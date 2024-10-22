@@ -71,7 +71,7 @@ const SummaryQualitative: React.FC<SummaryQualitativeProps> = ({
 
   return (
     <Stack
-      direction={{ base: "column", mb: "row" }}
+      direction={{ base: "column", md: "row" }}
       spacing={4}
       p={1}
       {...props}
