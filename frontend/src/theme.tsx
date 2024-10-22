@@ -1,10 +1,10 @@
-import { extendTheme } from "@chakra-ui/react"
+import { extendTheme } from "@chakra-ui/react";
 
 const disabledStyles = {
   _disabled: {
     backgroundColor: "ui.main",
   },
-}
+};
 
 const theme = extendTheme({
   colors: {
@@ -17,6 +17,7 @@ const theme = extendTheme({
       dark: "#1A202C",
       darkSlate: "#252D3D",
       dim: "#A0AEC0",
+      pink: "#f447c9",
     },
   },
   components: {
@@ -55,7 +56,34 @@ const theme = extendTheme({
         },
       },
     },
+    Table: {
+      variants: {
+        dividend: {
+          table: {
+            size: "sm",
+          },
+          tr: {
+            borderColor: "ui.dim",
+            borderBottomWidth: "0.5px",
+            borderBottomStyle: "solid",
+            height: "30px",
+          },
+          th: {
+            textAlign: "center",
+            fontSize: "12px",
+            whiteSpace: "normal", // テキストを折り返す
+            wordWrap: "break-word", // テキストを折り返す
+          },
+          td: {
+            textAlign: "center",
+            fontSize: "12px",
+            whiteSpace: "normal", // テキストを折り返す
+            wordWrap: "break-word", // テキストを折り返す
+          },
+        },
+      },
+    },
   },
-})
+});
 
-export default theme
+export default theme;
