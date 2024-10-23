@@ -212,6 +212,7 @@ def create_menu_items_tree(*, session, id: str, type: str, header: str = None) -
 
     endTime = datetime.now()
     print("処理時間: ", endTime - start)
+    start = datetime.now()
 
     # region ツリー構造の作成
     tree = Tree()
@@ -297,21 +298,26 @@ def create_menu_items_tree(*, session, id: str, type: str, header: str = None) -
 
     # region itemsの取得
     context_id = create_context_id(tree=tree)
+    finance_item = crud.read_finance_item(
+        session=session,
+        xbrl_id=id,
+        xbrl_type=type,
+    )
     for nodes in tree.children("root"):
         nodes: Node
         for node in tree.leaves(nodes.identifier):
             node: Node
+            finance_item_list = []
             if not node.tag.endswith("Member"):
-                finance_item = crud.read_finance_item(
-                    session=session,
-                    xbrl_id=id,
-                    xbrl_type=type,
-                    name=node.tag,
-                    context=context_id[nodes.tag]["id"],
-                )
+                name = node.tag
+                context = context_id[nodes.tag]["id"]
                 if finance_item is not None:
-                    print(finance_item.count, node.tag, context_id[nodes.tag]["id"])
-                node.data.items = finance_item
+                    for item in finance_item.data:
+                        if item.name == name and re.match(context, item.context):
+                            finance_item_list.append(item)
+                node.data.items = sc.ix_global.IxViewFinances(
+                    count=len(finance_item_list), data=finance_item_list
+                )
     # endregion
 
     # region 不要なノードの削除

@@ -7,9 +7,10 @@ from app.models import Field, SQLModel
 class IxViewFinance(SQLModel):
     """iXBRLの財務情報を公開するためのクラス"""
 
+    name: str = Field(default=None, description="名前")
     is_numeric: Optional[bool] = Field(default=False, description="数値データの有無")
     type: Optional[str] = Field(default=None, description="数値データの種別")
-    context: Optional[str] = Field(default=None, description="コンテキスト")
+    context: str = Field(default=None, description="コンテキスト")
     numeric: Optional[float] = Field(default=None, description="数値データ")
     value: Optional[str] = Field(default=None, description="非数値データ")
     display_scale: Optional[str] = Field(default=None, description="表示スケール")

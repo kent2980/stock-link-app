@@ -321,68 +321,59 @@ def read_menu_items(
 
 
 def read_finance_item(
-    session: Session, xbrl_id: str, xbrl_type: str, name: str, context: str
+    session: Session, xbrl_id: str, xbrl_type: str
 ) -> Optional[sc.ix_global.IxViewFinances]:
     """財務情報を取得"""
+
+    data: List[sc.ix_global.IxViewFinance] = []
 
     # region 非分数データの取得
     infQuery = select(IxNonFraction).where(
         IxNonFraction.xbrl_id == xbrl_id,
         IxNonFraction.xbrl_type == xbrl_type,
-        IxNonFraction.name == name,
         IxNonFraction.xsi_nil == False,
-        text(f"context ~ '{context}'"),
     )
     inf_result = session.exec(infQuery).all()
+
+    for item in inf_result:
+        data.append(
+            sc.ix_global.IxViewFinance(
+                name=item.name,
+                is_numeric=True,
+                type=item.unit_ref,
+                context=item.context,
+                numeric=item.numeric,
+                value=item.display_numeric,
+                display_scale=item.display_scale,
+            )
+        )
     # endregion
 
     # region 非数値データの取得
     innQuery = select(IxNonNumeric).where(
         IxNonNumeric.xbrl_id == xbrl_id,
         IxNonNumeric.xbrl_type == xbrl_type,
-        IxNonNumeric.name == name,
         IxNonNumeric.xsi_nil == False,
         not_(
             and_(
                 IxNonNumeric.value == "false", IxNonNumeric.name.like("%StockExchange%")
             )
         ),
-        text(f"context ~ '{context}'"),
     )
     inn_result = session.exec(innQuery).all()
+
+    for item in inn_result:
+        data.append(
+            sc.ix_global.IxViewFinance(
+                name=item.name,
+                type=item.format,
+                context=item.context,
+                value=item.value,
+            )
+        )
     # endregion
 
-    # region 結果をオブジェクト化して返す
-    # 非分数データがある場合
-    if len(inf_result) > 0:
-        data: List[sc.ix_global.IxViewFinance] = []
-        for item in inf_result:
-            data.append(
-                sc.ix_global.IxViewFinance(
-                    is_numeric=True,
-                    type=item.unit_ref,
-                    context=item.context,
-                    numeric=item.numeric,
-                    value=item.display_numeric,
-                    display_scale=item.display_scale,
-                )
-            )
-        return sc.ix_global.IxViewFinances(count=len(data), data=data)
-    # 非数値データがある場合
-    elif len(inn_result) > 0:
-        data: List[sc.ix_global.IxViewFinance] = []
-        for item in inn_result:
-            data.append(
-                sc.ix_global.IxViewFinance(
-                    type=item.format,
-                    context=item.context,
-                    value=item.value,
-                )
-            )
-        return sc.ix_global.IxViewFinances(count=len(data), data=data)
-    # それ以外の場合
-    else:
-        return None
+    return sc.ix_global.IxViewFinances(count=len(data), data=data)
     # endregion
 
 
