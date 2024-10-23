@@ -12,11 +12,7 @@ import app.schema as sc
 import emails  # type: ignore
 import jwt
 from app.core.config import settings
-from app.schema.ix_view import (
-    abstractBase,
-    stock,
-    stockNumeric,
-)
+from app.schema.ix_view import abstractBase, stock, stockNumeric
 from jinja2 import Template
 from jwt.exceptions import InvalidTokenError
 from treelib import Node, Tree
@@ -313,6 +309,8 @@ def create_menu_items_tree(*, session, id: str, type: str, header: str = None) -
                     name=node.tag,
                     context=context_id[nodes.tag]["id"],
                 )
+                if finance_item is not None:
+                    print(finance_item.count, node.tag, context_id[nodes.tag]["id"])
                 node.data.items = finance_item
     # endregion
 
