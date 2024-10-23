@@ -1,20 +1,11 @@
-import json
-import pprint
-import re
-from decimal import Decimal
-from typing import Any, Optional
+from typing import Any
 
-import app.api.routes
 import app.schema as sc
 from app.api.deps import SessionDep
-from app.models import IxDefinitionArc, IxDefinitionLoc, IxNonFraction, IxNonNumeric
+from app.models import IxDefinitionArc, IxDefinitionLoc
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
-from treelib import Node, Tree
-from treelib.exceptions import DuplicatedNodeIdError
-from treelib.tree import NodeIDAbsentError
 
 router = APIRouter()
 

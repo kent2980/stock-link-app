@@ -3,7 +3,6 @@ import re
 from decimal import Decimal
 from typing import List, Optional, Union
 
-import alembic
 from pydantic import BaseModel, validator
 
 import app.schema as sc

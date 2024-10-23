@@ -7,25 +7,18 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-import alembic
-import app.api.routes
 import app.crud as crud
 import app.schema as sc
 import emails  # type: ignore
 import jwt
 from app.core.config import settings
-from app.models import SQLModel
 from app.schema.ix_view import (
-    IncomeStatementsInformationAbstractJp,
-    OperatingResultJp,
-    abstract,
     abstractBase,
     stock,
     stockNumeric,
 )
 from jinja2 import Template
 from jwt.exceptions import InvalidTokenError
-from pandas import DataFrame
 from treelib import Node, Tree
 
 

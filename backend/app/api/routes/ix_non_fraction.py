@@ -3,16 +3,11 @@ from typing import Any
 import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import (
-    IxLabelArc,
-    IxLabelLoc,
-    IxLabelValue,
     IxNonFraction,
-    IxSourceFile,
-    ScLinkBaseRef,
 )
 from fastapi import APIRouter, HTTPException
 from sqlalchemy.exc import IntegrityError
-from sqlmodel import and_, select
+from sqlmodel import select
 
 router = APIRouter()
 

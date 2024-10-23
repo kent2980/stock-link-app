@@ -556,4 +556,21 @@ class IxQualitative(XbrlBase, table=True):
     photo_url: Optional[str] = Field(default=None, description="画像URL")
 
 
+class IxStockInfos(XbrlBase, table=True):
+    """期末に公表される決算情報を表すクラス"""
+
+    __tablename__ = "ix_stock_infos"
+
+    code: str = Field(max_length=4, description="証券コード")
+    name: str = Field(max_length=255, description="企業名")
+    payout_ratio: Optional[str] = Field(max_length=255, description="配当性向")
+    roe: Optional[str] = Field(max_length=255, description="自己資本当期純利益率")
+    roa: Optional[str] = Field(max_length=255, description="総資産経常利益率")
+    op_margin: Optional[str] = Field(max_length=255, description="売上高営業利益率")
+    cf_operating: Optional[str] = Field(max_length=255, description="営業CF")
+    cf_investing: Optional[str] = Field(max_length=255, description="投資CF")
+    cf_financing: Optional[str] = Field(max_length=255, description="財務CF")
+    cash_end: Optional[str] = Field(max_length=255, description="期末現金残高")
+
+
 # endregion

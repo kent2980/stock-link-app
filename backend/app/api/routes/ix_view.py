@@ -1,7 +1,7 @@
 import datetime
 import pprint
 import re
-from typing import List, Optional, Union
+from typing import Optional, Union
 
 import app.crud as crud
 import app.schema as ssc

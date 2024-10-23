@@ -1,6 +1,5 @@
 import re
 from collections import namedtuple
-from typing import Any, List
 
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select

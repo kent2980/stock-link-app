@@ -1,10 +1,9 @@
-from datetime import datetime
-from typing import Any, List
+from typing import Any
 
 import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxHeadTitle
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter
 from sqlmodel import select
 
 router = APIRouter()
