@@ -268,6 +268,7 @@ class IxDefinitionLoc(IxLocsBase, table=True):
         Index("idx_ix_definition_loc_source_file_id", "source_file_id"),
         Index("idx_ix_definition_loc_xlink_label", "xlink_label"),
         Index("idx_ix_definition_loc_attr_value", "attr_value"),
+        Index("idx_ix_definition_loc_xlink_href", "xlink_href"),
         Index(
             "idx_ix_definition_loc_attr_value_xlink_label", "attr_value", "xlink_label"
         ),
