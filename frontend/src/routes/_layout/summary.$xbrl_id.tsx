@@ -1,12 +1,19 @@
 import { Box, Spinner, Stack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { EffectCube, Navigation, Pagination, Scrollbar } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { XbrlViewService } from "../../client";
 import StockSummary from "../../components/summary/StockSummary";
 import SummaryBox from "../../components/summary/SummaryBox";
 import SummaryHeader from "../../components/summary/SummaryHeader";
 import SummaryQualitative from "../../components/summary/SummaryQualitative";
+
+import "swiper/css";
+import "swiper/css/effect-cube";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 export const Route = createFileRoute("/_layout/summary/$xbrl_id")({
   component: Summary,
@@ -50,13 +57,23 @@ function Summary() {
   if (window.innerWidth < 768) {
     return (
       <>
-        <SummaryHeader xbrl_id={xbrl_id} />
+        <SummaryHeader xbrl_id={xbrl_id} height="80px" />
         <Swiper
-          spaceBetween={50}
+          modules={[EffectCube, Scrollbar, Navigation, Pagination]}
+          spaceBetween={0}
           slidesPerView={1}
           loop={true}
+          scrollbar={{ draggable: true }}
+          pagination={{ clickable: true }}
           onSwiper={(swiper) => console.log(swiper)}
           onSlideChange={() => console.log("slide change")}
+          effect="cube"
+          cubeEffect={{
+            shadow: false,
+            slideShadows: true,
+            shadowOffset: 2,
+            shadowScale: 0.94,
+          }}
         >
           <SwiperSlide>
             <SummaryBox xbrl_id={xbrl_id} className="swiper-child" />

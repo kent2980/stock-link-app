@@ -4,10 +4,9 @@ import re
 from typing import Optional, Union
 
 import app.crud as crud
-import app.schema as ssc
 import app.utils as utils
 from app.api.deps import SessionDep
-from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric
+from app.models import IxHeadTitle
 from app.schema import ix_view as sc
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select, text

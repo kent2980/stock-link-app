@@ -36,7 +36,6 @@ const SummaryHeader: React.FC<SummaryHeaderProps> = ({ xbrl_id, ...props }) => {
       left={{ base: 0, md: 56 }}
       zIndex={1000}
       width="100%"
-      height={20}
       {...props}
     >
       <Stack direction="row" spacing={6}>

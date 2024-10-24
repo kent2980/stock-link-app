@@ -25,7 +25,7 @@ from app.models import (
     UserUpdate,
 )
 from sqlalchemy.orm import aliased
-from sqlmodel import Session, and_, not_, select, text
+from sqlmodel import Session, and_, not_, select
 
 
 def create_user(*, session: Session, user_create: UserCreate) -> User:

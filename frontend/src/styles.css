@@ -14,7 +14,7 @@
 
 .swiper-child {
     margin-top: 80px;
-    height: 100vh;
+    height: calc(100vh - 80px);
     overflow-y: auto;
     width: 100%;
 }
