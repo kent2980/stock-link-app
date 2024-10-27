@@ -1,6 +1,6 @@
 import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Store, useStore } from "@tanstack/react-store";
+import { Store } from "@tanstack/react-store";
 import dayjs from "dayjs";
 import "dayjs/locale/ja"; // 日本語ロケールをインポート
 import { useEffect, useRef, useState } from "react";
@@ -37,8 +37,8 @@ function Menu() {
 
   const dates = generateDates();
 
-  const isLeftSwipe = useStore(MenuStore, (state) => state.isLeftSwipe);
-  const isRightSwipe = useStore(MenuStore, (state) => state.isRightSwipe);
+  // const isLeftSwipe = useStore(MenuStore, (state) => state.isLeftSwipe);
+  // const isRightSwipe = useStore(MenuStore, (state) => state.isRightSwipe);
   const [isSwipeHandled, setIsSwipeHandled] = useState(false);
 
   useEffect(() => {

@@ -1,9 +1,7 @@
-import { Box, Spinner, Stack } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
+import { Box, Stack } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { EffectCube, Navigation, Pagination, Scrollbar } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { XbrlViewService } from "../../client";
 import SummaryBox from "../../components/summary/SummaryBox";
 import SummaryHeader from "../../components/summary/SummaryHeader";
 import SummaryQualitative from "../../components/summary/SummaryQualitative";
@@ -20,37 +18,37 @@ export const Route = createFileRoute("/_layout/summary/$xbrl_id")({
 
 function Summary() {
   const { xbrl_id } = Route.useParams();
-  const { data: item, status } = useQuery({
-    queryKey: ["head", xbrl_id],
-    queryFn: () =>
-      XbrlViewService.readHeadItem({
-        xbrlId: xbrl_id,
-      }),
-  });
+  // const { data: item, status } = useQuery({
+  //   queryKey: ["head", xbrl_id],
+  //   queryFn: () =>
+  //     XbrlViewService.readHeadItem({
+  //       xbrlId: xbrl_id,
+  //     }),
+  // });
 
-  if (status === "error") {
-    return <Box>Error</Box>;
-  }
+  // if (status === "error") {
+  //   return <Box>Error</Box>;
+  // }
 
-  if (status === "pending") {
-    return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        height="100vh"
-        width="100%"
-      >
-        <Spinner
-          size="xl"
-          thickness="10px"
-          speed="1s"
-          emptyColor="gray.200"
-          color="blue.500"
-        />
-      </Box>
-    );
-  }
+  // if (status === "pending") {
+  //   return (
+  //     <Box
+  //       display="flex"
+  //       justifyContent="center"
+  //       alignItems="center"
+  //       height="100vh"
+  //       width="100%"
+  //     >
+  //       <Spinner
+  //         size="xl"
+  //         thickness="10px"
+  //         speed="1s"
+  //         emptyColor="gray.200"
+  //         color="blue.500"
+  //       />
+  //     </Box>
+  //   );
+  // }
 
   // モバイルの場合
   if (window.innerWidth < 768) {
