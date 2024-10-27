@@ -1,5 +1,6 @@
 import { Box, Button, Heading, Stack, Text, keyframes } from "@chakra-ui/react";
-import { Link } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
+import dayjs from "dayjs";
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
@@ -7,6 +8,8 @@ import useAuth from "../../hooks/useAuth";
 interface HomeProps {}
 
 const Home: React.FC<HomeProps> = () => {
+  const navigate = useNavigate({ from: "/" });
+  const today = dayjs().format("YYYY-MM-DD");
   const { logout } = useAuth();
   const handleLogout = async () => {
     logout();
@@ -46,8 +49,12 @@ const Home: React.FC<HomeProps> = () => {
             colorScheme="blue"
             size="lg"
             variant="outline"
-            as={Link}
-            to="/navigate/"
+            onClick={() =>
+              navigate({
+                to: "/menu/$selectedDate",
+                params: { selectedDate: today },
+              })
+            }
           >
             利用を開始する
           </Button>

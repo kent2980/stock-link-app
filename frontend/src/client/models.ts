@@ -459,15 +459,6 @@ export type IncomeStatementsInformationAbstractJp = {
 
 
 
-/**
- * アイテムの作成時にAPI経由で受け取るプロパティです。
- * 
- * Properties:
- * title (str): アイテムのタイトルです。
- * 
- * examples:
- * ItemCreate(title="title")
- */
 export type ItemCreate = {
 	title: string;
 	description?: string | null;
@@ -475,34 +466,15 @@ export type ItemCreate = {
 
 
 
-/**
- * アイテムの公開情報を表すクラスです。
- * 
- * Properties:
- * id (int): アイテムのIDです。
- * owner_id (int): アイテムの所有者のIDです。
- * 
- * examples:
- * ItemPublic(id=1, title="title", owner_id=1)
- */
 export type ItemPublic = {
 	title: string;
 	description?: string | null;
-	id: number;
-	owner_id: number;
+	id: string;
+	owner_id: string;
 };
 
 
 
-/**
- * アイテムの更新時にAPI経由で受け取るプロパティです。
- * 
- * Properties:
- * title (str | None): アイテムのタイトルです。デフォルト値はNoneです。
- * 
- * examples:
- * ItemUpdate(title="title")
- */
 export type ItemUpdate = {
 	title?: string | null;
 	description?: string | null;
@@ -510,16 +482,6 @@ export type ItemUpdate = {
 
 
 
-/**
- * アイテムのリストを表すクラスです。
- * 
- * Properties:
- * data (list[ItemPublic]): アイテムのリストです。
- * count (int): アイテムの数です。
- * 
- * Examples:
- * ItemsPublic(data=[ItemPublic(id=1, title="title", owner_id=1)], count=1)
- */
 export type ItemsPublic = {
 	data: Array<ItemPublic>;
 	count: number;
@@ -738,6 +700,16 @@ export type IxHeadTitlePublic = {
 	is_sfp: boolean | null;
 	fiscal_year_end: string | null;
 	tel: string | null;
+};
+
+
+
+/**
+ * iXBRLのヘッダー情報のリストを表すクラス
+ */
+export type IxHeadTitlesPublic = {
+	data: Array<IxHeadTitlePublic>;
+	count: number;
 };
 
 
@@ -1036,6 +1008,27 @@ export type IxQualitativePublics = {
 
 
 /**
+ * 報告書タイプのカウントを表すクラス
+ */
+export type IxReportTypeCount = {
+	report_type: string;
+	report_type_jp: string;
+	count: number;
+};
+
+
+
+/**
+ * 報告書タイプのカウントのリストを表すクラス
+ */
+export type IxReportTypeCountList = {
+	data: Array<IxReportTypeCount>;
+	count: number;
+};
+
+
+
+/**
  * iXBRLのスキーマリンクベース情報を作成するためのクラス
  */
 export type IxSchemaLinkBaseCreate = {
@@ -1102,31 +1095,12 @@ export type MenuTitles = {
 
 
 
-/**
- * メッセージを表すクラスです。
- * 
- * Properties:
- * message (str): メッセージです。
- * 
- * Examples:
- * Message(message="message")
- */
 export type Message = {
 	message: string;
 };
 
 
 
-/**
- * 新しいパスワードを表すクラスです。
- * 
- * Properties:
- * token (str): トークンです。
- * new_password (str): 新しいパスワードです。
- * 
- * Examples:
- * NewPassword(token="string", new_password="string")
- */
 export type NewPassword = {
 	token: string;
 	new_password: string;
@@ -1742,16 +1716,6 @@ export type SummaryItemsAbstractJpList = {
 
 
 
-/**
- * アクセストークンを表すクラスです。
- * 
- * Properties:
- * access_token (str): アクセストークンです。
- * token_type (str): トークンのタイプです。デフォルト値は"bearer"です。
- * 
- * Examples:
- * Token(access_token="string")
- */
 export type Token = {
 	access_token: string;
 	token_type?: string;
@@ -1759,16 +1723,6 @@ export type Token = {
 
 
 
-/**
- * パスワードの更新時にAPI経由で受け取るプロパティです。
- * 
- * Properties:
- * current_password (str): 現在のパスワードです。
- * new_password (str): 新しいパスワードです。
- * 
- * Examples:
- * UpdatePassword(current_password="password", new_password="new_password")
- */
 export type UpdatePassword = {
 	current_password: string;
 	new_password: string;
@@ -1776,17 +1730,6 @@ export type UpdatePassword = {
 
 
 
-/**
- * ユーザーの作成時にAPI経由で受け取るプロパティです。
- * 
- * Properties:
- * email (EmailStr): ユーザーのメールアドレスです。
- * password (str): ユーザーのパスワードです。
- * full_name (str | None): ユーザーのフルネームです。デフォルト値はNoneです。
- * 
- * Examples:
- * UserCreate(email="example@example.com", password="password", full_name="yamada taro")
- */
 export type UserCreate = {
 	email: string;
 	is_active?: boolean;
@@ -1797,36 +1740,16 @@ export type UserCreate = {
 
 
 
-/**
- * ユーザーの公開情報を表すクラスです。
- * 
- * Properties:
- * id (int): ユーザーのIDです。
- * 
- * Examples:
- * UserPublic(id=1, email="example@example.com", is_active=True, is_superuser=False, full_name="yamada taro")
- */
 export type UserPublic = {
 	email: string;
 	is_active?: boolean;
 	is_superuser?: boolean;
 	full_name?: string | null;
-	id: number;
+	id: string;
 };
 
 
 
-/**
- * ユーザーの登録時にAPI経由で受け取るプロパティです。
- * 
- * Properties:
- * email (EmailStr): ユーザーのメールアドレスです。
- * password (str): ユーザーのパスワードです。
- * full_name (str | None): ユーザーのフルネームです。デフォルト値はNoneです。
- * 
- * Examples:
- * UserRegister(email="example@example.com", password="password", full_name="yamada taro")
- */
 export type UserRegister = {
 	email: string;
 	password: string;
@@ -1835,16 +1758,6 @@ export type UserRegister = {
 
 
 
-/**
- * ユーザーの更新時にAPI経由で受け取るプロパティです。
- * 
- * Properties:
- * email (EmailStr | None): ユーザーのメールアドレスです。デフォルト値はNoneです。
- * full_name (str | None): ユーザーのフルネームです。デフォルト値はNoneです。
- * 
- * Examples:
- * UserUpdate(email="example@example.com", full_name="yamada taro")
- */
 export type UserUpdate = {
 	email?: string | null;
 	is_active?: boolean;
@@ -1855,16 +1768,6 @@ export type UserUpdate = {
 
 
 
-/**
- * ユーザーの更新時にAPI経由で受け取るプロパティです。
- * 
- * Properties:
- * full_name (str | None): ユーザーのフルネームです。デフォルト値はNoneです。
- * email (EmailStr | None): ユーザーのメールアドレスです。デフォルト値はNoneです。
- * 
- * examples:
- * UserUpdateMe(full_name="yamada taro", email="example@example.com")
- */
 export type UserUpdateMe = {
 	full_name?: string | null;
 	email?: string | null;
@@ -1872,16 +1775,6 @@ export type UserUpdateMe = {
 
 
 
-/**
- * ユーザーのリストを表すクラスです。
- * 
- * Properties:
- * data (list[UserPublic]): ユーザーのリストです。
- * count (int): ユーザーの数です。
- * 
- * Examples:
- * UsersPublic(data=[UserPublic(id=1, email="example@example.com", is_active=True, is_superuser=False, full_name="yamada taro")], count=1)
- */
 export type UsersPublic = {
 	data: Array<UserPublic>;
 	count: number;

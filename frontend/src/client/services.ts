@@ -2,7 +2,7 @@ import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
 
-import type { FiscalYearStockInfo,HeadItem,HeadItems,MenuTitles,StockInfo,StockRecordInfos,SummaryItemsAbstractJp,SummaryItemsAbstractJpList,IxHeadTitleCreate,IxHeadTitleCreateList,IxHeadTitlePublic,IxNonFractionCreate_Input,IxNonFractionCreate_Output,IxNonFractionCreateList,IxNonNumericCreate,IxNonNumericCreateList,IxLabelArcCreate,IxLabelArcCreateList,IxLabelLocCreate,IxLabelLocCreateList,IxLabelValueCreate,IxLabelValueCreateList,IxCalculationArcCreate_Input,IxCalculationArcCreate_Output,IxCalculationArcCreateList,IxCalculationLocCreate,IxCalculationLocCreateList,IxDefinitionArcCreate_Input,IxDefinitionArcCreate_Output,IxDefinitionArcCreateList,IxDefinitionLocCreate,IxDefinitionLocCreateList,IxPresentationArcCreate_Input,IxPresentationArcCreate_Output,IxPresentationArcCreateList,IxPresentationLocCreate,IxPresentationLocCreateList,IxSourceFileCreate,IxSourceFileCreateList,IxSchemaLinkBaseCreate,IxSchemaLinkBaseCreateList,IxFilePathCreate,IxFilePathPublic,IxQualitativeCreate,IxQualitativeCreates,IxQualitativePublic,IxQualitativePublics,QualitativeInfoHeader,Body_login_login_access_token,Message,NewPassword,Token,UserPublic,UpdatePassword,UserCreate,UserRegister,UsersPublic,UserUpdate,UserUpdateMe,ItemCreate,ItemPublic,ItemsPublic,ItemUpdate } from './models';
+import type { FiscalYearStockInfo,HeadItem,HeadItems,MenuTitles,StockInfo,StockRecordInfos,SummaryItemsAbstractJp,SummaryItemsAbstractJpList,IxHeadTitleCreate,IxHeadTitleCreateList,IxHeadTitlePublic,IxHeadTitlesPublic,IxReportTypeCountList,IxNonFractionCreate_Input,IxNonFractionCreate_Output,IxNonFractionCreateList,IxNonNumericCreate,IxNonNumericCreateList,IxLabelArcCreate,IxLabelArcCreateList,IxLabelLocCreate,IxLabelLocCreateList,IxLabelValueCreate,IxLabelValueCreateList,IxCalculationArcCreate_Input,IxCalculationArcCreate_Output,IxCalculationArcCreateList,IxCalculationLocCreate,IxCalculationLocCreateList,IxDefinitionArcCreate_Input,IxDefinitionArcCreate_Output,IxDefinitionArcCreateList,IxDefinitionLocCreate,IxDefinitionLocCreateList,IxPresentationArcCreate_Input,IxPresentationArcCreate_Output,IxPresentationArcCreateList,IxPresentationLocCreate,IxPresentationLocCreateList,IxSourceFileCreate,IxSourceFileCreateList,IxSchemaLinkBaseCreate,IxSchemaLinkBaseCreateList,IxFilePathCreate,IxFilePathPublic,IxQualitativeCreate,IxQualitativeCreates,IxQualitativePublic,IxQualitativePublics,QualitativeInfoHeader,Body_login_login_access_token,Message,NewPassword,Token,UserPublic,UpdatePassword,UserCreate,UserRegister,UsersPublic,UserUpdate,UserUpdateMe,ItemCreate,ItemPublic,ItemsPublic,ItemUpdate } from './models';
 
 export type TDataReadStockRecord = {
                 code?: string | null
@@ -333,36 +333,16 @@ export type TDataIsIxHeadTitleItemExists = {
                 xbrlId: string
                 
             }
-export type TDataCreateIxNonNumericItem = {
-                requestBody: IxNonNumericCreate
+export type TDataGetCountReportType = {
+                dateStr: string
                 
             }
-export type TDataCreateIxNonNumericItemsExists = {
-                requestBody: IxNonNumericCreateList
-                
-            }
-export type TDataIsIxNonNumericItemExists = {
-                sourceFileId: string
-                
-            }
-export type TDataCreateIxNonFractionItem = {
-                requestBody: IxNonFractionCreate_Input
-                
-            }
-export type TDataCreateIxNonFractionItemsExists = {
-                requestBody: IxNonFractionCreateList
-                
-            }
-export type TDataIsIxNonFractionItemExists = {
-                sourceFileId: string
-                
-            }
-export type TDataIsConsolidated = {
-                xbrlId: string
+export type TDataSelectIxHeadTitleItems = {
+                dateStr: string
                 
             }
 
-export class XbrlIxService {
+export class XbrlIxHeadService {
 
 	/**
 	 * Create Ix Head Title Item
@@ -448,6 +428,83 @@ xbrlId,
 			},
 		});
 	}
+
+	/**
+	 * Get Count Report Type
+	 * 指定した日付の報告書タイプごとの件数を取得する。
+	 * @returns IxReportTypeCountList Successful Response
+	 * @throws ApiError
+	 */
+	public static getCountReportType(data: TDataGetCountReportType): CancelablePromise<IxReportTypeCountList> {
+		const {
+dateStr,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/xbrl/head/count-report-type/',
+			query: {
+				date_str: dateStr
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Select Ix Head Title Items
+	 * 指定した日付の報告書タイプごとの件数を取得する。
+	 * @returns IxHeadTitlesPublic Successful Response
+	 * @throws ApiError
+	 */
+	public static selectIxHeadTitleItems(data: TDataSelectIxHeadTitleItems): CancelablePromise<IxHeadTitlesPublic> {
+		const {
+dateStr,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/xbrl/head/select/',
+			query: {
+				date_str: dateStr
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+}
+
+export type TDataCreateIxNonNumericItem = {
+                requestBody: IxNonNumericCreate
+                
+            }
+export type TDataCreateIxNonNumericItemsExists = {
+                requestBody: IxNonNumericCreateList
+                
+            }
+export type TDataIsIxNonNumericItemExists = {
+                sourceFileId: string
+                
+            }
+export type TDataCreateIxNonFractionItem = {
+                requestBody: IxNonFractionCreate_Input
+                
+            }
+export type TDataCreateIxNonFractionItemsExists = {
+                requestBody: IxNonFractionCreateList
+                
+            }
+export type TDataIsIxNonFractionItemExists = {
+                sourceFileId: string
+                
+            }
+export type TDataIsConsolidated = {
+                xbrlId: string
+                
+            }
+
+export class XbrlIxService {
 
 	/**
 	 * Create Ix Non Numeric Item
@@ -1849,16 +1906,16 @@ export type TDataRegisterUser = {
                 
             }
 export type TDataReadUserById = {
-                userId: number
+                userId: string
                 
             }
 export type TDataUpdateUser = {
                 requestBody: UserUpdate
-userId: number
+userId: string
                 
             }
 export type TDataDeleteUser = {
-                userId: number
+                userId: string
                 
             }
 
@@ -2121,16 +2178,16 @@ export type TDataCreateItem = {
                 
             }
 export type TDataReadItem = {
-                id: number
+                id: string
                 
             }
 export type TDataUpdateItem = {
-                id: number
+                id: string
 requestBody: ItemUpdate
                 
             }
 export type TDataDeleteItem = {
-                id: number
+                id: string
                 
             }
 

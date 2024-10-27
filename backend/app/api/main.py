@@ -20,7 +20,7 @@ from fastapi import APIRouter
 
 api_router = APIRouter()
 api_router.include_router(ix_view.router, prefix="/xbrl/view", tags=["xbrl_view"])
-api_router.include_router(ix_head_title.router, prefix="/xbrl", tags=["xbrl_ix"])
+api_router.include_router(ix_head_title.router, prefix="/xbrl", tags=["xbrl_ix_head"])
 api_router.include_router(ix_non_numeric.router, prefix="/xbrl", tags=["xbrl_ix"])
 api_router.include_router(ix_non_fraction.router, prefix="/xbrl", tags=["xbrl_ix"])
 api_router.include_router(ix_label.router, prefix="/xbrl", tags=["xbrl_lab"])

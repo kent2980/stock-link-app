@@ -1,10 +1,12 @@
+import datetime
+import re
 from typing import Any
 
 import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxHeadTitle
-from fastapi import APIRouter
-from sqlmodel import select
+from fastapi import APIRouter, HTTPException
+from sqlmodel import func, select
 
 router = APIRouter()
 
@@ -83,3 +85,154 @@ def is_ix_head_title_item_exists(*, session: SessionDep, xbrl_id: str) -> Any:
         return True
 
     return False
+
+
+@router.get(
+    "/head/count-report-type/",
+    response_model=sc.ix_head.IxReportTypeCountList,
+)
+def get_count_report_type(
+    *, session: SessionDep, date_str: str
+) -> sc.ix_head.IxReportTypeCountList:
+    """
+    指定した日付の報告書タイプごとの件数を取得する。
+    """
+
+    # date_strが"YYYY-MM-DD"の形式であることを確認
+    if not re.match(r"\d{4}-\d{2}-\d{2}", date_str):
+        raise HTTPException(
+            status_code=400,
+            detail="日付の形式が正しくありません。YYYY-MM-DDの形式で指定してください。",
+        )
+
+    # date_strをDate型に変換
+    date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+    date = date.date()
+
+    statement = (
+        select(
+            IxHeadTitle.report_type, func.count(IxHeadTitle.report_type).label("count")
+        )
+        .where(IxHeadTitle.reporting_date == date)
+        .group_by(IxHeadTitle.report_type)
+    )
+    result = session.exec(statement)
+    items = result.all()
+
+    items_list = []
+    for item in items:
+        if item.report_type == "edif":
+            items_list.append(
+                sc.ix_head.IxReportTypeCount(
+                    report_type=item.report_type,
+                    report_type_jp="決算短信[国際会計基準]",
+                    count=item.count,
+                )
+            )
+        elif item.report_type == "edjp":
+            items_list.append(
+                sc.ix_head.IxReportTypeCount(
+                    report_type=item.report_type,
+                    report_type_jp="決算短信[日本基準]",
+                    count=item.count,
+                )
+            )
+        elif item.report_type == "edus":
+            items_list.append(
+                sc.ix_head.IxReportTypeCount(
+                    report_type=item.report_type,
+                    report_type_jp="決算短信[米国基準]",
+                    count=item.count,
+                )
+            )
+        elif item.report_type == "edit":
+            items_list.append(
+                sc.ix_head.IxReportTypeCount(
+                    report_type=item.report_type,
+                    report_type_jp="決算短信[国際会計基準]",
+                    count=item.count,
+                )
+            )
+        elif item.report_type == "rvfc":
+            items_list.append(
+                sc.ix_head.IxReportTypeCount(
+                    report_type=item.report_type,
+                    report_type_jp="業績予想修正に関するお知らせ",
+                    count=item.count,
+                )
+            )
+        elif item.report_type == "rvdf":
+            items_list.append(
+                sc.ix_head.IxReportTypeCount(
+                    report_type=item.report_type,
+                    report_type_jp="配当予想修正に関するお知らせ",
+                    count=item.count,
+                )
+            )
+        elif item.report_type == "rejp":
+            items_list.append(
+                sc.ix_head.IxReportTypeCount(
+                    report_type=item.report_type,
+                    report_type_jp="REIT決算短信（日本基準）",
+                    count=item.count,
+                )
+            )
+        elif item.report_type == "rrdf":
+            items_list.append(
+                sc.ix_head.IxReportTypeCount(
+                    report_type=item.report_type,
+                    report_type_jp="分配予想の修正に関するお知らせ",
+                    count=item.count,
+                )
+            )
+        elif item.report_type == "rrfc":
+            items_list.append(
+                sc.ix_head.IxReportTypeCount(
+                    report_type=item.report_type,
+                    report_type_jp="運用状況の予想の修正に関するお知らせ",
+                    count=item.count,
+                )
+            )
+        elif item.report_type == "efjp":
+            items_list.append(
+                sc.ix_head.IxReportTypeCount(
+                    report_type=item.report_type,
+                    report_type_jp="ETF決算短信（日本基準）",
+                    count=item.count,
+                )
+            )
+
+    return sc.ix_head.IxReportTypeCountList(data=items_list, count=len(items_list))
+
+
+@router.get(
+    "/head/select/",
+    response_model=sc.ix_head.IxHeadTitlesPublic,
+)
+def select_ix_head_title_items(
+    *, session: SessionDep, date_str: str
+) -> sc.ix_head.IxHeadTitlesPublic:
+    """
+    指定した日付の報告書タイプごとの件数を取得する。
+    """
+
+    # date_strが"YYYY-MM-DD"の形式であることを確認
+    if not re.match(r"\d{4}-\d{2}-\d{2}", date_str):
+        raise HTTPException(
+            status_code=400,
+            detail="日付の形式が正しくありません。YYYY-MM-DDの形式で指定してください。",
+        )
+
+    # date_strをDate型に変換
+    date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+    date = date.date()
+
+    statement = (
+        select(IxHeadTitle)
+        .where(IxHeadTitle.reporting_date == date)
+        .order_by(IxHeadTitle.securities_code)
+    )
+    result = session.exec(statement)
+    items = result.all()
+
+    return sc.ix_head.IxHeadTitlesPublic(data=items, count=len(items))

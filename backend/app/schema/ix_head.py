@@ -61,3 +61,18 @@ class IxHeadTitleCreateList(SQLModel):
     """iXBRLのヘッダー情報のリストを表すクラス"""
 
     data: list[IxHeadTitleCreate]
+
+
+class IxReportTypeCount(SQLModel):
+    """報告書タイプのカウントを表すクラス"""
+
+    report_type: str
+    report_type_jp: str
+    count: int
+
+
+class IxReportTypeCountList(SQLModel):
+    """報告書タイプのカウントのリストを表すクラス"""
+
+    data: list[IxReportTypeCount]
+    count: int
