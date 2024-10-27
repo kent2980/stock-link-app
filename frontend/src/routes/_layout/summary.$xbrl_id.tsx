@@ -4,7 +4,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { EffectCube, Navigation, Pagination, Scrollbar } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { XbrlViewService } from "../../client";
-import StockSummary from "../../components/summary/StockSummary";
 import SummaryBox from "../../components/summary/SummaryBox";
 import SummaryHeader from "../../components/summary/SummaryHeader";
 import SummaryQualitative from "../../components/summary/SummaryQualitative";
@@ -80,12 +79,6 @@ function Summary() {
           </SwiperSlide>
           <SwiperSlide>
             <SummaryQualitative xbrl_id={xbrl_id} className="swiper-child" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <StockSummary
-              code={item.securities_code}
-              className="swiper-child"
-            />
           </SwiperSlide>
         </Swiper>
       </>

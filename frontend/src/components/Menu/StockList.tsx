@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import React from "react";
 import { useSwipeable } from "react-swipeable";
 import { XbrlIxHeadService } from "../../client";
+import { MenuStore } from "../../routes/_layout/menu.$selectedDate";
 
 interface StockListProps extends BoxProps {
   selectDate: string;
@@ -21,6 +22,13 @@ const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
         params: { selectedDate: nextDate },
         replace: true,
       });
+      MenuStore.setState((state) => {
+        return {
+          ...state,
+          isLeftSwipe: true,
+          isRightSwipe: false,
+        };
+      });
     },
     onSwipedRight: () => {
       // 1日前の日付を取得
@@ -32,14 +40,19 @@ const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
         params: { selectedDate: prevDate },
         replace: true,
       });
+      MenuStore.setState((state) => {
+        return {
+          ...state,
+          isRightSwipe: true,
+          isLeftSwipe: false,
+        };
+      });
     },
   });
   const { data } = useQuery({
     queryKey: ["stock_list", selectDate],
     queryFn: () =>
       XbrlIxHeadService.selectIxHeadTitleItems({ dateStr: selectDate }),
-    staleTime: 1000 * 60 * 60 * 24,
-    gcTime: 1000 * 60 * 60 * 24,
   });
   return (
     <Box {...props} {...handlers} w="100vw" overflowY="scroll">

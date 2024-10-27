@@ -1,8 +1,9 @@
 import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Store, useStore } from "@tanstack/react-store";
 import dayjs from "dayjs";
 import "dayjs/locale/ja"; // 日本語ロケールをインポート
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import SelectItem from "../../components/Menu/SelectItem";
 
 dayjs.locale("ja"); // 日本語ロケールを設定
@@ -11,10 +12,16 @@ export const Route = createFileRoute("/_layout/menu/$selectedDate")({
   component: Menu,
 });
 
+export const MenuStore = new Store({
+  isLeftSwipe: false,
+  isRightSwipe: false,
+});
+
 function Menu() {
   const navigate = useNavigate({ from: "/menu" });
   const { selectedDate } = Route.useParams();
   const dateGroupRef = useRef<HTMLDivElement>(null);
+
   let scrollPoint = 0;
 
   const generateDates = () => {
@@ -22,8 +29,7 @@ function Menu() {
     for (let i = 0; i < 365; i++) {
       dates.push(dayjs().subtract(i, "day").format("YYYY-MM-DD"));
       if (selectedDate === dayjs().subtract(i, "day").format("YYYY-MM-DD")) {
-        console.log(i * 76);
-        scrollPoint = i * 77.4;
+        scrollPoint = i * 76 + 76 * 3 + 16;
       }
     }
     return dates;
@@ -31,13 +37,28 @@ function Menu() {
 
   const dates = generateDates();
 
+  const isLeftSwipe = useStore(MenuStore, (state) => state.isLeftSwipe);
+  const isRightSwipe = useStore(MenuStore, (state) => state.isRightSwipe);
+  const [isSwipeHandled, setIsSwipeHandled] = useState(false);
+
   useEffect(() => {
     if (dateGroupRef.current) {
-      console.log(dateGroupRef.current.scrollWidth);
+      console.log("else");
       dateGroupRef.current.scrollLeft =
         dateGroupRef.current.scrollWidth - scrollPoint;
     }
   }, []);
+
+  useEffect(() => {
+    if (isSwipeHandled) {
+      MenuStore.setState((state) => ({
+        ...state,
+        isLeftSwipe: false,
+        isRightSwipe: false,
+      }));
+      setIsSwipeHandled(false);
+    }
+  }, [isSwipeHandled]);
 
   return (
     <VStack spacing={0}>

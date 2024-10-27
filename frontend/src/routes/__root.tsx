@@ -12,7 +12,7 @@ const loadDevtools = () =>
     return {
       default: () => (
         <>
-          <Box display={{ base: "none", md: "block" }}>
+          <Box display={{ base: "block", md: "block" }}>
             <routerDevtools.TanStackRouterDevtools />
             <reactQueryDevtools.ReactQueryDevtools />
           </Box>
