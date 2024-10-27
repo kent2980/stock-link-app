@@ -19,10 +19,10 @@ import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutSettingsImport } from './routes/_layout/settings'
 import { Route as LayoutNavigateImport } from './routes/_layout/navigate'
-import { Route as LayoutMenuImport } from './routes/_layout/menu'
 import { Route as LayoutItemsImport } from './routes/_layout/items'
 import { Route as LayoutAdminImport } from './routes/_layout/admin'
 import { Route as LayoutSummaryXbrlidImport } from './routes/_layout/summary.$xbrl_id'
+import { Route as LayoutMenuSelectedDateImport } from './routes/_layout/menu.$selectedDate'
 
 // Create/Update Routes
 
@@ -66,11 +66,6 @@ const LayoutNavigateRoute = LayoutNavigateImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutMenuRoute = LayoutMenuImport.update({
-  path: '/menu',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
 const LayoutItemsRoute = LayoutItemsImport.update({
   path: '/items',
   getParentRoute: () => LayoutRoute,
@@ -83,6 +78,11 @@ const LayoutAdminRoute = LayoutAdminImport.update({
 
 const LayoutSummaryXbrlidRoute = LayoutSummaryXbrlidImport.update({
   path: '/summary/$xbrl_id',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutMenuSelectedDateRoute = LayoutMenuSelectedDateImport.update({
+  path: '/menu/$selectedDate',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -118,10 +118,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutItemsImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/menu': {
-      preLoaderRoute: typeof LayoutMenuImport
-      parentRoute: typeof LayoutImport
-    }
     '/_layout/navigate': {
       preLoaderRoute: typeof LayoutNavigateImport
       parentRoute: typeof LayoutImport
@@ -132,6 +128,10 @@ declare module '@tanstack/react-router' {
     }
     '/_layout/': {
       preLoaderRoute: typeof LayoutIndexImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/menu/$selectedDate': {
+      preLoaderRoute: typeof LayoutMenuSelectedDateImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/summary/$xbrl_id': {
@@ -147,10 +147,10 @@ export const routeTree = rootRoute.addChildren([
   LayoutRoute.addChildren([
     LayoutAdminRoute,
     LayoutItemsRoute,
-    LayoutMenuRoute,
     LayoutNavigateRoute,
     LayoutSettingsRoute,
     LayoutIndexRoute,
+    LayoutMenuSelectedDateRoute,
     LayoutSummaryXbrlidRoute,
   ]),
   LoginRoute,

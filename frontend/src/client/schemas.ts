@@ -62,18 +62,12 @@ export const $BusinessResultsFinancialPositionsJp = {
 }],
 },
 		FinancialPositions: {
-	type: 'all-of',
-	description: `財政状態の概要`,
-	contains: [{
 	type: 'FinancialPositionsAbstractJp',
-}],
+	description: `財政状態の概要`,
 },
 		NoteToFinancialPositions: {
-	type: 'all-of',
-	description: `連結財務諸表に関する注記`,
-	contains: [{
 	type: 'NoteToFinancialPositionsAbstractJp',
-}],
+	description: `連結財務諸表に関する注記`,
 },
 	},
 } as const;
@@ -968,72 +962,41 @@ export const $IncomeStatementsInformationAbstractJp = {
 }],
 },
 		NetSales: {
-	type: 'all-of',
-	description: `売上高`,
-	contains: [{
 	type: 'abstract',
-}],
+	description: `売上高`,
 },
 		PeriodNetSales: {
-	type: 'all-of',
-	description: `昨年度売上高`,
-	contains: [{
 	type: 'abstract',
-}],
+	description: `昨年度売上高`,
 },
 		OperatingIncome: {
-	type: 'all-of',
-	description: `営業利益`,
-	contains: [{
 	type: 'abstract',
-}],
+	description: `営業利益`,
 },
 		PeriodOperatingIncome: {
-	type: 'all-of',
-	description: `昨年度営業利益`,
-	contains: [{
 	type: 'abstract',
-}],
+	description: `昨年度営業利益`,
 },
 		OrdinaryIncome: {
-	type: 'all-of',
-	description: `経常利益`,
-	contains: [{
 	type: 'abstract',
-}],
+	description: `経常利益`,
 },
 		PeriodOrdinaryIncome: {
-	type: 'all-of',
-	description: `昨年度経常利益`,
-	contains: [{
 	type: 'abstract',
-}],
+	description: `昨年度経常利益`,
 },
 		Profit: {
-	type: 'all-of',
-	description: `親会社株主に帰属する当期純利益`,
-	contains: [{
 	type: 'abstract',
-}],
+	description: `親会社株主に帰属する当期純利益`,
 },
 		PeriodProfit: {
-	type: 'all-of',
-	description: `昨年度親会社株主に帰属する当期純利益`,
-	contains: [{
 	type: 'abstract',
-}],
+	description: `昨年度親会社株主に帰属する当期純利益`,
 },
 	},
 } as const;
 
 export const $ItemCreate = {
-	description: `アイテムの作成時にAPI経由で受け取るプロパティです。
-
-Properties:
-    title (str): アイテムのタイトルです。
-
-examples:
-    ItemCreate(title="title")`,
 	properties: {
 		title: {
 	type: 'string',
@@ -1054,14 +1017,6 @@ examples:
 } as const;
 
 export const $ItemPublic = {
-	description: `アイテムの公開情報を表すクラスです。
-
-Properties:
-    id (int): アイテムのIDです。
-    owner_id (int): アイテムの所有者のIDです。
-
-examples:
-    ItemPublic(id=1, title="title", owner_id=1)`,
 	properties: {
 		title: {
 	type: 'string',
@@ -1079,24 +1034,19 @@ examples:
 }],
 },
 		id: {
-	type: 'number',
+	type: 'string',
 	isRequired: true,
+	format: 'uuid',
 },
 		owner_id: {
-	type: 'number',
+	type: 'string',
 	isRequired: true,
+	format: 'uuid',
 },
 	},
 } as const;
 
 export const $ItemUpdate = {
-	description: `アイテムの更新時にAPI経由で受け取るプロパティです。
-
-Properties:
-    title (str | None): アイテムのタイトルです。デフォルト値はNoneです。
-
-examples:
-    ItemUpdate(title="title")`,
 	properties: {
 		title: {
 	type: 'any-of',
@@ -1121,14 +1071,6 @@ examples:
 } as const;
 
 export const $ItemsPublic = {
-	description: `アイテムのリストを表すクラスです。
-
-Properties:
-    data (list[ItemPublic]): アイテムのリストです。
-    count (int): アイテムの数です。
-
-Examples:
-    ItemsPublic(data=[ItemPublic(id=1, title="title", owner_id=1)], count=1)`,
 	properties: {
 		data: {
 	type: 'array',
@@ -1965,6 +1907,23 @@ export const $IxHeadTitlePublic = {
 }, {
 	type: 'null',
 }],
+	isRequired: true,
+},
+	},
+} as const;
+
+export const $IxHeadTitlesPublic = {
+	description: `iXBRLのヘッダー情報のリストを表すクラス`,
+	properties: {
+		data: {
+	type: 'array',
+	contains: {
+		type: 'IxHeadTitlePublic',
+	},
+	isRequired: true,
+},
+		count: {
+	type: 'number',
 	isRequired: true,
 },
 	},
@@ -2908,6 +2867,41 @@ export const $IxQualitativePublics = {
 	},
 } as const;
 
+export const $IxReportTypeCount = {
+	description: `報告書タイプのカウントを表すクラス`,
+	properties: {
+		report_type: {
+	type: 'string',
+	isRequired: true,
+},
+		report_type_jp: {
+	type: 'string',
+	isRequired: true,
+},
+		count: {
+	type: 'number',
+	isRequired: true,
+},
+	},
+} as const;
+
+export const $IxReportTypeCountList = {
+	description: `報告書タイプのカウントのリストを表すクラス`,
+	properties: {
+		data: {
+	type: 'array',
+	contains: {
+		type: 'IxReportTypeCount',
+	},
+	isRequired: true,
+},
+		count: {
+	type: 'number',
+	isRequired: true,
+},
+	},
+} as const;
+
 export const $IxSchemaLinkBaseCreate = {
 	description: `iXBRLのスキーマリンクベース情報を作成するためのクラス`,
 	properties: {
@@ -3095,13 +3089,6 @@ export const $MenuTitles = {
 } as const;
 
 export const $Message = {
-	description: `メッセージを表すクラスです。
-
-Properties:
-    message (str): メッセージです。
-
-Examples:
-    Message(message="message")`,
 	properties: {
 		message: {
 	type: 'string',
@@ -3111,14 +3098,6 @@ Examples:
 } as const;
 
 export const $NewPassword = {
-	description: `新しいパスワードを表すクラスです。
-
-Properties:
-    token (str): トークンです。
-    new_password (str): 新しいパスワードです。
-
-Examples:
-    NewPassword(token="string", new_password="string")`,
 	properties: {
 		token: {
 	type: 'string',
@@ -3230,18 +3209,12 @@ export const $NoteToIncomeStatementsInformationAbstractJp = {
 }],
 },
 		ComprehensiveIncomeAbstract: {
-	type: 'all-of',
-	description: `包括利益`,
-	contains: [{
 	type: 'abstract',
-}],
+	description: `包括利益`,
 },
 		PeriodComprehensiveIncomeAbstract: {
-	type: 'all-of',
-	description: `昨年度包括利益`,
-	contains: [{
 	type: 'abstract',
-}],
+	description: `昨年度包括利益`,
 },
 	},
 } as const;
@@ -3471,18 +3444,12 @@ export const $OperatingResultJp = {
 }],
 },
 		OperatingResultsAbstract: {
-	type: 'all-of',
-	description: `業績情報`,
-	contains: [{
 	type: 'OperatingResultsAbstractJp',
-}],
+	description: `業績情報`,
 },
 		NoteToOperatingResultsAbstract: {
-	type: 'all-of',
-	description: `業績情報に関する注記`,
-	contains: [{
 	type: 'NoteToOperatingResultsAbstractJp',
-}],
+	description: `業績情報に関する注記`,
 },
 	},
 } as const;
@@ -3509,25 +3476,16 @@ export const $OperatingResultsAbstractJp = {
 }],
 },
 		IncomeStatementsInformationAbstract: {
-	type: 'all-of',
-	description: `連結損益計算書情報`,
-	contains: [{
 	type: 'IncomeStatementsInformationAbstractJp',
-}],
+	description: `連結損益計算書情報`,
 },
 		NoteToIncomeStatementsInformationAbstract: {
-	type: 'all-of',
-	description: `連結損益計算書情報に関する注記`,
-	contains: [{
 	type: 'NoteToIncomeStatementsInformationAbstractJp',
-}],
+	description: `連結損益計算書情報に関する注記`,
 },
 		OtherOperatingResultsAbstract: {
-	type: 'all-of',
-	description: `その他の連結経営成績の概要`,
-	contains: [{
 	type: 'OtherOperatingResultsAbstractJp',
-}],
+	description: `その他の連結経営成績の概要`,
 },
 	},
 } as const;
@@ -4236,14 +4194,6 @@ export const $SummaryItemsAbstractJpList = {
 } as const;
 
 export const $Token = {
-	description: `アクセストークンを表すクラスです。
-
-Properties:
-    access_token (str): アクセストークンです。
-    token_type (str): トークンのタイプです。デフォルト値は"bearer"です。
-
-Examples:
-    Token(access_token="string")`,
 	properties: {
 		access_token: {
 	type: 'string',
@@ -4257,14 +4207,6 @@ Examples:
 } as const;
 
 export const $UpdatePassword = {
-	description: `パスワードの更新時にAPI経由で受け取るプロパティです。
-
-Properties:
-    current_password (str): 現在のパスワードです。
-    new_password (str): 新しいパスワードです。
-
-Examples:
-    UpdatePassword(current_password="password", new_password="new_password")`,
 	properties: {
 		current_password: {
 	type: 'string',
@@ -4282,15 +4224,6 @@ Examples:
 } as const;
 
 export const $UserCreate = {
-	description: `ユーザーの作成時にAPI経由で受け取るプロパティです。
-
-Properties:
-    email (EmailStr): ユーザーのメールアドレスです。
-    password (str): ユーザーのパスワードです。
-    full_name (str | None): ユーザーのフルネームです。デフォルト値はNoneです。
-
-Examples:
-    UserCreate(email="example@example.com", password="password", full_name="yamada taro")`,
 	properties: {
 		email: {
 	type: 'string',
@@ -4325,13 +4258,6 @@ Examples:
 } as const;
 
 export const $UserPublic = {
-	description: `ユーザーの公開情報を表すクラスです。
-
-Properties:
-    id (int): ユーザーのIDです。
-
-Examples:
-    UserPublic(id=1, email="example@example.com", is_active=True, is_superuser=False, full_name="yamada taro")`,
 	properties: {
 		email: {
 	type: 'string',
@@ -4357,22 +4283,14 @@ Examples:
 }],
 },
 		id: {
-	type: 'number',
+	type: 'string',
 	isRequired: true,
+	format: 'uuid',
 },
 	},
 } as const;
 
 export const $UserRegister = {
-	description: `ユーザーの登録時にAPI経由で受け取るプロパティです。
-
-Properties:
-    email (EmailStr): ユーザーのメールアドレスです。
-    password (str): ユーザーのパスワードです。
-    full_name (str | None): ユーザーのフルネームです。デフォルト値はNoneです。
-
-Examples:
-    UserRegister(email="example@example.com", password="password", full_name="yamada taro")`,
 	properties: {
 		email: {
 	type: 'string',
@@ -4399,14 +4317,6 @@ Examples:
 } as const;
 
 export const $UserUpdate = {
-	description: `ユーザーの更新時にAPI経由で受け取るプロパティです。
-
-Properties:
-    email (EmailStr | None): ユーザーのメールアドレスです。デフォルト値はNoneです。
-    full_name (str | None): ユーザーのフルネームです。デフォルト値はNoneです。
-
-Examples:
-    UserUpdate(email="example@example.com", full_name="yamada taro")`,
 	properties: {
 		email: {
 	type: 'any-of',
@@ -4449,14 +4359,6 @@ Examples:
 } as const;
 
 export const $UserUpdateMe = {
-	description: `ユーザーの更新時にAPI経由で受け取るプロパティです。
-
-Properties:
-    full_name (str | None): ユーザーのフルネームです。デフォルト値はNoneです。
-    email (EmailStr | None): ユーザーのメールアドレスです。デフォルト値はNoneです。
-
-examples:
-    UserUpdateMe(full_name="yamada taro", email="example@example.com")`,
 	properties: {
 		full_name: {
 	type: 'any-of',
@@ -4481,14 +4383,6 @@ examples:
 } as const;
 
 export const $UsersPublic = {
-	description: `ユーザーのリストを表すクラスです。
-
-Properties:
-    data (list[UserPublic]): ユーザーのリストです。
-    count (int): ユーザーの数です。
-
-Examples:
-    UsersPublic(data=[UserPublic(id=1, email="example@example.com", is_active=True, is_superuser=False, full_name="yamada taro")], count=1)`,
 	properties: {
 		data: {
 	type: 'array',

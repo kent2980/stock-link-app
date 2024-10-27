@@ -1,7 +1,8 @@
-import { Outlet, createRootRoute } from "@tanstack/react-router"
-import React, { Suspense } from "react"
+import { Outlet, createRootRoute } from "@tanstack/react-router";
+import React, { Suspense } from "react";
 
-import NotFound from "../components/Common/NotFound"
+import { Box } from "@chakra-ui/react";
+import NotFound from "../components/Common/NotFound";
 
 const loadDevtools = () =>
   Promise.all([
@@ -11,15 +12,17 @@ const loadDevtools = () =>
     return {
       default: () => (
         <>
-          <routerDevtools.TanStackRouterDevtools />
-          <reactQueryDevtools.ReactQueryDevtools />
+          <Box display={{ base: "none", md: "block" }}>
+            <routerDevtools.TanStackRouterDevtools />
+            <reactQueryDevtools.ReactQueryDevtools />
+          </Box>
         </>
       ),
-    }
-  })
+    };
+  });
 
 const TanStackDevtools =
-  process.env.NODE_ENV === "production" ? () => null : React.lazy(loadDevtools)
+  process.env.NODE_ENV === "production" ? () => null : React.lazy(loadDevtools);
 
 export const Route = createRootRoute({
   component: () => (
@@ -31,4 +34,4 @@ export const Route = createRootRoute({
     </>
   ),
   notFoundComponent: () => <NotFound />,
-})
+});
