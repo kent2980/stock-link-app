@@ -62,7 +62,7 @@ const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
 
   const scrollPosition = useStore(
     StockListStore,
-    (state) => state.scrollPosition
+    (state) => state[selectDate]?.scrollPosition ?? 0
   );
 
   useEffect(() => {
@@ -76,7 +76,9 @@ const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
         StockListStore.setState((state) => {
           return {
             ...state,
-            scrollPosition: StockListRef?.current?.scrollTop ?? 0,
+            [selectDate]: {
+              scrollPosition: StockListRef?.current?.scrollTop ?? 0,
+            },
           };
         });
       }
@@ -93,7 +95,7 @@ const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
         currentRef.removeEventListener("scroll", handleScroll);
       }
     };
-  }, []);
+  }, [selectDate]);
 
   return (
     <Box {...props} {...handlers}>
