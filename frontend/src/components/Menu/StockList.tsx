@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import dayjs from "dayjs";
 import React from "react";
+import { useSwipeable } from "react-swipeable";
 import { XbrlIxHeadService } from "../../client";
 
 interface StockListProps extends BoxProps {
@@ -11,6 +12,28 @@ interface StockListProps extends BoxProps {
 
 const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
   const navigate = useNavigate({ from: "/menu" });
+  const handlers = useSwipeable({
+    onSwipedLeft: () => {
+      // 1日後の日付を取得
+      const nextDate = dayjs(selectDate).add(1, "day").format("YYYY-MM-DD");
+      navigate({
+        to: "/menu/$selectedDate",
+        params: { selectedDate: nextDate },
+        replace: true,
+      });
+    },
+    onSwipedRight: () => {
+      // 1日前の日付を取得
+      const prevDate = dayjs(selectDate)
+        .subtract(1, "day")
+        .format("YYYY-MM-DD");
+      navigate({
+        to: "/menu/$selectedDate",
+        params: { selectedDate: prevDate },
+        replace: true,
+      });
+    },
+  });
   const { data } = useQuery({
     queryKey: ["stock_list", selectDate],
     queryFn: () =>
@@ -19,7 +42,7 @@ const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
     gcTime: 1000 * 60 * 60 * 24,
   });
   return (
-    <Box {...props} w="100vw" overflowY="scroll">
+    <Box {...props} {...handlers} w="100vw" overflowY="scroll">
       <Box h="40px" />
       {data?.data?.map((item) => {
         const code = item.securities_code; // 銘柄コード
@@ -41,10 +64,8 @@ const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
             return "第2四半期";
           } else if (item?.current_period == "Q3") {
             return "第3四半期";
-          } else if (item?.current_period == "FY") {
-            return "通期";
           }
-          return item.current_period;
+          return "";
         };
 
         const year = item.fiscal_year_end; // 決算期
@@ -72,8 +93,10 @@ const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
                 <Box>{name}</Box>
               </HStack>
               <HStack justify="flex-start" w="100%">
-                <Badge>{dayjs(year).format("YYYY年")}</Badge>
-                <Badge>{period()}</Badge>
+                <Badge>{dayjs(year).format("YYYY年M月期")}</Badge>
+                <Badge display={period() === "" ? "none" : "block"}>
+                  {period()}
+                </Badge>
                 <Badge>{report_type()}</Badge>
               </HStack>
             </VStack>

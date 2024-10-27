@@ -71,6 +71,7 @@ const SelectItem: React.FC<SelectItemProps> = ({ selectDate, ...props }) => {
         left={2}
         border="0.5px solid #ccc"
         borderRadius="4px"
+        display="none"
       >
         <Button colorScheme="blue" variant="outline" size="sm">
           日付選択解除

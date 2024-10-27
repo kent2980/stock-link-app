@@ -15,11 +15,16 @@ function Menu() {
   const navigate = useNavigate({ from: "/menu" });
   const { selectedDate } = Route.useParams();
   const dateGroupRef = useRef<HTMLDivElement>(null);
+  let scrollPoint = 0;
 
   const generateDates = () => {
     const dates = [];
     for (let i = 0; i < 365; i++) {
       dates.push(dayjs().subtract(i, "day").format("YYYY-MM-DD"));
+      if (selectedDate === dayjs().subtract(i, "day").format("YYYY-MM-DD")) {
+        console.log(i * 76);
+        scrollPoint = i * 77.4;
+      }
     }
     return dates;
   };
@@ -28,7 +33,9 @@ function Menu() {
 
   useEffect(() => {
     if (dateGroupRef.current) {
-      dateGroupRef.current.scrollLeft = dateGroupRef.current.scrollWidth;
+      console.log(dateGroupRef.current.scrollWidth);
+      dateGroupRef.current.scrollLeft =
+        dateGroupRef.current.scrollWidth - scrollPoint;
     }
   }, []);
 
@@ -53,6 +60,7 @@ function Menu() {
                 navigate({
                   to: "/menu/$selectedDate",
                   params: { selectedDate: date },
+                  replace: true,
                 })
               }
               _hover={
