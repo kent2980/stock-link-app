@@ -119,7 +119,7 @@ const SelectItem: React.FC<SelectItemProps> = ({ selectDate, ...props }) => {
           </HStack>
         </Box>
 
-        <StockList selectDate={selectDate} height="calc(100vh - 210px)" />
+        <StockList selectDate={selectDate} />
       </VStack>
     </Box>
   );
