@@ -1,20 +1,17 @@
 import { Badge, Box, BoxProps, HStack, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
-import { Store, useStore } from "@tanstack/react-store";
+import { useStore } from "@tanstack/react-store";
 import dayjs from "dayjs";
 import React, { useEffect, useRef } from "react";
 import { useSwipeable } from "react-swipeable";
 import { XbrlIxHeadService } from "../../client";
 import { MenuStore } from "../../routes/_layout/menu.$selectedDate";
+import { StockListStore } from "../../Store/Store";
 
 interface StockListProps extends BoxProps {
   selectDate: string;
 }
-
-export const StockListStore = new Store({
-  scrollPosition: 0,
-});
 
 const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
   const StockListRef = useRef<HTMLDivElement>(null);
@@ -70,6 +67,7 @@ const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
 
   useEffect(() => {
     if (StockListRef.current) {
+      console.log("set scroll position", scrollPosition);
       StockListRef.current.scrollTop = scrollPosition;
     }
 
