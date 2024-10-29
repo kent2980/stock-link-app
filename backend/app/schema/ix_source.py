@@ -6,7 +6,7 @@ from app.models import Field, SQLModel
 class IxSourceFileCreate(SQLModel):
     """iXBRLのソースファイル情報を作成するためのクラス"""
 
-    id: str = Field(max_length=36)
+    id: str = Field(max_length=36, min_length=36)
     name: str = Field(max_length=255)
     type: str = Field(max_length=255)
     xbrl_id: Optional[str] = Field(max_length=36)

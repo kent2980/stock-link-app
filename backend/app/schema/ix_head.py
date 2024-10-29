@@ -30,6 +30,7 @@ class IxHeadTitlePublic(SQLModel):
 class IxHeadTitleCreate(SQLModel):
     """iXBRLのヘッダー情報を表すクラス"""
 
+    id: str = Field(max_length=36, min_length=36)
     company_name: Optional[str] = Field(max_length=255)
     securities_code: Optional[str] = Field(max_length=4)
     document_name: Optional[str] = Field(max_length=255)
@@ -48,6 +49,16 @@ class IxHeadTitleCreate(SQLModel):
     is_sfp: bool = Field(default=False)
     fiscal_year_end: Optional[str] = Field(default=None)
     tel: Optional[str] = Field(default=None)
+    is_dividend_revision: Optional[bool] = Field(
+        default=False, description="配当予想の修正"
+    )
+    dividend_increase_rate: Optional[str] = Field(default=None, description="増配率")
+    is_earnings_forecast_revision: Optional[bool] = Field(
+        default=False, description="業績予想の修正"
+    )
+    forecast_ordinary_income_growth_rate: Optional[str] = Field(
+        default=None, description="予想経常利益増益率"
+    )
 
 
 class IxHeadTitlesPublic(SQLModel):

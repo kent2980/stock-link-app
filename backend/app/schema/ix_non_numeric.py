@@ -6,6 +6,7 @@ from app.models import Field, SQLModel
 class IxNonNumericCreate(SQLModel):
     """iXBRLの非数値情報を表すクラス"""
 
+    id: str = Field(max_length=36, min_length=36)
     xbrl_id: str = Field(max_length=255)
     context: Optional[str] = Field(max_length=255)
     name: str = Field(default=None)

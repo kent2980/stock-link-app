@@ -2,14 +2,14 @@ from datetime import datetime
 from decimal import Decimal
 from typing import List, Optional
 
-from sqlalchemy import DECIMAL, Column
-
 from app.models import Field, SQLModel
+from sqlalchemy import DECIMAL, Column
 
 
 class IxNonFractionCreate(SQLModel):
     """iXBRLの非分数情報を表すクラス"""
 
+    id: str = Field(max_length=36, min_length=36)
     xbrl_id: str = Field(max_length=255)
     context: str = Field(max_length=255)
     decimals: Optional[Decimal] = Field(default=None, sa_column=Column(DECIMAL(5, 2)))

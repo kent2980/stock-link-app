@@ -6,6 +6,7 @@ from app.models import Field, SQLModel
 class IxFilePathCreate(SQLModel):
     """iXBRLのファイルパス情報を作成するためのクラス"""
 
+    id: str = Field(max_length=36, min_length=36)
     path: str = Field(default=None)
     xbrl_id: Optional[str] = Field(max_length=36)
 

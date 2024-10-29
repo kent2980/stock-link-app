@@ -6,6 +6,7 @@ from app.models import Field, SQLModel
 class IxSchemaLinkBaseCreate(SQLModel):
     """iXBRLのスキーマリンクベース情報を作成するためのクラス"""
 
+    id: str = Field(max_length=36, min_length=36)
     xbrl_id: str = Field(foreign_key="ix_head_title.xbrl_id", nullable=False)
     xlink_arcrole: Optional[str] = Field(max_length=255)
     xlink_href: Optional[str] = Field(max_length=255)
