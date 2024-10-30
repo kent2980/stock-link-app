@@ -6,7 +6,7 @@ from app.models import Field, SQLModel
 class IxQualitativeCreate(SQLModel):
     """定性的情報を登録するためのモデル"""
 
-    id: str = Field(default=None, max_length=36, description="ID")
+    item_key: Optional[str] = Field(default=None, max_length=36, description="ID")
     currentId: str = Field(default=None, max_length=36, description="現在のID")
     parentId: Optional[str] = Field(default=None, max_length=36, description="親ID")
     type: Optional[str] = Field(default=None, max_length=255, description="タイプ")

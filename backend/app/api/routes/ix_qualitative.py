@@ -1,13 +1,12 @@
 import re
 from collections import namedtuple
 
-from fastapi import APIRouter, HTTPException, Query
-from sqlmodel import select
-from treelib import Node, Tree
-
 import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxQualitative
+from fastapi import APIRouter, HTTPException, Query
+from sqlmodel import select
+from treelib import Node, Tree
 
 router = APIRouter()
 

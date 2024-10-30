@@ -2,9 +2,7 @@ from typing import Any
 
 import app.schema as sc
 from app.api.deps import SessionDep
-from app.models import (
-    IxNonFraction,
-)
+from app.models import IxNonFraction
 from fastapi import APIRouter, HTTPException
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
@@ -19,20 +17,11 @@ def create_ix_non_fraction_item(
     """
     Create new item.
     """
-    try:
 
-        item = IxNonFraction.model_validate(item_in)
-        session.add(item)
-        session.commit()
-        session.refresh(item)
-
-    except IntegrityError as e:
-        session.rollback()
-        if "foreign key constraint" in str(e):
-            raise HTTPException(
-                status_code=400, detail="Foreign key constraint violated"
-            )
-        raise HTTPException(status_code=500, detail="Internal Server Error")
+    item = IxNonFraction.model_validate(item_in)
+    session.add(item)
+    session.commit()
+    session.refresh(item)
 
     return item
 

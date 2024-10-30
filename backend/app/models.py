@@ -1,5 +1,5 @@
-import datetime
 import uuid
+from datetime import date, datetime
 from decimal import Decimal
 from typing import Optional
 
@@ -9,6 +9,7 @@ from sqlmodel import (
     Column,
     Field,
     Index,
+    Integer,
     Relationship,
     SQLModel,
     UniqueConstraint,
@@ -143,13 +144,10 @@ class XbrlBase(SQLModel):
         update_date (datetime.datetime): 更新日時です。
     """
 
-    id: Optional[str] = Field(default=None, max_length=36, primary_key=True)
-    insert_date: datetime.datetime = Field(
-        default=datetime.datetime.now(datetime.timezone.utc)
-    )
-    update_date: datetime.datetime = Field(
-        default=datetime.datetime.now(datetime.timezone.utc)
-    )
+    id: Optional[int] = Field(default=None, primary_key=True)
+    item_key: Optional[str] = Field(max_length=36, min_length=36, unique=True)
+    insert_date: datetime = Field(default_factory=datetime.now)
+    update_date: datetime = Field(default_factory=datetime.now)
 
 
 class IxLocsBase(XbrlBase):
@@ -203,7 +201,7 @@ class IxHeadTitle(XbrlBase, table=True):
     company_name: Optional[str] = Field(max_length=255, description="企業名")
     securities_code: str = Field(max_length=4, description="証券コード")
     document_name: Optional[str] = Field(max_length=255, description="書類名")
-    reporting_date: datetime.date = Field(description="報告日")
+    reporting_date: date = Field(description="報告日")
     current_period: Optional[str] = Field(max_length=255, description="決算期")
     xbrl_id: str = Field(max_length=36, foreign_key="ix_file_path.xbrl_id", unique=True)
     report_type: Optional[str] = Field(max_length=4, description="報告書種別")

@@ -17,6 +17,7 @@ def create_ix_def_loc_item(
     """
     Create new item.
     """
+
     item = IxDefinitionLoc.model_validate(item_in)
     session.add(item)
     session.commit()
@@ -47,37 +48,28 @@ def create_ix_def_loc_items_exists(
     """
     Create new items.(Insert Select ... Not Exists)
     """
-    try:
 
-        new_items = []
-        for item in items_in.data:
-            statement = select(IxDefinitionLoc).where(
-                IxDefinitionLoc.xlink_label == item.xlink_label,
-                IxDefinitionLoc.xlink_href == item.xlink_href,
-                IxDefinitionLoc.attr_value == item.attr_value,
-                IxDefinitionLoc.xlink_schema == item.xlink_schema,
-                IxDefinitionLoc.source_file_id == item.source_file_id,
-            )
-            result = session.exec(statement)
-            item_exists = result.first()
+    new_items = []
+    for item in items_in.data:
+        statement = select(IxDefinitionLoc).where(
+            IxDefinitionLoc.xlink_label == item.xlink_label,
+            IxDefinitionLoc.xlink_href == item.xlink_href,
+            IxDefinitionLoc.attr_value == item.attr_value,
+            IxDefinitionLoc.xlink_schema == item.xlink_schema,
+            IxDefinitionLoc.source_file_id == item.source_file_id,
+        )
+        result = session.exec(statement)
+        item_exists = result.first()
 
-            if not item_exists:
-                new_item = IxDefinitionLoc.model_validate(item)
-                session.add(new_item)
-                new_items.append(new_item)
+        if not item_exists:
+            new_item = IxDefinitionLoc.model_validate(item)
+            session.add(new_item)
+            new_items.append(new_item)
 
-        if new_items:
-            session.commit()
-            for new_item in new_items:
-                session.refresh(new_item)
-
-    except IntegrityError as e:
-        session.rollback()
-        if "foreign key constraint" in str(e):
-            raise HTTPException(
-                status_code=400, detail="Foreign key constraint violated"
-            )
-        raise HTTPException(status_code=500, detail="Internal Server Error")
+    if new_items:
+        session.commit()
+        for new_item in new_items:
+            session.refresh(new_item)
 
     return f"{len(new_items)} items created."
 
@@ -89,36 +81,27 @@ def create_ix_def_arc_items_exists(
     """
     Create new items.(Insert Select ... Not Exists)
     """
-    try:
 
-        new_items = []
-        for item in items_in.data:
-            statement = select(IxDefinitionArc).where(
-                IxDefinitionArc.xlink_to == item.xlink_to,
-                IxDefinitionArc.xlink_from == item.xlink_from,
-                IxDefinitionArc.attr_value == item.attr_value,
-                IxDefinitionArc.source_file_id == item.source_file_id,
-            )
-            result = session.exec(statement)
-            item_exists = result.first()
+    new_items = []
+    for item in items_in.data:
+        statement = select(IxDefinitionArc).where(
+            IxDefinitionArc.xlink_to == item.xlink_to,
+            IxDefinitionArc.xlink_from == item.xlink_from,
+            IxDefinitionArc.attr_value == item.attr_value,
+            IxDefinitionArc.source_file_id == item.source_file_id,
+        )
+        result = session.exec(statement)
+        item_exists = result.first()
 
-            if not item_exists:
-                new_item = IxDefinitionArc.model_validate(item)
-                session.add(new_item)
-                new_items.append(new_item)
+        if not item_exists:
+            new_item = IxDefinitionArc.model_validate(item)
+            session.add(new_item)
+            new_items.append(new_item)
 
-        if new_items:
-            session.commit()
-            for new_item in new_items:
-                session.refresh(new_item)
-
-    except IntegrityError as e:
-        session.rollback()
-        if "foreign key constraint" in str(e):
-            raise HTTPException(
-                status_code=400, detail="Foreign key constraint violated"
-            )
-        raise HTTPException(status_code=500, detail="Internal Server Error")
+    if new_items:
+        session.commit()
+        for new_item in new_items:
+            session.refresh(new_item)
 
     return f"{len(new_items)} items created."
 

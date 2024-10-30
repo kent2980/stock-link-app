@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from app.models import Field, SQLModel
 
@@ -6,7 +6,7 @@ from app.models import Field, SQLModel
 class IxLabelLocCreate(SQLModel):
     """iXBRLのラベルロケーション情報を作成するためのクラス"""
 
-    id: str = Field(max_length=36, min_length=36)
+    item_key: Optional[str] = Field(max_length=36, min_length=36)
     xlink_href: str = Field(default=None)
     xlink_label: str = Field(default=None)
     xlink_type: str = Field(max_length=255)
@@ -33,7 +33,7 @@ class IxLabelLocsPublic(SQLModel):
 class IxLabelArcCreate(SQLModel):
     """iXBRLのラベルアーク情報を作成するためのクラス"""
 
-    id: str = Field(max_length=36, min_length=36)
+    item_key: Optional[str] = Field(max_length=36, min_length=36)
     xlink_type: str = Field(max_length=255)
     xlink_arcrole: str = Field(max_length=255)
     xlink_from: str = Field(default=None)
@@ -66,7 +66,7 @@ class IxLabelArcsPublic(SQLModel):
 class IxLabelValueCreate(SQLModel):
     """iXBRLのラベルリンク情報を作成するためのクラス"""
 
-    id: str = Field(max_length=36, min_length=36)
+    item_key: Optional[str] = Field(max_length=36, min_length=36)
     xlink_type: str = Field(max_length=255)
     xlink_label: str = Field(default=None)
     xlink_role: str = Field(max_length=255)

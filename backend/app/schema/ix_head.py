@@ -30,7 +30,7 @@ class IxHeadTitlePublic(SQLModel):
 class IxHeadTitleCreate(SQLModel):
     """iXBRLのヘッダー情報を表すクラス"""
 
-    id: str = Field(max_length=36, min_length=36)
+    item_key: Optional[str] = Field(max_length=36, min_length=36)
     company_name: Optional[str] = Field(max_length=255)
     securities_code: Optional[str] = Field(max_length=4)
     document_name: Optional[str] = Field(max_length=255)

@@ -8,7 +8,7 @@ from sqlalchemy import DECIMAL, Column
 class IxCalculationLocCreate(SQLModel):
     """iXBRLの計算ロケーション情報を表すクラス"""
 
-    id: str = Field(max_length=36, min_length=36)
+    item_key: Optional[str] = Field(max_length=36, min_length=36)
     xbrl_id: str = Field(foreign_key="ix_head_title.xbrl_id", nullable=False)
     attr_value: Optional[str] = Field(max_length=255)
     xlink_href: Optional[str] = Field(nullable=False)
@@ -21,7 +21,7 @@ class IxCalculationLocCreate(SQLModel):
 class IxCalculationArcCreate(SQLModel):
     """iXBRLの計算アーク情報を表すクラス"""
 
-    id: str = Field(max_length=36, min_length=36)
+    item_key: Optional[str] = Field(max_length=36, min_length=36)
     xbrl_id: str = Field(foreign_key="ix_head_title.xbrl_id", nullable=False)
     attr_value: Optional[str] = Field(max_length=255)
     xlink_order: Optional[Decimal] = Field(
