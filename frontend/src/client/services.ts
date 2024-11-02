@@ -305,8 +305,8 @@ xbrlId,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/api/v1/xbrl/view/summary/item/{xbrl_id}',
-			path: {
+			url: '/api/v1/xbrl/view/summary/item/select/',
+			query: {
 				xbrl_id: xbrlId
 			},
 			errors: {
