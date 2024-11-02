@@ -467,11 +467,11 @@ def read_summary_item(
     # endregion
 
 
-@router.get("/summary/item/{xbrl_id}", response_model=sc.SummaryItemsAbstractJp)
+@router.get("/summary/item/select/", response_model=sc.SummaryItemsAbstractJp)
 def read_summary_item_by_xbrl_id(
     *,
     session: SessionDep,
-    xbrl_id: str,  # XBRLファイルのID
+    xbrl_id: str = Query(...),  # XBRLファイルのID
 ) -> sc.SummaryItemsAbstractJp:
     """XBRLファイルのIDから決算情報を取得する"""
 
