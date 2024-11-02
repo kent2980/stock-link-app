@@ -1089,6 +1089,17 @@ export const $ItemsPublic = {
 export const $IxCalculationArcCreate_Input = {
 	description: `iXBRLの計算アーク情報を表すクラス`,
 	properties: {
+		item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+	minLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
 		xbrl_id: {
 	type: 'string',
 	isRequired: true,
@@ -1175,6 +1186,17 @@ export const $IxCalculationArcCreate_Input = {
 export const $IxCalculationArcCreate_Output = {
 	description: `iXBRLの計算アーク情報を表すクラス`,
 	properties: {
+		item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+	minLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
 		xbrl_id: {
 	type: 'string',
 	isRequired: true,
@@ -1270,6 +1292,17 @@ export const $IxCalculationArcCreateList = {
 export const $IxCalculationLocCreate = {
 	description: `iXBRLの計算ロケーション情報を表すクラス`,
 	properties: {
+		item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+	minLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
 		xbrl_id: {
 	type: 'string',
 	isRequired: true,
@@ -1350,6 +1383,17 @@ export const $IxCalculationLocCreateList = {
 export const $IxDefinitionArcCreate_Input = {
 	description: `XBRLの表示リンクアークを表すクラス`,
 	properties: {
+		item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+	minLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
 		xbrl_id: {
 	type: 'string',
 	isRequired: true,
@@ -1427,6 +1471,17 @@ export const $IxDefinitionArcCreate_Input = {
 export const $IxDefinitionArcCreate_Output = {
 	description: `XBRLの表示リンクアークを表すクラス`,
 	properties: {
+		item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+	minLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
 		xbrl_id: {
 	type: 'string',
 	isRequired: true,
@@ -1510,6 +1565,17 @@ export const $IxDefinitionArcCreateList = {
 export const $IxDefinitionLocCreate = {
 	description: `XBRLの表示リンクロケーションを表すクラス`,
 	properties: {
+		item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+	minLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
 		xbrl_id: {
 	type: 'string',
 	isRequired: true,
@@ -1590,6 +1656,17 @@ export const $IxDefinitionLocCreateList = {
 export const $IxFilePathCreate = {
 	description: `iXBRLのファイルパス情報を作成するためのクラス`,
 	properties: {
+		item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+	minLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
 		path: {
 	type: 'string',
 },
@@ -1623,6 +1700,17 @@ export const $IxFilePathPublic = {
 export const $IxHeadTitleCreate = {
 	description: `iXBRLのヘッダー情報を表すクラス`,
 	properties: {
+		item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+	minLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
 		company_name: {
 	type: 'any-of',
 	contains: [{
@@ -1746,6 +1834,42 @@ export const $IxHeadTitleCreate = {
 },
 		tel: {
 	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+},
+		is_dividend_revision: {
+	type: 'any-of',
+	description: `配当予想の修正`,
+	contains: [{
+	type: 'boolean',
+}, {
+	type: 'null',
+}],
+},
+		dividend_increase_rate: {
+	type: 'any-of',
+	description: `増配率`,
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+},
+		is_earnings_forecast_revision: {
+	type: 'any-of',
+	description: `業績予想の修正`,
+	contains: [{
+	type: 'boolean',
+}, {
+	type: 'null',
+}],
+},
+		forecast_ordinary_income_growth_rate: {
+	type: 'any-of',
+	description: `予想経常利益増益率`,
 	contains: [{
 	type: 'string',
 }, {
@@ -1932,6 +2056,17 @@ export const $IxHeadTitlesPublic = {
 export const $IxLabelArcCreate = {
 	description: `iXBRLのラベルアーク情報を作成するためのクラス`,
 	properties: {
+		item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+	minLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
 		xlink_type: {
 	type: 'string',
 	isRequired: true,
@@ -1972,6 +2107,17 @@ export const $IxLabelArcCreateList = {
 export const $IxLabelLocCreate = {
 	description: `iXBRLのラベルロケーション情報を作成するためのクラス`,
 	properties: {
+		item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+	minLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
 		xlink_href: {
 	type: 'string',
 },
@@ -2012,6 +2158,17 @@ export const $IxLabelLocCreateList = {
 export const $IxLabelValueCreate = {
 	description: `iXBRLのラベルリンク情報を作成するためのクラス`,
 	properties: {
+		item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+	minLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
 		xlink_type: {
 	type: 'string',
 	isRequired: true,
@@ -2057,6 +2214,17 @@ export const $IxLabelValueCreateList = {
 export const $IxNonFractionCreate_Input = {
 	description: `iXBRLの非分数情報を表すクラス`,
 	properties: {
+		item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+	minLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
 		xbrl_id: {
 	type: 'string',
 	isRequired: true,
@@ -2193,6 +2361,17 @@ export const $IxNonFractionCreate_Input = {
 export const $IxNonFractionCreate_Output = {
 	description: `iXBRLの非分数情報を表すクラス`,
 	properties: {
+		item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+	minLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
 		xbrl_id: {
 	type: 'string',
 	isRequired: true,
@@ -2336,6 +2515,17 @@ export const $IxNonFractionCreateList = {
 export const $IxNonNumericCreate = {
 	description: `iXBRLの非数値情報を表すクラス`,
 	properties: {
+		item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+	minLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
 		xbrl_id: {
 	type: 'string',
 	isRequired: true,
@@ -2437,6 +2627,17 @@ export const $IxNonNumericCreateList = {
 export const $IxPresentationArcCreate_Input = {
 	description: `XBRLの表示リンクアークを表すクラス`,
 	properties: {
+		item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+	minLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
 		xbrl_id: {
 	type: 'string',
 	isRequired: true,
@@ -2523,6 +2724,17 @@ export const $IxPresentationArcCreate_Input = {
 export const $IxPresentationArcCreate_Output = {
 	description: `XBRLの表示リンクアークを表すクラス`,
 	properties: {
+		item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+	minLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
 		xbrl_id: {
 	type: 'string',
 	isRequired: true,
@@ -2618,6 +2830,17 @@ export const $IxPresentationArcCreateList = {
 export const $IxPresentationLocCreate = {
 	description: `XBRLの表示リンクロケーションを表すクラス`,
 	properties: {
+		item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+	minLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
 		xbrl_id: {
 	type: 'string',
 	isRequired: true,
@@ -2698,6 +2921,16 @@ export const $IxPresentationLocCreateList = {
 export const $IxQualitativeCreate = {
 	description: `定性的情報を登録するためのモデル`,
 	properties: {
+		item_key: {
+	type: 'any-of',
+	description: `ID`,
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+}, {
+	type: 'null',
+}],
+},
 		currentId: {
 	type: 'string',
 	description: `現在のID`,
@@ -2905,6 +3138,17 @@ export const $IxReportTypeCountList = {
 export const $IxSchemaLinkBaseCreate = {
 	description: `iXBRLのスキーマリンクベース情報を作成するためのクラス`,
 	properties: {
+		item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+	minLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
 		xbrl_id: {
 	type: 'string',
 	isRequired: true,
@@ -2999,9 +3243,25 @@ export const $IxSourceFileCreate = {
 	description: `iXBRLのソースファイル情報を作成するためのクラス`,
 	properties: {
 		id: {
+	type: 'any-of',
+	contains: [{
 	type: 'string',
-	isRequired: true,
 	maxLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 36,
+	minLength: 36,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
 },
 		name: {
 	type: 'string',

@@ -493,6 +493,7 @@ export type ItemsPublic = {
  * iXBRLの計算アーク情報を表すクラス
  */
 export type IxCalculationArcCreate_Input = {
+	item_key: string | null;
 	xbrl_id: string;
 	attr_value: string | null;
 	xlink_order?: number | string | null;
@@ -510,6 +511,7 @@ export type IxCalculationArcCreate_Input = {
  * iXBRLの計算アーク情報を表すクラス
  */
 export type IxCalculationArcCreate_Output = {
+	item_key: string | null;
 	xbrl_id: string;
 	attr_value: string | null;
 	xlink_order?: string | null;
@@ -536,6 +538,7 @@ export type IxCalculationArcCreateList = {
  * iXBRLの計算ロケーション情報を表すクラス
  */
 export type IxCalculationLocCreate = {
+	item_key: string | null;
 	xbrl_id: string;
 	attr_value: string | null;
 	xlink_href: string | null;
@@ -560,6 +563,7 @@ export type IxCalculationLocCreateList = {
  * XBRLの表示リンクアークを表すクラス
  */
 export type IxDefinitionArcCreate_Input = {
+	item_key: string | null;
 	xbrl_id: string;
 	attr_value: string | null;
 	xlink_order: number | string;
@@ -577,6 +581,7 @@ export type IxDefinitionArcCreate_Input = {
  * XBRLの表示リンクアークを表すクラス
  */
 export type IxDefinitionArcCreate_Output = {
+	item_key: string | null;
 	xbrl_id: string;
 	attr_value: string | null;
 	xlink_order: string;
@@ -603,6 +608,7 @@ export type IxDefinitionArcCreateList = {
  * XBRLの表示リンクロケーションを表すクラス
  */
 export type IxDefinitionLocCreate = {
+	item_key: string | null;
 	xbrl_id: string;
 	attr_value: string | null;
 	xlink_href: string | null;
@@ -627,6 +633,7 @@ export type IxDefinitionLocCreateList = {
  * iXBRLのファイルパス情報を作成するためのクラス
  */
 export type IxFilePathCreate = {
+	item_key: string | null;
 	path?: string;
 	xbrl_id: string | null;
 };
@@ -647,6 +654,7 @@ export type IxFilePathPublic = {
  * iXBRLのヘッダー情報を表すクラス
  */
 export type IxHeadTitleCreate = {
+	item_key: string | null;
 	company_name: string | null;
 	securities_code: string | null;
 	document_name: string | null;
@@ -665,6 +673,22 @@ export type IxHeadTitleCreate = {
 	is_sfp?: boolean;
 	fiscal_year_end?: string | null;
 	tel?: string | null;
+	/**
+	 * 配当予想の修正
+	 */
+	is_dividend_revision?: boolean | null;
+	/**
+	 * 増配率
+	 */
+	dividend_increase_rate?: string | null;
+	/**
+	 * 業績予想の修正
+	 */
+	is_earnings_forecast_revision?: boolean | null;
+	/**
+	 * 予想経常利益増益率
+	 */
+	forecast_ordinary_income_growth_rate?: string | null;
 };
 
 
@@ -718,6 +742,7 @@ export type IxHeadTitlesPublic = {
  * iXBRLのラベルアーク情報を作成するためのクラス
  */
 export type IxLabelArcCreate = {
+	item_key: string | null;
 	xlink_type: string;
 	xlink_arcrole: string;
 	xlink_from?: string;
@@ -740,6 +765,7 @@ export type IxLabelArcCreateList = {
  * iXBRLのラベルロケーション情報を作成するためのクラス
  */
 export type IxLabelLocCreate = {
+	item_key: string | null;
 	xlink_href?: string;
 	xlink_label?: string;
 	xlink_type: string;
@@ -762,6 +788,7 @@ export type IxLabelLocCreateList = {
  * iXBRLのラベルリンク情報を作成するためのクラス
  */
 export type IxLabelValueCreate = {
+	item_key: string | null;
 	xlink_type: string;
 	xlink_label?: string;
 	xlink_role: string;
@@ -785,6 +812,7 @@ export type IxLabelValueCreateList = {
  * iXBRLの非分数情報を表すクラス
  */
 export type IxNonFractionCreate_Input = {
+	item_key: string | null;
 	xbrl_id: string;
 	context: string;
 	decimals?: number | string | null;
@@ -809,6 +837,7 @@ export type IxNonFractionCreate_Input = {
  * iXBRLの非分数情報を表すクラス
  */
 export type IxNonFractionCreate_Output = {
+	item_key: string | null;
 	xbrl_id: string;
 	context: string;
 	decimals?: string | null;
@@ -842,6 +871,7 @@ export type IxNonFractionCreateList = {
  * iXBRLの非数値情報を表すクラス
  */
 export type IxNonNumericCreate = {
+	item_key: string | null;
 	xbrl_id: string;
 	context: string | null;
 	name?: string;
@@ -870,6 +900,7 @@ export type IxNonNumericCreateList = {
  * XBRLの表示リンクアークを表すクラス
  */
 export type IxPresentationArcCreate_Input = {
+	item_key: string | null;
 	xbrl_id: string;
 	attr_value: string | null;
 	xlink_order?: number | string | null;
@@ -887,6 +918,7 @@ export type IxPresentationArcCreate_Input = {
  * XBRLの表示リンクアークを表すクラス
  */
 export type IxPresentationArcCreate_Output = {
+	item_key: string | null;
 	xbrl_id: string;
 	attr_value: string | null;
 	xlink_order?: string | null;
@@ -913,6 +945,7 @@ export type IxPresentationArcCreateList = {
  * XBRLの表示リンクロケーションを表すクラス
  */
 export type IxPresentationLocCreate = {
+	item_key: string | null;
 	xbrl_id: string;
 	attr_value: string | null;
 	xlink_href: string | null;
@@ -937,6 +970,10 @@ export type IxPresentationLocCreateList = {
  * 定性的情報を登録するためのモデル
  */
 export type IxQualitativeCreate = {
+	/**
+	 * ID
+	 */
+	item_key?: string | null;
 	/**
 	 * 現在のID
 	 */
@@ -1032,6 +1069,7 @@ export type IxReportTypeCountList = {
  * iXBRLのスキーマリンクベース情報を作成するためのクラス
  */
 export type IxSchemaLinkBaseCreate = {
+	item_key: string | null;
 	xbrl_id: string;
 	xlink_arcrole: string | null;
 	xlink_href: string | null;
@@ -1057,7 +1095,8 @@ export type IxSchemaLinkBaseCreateList = {
  * iXBRLのソースファイル情報を作成するためのクラス
  */
 export type IxSourceFileCreate = {
-	id: string;
+	id: string | null;
+	item_key: string | null;
 	name: string;
 	type: string;
 	xbrl_id: string | null;
