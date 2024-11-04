@@ -17,7 +17,7 @@ from app.schema.ix_view import abstractBase, stock, stockNumeric
 router = APIRouter()
 
 
-@router.get("/head_item/all", response_model=sc.ix_view.HeadItems)
+@router.get("/head_item/all/", response_model=sc.ix_view.HeadItems)
 def read_head_items(
     *,
     session: SessionDep,
@@ -47,7 +47,7 @@ def read_head_items(
     return sc.ix_view.HeadItems(data=items, count=len(items))
 
 
-@router.get("/head_item/select", response_model=sc.ix_view.HeadItem)
+@router.get("/head_item/select/", response_model=sc.ix_view.HeadItem)
 def read_head_item(
     *,
     session: SessionDep,

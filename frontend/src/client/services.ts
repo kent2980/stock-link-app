@@ -2,22 +2,8 @@ import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
 
-import type { FiscalYearStockInfo,HeadItem,HeadItems,MenuTitles,StockInfo,StockRecordInfos,SummaryItemsAbstractJp,SummaryItemsAbstractJpList,IxHeadTitleCreate,IxHeadTitleCreateList,IxHeadTitlePublic,IxHeadTitlesPublic,IxReportTypeCountList,IxNonFractionCreate_Input,IxNonFractionCreate_Output,IxNonFractionCreateList,IxNonNumericCreate,IxNonNumericCreateList,IxLabelArcCreate,IxLabelArcCreateList,IxLabelLocCreate,IxLabelLocCreateList,IxLabelValueCreate,IxLabelValueCreateList,IxCalculationArcCreate_Input,IxCalculationArcCreate_Output,IxCalculationArcCreateList,IxCalculationLocCreate,IxCalculationLocCreateList,IxDefinitionArcCreate_Input,IxDefinitionArcCreate_Output,IxDefinitionArcCreateList,IxDefinitionLocCreate,IxDefinitionLocCreateList,IxPresentationArcCreate_Input,IxPresentationArcCreate_Output,IxPresentationArcCreateList,IxPresentationLocCreate,IxPresentationLocCreateList,IxSourceFileCreate,IxSourceFileCreateList,IxSchemaLinkBaseCreate,IxSchemaLinkBaseCreateList,IxFilePathCreate,IxFilePathPublic,IxQualitativeCreate,IxQualitativeCreates,IxQualitativePublic,IxQualitativePublics,QualitativeInfoHeader,Body_login_login_access_token,Message,NewPassword,Token,UserPublic,UpdatePassword,UserCreate,UserRegister,UsersPublic,UserUpdate,UserUpdateMe,ItemCreate,ItemPublic,ItemsPublic,ItemUpdate } from './models';
+import type { HeadItem,HeadItems,SummaryItemsAbstractJp,IxHeadTitleCreate,IxHeadTitleCreateList,IxHeadTitlePublic,IxHeadTitlesPublic,IxReportTypeCountList,IxNonFractionCreate_Input,IxNonFractionCreate_Output,IxNonFractionCreateList,IxNonNumericCreate,IxNonNumericCreateList,IxLabelArcCreate,IxLabelArcCreateList,IxLabelLocCreate,IxLabelLocCreateList,IxLabelValueCreate,IxLabelValueCreateList,IxCalculationArcCreate_Input,IxCalculationArcCreate_Output,IxCalculationArcCreateList,IxCalculationLocCreate,IxCalculationLocCreateList,IxDefinitionArcCreate_Input,IxDefinitionArcCreate_Output,IxDefinitionArcCreateList,IxDefinitionLocCreate,IxDefinitionLocCreateList,IxPresentationArcCreate_Input,IxPresentationArcCreate_Output,IxPresentationArcCreateList,IxPresentationLocCreate,IxPresentationLocCreateList,IxSourceFileCreate,IxSourceFileCreateList,IxSchemaLinkBaseCreate,IxSchemaLinkBaseCreateList,IxFilePathCreate,IxFilePathPublic,IxQualitativeCreate,IxQualitativeCreates,IxQualitativePublic,IxQualitativePublics,QualitativeInfoHeader,Body_login_login_access_token,Message,NewPassword,Token,UserPublic,UpdatePassword,UserCreate,UserRegister,UsersPublic,UserUpdate,UserUpdateMe,ItemCreate,ItemPublic,ItemsPublic,ItemUpdate } from './models';
 
-export type TDataReadStockRecord = {
-                code?: string | null
-dateStr?: string | null
-limit?: number
-period?: number | null
-skip?: number
-type?: string | null
-                
-            }
-export type TDataReadNewStockRecord = {
-                limit?: number
-skip?: number
-                
-            }
 export type TDataReadHeadItems = {
                 code?: string
 limit?: number
@@ -28,92 +14,12 @@ export type TDataReadHeadItem = {
                 xbrlId: string
                 
             }
-export type TDataReadMenuTitle = {
-                id: string
-type: string
-                
-            }
-export type TDataReadMenuItems = {
-                header?: string | null
-id: string
-type: string
-                
-            }
-export type TDataReadStockInfo = {
-                code: string
-                
-            }
-export type TDataReadSummaryItems = {
-                code: string
-length?: number | null
-                
-            }
-export type TDataReadSummaryItem = {
-                code: string
-count?: number | null
-                
-            }
 export type TDataReadSummaryItemByXbrlId = {
                 xbrlId: string
                 
             }
 
 export class XbrlViewService {
-
-	/**
-	 * Read Stock Record
-	 * すべての銘柄コードを取得する
- * 
- * Args:
- * type (str): レポートの種類
- * 
- * Returns:
- * sc.ix_head.IxHeadShortsPublic: 銘柄コードのリスト
-	 * @returns StockRecordInfos Successful Response
-	 * @throws ApiError
-	 */
-	public static readStockRecord(data: TDataReadStockRecord = {}): CancelablePromise<StockRecordInfos> {
-		const {
-code,
-dateStr,
-limit = 10,
-period,
-skip = 0,
-type,
-} = data;
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/api/v1/xbrl/view/stock/all/',
-			query: {
-				code, type, dateStr, period, skip, limit
-			},
-			errors: {
-				422: `Validation Error`,
-			},
-		});
-	}
-
-	/**
-	 * Read New Stock Record
-	 * @returns StockRecordInfos Successful Response
-	 * @throws ApiError
-	 */
-	public static readNewStockRecord(data: TDataReadNewStockRecord = {}): CancelablePromise<StockRecordInfos> {
-		const {
-limit = 10,
-skip = 0,
-} = data;
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/api/v1/xbrl/view/stock/all/new/',
-			query: {
-				skip, limit
-			},
-			errors: {
-				422: `Validation Error`,
-			},
-		});
-	}
 
 	/**
 	 * Read Head Items
@@ -133,7 +39,7 @@ skip = 0,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/api/v1/xbrl/view/head_items/',
+			url: '/api/v1/xbrl/view/head_item/all/',
 			query: {
 				code, limit, skip
 			},
@@ -157,135 +63,9 @@ xbrlId,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/api/v1/xbrl/view/head_item/${xbrl_id}',
-			path: {
+			url: '/api/v1/xbrl/view/head_item/select/',
+			query: {
 				xbrl_id: xbrlId
-			},
-			errors: {
-				422: `Validation Error`,
-			},
-		});
-	}
-
-	/**
-	 * Read Menu Title
-	 * XBRLファイルのIDからメニューラベルを取得する
- * Args:
- * xbrl_id (str): XBRLファイルのID
-	 * @returns MenuTitles Successful Response
-	 * @throws ApiError
-	 */
-	public static readMenuTitle(data: TDataReadMenuTitle): CancelablePromise<MenuTitles> {
-		const {
-id,
-type,
-} = data;
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/api/v1/xbrl/view/menu/',
-			query: {
-				type, id
-			},
-			errors: {
-				422: `Validation Error`,
-			},
-		});
-	}
-
-	/**
-	 * Read Menu Items
-	 * XBRLファイルのIDとメニューラベルから項目を取得する
- * Args:
- * xbrl_id (str): XBRLファイルのID
- * menu_label (str): メニューラベル
-	 * @returns unknown Successful Response
-	 * @throws ApiError
-	 */
-	public static readMenuItems(data: TDataReadMenuItems): CancelablePromise<Record<string, unknown>> {
-		const {
-header,
-id,
-type,
-} = data;
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/api/v1/xbrl/view/items/',
-			query: {
-				type, id, header
-			},
-			errors: {
-				422: `Validation Error`,
-			},
-		});
-	}
-
-	/**
-	 * Read Stock Info
-	 * 銘柄コードから企業情報を取得する
- * 
- * Args:
- * code (str): 銘柄コード
- * 
- * Returns:
- * sc.StockInfoPublic: 企業情報
-	 * @returns unknown Successful Response
-	 * @throws ApiError
-	 */
-	public static readStockInfo(data: TDataReadStockInfo): CancelablePromise<FiscalYearStockInfo | StockInfo> {
-		const {
-code,
-} = data;
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/api/v1/xbrl/view/info/',
-			query: {
-				code
-			},
-			errors: {
-				422: `Validation Error`,
-			},
-		});
-	}
-
-	/**
-	 * Read Summary Items
-	 * 銘柄コードから決算情報を取得する
-	 * @returns SummaryItemsAbstractJpList Successful Response
-	 * @throws ApiError
-	 */
-	public static readSummaryItems(data: TDataReadSummaryItems): CancelablePromise<SummaryItemsAbstractJpList> {
-		const {
-code,
-length,
-} = data;
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/api/v1/xbrl/view/summary/items/',
-			query: {
-				code, length
-			},
-			errors: {
-				422: `Validation Error`,
-			},
-		});
-	}
-
-	/**
-	 * Read Summary Item
-	 * 銘柄コードから決算情報を取得する
-	 * @returns SummaryItemsAbstractJp Successful Response
-	 * @throws ApiError
-	 */
-	public static readSummaryItem(data: TDataReadSummaryItem): CancelablePromise<SummaryItemsAbstractJp> {
-		const {
-code,
-count,
-} = data;
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/api/v1/xbrl/view/summary/item/',
-			query: {
-				code, count
 			},
 			errors: {
 				422: `Validation Error`,

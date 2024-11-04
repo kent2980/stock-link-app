@@ -218,106 +218,6 @@ export type FinancialPositionsAbstractJp = {
 
 
 /**
- * 決算期情報を公開するためのクラス
- */
-export type FiscalYearStockInfo = {
-	/**
-	 * 順序
-	 */
-	order?: number | null;
-	/**
-	 * ラベル
-	 */
-	Label?: string | null;
-	/**
-	 * 文書名
-	 */
-	DocumentName?: stock | null;
-	/**
-	 * 提出日
-	 */
-	FilingDate?: stock | null;
-	/**
-	 * 上場会社名
-	 */
-	CompanyName?: stock | null;
-	/**
-	 * 証券コード
-	 */
-	SecuritiesCode?: stock | null;
-	/**
-	 * URL
-	 */
-	URL?: stock | null;
-	/**
-	 * 代表者情報
-	 */
-	RepresentativeAbstract?: representative_abstract | null;
-	/**
-	 * 問合せ先情報
-	 */
-	InquiriesAbstract?: inquiries_abstract | null;
-	/**
-	 * 電話番号
-	 */
-	Tel?: stock | null;
-	/**
-	 * その他の上場会社情報
-	 */
-	OtherCompanyInformationAbstract?: other_company_information_abstract | null;
-	/**
-	 * 決算補足資料
-	 */
-	SupplementalMaterialOfAnnualResults?: stock | null;
-	/**
-	 * 決算補足資料の入手方法
-	 */
-	WayOfGettingSupplementalMaterialOfAnnualResults?: stock | null;
-	/**
-	 * 決算説明会の開催の有無
-	 */
-	ConveningBriefingOfAnnualResults?: stock | null;
-	/**
-	 * 決算説明会の対象者
-	 */
-	TargetAudienceBriefingOfAnnualResults?: stock | null;
-	/**
-	 * 端数処理方法に関する注記
-	 */
-	NoteToFractionProcessingMethod?: stock | null;
-	/**
-	 * 東京証券取引所の上場市場
-	 */
-	TokyoStockExchange?: stock | null;
-	/**
-	 * 事業会社種別
-	 */
-	BusinessCategory?: business_category | null;
-	/**
-	 * 決算期
-	 */
-	FiscalYearEnd?: stock | null;
-	/**
-	 * 四半期
-	 */
-	QuarterlyPeriod?: stock | null;
-	/**
-	 * 有価証券報告書提出予定日
-	 */
-	AnnualSecuritiesReportFilingDateAsPlanned?: stock | null;
-	/**
-	 * 定時株主総会の開催予定日
-	 */
-	DateOfGeneralShareholdersMeetingAsPlanned?: stock | null;
-	/**
-	 * 配当支払予定日
-	 */
-	DividendPayableDateAsPlanned?: stock | null;
-};
-
-
-
-/**
  * 四半期予想に関する注記を公開するためのクラス
  */
 export type ForecastsJp = {
@@ -1114,26 +1014,6 @@ export type IxSourceFileCreateList = {
 
 
 
-export type MenuTitle = {
-	/**
-	 * タイトルラベル
-	 */
-	label?: string | null;
-	/**
-	 * 日本語ラベル
-	 */
-	jp?: string | null;
-};
-
-
-
-export type MenuTitles = {
-	count: number;
-	data: Array<MenuTitle>;
-};
-
-
-
 export type Message = {
 	message: string;
 };
@@ -1625,64 +1505,6 @@ export type StockInfo = {
 
 
 /**
- * iXBRLのヘッダー情報を表すクラス
- */
-export type StockRecordInfo = {
-	/**
-	 * iXBRLのソースID
-	 */
-	xbrl_id?: string;
-	/**
-	 * 上場会社名
-	 */
-	company_name?: string;
-	/**
-	 * 証券コード
-	 */
-	securities_code?: string;
-	/**
-	 * 四半期
-	 */
-	current_period?: string | null;
-	/**
-	 * 報告書種別
-	 */
-	report_type?: string;
-	/**
-	 * 提出日
-	 */
-	reporting_date?: string;
-	/**
-	 * 文書名
-	 */
-	document_name?: string;
-	/**
-	 * 決算期
-	 */
-	fiscal_year_end?: string;
-	/**
-	 * URL
-	 */
-	url?: string | null;
-};
-
-
-
-/**
- * iXBRLのヘッダー情報のリストを表すクラス
- */
-export type StockRecordInfos = {
-	count: number;
-	data: Array<StockRecordInfo>;
-	/**
-	 * 次のページのオフセット
-	 */
-	nextOffset?: number | null;
-};
-
-
-
-/**
  * 概要情報を公開するためのクラス
  */
 export type SummaryItemsAbstractJp = {
@@ -1738,19 +1560,6 @@ export type SummaryItemsAbstractJp = {
 	 * 四半期決算概要に関する特記事項
 	 */
 	SpecialNotes?: SpecialNotesJp | null;
-};
-
-
-
-export type SummaryItemsAbstractJpList = {
-	/**
-	 * 概要情報のリスト数
-	 */
-	count?: number;
-	/**
-	 * 概要情報
-	 */
-	data?: Array<SummaryItemsAbstractJp>;
 };
 
 

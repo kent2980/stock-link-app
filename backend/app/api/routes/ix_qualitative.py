@@ -1,12 +1,13 @@
 import re
 from collections import namedtuple
 
-import app.schema as sc
-from app.api.deps import SessionDep
-from app.models import IxQualitative
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
 from treelib import Node, Tree
+
+import app.schema as sc
+from app.api.deps import SessionDep
+from app.models import IxQualitative
 
 router = APIRouter()
 
@@ -229,7 +230,6 @@ def extract_tree_content(tree: Tree):
                             segment = re.sub(r"^[a-zA-Z]\.|^[ア-ン]\.", "", segment)
                             segment_headers.append(segment)
                             segment_photo_url[segment] = grandchild.data.photo_url
-                            print(grandchild.data)
                             for greatGrandChild in tree.children(grandchild.identifier):
                                 greatGrandChild: Node
                                 if greatGrandChild.data.type == "content":
