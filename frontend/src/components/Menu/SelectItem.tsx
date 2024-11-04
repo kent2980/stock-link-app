@@ -37,9 +37,9 @@ const SelectItem: React.FC<SelectItemProps> = ({ selectDate, ...props }) => {
   reportCount?.data.forEach((item) => {
     if (item.report_type.startsWith("ed")) {
       earningsReportCount += item.count;
-    } else if (item.report_type.startsWith("rvdf")) {
-      performanceForecastRevisionCount += item.count;
     } else if (item.report_type.startsWith("rvfc")) {
+      performanceForecastRevisionCount += item.count;
+    } else if (item.report_type.startsWith("rvdf")) {
       dividendForecastRevisionCount += item.count;
     }
   });
