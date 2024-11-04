@@ -25,6 +25,10 @@ class IxHeadTitlePublic(SQLModel):
     is_sfp: Optional[bool]
     fiscal_year_end: Optional[str]
     tel: Optional[str]
+    is_dividend_revision: Optional[bool]
+    dividend_increase_rate: Optional[str]
+    is_earnings_forecast_revision: Optional[bool]
+    forecast_ordinary_income_growth_rate: Optional[str]
 
 
 class IxHeadTitleCreate(SQLModel):

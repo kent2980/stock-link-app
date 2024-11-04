@@ -37,8 +37,6 @@ function Menu() {
 
   const dates = generateDates();
 
-  // const isLeftSwipe = useStore(MenuStore, (state) => state.isLeftSwipe);
-  // const isRightSwipe = useStore(MenuStore, (state) => state.isRightSwipe);
   const [isSwipeHandled, setIsSwipeHandled] = useState(false);
 
   useEffect(() => {

@@ -5,7 +5,7 @@ import { useStore } from "@tanstack/react-store";
 import dayjs from "dayjs";
 import React, { useEffect, useRef } from "react";
 import { useSwipeable } from "react-swipeable";
-import { XbrlIxHeadService } from "../../client";
+import { IxHeadTitlePublic, XbrlIxHeadService } from "../../client";
 import { MenuStore } from "../../routes/_layout/menu.$selectedDate";
 import { StockListStore } from "../../Store/Store";
 
@@ -13,6 +13,19 @@ interface StockListProps extends BoxProps {
   selectDate: string;
 }
 
+/**
+ * StockListコンポーネントは、指定された日付の株式リストを表示します。
+ *
+ * @component
+ * @example
+ * <StockList selectDate="2021-09-30" />
+ *
+ * @param {StockListProps} props - プロパティの情報を持つオブジェクト
+ * @param {string} props.selectDate - 表示する日付
+ * @param {BoxProps} props - Boxコンポーネントに適用されるプロパティ
+ *
+ * @returns {React.FC<StockListProps>} 指定された日付の株式リストを表示するコンポーネント
+ */
 const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
   const StockListRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate({ from: "/menu" });
@@ -107,29 +120,6 @@ const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
       >
         <Box h="40px" />
         {data?.data?.map((item) => {
-          const code = item.securities_code; // 銘柄コード
-          const name = item.company_name; // 企業名
-          const report_type = () => {
-            if (item?.report_type?.startsWith("ed")) {
-              return "決算短信";
-            } else if (item?.report_type === "rvdf") {
-              return "業績予想の修正";
-            } else if (item?.report_type === "rvfc") {
-              return "配当予想の修正";
-            }
-            return "";
-          };
-          const period = () => {
-            if (item?.current_period == "Q1") {
-              return "第1四半期";
-            } else if (item?.current_period == "Q2") {
-              return "第2四半期";
-            } else if (item?.current_period == "Q3") {
-              return "第3四半期";
-            }
-            return "";
-          };
-          const year = item.fiscal_year_end; // 決算期
           return (
             <Box
               key={item.xbrl_id}
@@ -148,19 +138,7 @@ const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
                 })
               }
             >
-              <VStack m={2} w="100%">
-                <HStack justify="flex-start" w="100%">
-                  <Box>{code}</Box>
-                  <Box>{name}</Box>
-                </HStack>
-                <HStack justify="flex-start" w="100%">
-                  <Badge>{dayjs(year).format("YYYY年M月期")}</Badge>
-                  <Badge display={period() === "" ? "none" : "block"}>
-                    {period()}
-                  </Badge>
-                  <Badge>{report_type()}</Badge>
-                </HStack>
-              </VStack>
+              <StockItem item={item} />
             </Box>
           );
         })}
@@ -172,3 +150,62 @@ const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
 };
 
 export default StockList;
+
+interface StockItemProps {
+  item: IxHeadTitlePublic;
+}
+
+/**
+ * StockItemコンポーネントは、株式リストの各項目を表示します。
+ *
+ * @component
+ * @example
+ * <StockItem item={item} />
+ *
+ * @param {StockItemProps} props - プロパティの情報を持つオブジェクト
+ * @param {IxHeadTitlePublic} props.item - 株式リストの各種情報を持つオブジェクト
+ *
+ * @returns {React.FC<StockItemProps>} 株式リストの各項目を表示するコンポーネント
+ */
+const StockItem: React.FC<StockItemProps> = ({ item }) => {
+  const code = item.securities_code; // 銘柄コード
+  const name = item.company_name; // 企業名
+  const report_type = () => {
+    if (item?.report_type?.startsWith("ed")) {
+      return "決算短信";
+    } else if (item?.report_type === "rvdf") {
+      return "業績予想の修正";
+    } else if (item?.report_type === "rvfc") {
+      return "配当予想の修正";
+    }
+    return "";
+  };
+  const period = () => {
+    if (item?.current_period == "Q1") {
+      return "第1四半期";
+    } else if (item?.current_period == "Q2") {
+      return "第2四半期";
+    } else if (item?.current_period == "Q3") {
+      return "第3四半期";
+    }
+    return "";
+  };
+  const year = item.fiscal_year_end; // 決算期
+  return (
+    <VStack m={2} w="100%">
+      <HStack justify="flex-start" w="100%">
+        <Box>{code}</Box>
+        <Box>{name}</Box>
+        <Box>{item.is_dividend_revision}</Box>
+        <Box>{item.dividend_increase_rate}</Box>
+        <Box>{item.is_earnings_forecast_revision}</Box>
+        <Box>{item.forecast_ordinary_income_growth_rate}</Box>
+      </HStack>
+      <HStack justify="flex-start" w="100%">
+        <Badge>{dayjs(year).format("YYYY年M月期")}</Badge>
+        <Badge display={period() === "" ? "none" : "block"}>{period()}</Badge>
+        <Badge>{report_type()}</Badge>
+      </HStack>
+    </VStack>
+  );
+};

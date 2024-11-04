@@ -624,6 +624,10 @@ export type IxHeadTitlePublic = {
 	is_sfp: boolean | null;
 	fiscal_year_end: string | null;
 	tel: string | null;
+	is_dividend_revision: boolean | null;
+	dividend_increase_rate: string | null;
+	is_earnings_forecast_revision: boolean | null;
+	forecast_ordinary_income_growth_rate: string | null;
 };
 
 

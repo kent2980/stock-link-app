@@ -1820,6 +1820,42 @@ export const $IxHeadTitlePublic = {
 }],
 	isRequired: true,
 },
+		is_dividend_revision: {
+	type: 'any-of',
+	contains: [{
+	type: 'boolean',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		dividend_increase_rate: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		is_earnings_forecast_revision: {
+	type: 'any-of',
+	contains: [{
+	type: 'boolean',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		forecast_ordinary_income_growth_rate: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
 	},
 } as const;
 
