@@ -1,5 +1,5 @@
 import { Box, HStack, Text, VStack } from "@chakra-ui/react";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Store } from "@tanstack/react-store";
 import dayjs from "dayjs";
 import "dayjs/locale/ja"; // 日本語ロケールをインポート
@@ -18,7 +18,6 @@ export const MenuStore = new Store({
 });
 
 function Menu() {
-  const navigate = useNavigate({ from: "/menu" });
   const { selectedDate } = Route.useParams();
   const dateGroupRef = useRef<HTMLDivElement>(null);
 
