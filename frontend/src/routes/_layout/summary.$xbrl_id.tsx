@@ -11,45 +11,30 @@ import "swiper/css/effect-cube";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import { XbrlViewService } from "../../client";
+
+function queryOptions(xbrl_id: string) {
+  return {
+    queryKey: ["summary", xbrl_id],
+    queryFn: () =>
+      XbrlViewService.readSummaryItemByXbrlId({
+        xbrlId: xbrl_id,
+      }),
+  };
+}
 
 export const Route = createFileRoute("/_layout/summary/$xbrl_id")({
+  loader: async ({ context: { queryClient }, params: { xbrl_id } }) => {
+    return queryClient.ensureQueryData(queryOptions(xbrl_id));
+  },
   component: Summary,
+  pendingComponent: () => <Box>Loading...</Box>,
+  notFoundComponent: () => <Box>Not found</Box>,
+  errorComponent: () => <Box>Error</Box>,
 });
 
 function Summary() {
   const { xbrl_id } = Route.useParams();
-  // const { data: item, status } = useQuery({
-  //   queryKey: ["head", xbrl_id],
-  //   queryFn: () =>
-  //     XbrlViewService.readHeadItem({
-  //       xbrlId: xbrl_id,
-  //     }),
-  // });
-
-  // if (status === "error") {
-  //   return <Box>Error</Box>;
-  // }
-
-  // if (status === "pending") {
-  //   return (
-  //     <Box
-  //       display="flex"
-  //       justifyContent="center"
-  //       alignItems="center"
-  //       height="100vh"
-  //       width="100%"
-  //     >
-  //       <Spinner
-  //         size="xl"
-  //         thickness="10px"
-  //         speed="1s"
-  //         emptyColor="gray.200"
-  //         color="blue.500"
-  //       />
-  //     </Box>
-  //   );
-  // }
-
   // モバイルの場合
   if (window.innerWidth < 768) {
     return (

@@ -1,5 +1,5 @@
 import { Box, HStack, Text, VStack } from "@chakra-ui/react";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Store } from "@tanstack/react-store";
 import dayjs from "dayjs";
 import "dayjs/locale/ja"; // 日本語ロケールをインポート
@@ -72,56 +72,55 @@ function Menu() {
       >
         {dates
           .map((date) => (
-            <Box
-              className="date-box"
-              key={date}
-              onClick={() =>
-                navigate({
-                  to: "/menu/$selectedDate",
-                  params: { selectedDate: date },
-                  replace: true,
-                })
-              }
-              _hover={
-                selectedDate === date
-                  ? { cursor: "pointer", bgColor: "blue.500" }
-                  : { cursor: "pointer", bgColor: "gray.100" }
-              }
-              bgColor={selectedDate === date ? "blue.500" : "white"}
-              textAlign="center"
-              padding="4px"
-              border="1px solid #ccc"
-              borderRadius="4px"
-              width="60px"
-              flexShrink={0}
-              height="full"
-              boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)"
+            <Link
+              to="/menu/$selectedDate"
+              params={{ selectedDate: date }}
+              replace
             >
               <Box
-                color={
+                className="date-box"
+                key={date}
+                _hover={
                   selectedDate === date
-                    ? "white"
-                    : dayjs(date).day() === 0
-                      ? "red.500"
-                      : dayjs(date).day() === 6
-                        ? "blue.500"
-                        : "gray.500"
+                    ? { cursor: "pointer", bgColor: "blue.500" }
+                    : { cursor: "pointer", bgColor: "gray.100" }
                 }
-                fontWeight={selectedDate === date ? "bold" : "normal"}
-                fontFamily="monospace"
-                display="flex"
-                flexDirection="column"
-                justifyContent="space-between"
-                height="100%"
+                bgColor={selectedDate === date ? "blue.500" : "white"}
+                textAlign="center"
+                padding="4px"
+                border="1px solid #ccc"
+                borderRadius="4px"
+                width="60px"
+                flexShrink={0}
+                height="full"
+                boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)"
               >
-                <Text fontSize="14px">{dayjs(date).format("MM/DD")}</Text>{" "}
-                {/* 日付を表示 */}
-                <Text fontSize="13px" textAlign="center" mb={2}>
-                  {dayjs(date).format("dd")}
-                </Text>{" "}
-                {/* 曜日を日本語で表示 */}
+                <Box
+                  color={
+                    selectedDate === date
+                      ? "white"
+                      : dayjs(date).day() === 0
+                        ? "red.500"
+                        : dayjs(date).day() === 6
+                          ? "blue.500"
+                          : "gray.500"
+                  }
+                  fontWeight={selectedDate === date ? "bold" : "normal"}
+                  fontFamily="monospace"
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="space-between"
+                  height="100%"
+                >
+                  <Text fontSize="14px">{dayjs(date).format("MM/DD")}</Text>{" "}
+                  {/* 日付を表示 */}
+                  <Text fontSize="13px" textAlign="center" mb={2}>
+                    {dayjs(date).format("dd")}
+                  </Text>{" "}
+                  {/* 曜日を日本語で表示 */}
+                </Box>
               </Box>
-            </Box>
+            </Link>
           ))
           .reverse()}
       </HStack>

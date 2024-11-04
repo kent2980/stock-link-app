@@ -1,6 +1,6 @@
 import { Box, BoxProps } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import dayjs from "dayjs";
 import React, { useEffect, useRef } from "react";
@@ -122,25 +122,21 @@ const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
         <Box h="40px" />
         {data?.data?.map((item) => {
           return (
-            <Box
-              key={item.xbrl_id}
-              w="100%"
-              borderBottom="1px"
-              borderColor="gray.200"
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              p={2}
-              _hover={{ cursor: "pointer", bgColor: "gray.100" }}
-              onClick={() =>
-                navigate({
-                  to: "/summary/$xbrl_id",
-                  params: { xbrl_id: item.xbrl_id },
-                })
-              }
-            >
-              <StockItem item={item} />
-            </Box>
+            <Link to="/summary/$xbrl_id" params={{ xbrl_id: item.xbrl_id }}>
+              <Box
+                key={item.xbrl_id}
+                w="100%"
+                borderBottom="1px"
+                borderColor="gray.200"
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+                p={2}
+                _hover={{ cursor: "pointer", bgColor: "gray.100" }}
+              >
+                <StockItem item={item} />
+              </Box>
+            </Link>
           );
         })}
         {/* 最後尾に空白行を追加 */}

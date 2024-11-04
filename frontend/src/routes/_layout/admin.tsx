@@ -49,7 +49,7 @@ function UsersTable() {
   const { page } = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
   const setPage = (page: number) =>
-    navigate({ search: (prev: any) => ({ ...prev, page }) });
+    navigate({ search: (prev) => ({ ...prev, page }) });
 
   const {
     data: users,
