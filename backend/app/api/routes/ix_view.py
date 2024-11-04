@@ -1,129 +1,30 @@
+import copy
 import datetime
-import pprint
+import itertools
 import re
-from typing import Optional, Union
+from typing import Any, Dict, List, Optional
+
+from fastapi import APIRouter, Query
+from sqlmodel import select
+from treelib import Node, Tree
 
 import app.crud as crud
-import app.utils as utils
+import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxHeadTitle
-from app.schema import ix_view as sc
-from fastapi import APIRouter, HTTPException, Query
-from sqlmodel import select, text
+from app.schema.ix_view import abstractBase, stock, stockNumeric
 
 router = APIRouter()
 
 
-@router.get("/stock/all/", response_model=sc.StockRecordInfos)
-def read_stock_record(
-    *,
-    session: SessionDep,
-    code: Optional[str] = Query(None),
-    type: Optional[str] = Query(None),
-    dateStr: Optional[str] = Query(None),
-    period: Optional[int] = Query(None),
-    skip: int = Query(0, ge=0),  # ページネーションのためのスキップ数
-    limit: int = Query(10, ge=1),  # ページネーションのための取得数
-) -> sc.StockRecordInfos:
-    """すべての銘柄コードを取得する
-
-    Args:
-        type (str): レポートの種類
-
-    Returns:
-        sc.ix_head.IxHeadShortsPublic: 銘柄コードのリスト
-    """
-
-    # region 引数のチェック処理
-    if dateStr is not None and not re.match(r"^\d{8}$", dateStr):
-        detail = "dateStrはYYYYMMDDの形式で指定してください"
-        raise HTTPException(status_code=400, detail=detail)
-    if period is not None and period not in [1, 2, 3, 4]:
-        detail = "periodは1,2,3,4のいずれかを指定してください"
-        raise HTTPException(status_code=400, detail=detail)
-    # endregion
-
-    # region クエリの作成
-    statement = select(
-        IxHeadTitle.xbrl_id,
-        IxHeadTitle.company_name,
-        IxHeadTitle.securities_code,
-        IxHeadTitle.current_period,
-        IxHeadTitle.report_type,
-        IxHeadTitle.reporting_date,
-        IxHeadTitle.document_name,
-        IxHeadTitle.fiscal_year_end,
-        IxHeadTitle.url,
-    ).order_by(IxHeadTitle.securities_code.asc())
-    if code:
-        statement = statement.where(IxHeadTitle.securities_code == code)
-    if type:
-        statement = statement.where(IxHeadTitle.report_type.like(f"%{type}%"))
-    if dateStr:
-        statement = statement.where(
-            IxHeadTitle.reporting_date == datetime.datetime.strptime(dateStr, "%Y%m%d")
-        )
-    if period:
-        period_mapping = {1: "Q1", 2: "Q2", 3: "Q3", 4: "FY"}
-        statement = statement.where(
-            IxHeadTitle.current_period == period_mapping[period]
-        )
-    # endregion
-
-    # region クエリの実行
-    result = session.exec(statement.offset(skip).limit(limit))
-    data = result.all()
-    # endregion
-
-    # 次のレコードが存在しない場合はnextOffsetをNoneにする
-    if len(data) < limit:
-        nextOffset = None
-    else:
-        nextOffset = skip + limit
-
-    pprint.pprint(data)
-
-    return sc.StockRecordInfos(data=data, count=len(data), nextOffset=nextOffset)
-
-
-@router.get("/stock/all/new/", response_model=sc.StockRecordInfos)
-def read_new_stock_record(
-    *,
-    session: SessionDep,
-    skip: int = Query(0, ge=0),  # ページネーションのためのスキップ数
-    limit: int = Query(10, ge=1),  # ページネーションのための取得数
-) -> sc.StockRecordInfos:
-
-    # SQL文を定義
-    statement = text(
-        """
-        SELECT DISTINCT ON (iht.securities_code) *
-        FROM ix_head_title iht
-        ORDER BY iht.securities_code, iht.reporting_date DESC
-    """
-    )
-
-    # SQL文を実行
-    result = session.exec(statement)
-    data = result.all()
-
-    # 次のレコードが存在しない場合はnextOffsetをNoneにする
-    if len(data) < limit:
-        nextOffset = None
-    else:
-        nextOffset = skip + limit
-
-    return sc.StockRecordInfos(data=data, count=len(data), nextOffset=nextOffset)
-
-
-@router.get("/head_items/", response_model=sc.HeadItems)
+@router.get("/head_item/all", response_model=sc.ix_view.HeadItems)
 def read_head_items(
     *,
     session: SessionDep,
     code: str = Query(None),  # 銘柄コード
     limit: int = Query(10, ge=1),  # ページネーションのための取得数
     skip: int = Query(0, ge=0),  # ページネーションのためのスキップ数
-) -> sc.HeadItems:
+) -> sc.ix_view.HeadItems:
     """銘柄コードからXBRLファイルのIDを取得する
     Args:
         code (str): 銘柄コード
@@ -143,15 +44,15 @@ def read_head_items(
 
     # endregion
 
-    return sc.HeadItems(data=items, count=len(items))
+    return sc.ix_view.HeadItems(data=items, count=len(items))
 
 
-@router.get("/head_item/${xbrl_id}", response_model=sc.HeadItem)
+@router.get("/head_item/select", response_model=sc.ix_view.HeadItem)
 def read_head_item(
     *,
     session: SessionDep,
-    xbrl_id: str,
-) -> sc.HeadItem:
+    xbrl_id: str = Query(...),  # XBRLファイルのID
+) -> sc.ix_view.HeadItem:
     """XBRLファイルのIDからXBRLファイルの情報を取得する
     Args:
         xbrl_id (str): XBRLファイルのID
@@ -163,323 +64,380 @@ def read_head_item(
     return items
 
 
-@router.get("/menu/", response_model=sc.MenuTitles)
-def read_menu_title(
-    *, session: SessionDep, type: str = Query(...), id: str = Query(...)
-) -> sc.MenuTitles:
-    """XBRLファイルのIDからメニューラベルを取得する
-    Args:
-        xbrl_id (str): XBRLファイルのID
-    """
-
-    # region 引数のチェック処理
-    if type not in ["sm", "fr"]:
-        detail = "typeは [sm:サマリー], [fr:財務諸表] のいずれかを指定してください"
-        raise HTTPException(status_code=400, detail=detail)
-
-    # endregion
-
-    # region データベースからの取得
-    items = crud.read_menu_label(session=session, xbrl_id=id, type=type)
-
-    menu_list = []
-    for item in items:
-        menu_item = {
-            "label": item.xlink_href,
-            "jp": re.sub(r" \[.*\]", "", item.label).split("、")[-1],
-        }
-        menu_list.append(menu_item)
-
-    # endregion
-
-    return sc.MenuTitles(data=menu_list, count=len(menu_list))
-
-
-@router.get("/items/", response_model=dict)
-def read_menu_items(
-    *,
-    session: SessionDep,
-    type: str = Query(...),
-    id: str = Query(...),
-    header: Optional[str] = Query(None),
-) -> dict:
-    """XBRLファイルのIDとメニューラベルから項目を取得する
-    Args:
-        xbrl_id (str): XBRLファイルのID
-        menu_label (str): メニューラベル
-    """
-
-    # region 引数のチェック処理
-    # typeのチェック
-    if type not in ["sm", "fr"]:
-        detail = "typeは [sm:サマリー], [fr:財務諸表] のいずれかを指定してください"
-        raise HTTPException(status_code=400, detail=detail)
-
-    # menu_labelのチェック
-    header_list = read_menu_title(session=session, type=type, id=id).data
-    headers = [item.label for item in header_list]
-    if header is not None and header != "" and header not in headers:
-        detail = f"menu_labelは {header_list} のいずれかを指定してください"
-        raise HTTPException(status_code=400, detail=detail)
-    # endregion
-
-    # region ツリーの取得
-    tree = utils.create_menu_items_tree(
-        session=session, id=id, type=type, header=header
-    )
-    # endregion
-
-    return tree.to_dict(with_data=True, key=lambda x: x.data.order)
-
-
-@router.get("/info/", response_model=Union[sc.FiscalYearStockInfo, sc.StockInfo])
-def read_stock_info(
-    *,
-    session: SessionDep,
-    code: str = Query(...),
-) -> Union[sc.FiscalYearStockInfo, sc.StockInfo]:
-    """銘柄コードから企業情報を取得する
-
-    Args:
-        code (str): 銘柄コード
-
-    Returns:
-        sc.StockInfoPublic: 企業情報
-    """
-
-    statement = (
-        select(IxHeadTitle)
-        .where(IxHeadTitle.securities_code == code, IxHeadTitle.report_type.like("ed%"))
-        .order_by(IxHeadTitle.reporting_date.desc())
-    )
-    items = session.exec(statement).all()
-    if len(items) == 0:
-        raise HTTPException(status_code=404, detail="Item not found")
-
-    # itemsをlistに変換
-    items = [item for item in items]
-
-    id = items[0].xbrl_id
-
-    period = items[0].current_period
-
-    if period is None:
-        raise HTTPException(status_code=404, detail="Item not found")
-
-    # region データベースからの取得
-    header = "tse-ed-t_DocumentEntityInformationHeading"
-
-    tree = utils.create_menu_items_tree(
-        session=session, id=id, type="sm", header=header
-    )
-    # endregion
-
-    # region ツリーから情報を取得
-    info = sc.StockInfo()
-
-    for header in tree.all_nodes():
-        if header.tag == "tse-ed-t_DocumentEntityInformationHeading":
-            subtree = tree.subtree(header.identifier)
-            for node in subtree.all_nodes():
-                try:
-                    tag = node.tag
-                    value = node.data.items.data[0].value
-                    label = node.data.label
-                except AttributeError:
-                    continue
-                if tag == "tse-ed-t_GeneralBusiness":  # 一般事業会社
-                    info.BusinessCategory.GeneralBusiness.set_value(value)
-                    info.BusinessCategory.GeneralBusiness.label = label
-                elif tag == "tse-ed-t_SpecificBusiness":  # 特定事業会社
-                    info.BusinessCategory.SpecificBusiness.set_value(value)
-                    info.BusinessCategory.SpecificBusiness.label = label
-                elif tag == "tse-ed-t_CompanyName":  # 上場会社名
-                    info.CompanyName.set_value(value)
-                    info.CompanyName.label = label
-                elif tag == "tse-ed-t_DocumentName":  # 文書名
-                    info.DocumentName.set_value(value)
-                    info.DocumentName.label = label
-                elif tag == "tse-ed-t_FilingDate":  # 提出日
-                    info.FilingDate.set_value(value)
-                    info.FilingDate.label = label
-                elif tag == "tse-ed-t_FiscalYearEnd":  # 決算期
-                    info.FiscalYearEnd.set_value(value)
-                    info.FiscalYearEnd.label = label
-                elif tag == "tse-ed-t_NameInquiries":  # 問合せ先
-                    info.NameInquiries.set_value(value)
-                    info.NameInquiries.label = label
-                elif tag == "tse-ed-t_TitleInquiries":  # 問合せ先役職
-                    info.TitleInquiries.set_value(value)
-                    info.TitleInquiries.label = label
-                elif (
-                    tag == "tse-ed-t_NoteToFractionProcessingMethod"
-                ):  # 端数処理方法に関する注記
-                    info.NoteToFractionProcessingMethod.set_value(value)
-                    info.NoteToFractionProcessingMethod.label = label
-                elif tag == "tse-ed-t_NameRepresentative":  # 代表者氏名
-                    info.NameRepresentative.set_value(value)
-                    info.NameRepresentative.label = label
-                elif tag == "tse-ed-t_TitleRepresentative":  # 代表者役職名
-                    info.TitleRepresentative.set_value(value)
-                    info.TitleRepresentative.label = label
-                elif tag == "tse-ed-t_SecuritiesCode":  # 証券コード
-                    info.SecuritiesCode.set_value(value)
-                    info.SecuritiesCode.label = label
-                elif tag == "tse-ed-t_Tel":  # 電話番号
-                    info.Tel.set_value(value)
-                    info.Tel.label = label
-                elif tag == "tse-ed-t_URL":  # URL
-                    info.URL.set_value(value)
-                    info.URL.label = label
-                elif "tse-ed-t_TokyoStockExchange" in tag:  # 東京証券取引所の上場市場
-                    info.TokyoStockExchange.set_value(value)
-                    info.TokyoStockExchange.label = label
-    # endregion
-
-    if period == "FY":
-        result = sc.FiscalYearStockInfo.from_parent(info)
-        for node in tree.all_nodes():
-            tag = node.tag
-            try:
-                data = node.data.items.data[0]
-                value = data.value
-                label = node.data.label
-            except AttributeError:
-                continue
-            if (
-                tag == "tse-ed-t_ConveningBriefingOfAnnualResults"
-            ):  # 決算説明会の開催の有無
-                result.ConveningBriefingOfAnnualResults.set_value(value)
-                result.ConveningBriefingOfAnnualResults.label = label
-            elif (
-                tag == "tse-ed-t_AnnualSecuritiesReportFilingDateAsPlanned"
-            ):  # 有価証券報告書提出予定日
-                result.AnnualSecuritiesReportFilingDateAsPlanned.set_value(value)
-                result.AnnualSecuritiesReportFilingDateAsPlanned.label = label
-            elif (
-                tag == "tse-ed-t_DateOfGeneralShareholdersMeetingAsPlanned"
-            ):  # 定時株主総会の開催予定日
-                result.DateOfGeneralShareholdersMeetingAsPlanned.set_value(value)
-                result.DateOfGeneralShareholdersMeetingAsPlanned.label = label
-            elif tag == "tse-ed-t_DividendPayableDateAsPlanned":  # 配当支払予定日
-                result.DividendPayableDateAsPlanned.set_value(value)
-                result.DividendPayableDateAsPlanned.label = label
-            result.QuarterlyPeriod.set_value("FY")  # 四半期
-            result.QuarterlyPeriod.label = "四半期"
-
-        return result
-
-    elif period in ["Q1", "Q2", "Q3"]:
-        for node in tree.all_nodes():
-            tag = node.tag
-            try:
-                data = node.data.items.data[0]
-                value = data.value
-                label = node.data.label
-            except AttributeError:
-                continue
-            if tag == "tse-ed-t_QuarterlyPeriod":  # 四半期
-                info.QuarterlyPeriod.set_value(value)
-                info.QuarterlyPeriod.label = label
-        return info
-
-
-@router.get("/summary/items/", response_model=sc.SummaryItemsAbstractJpList)
-def read_summary_items(
-    *,
-    session: SessionDep,
-    code: str = Query(...),  # 銘柄コード
-    length: Optional[int] = Query(None),  # 期間
-) -> sc.SummaryItemsAbstractJpList:
-    """銘柄コードから決算情報を取得する"""
-
-    summaryLst = []
-
-    # region idの取得
-    try:
-        items = read_head_items(session=session, code=code, type=0, period=None).data
-        if length is None:
-            head_items = [item for item in items]
-        else:
-            head_items = [item for item in items][:length]
-    except IndexError:
-        raise HTTPException(status_code=404, detail="Item not found")
-    # endregion
-
-    for head_item in head_items:
-
-        try:
-            xbrl_id = head_item.xbrl_id
-        except IndexError:
-            raise HTTPException(status_code=404, detail="Item not found")
-
-        # region ツリーの生成
-        tree = utils.create_menu_items_tree(session=session, id=xbrl_id, type="sm")
-        # endregion
-
-        summary = utils.summary_result(tree)
-
-        summaryLst.append(summary)
-
-    return sc.SummaryItemsAbstractJpList(data=summaryLst, count=len(summaryLst))
-    # endregion
-
-
-@router.get("/summary/item/", response_model=sc.SummaryItemsAbstractJp)
-def read_summary_item(
-    *,
-    session: SessionDep,
-    code: str = Query(...),  # 銘柄コード
-    count: Optional[int] = Query(None),  # 期間
-) -> sc.SummaryItemsAbstractJp:
-    """銘柄コードから決算情報を取得する"""
-
-    # region idの取得
-    try:
-        items = read_head_items(session=session, code=code, type=0, period=None).data
-        head_items = [item for item in items]
-    except IndexError:
-        raise HTTPException(status_code=404, detail="Item not found")
-    # endregion
-    try:
-        if count:
-            count = count
-            head_item = head_items[count]
-        else:
-            head_item = head_items[0]
-    except IndexError:
-        raise HTTPException(status_code=404, detail="Item not found")
-
-    try:
-        xbrl_id = head_item.xbrl_id
-    except IndexError:
-        raise HTTPException(status_code=404, detail="Item not found")
-
-    # region ツリーの生成
-    tree = utils.create_menu_items_tree(session=session, id=xbrl_id, type="sm")
-    # endregion
-
-    summary = utils.summary_result(tree)
-
-    summary.XbrlId = xbrl_id
-
-    return summary
-    # endregion
-
-
-@router.get("/summary/item/select/", response_model=sc.SummaryItemsAbstractJp)
+@router.get("/summary/item/select/", response_model=sc.ix_view.SummaryItemsAbstractJp)
 def read_summary_item_by_xbrl_id(
     *,
     session: SessionDep,
     xbrl_id: str = Query(...),  # XBRLファイルのID
-) -> sc.SummaryItemsAbstractJp:
+) -> sc.ix_view.SummaryItemsAbstractJp:
     """XBRLファイルのIDから決算情報を取得する"""
 
     # region ツリーの生成
-    tree = utils.create_menu_items_tree(session=session, id=xbrl_id, type="sm")
+    tree = create_menu_items_tree(session=session, id=xbrl_id, type="sm")
     # endregion
 
-    summary = utils.summary_result(tree)
+    summary = summary_result(tree)
 
     return summary
     # endregion
+
+
+def create_menu_items_tree(*, session, id: str, type: str, header: str = None) -> Tree:
+
+    # 処理時間の計測
+    start = datetime.datetime.now()
+
+    # region データベースからアイテムを取得
+    items = crud.read_menu_items(session=session, xbrl_id=id, xbrl_type=type).data
+    # endregion
+
+    endTime = datetime.datetime.now()
+    print("処理時間: ", endTime - start)
+    start = datetime.datetime.now()
+
+    # region ツリー構造の作成
+    tree = Tree()
+
+    tree.create_node(tag="root", identifier="root", data=sc.ix_global.IxViewItems())
+
+    for item in items:
+        arcrole = [
+            "http://xbrl.org/int/dim/arcrole/all",
+        ]
+        if item.xlink_arcrole in arcrole:
+            tag = str(item.from_href)
+            label = crud.read_finance_item_label(session, id, type, tag)
+            tree.create_node(
+                tag=tag,
+                identifier=item.xlink_from,
+                parent="root",
+                data=sc.ix_global.IxViewItems(
+                    label=label,
+                    order=item.xlink_order,
+                    arcrole=item.xlink_arcrole,
+                ),
+            )
+
+    tagList = []
+    for item in items:
+        tag = str(item.to_href)
+        tagList.append(tag)
+
+    labels = crud.read_finance_item_labels(session, id, type, tagList)
+
+    for item in items:
+        tag = str(item.to_href)
+        if item.from_id is None:
+            if tree.contains(item.xlink_from):
+                try:
+                    label = [label.label for label in labels.data if label.tag == tag][
+                        0
+                    ]
+                except IndexError:
+                    label = None
+                tree.create_node(
+                    tag=tag,
+                    identifier=item.id,
+                    parent=item.xlink_from,
+                    data=sc.ix_global.IxViewItems(
+                        label=label,
+                        order=item.xlink_order,
+                        arcrole=item.xlink_arcrole,
+                    ),
+                )
+        else:
+            try:
+                label = [label.label for label in labels.data if label.tag == tag][0]
+            except IndexError:
+                label = None
+            tree.create_node(
+                tag=tag,
+                identifier=item.id,
+                parent="root",
+                data=sc.ix_global.IxViewItems(
+                    label=label,
+                    order=item.xlink_order,
+                    arcrole=item.xlink_arcrole,
+                ),
+            )
+
+    for item in items:
+        if item.from_id is not None:
+            tree.move_node(item.id, item.from_id)
+    # endregion
+
+    # region ツリーの抽出
+    if header is not None and header != "":
+        for node in tree.children("root"):
+            if re.match(header, node.tag):
+                if tree.contains(node.identifier):
+                    new_tree = tree.subtree(node.identifier)
+                    tree = Tree()
+                    tree.create_node("root", "root")
+                    tree.paste("root", new_tree)
+    # endregion
+
+    # region itemsの取得
+    context_id = create_context_id(tree=tree)
+    finance_item = crud.read_finance_item(
+        session=session,
+        xbrl_id=id,
+        xbrl_type=type,
+    )
+    for nodes in tree.children("root"):
+        nodes: Node
+        for node in tree.leaves(nodes.identifier):
+            node: Node
+            finance_item_list = []
+            if not node.tag.endswith("Member"):
+                name = node.tag
+                context = context_id[nodes.tag]["id"]
+                if finance_item is not None:
+                    for item in finance_item.data:
+                        if item.name == name and re.match(context, item.context):
+                            finance_item_list.append(item)
+                node.data.items = sc.ix_global.IxViewFinances(
+                    count=len(finance_item_list), data=finance_item_list
+                )
+    # endregion
+
+    # region 不要なノードの削除
+    for nodes in tree.children("root"):
+        nodes: Node
+        for node in tree.children(nodes.identifier):
+            node: Node
+            if node.tag.endswith("Table"):
+                tree.remove_node(node.identifier)
+    # endregion
+
+    endTime = datetime.datetime.now()
+    print("処理時間: ", endTime - start)
+
+    return tree
+
+
+def create_context_id(tree: Tree):
+    """contextTableを辞書に変換
+
+    Args:
+        tree (Tree): contextTableのTree構造
+
+    Returns:
+        Dict[str, Dict[str, Any]]: context_id
+    """
+
+    # region contextTableを辞書に変換
+    context_id = {}
+    for nodes in tree.children("root"):
+        parentDict = {}
+        for node in tree.children(nodes.identifier):
+            if node.tag.endswith("Table"):
+                subTree = tree.subtree(node.identifier)
+                for axisNode in subTree.all_nodes():
+                    if axisNode.tag.endswith("Axis"):
+                        member = {}
+                        arcrole = ""
+                        axisTree = subTree.subtree(axisNode.identifier)
+                        for allNode in axisTree.all_nodes():
+                            if allNode.tag.endswith("Member"):
+                                item = allNode.data
+                                if arcrole != item.arcrole.split("/")[-1]:
+                                    tags = []
+                                arcrole = item.arcrole.split("/")[-1]
+                                parent = subTree.parent(allNode.identifier).tag
+                                tags.append(allNode.tag)
+                                member[arcrole] = tags
+                        parentDict[parent] = copy.deepcopy(member)
+        context_id[nodes.tag] = parentDict
+    # endregion
+
+    # region idを作成
+    for _, value in context_id.items():
+        id_list = []
+        for _, contexts in value.items():
+            is_default = True
+            default_context = ""
+            for arcrole, context in contexts.items():
+                if arcrole == "dimension-default":
+                    try:
+                        id_list.remove(context)
+                    except ValueError:
+                        is_default = False
+                        default_context = context
+                elif arcrole == "domain-member":
+                    id_list.append(context)
+                else:
+                    if is_default and default_context != context:
+                        id_list.append(context)
+        id_mix: List[List[str]] = itertools.product(*id_list)
+        # id_mix の内包リスト内の文字列を結合
+        idd = []
+        for values in id_mix:
+            values = [value.split("_")[-1] for value in values]
+            values = [r"(?=.*_" + value + ")" for value in values]
+            values = "".join(values)
+            idd.append(values)
+        idd = "|".join(idd)
+        value["id"] = idd
+    # endregion
+
+    # region context_idからid以外の要素を削除
+    for key, value in context_id.items():
+        value: Dict[str, Any]
+        keys_to_delete = [key2 for key2 in value.keys() if key2 != "id"]
+        for key2 in keys_to_delete:
+            del value[key2]
+    # endregion
+
+    # region 結果を出力
+    return context_id
+    # endregion
+
+
+def summary_result(
+    tree: Tree, specific: bool = False
+) -> sc.ix_view.SummaryItemsAbstractJp:
+    """
+    operating_result_jp(tree, ncisi, ocor[, specific])<br/><br/>
+    この関数は、決算短信サマリー[日本基準]から損益計算書情報を取得するための関数です。<br/>
+    特定事業会社の場合は、specificをTrueに設定してください。<br/>
+    """
+
+    objLst = []
+
+    if specific is True:  # 特定事業会社の場合
+        items = sc.ix_view.OperatingResultSpecificJp()
+    else:  # 一般事業会社の場合
+        sm = sc.ix_view.SummaryItemsAbstractJp()
+        info = sm.DocumentEntityInformation
+        operating = sm.OperatingResult
+        operating_abstract = operating.OperatingResultsAbstract
+        fi_pos = sm.BusinessResultsFinancialPositions
+        objLst.extend(
+            [
+                sm,
+                info,
+                info.RepresentativeAbstract,
+                info.InquiriesAbstract,
+                info.OtherCompanyInformationAbstract,
+                info.BusinessCategory,
+                operating,
+                operating_abstract,
+                operating_abstract.IncomeStatementsInformationAbstract,
+                operating_abstract.NoteToIncomeStatementsInformationAbstract,
+                operating_abstract.OtherOperatingResultsAbstract,
+                operating.NoteToOperatingResultsAbstract,
+                sm.NotesApplyingSpecificAccountingQuarterlyFinancialStatements,
+                sm.NotesChangesAccountingPoliciesAccountingEstimatesRetrospectiveRestatement,
+                sm.NotesNumberIssuedOutstandingSharesCommonStock,
+                sm.NoteToFinancialResults,
+                fi_pos,
+                fi_pos.FinancialPositions,
+                fi_pos.NoteToFinancialPositions,
+                sm.Dividends,
+                sm.Forecasts,
+                sm.Dividends.DividendPerShare,
+                sm.SignificantChangesInTheScopeOfConsolidationDuringThePeriod,
+                sm.SpecialNotes,
+            ]
+        )
+
+    # region ツリーから情報を取得
+    for header in tree.all_nodes():
+        header: Node
+        for obj in objLst:
+            if isinstance(obj, sc.ix_view.ContextFilter):
+                for key, value in obj.__dict__.items():
+                    try:
+                        if isinstance(value, sc.ix_view.stock):
+                            set_view_stock_regex(value, header, value.regex)
+                        elif isinstance(value, sc.ix_view.stockNumeric):
+                            set_view_item_regex(
+                                value, header, value.regex, value.context
+                            )
+                        elif isinstance(value, sc.ix_view.abstract):
+                            set_view_abstract_regex(value, header, value.regex)
+                            set_view_item_regex(
+                                value.ChangeIn,
+                                header,
+                                value.ChangeIn.regex,
+                                value.context,
+                            )
+                            set_view_item_regex(
+                                value.Values, header, value.Values.regex, value.context
+                            )
+                        elif isinstance(value, sc.ix_view.abstractBase):
+                            set_view_abstract_regex(value, header, value.regex)
+                    except TypeError:
+                        continue
+    # endregion
+
+    return sm
+
+
+def set_view_stock_regex(item: stock, node: Node, regex: str):
+    if node.tag == "root":
+        return None
+
+    tag = node.tag
+    order = node.data.order
+    try:
+        data = node.data.items.data[0]
+        if re.match(regex, tag):
+            item.set_value(data.value)
+    except (IndexError, AttributeError):
+        return None
+    finally:
+        if re.match(regex, tag):
+            item.label = node.data.label
+            item.order = order
+
+
+def set_view_item_regex(
+    item: stockNumeric, node: Node, regex: str, context_regex: Optional[str] = None
+):
+    """ix_view項目を設定する
+
+    Args:
+        item (stockNumeric): 項目
+        node (Node): ノード
+        regex (str): 正規表現
+    """
+    if node.tag == "root":
+        return None
+
+    try:
+        tag = node.tag
+        dataLst = node.data.items.data
+        if isinstance(dataLst, list):
+            for data in dataLst:
+                context = data.context
+                if re.match(regex, tag) and re.match(context_regex, context):
+                    item.set_value(data.value)
+                    item.scale = data.display_scale
+                    item.numeric = data.numeric
+    except (IndexError, AttributeError) as e:
+        return None
+    finally:
+        if re.match(regex, tag):
+            item.label = node.data.label
+            item.order = node.data.order
+
+
+def set_view_abstract_regex(item: abstractBase, node: Node, regex: str):
+    """ix_view概要を設定する
+
+    Args:
+        item (abstractBase): 概要
+        node (Node): ノード
+        regex (str): 正規表現
+    """
+    if node.tag == "root" or node.data.items is not None:
+        return None
+    tag = node.tag
+    order = node.data.order
+    label = node.data.label
+
+    if re.match(regex, tag):
+        item.order = order
+        item.Label = label
