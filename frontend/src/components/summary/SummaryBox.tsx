@@ -17,6 +17,8 @@ const SummaryBox: React.FC<SummaryBoxProps> = ({ xbrl_id, ...props }) => {
       XbrlViewService.readSummaryItemByXbrlId({
         xbrlId: xbrl_id,
       }),
+    staleTime: 1000 * 60 * 60 * 24 * 7,
+    gcTime: 1000 * 60 * 60 * 24 * 30,
   });
 
   if (status === "error") {

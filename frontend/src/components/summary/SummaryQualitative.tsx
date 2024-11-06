@@ -33,6 +33,8 @@ const SummaryQualitative: React.FC<SummaryQualitativeProps> = ({
       XbrlQualitativeService.readIxQualitativeItem({
         xbrlId: xbrl_id,
       }),
+    staleTime: 1000 * 60 * 60 * 24 * 7,
+    gcTime: 1000 * 60 * 60 * 24 * 30,
   });
 
   if (status === "error") {
