@@ -77,7 +77,9 @@ def is_ix_head_title_item_exists(*, session: SessionDep, xbrl_id: str) -> Any:
     """
     Check if item exists.
     """
-    statement = select(IxHeadTitle).where(IxHeadTitle.xbrl_id == xbrl_id)
+    statement = select(IxHeadTitle).where(
+        IxHeadTitle.xbrl_id == xbrl_id, IxHeadTitle.is_active == True
+    )
     result = session.exec(statement)
     item_exists = result.first()
 
@@ -113,7 +115,7 @@ def get_count_report_type(
         select(
             IxHeadTitle.report_type, func.count(IxHeadTitle.report_type).label("count")
         )
-        .where(IxHeadTitle.reporting_date == date)
+        .where(IxHeadTitle.reporting_date == date, IxHeadTitle.is_active == True)
         .group_by(IxHeadTitle.report_type)
     )
     result = session.exec(statement)
@@ -229,7 +231,7 @@ def select_ix_head_title_items(
 
     statement = (
         select(IxHeadTitle)
-        .where(IxHeadTitle.reporting_date == date)
+        .where(IxHeadTitle.reporting_date == date, IxHeadTitle.is_active == True)
         .order_by(IxHeadTitle.securities_code)
     )
     result = session.exec(statement)
