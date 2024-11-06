@@ -1,12 +1,11 @@
 from typing import Any
 
-from fastapi import APIRouter, HTTPException
-from sqlalchemy.exc import IntegrityError
-from sqlmodel import select
-
 import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import ScLinkBaseRef
+from fastapi import APIRouter, HTTPException, Query
+from sqlalchemy.exc import IntegrityError
+from sqlmodel import select
 
 router = APIRouter()
 
@@ -60,7 +59,9 @@ def create_ix_schema_linkbase_items_exists(
     except IntegrityError as e:
         session.rollback()
         if "foreign key constraint" in str(e):
-            raise HTTPException(status_code=400, detail="Foreign key constraint violated")
+            raise HTTPException(
+                status_code=400, detail="Foreign key constraint violated"
+            )
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
     return "Items already exists"
@@ -76,6 +77,24 @@ def is_ix_schema_item_exists(*, session: SessionDep, xbrl_id: str) -> Any:
     item_exists = result.first()
 
     if item_exists:
+        return True
+
+    return False
+
+
+@router.delete("/schema/linkbase/delete/", response_model=bool)
+def delete_ix_schema_item(*, session: SessionDep, xbrl_id: str = Query(...)) -> Any:
+    """
+    Delete item.
+    """
+    statement = select(ScLinkBaseRef).where(ScLinkBaseRef.xbrl_id == xbrl_id)
+    result = session.exec(statement)
+    item_exists = result.all()
+
+    if item_exists:
+        for item in item_exists:
+            session.delete(item)
+        session.commit()
         return True
 
     return False

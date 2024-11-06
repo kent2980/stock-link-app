@@ -3,7 +3,7 @@ from typing import Any
 import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxNonFraction
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
@@ -84,6 +84,26 @@ def is_consolidated(*, session: SessionDep, xbrl_id: str) -> Any:
     item_exists = result.first()
 
     if item_exists:
+        return True
+
+    return False
+
+
+@router.delete("/ix/non_fraction/delete/", response_model=bool)
+def delete_ix_non_fraction_item(
+    *, session: SessionDep, xbrl_id: str = Query(...)
+) -> Any:
+    """
+    Delete item.
+    """
+    statement = select(IxNonFraction).where(IxNonFraction.xbrl_id == xbrl_id)
+    result = session.exec(statement)
+    items = result.all()
+
+    if items:
+        for item in items:
+            session.delete(item)
+        session.commit()
         return True
 
     return False

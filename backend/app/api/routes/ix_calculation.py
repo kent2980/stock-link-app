@@ -1,9 +1,10 @@
-from typing import Any
+from typing import Any, Optional
 
+import app.api.routes
 import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxCalculationArc, IxCalculationLoc
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
@@ -135,3 +136,45 @@ def get_ix_cal_arc_item(*, session: SessionDep, source_file_id: str) -> Any:
         return True
 
     return False
+
+
+@router.delete("/link/cal/loc/delete/", response_model=bool)
+def delete_ix_cal_loc_item(
+    *, session: SessionDep, xbrl_id: Optional[str] = Query(...)
+) -> Any:
+    """
+    Delete item.
+    """
+    statement = select(IxCalculationLoc).where(IxCalculationLoc.xbrl_id == xbrl_id)
+    result = session.exec(statement)
+    items = result.all()
+
+    if items is None:
+        return False
+
+    for item in items:
+        session.delete(item)
+    session.commit()
+
+    return True
+
+
+@router.delete("/link/cal/arc/delete/", response_model=bool)
+def delete_ix_cal_arc_item(
+    *, session: SessionDep, xbrl_id: Optional[str] = Query(...)
+) -> Any:
+    """
+    Delete item.
+    """
+    statement = select(IxCalculationArc).where(IxCalculationArc.xbrl_id == xbrl_id)
+    result = session.exec(statement)
+    items = result.all()
+
+    if items is None:
+        return False
+
+    for item in items:
+        session.delete(item)
+    session.commit()
+
+    return True

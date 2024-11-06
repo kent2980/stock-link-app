@@ -3,7 +3,7 @@ from typing import Any
 import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxDefinitionArc, IxDefinitionLoc
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
@@ -138,3 +138,43 @@ def get_ix_def_arc_item(*, session: SessionDep, source_file_id: str) -> Any:
         return True
 
     return False
+
+
+@router.delete("/link/def/loc/delete/", response_model=bool)
+def delete_ix_def_loc_item(*, session: SessionDep, xbrl_id: str = Query(...)) -> Any:
+    """
+    Delete item.
+    """
+    statement = select(IxDefinitionLoc).where(IxDefinitionLoc.xbrl_id == xbrl_id)
+    result = session.exec(statement)
+    items = result.all()
+
+    if item is None:
+        return False
+
+    for item in items:
+        session.delete(item)
+
+    session.commit()
+
+    return True
+
+
+@router.delete("/link/def/arc/delete/", response_model=bool)
+def delete_ix_def_arc_item(*, session: SessionDep, xbrl_id: str = Query(...)) -> Any:
+    """
+    Delete item.
+    """
+    statement = select(IxDefinitionArc).where(IxDefinitionArc.xbrl_id == xbrl_id)
+    result = session.exec(statement)
+    items = result.all()
+
+    if items is None:
+        return False
+
+    for item in items:
+        session.delete(item)
+
+    session.commit()
+
+    return True

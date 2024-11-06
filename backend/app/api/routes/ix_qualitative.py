@@ -1,13 +1,12 @@
 import re
 from collections import namedtuple
 
-from fastapi import APIRouter, HTTPException, Query
-from sqlmodel import select
-from treelib import Node, Tree
-
 import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxQualitative
+from fastapi import APIRouter, HTTPException, Query
+from sqlmodel import select
+from treelib import Node, Tree
 
 router = APIRouter()
 
@@ -260,3 +259,31 @@ def extract_tree_content(tree: Tree):
         forecast_info,
         segment_photo_url,
     )
+
+
+@router.delete("/qualitative/delete/", response_model=bool)
+def delete_ix_qualitative_item(
+    *, session: SessionDep, xbrl_id: str = Query(...)
+) -> bool:
+    """
+    提携情報をIxQualitativeテーブルから削除する
+
+    Raises:
+        HTTPException: アイテムが存在しない場合
+
+    Returns:
+        bool: 削除した場合はTrue
+    """
+
+    statement = select(IxQualitative).where(IxQualitative.xbrl_id == xbrl_id)
+    result = session.exec(statement).all()
+
+    if result is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+    for item in result:
+        session.delete(item)
+
+    session.commit()
+
+    return True

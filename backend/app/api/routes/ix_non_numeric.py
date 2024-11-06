@@ -1,11 +1,10 @@
 from typing import Any
 
-from fastapi import APIRouter
-from sqlmodel import select
-
 import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxNonNumeric
+from fastapi import APIRouter, Query
+from sqlmodel import select
 
 router = APIRouter()
 
@@ -66,6 +65,26 @@ def is_ix_non_numeric_item_exists(*, session: SessionDep, source_file_id: str) -
     item_exists = result.first()
 
     if item_exists:
+        return True
+
+    return False
+
+
+@router.delete("/ix/non_numeric/delete/", response_model=bool)
+def delete_ix_non_numeric_item(
+    *, session: SessionDep, xbrl_id: str = Query(...)
+) -> Any:
+    """
+    Delete item.
+    """
+    statement = select(IxNonNumeric).where(IxNonNumeric.xbrl_id == xbrl_id)
+    result = session.exec(statement)
+    items = result.all()
+
+    if items:
+        for item in items:
+            session.delete(item)
+        session.commit()
         return True
 
     return False

@@ -5,7 +5,7 @@ from typing import Any
 import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxHeadTitle
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import func, select
 
 router = APIRouter()
@@ -236,3 +236,24 @@ def select_ix_head_title_items(
     items = result.all()
 
     return sc.ix_head.IxHeadTitlesPublic(data=items, count=len(items))
+
+
+@router.delete("/ix/head/delete/", response_model=bool)
+def delete_ix_head_title_item(*, session: SessionDep, xbrl_id: str = Query(...)) -> Any:
+    """
+    Delete item.
+    """
+    statement = select(IxHeadTitle).where(IxHeadTitle.xbrl_id == xbrl_id)
+    result = session.exec(statement)
+    item = result.first()
+
+    if item is None:
+        return False
+
+    try:
+        session.delete(item)
+        session.commit()
+    except Exception:
+        raise HTTPException(status_code=400, detail="削除に失敗しました")
+
+    return True
