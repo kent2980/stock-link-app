@@ -257,3 +257,37 @@ def delete_ix_head_title_item(*, session: SessionDep, xbrl_id: str = Query(...))
         raise HTTPException(status_code=400, detail="削除に失敗しました")
 
     return True
+
+
+@router.put("/ix/head/active/", response_model=bool)
+def active_ix_head_title_item(*, session: SessionDep, xbrl_id: str = Query(...)) -> Any:
+    """
+    Active item.
+    """
+    statement = select(IxHeadTitle).where(IxHeadTitle.xbrl_id == xbrl_id)
+    result = session.exec(statement)
+    item = result.first()
+
+    if item is None:
+        return False
+
+    item.is_active = True
+    session.add(item)
+    session.commit()
+
+    return True
+
+
+@router.get("/ix/head/is_active/", response_model=bool)
+def is_ix_head_title_item_active(*, session: SessionDep, xbrl_id: str) -> Any:
+    """
+    Check if item is active.
+    """
+    statement = select(IxHeadTitle).where(IxHeadTitle.xbrl_id == xbrl_id)
+    result = session.exec(statement)
+    item = result.first()
+
+    if item.is_active:
+        return True
+
+    return False

@@ -1,8 +1,8 @@
 """Ix init
 
-Revision ID: 71b6e8cdf439
+Revision ID: 516043f4c7b6
 Revises: 1a31ce608336
-Create Date: 2024-11-06 20:28:49.332520
+Create Date: 2024-11-07 01:20:06.982982
 
 """
 from alembic import op
@@ -11,7 +11,7 @@ import sqlmodel.sql.sqltypes
 
 
 # revision identifiers, used by Alembic.
-revision = '71b6e8cdf439'
+revision = '516043f4c7b6'
 down_revision = '1a31ce608336'
 branch_labels = None
 depends_on = None
@@ -75,6 +75,7 @@ def upgrade():
     sa.Column('dividend_increase_rate', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('is_earnings_forecast_revision', sa.Boolean(), nullable=True),
     sa.Column('forecast_ordinary_income_growth_rate', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+    sa.Column('is_active', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['xbrl_id'], ['ix_file_path.xbrl_id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('item_key'),

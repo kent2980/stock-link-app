@@ -149,7 +149,7 @@ def delete_ix_def_loc_item(*, session: SessionDep, xbrl_id: str = Query(...)) ->
     result = session.exec(statement)
     items = result.all()
 
-    if item is None:
+    if items is None:
         return False
 
     for item in items:

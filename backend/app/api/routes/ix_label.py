@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, List
 
 import app.schema as sc
 from app.api.deps import SessionDep
@@ -194,3 +194,69 @@ def get_ix_label_value_item(*, session: SessionDep, source_file_id: str) -> Any:
         return True
 
     return False
+
+
+@router.delete("/link/lab/loc/delete/", response_model=bool)
+def delete_ix_label_loc_item(
+    *, session: SessionDep, source_file_id_list: List[str]
+) -> bool:
+    """
+    Delete item.
+    """
+    for source_file_id in source_file_id_list:
+        statement = select(IxLabelLoc).where(
+            IxLabelLoc.source_file_id == source_file_id
+        )
+        result = session.exec(statement)
+        items = result.all()
+
+        if items:
+            for item in items:
+                session.delete(item)
+            session.commit()
+
+    return True
+
+
+@router.delete("/link/lab/arc/delete/", response_model=bool)
+def delete_ix_label_arc_item(
+    *, session: SessionDep, source_file_id_list: List[str]
+) -> bool:
+    """
+    Delete item.
+    """
+    for source_file_id in source_file_id_list:
+        statement = select(IxLabelArc).where(
+            IxLabelArc.source_file_id == source_file_id
+        )
+        result = session.exec(statement)
+        items = result.all()
+
+        if items:
+            for item in items:
+                session.delete(item)
+            session.commit()
+
+    return True
+
+
+@router.delete("/link/lab/value/delete/", response_model=bool)
+def delete_ix_label_value_item(
+    *, session: SessionDep, source_file_id_list: List[str]
+) -> bool:
+    """
+    Delete item.
+    """
+    for source_file_id in source_file_id_list:
+        statement = select(IxLabelValue).where(
+            IxLabelValue.source_file_id == source_file_id
+        )
+        result = session.exec(statement)
+        items = result.all()
+
+        if items:
+            for item in items:
+                session.delete(item)
+            session.commit()
+
+    return True

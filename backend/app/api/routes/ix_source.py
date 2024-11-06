@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, List
 
 import app.schema as sc
 from app.api.deps import SessionDep
@@ -105,12 +105,26 @@ def delete_ix_source_file_item(
     """
     statement = select(IxSourceFile).where(IxSourceFile.xbrl_id == xbrl_id)
     result = session.exec(statement)
-    item_exists = result.all()
+    items = result.all()
 
-    if item_exists:
-        for item in item_exists:
+    if items:
+        for item in items:
             session.delete(item)
         session.commit()
         return True
 
     return False
+
+
+@router.get("/source/id_list/", response_model=List[str])
+def get_ix_source_file_id_list(
+    *, session: SessionDep, xbrl_id: str = Query(...)
+) -> Any:
+    """
+    Get item.
+    """
+    statement = select(IxSourceFile).where(IxSourceFile.xbrl_id == xbrl_id)
+    result = session.exec(statement)
+    items = result.all()
+
+    return [item.id for item in items]

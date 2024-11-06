@@ -234,6 +234,7 @@ class IxHeadTitle(XbrlBase, table=True):
     forecast_ordinary_income_growth_rate: Optional[str] = Field(
         default=None, description="予想経常利益増益率"
     )
+    is_active: bool = Field(default=False, nullable=False, description="有効フラグ")
 
 
 class IxCalculationLoc(IxLocsBase, table=True):
