@@ -4,15 +4,14 @@ import itertools
 import re
 from typing import Any, Dict, List, Optional
 
-from fastapi import APIRouter, Query
-from sqlmodel import select
-from treelib import Node, Tree
-
 import app.crud as crud
 import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxHeadTitle
 from app.schema.ix_view import abstractBase, stock, stockNumeric
+from fastapi import APIRouter, Query
+from sqlmodel import select
+from treelib import Node, Tree
 
 router = APIRouter()
 
@@ -33,7 +32,7 @@ def read_head_items(
     """
 
     # 銘柄コードからXBRLファイルのIDを抽出
-    statement = select(IxHeadTitle)
+    statement = select(IxHeadTitle).where(IxHeadTitle.is_active == True)
     statement = statement.order_by(IxHeadTitle.reporting_date.desc())
     if code:
         statement = statement.where(IxHeadTitle.securities_code == code)
@@ -58,7 +57,9 @@ def read_head_item(
         xbrl_id (str): XBRLファイルのID
     """
 
-    statement = select(IxHeadTitle).where(IxHeadTitle.xbrl_id == xbrl_id)
+    statement = select(IxHeadTitle).where(
+        IxHeadTitle.xbrl_id == xbrl_id, IxHeadTitle.is_active == True
+    )
     items = session.exec(statement).first()
 
     return items
