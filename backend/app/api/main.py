@@ -1,6 +1,7 @@
 from app.api.routes import (
     items,
     ix_calculation,
+    ix_check,
     ix_definition,
     ix_file_path,
     ix_head_title,
@@ -20,6 +21,7 @@ from fastapi import APIRouter
 
 api_router = APIRouter()
 api_router.include_router(ix_view.router, prefix="/xbrl/view", tags=["xbrl_view"])
+api_router.include_router(ix_check.router, prefix="/xbrl/check", tags=["xbrl_check"])
 api_router.include_router(ix_head_title.router, prefix="/xbrl", tags=["xbrl_ix_head"])
 api_router.include_router(ix_non_numeric.router, prefix="/xbrl", tags=["xbrl_ix"])
 api_router.include_router(ix_non_fraction.router, prefix="/xbrl", tags=["xbrl_ix"])

@@ -1,11 +1,9 @@
 from typing import Any, Optional
 
-import app.api.routes
 import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxCalculationArc, IxCalculationLoc
 from fastapi import APIRouter, HTTPException, Query
-from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
 router = APIRouter()

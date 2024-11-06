@@ -183,6 +183,18 @@ class IxArcsBase(XbrlBase):
     xlink_to: Optional[str] = Field(default=None)
 
 
+class IxFilePath(XbrlBase, table=True):
+    """ソースファイルのパス情報を表すクラス"""
+
+    __tablename__ = "ix_file_path"
+
+    xbrl_id: str = Field(
+        max_length=36,
+        unique=True,
+    )
+    path: str = Field(default=None)
+
+
 class IxHeadTitle(XbrlBase, table=True):
     """Class representing iXBRL header information"""
 
@@ -193,7 +205,7 @@ class IxHeadTitle(XbrlBase, table=True):
     document_name: Optional[str] = Field(max_length=255, description="書類名")
     reporting_date: date = Field(description="報告日")
     current_period: Optional[str] = Field(max_length=255, description="決算期")
-    xbrl_id: str = Field(max_length=36, unique=True)
+    xbrl_id: str = Field(max_length=36, unique=True, foreign_key="ix_file_path.xbrl_id")
     report_type: Optional[str] = Field(max_length=4, description="報告書種別")
     listed_market: Optional[str] = Field(default=None, description="上場市場")
     market_section: Optional[str] = Field(default=None, description="市場区分")
@@ -222,17 +234,6 @@ class IxHeadTitle(XbrlBase, table=True):
     forecast_ordinary_income_growth_rate: Optional[str] = Field(
         default=None, description="予想経常利益増益率"
     )
-
-
-class IxFilePath(XbrlBase, table=True):
-    """ソースファイルのパス情報を表すクラス"""
-
-    __tablename__ = "ix_file_path"
-
-    xbrl_id: str = Field(
-        max_length=36, unique=True, foreign_key="ix_head_title.xbrl_id"
-    )
-    path: str = Field(default=None)
 
 
 class IxCalculationLoc(IxLocsBase, table=True):
