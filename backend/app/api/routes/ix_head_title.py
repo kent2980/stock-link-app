@@ -294,8 +294,9 @@ def is_ix_head_title_item_active(*, session: SessionDep, head_item_key: str) -> 
     result = session.exec(statement)
     item = result.first()
 
-    if item.is_active:
-        return True
+    if item:
+        if item.is_active:
+            return True
 
     return False
 

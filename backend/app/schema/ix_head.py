@@ -8,10 +8,10 @@ class IxHeadTitlePublic(SQLModel):
     """iXBRLのヘッダー情報を表すクラス"""
 
     item_key: str
-    company_name: str
-    securities_code: str
-    document_name: str
-    reporting_date: datetime.date
+    company_name: Optional[str]
+    securities_code: Optional[str]
+    document_name: Optional[str]
+    reporting_date: Optional[datetime.date]
     current_period: Optional[str]
     report_type: Optional[str]
     listed_market: Optional[str]
