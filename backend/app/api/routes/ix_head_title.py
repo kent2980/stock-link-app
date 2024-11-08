@@ -1,10 +1,11 @@
 import datetime
 import re
-from typing import Any
+from decimal import Decimal
+from typing import Any, Optional
 
 import app.schema as sc
 from app.api.deps import SessionDep
-from app.models import IxHeadTitle
+from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import func, select
 
@@ -33,7 +34,7 @@ def create_ix_head_title_item_exists(
     """
     Create new item.
     """
-    statement = select(IxHeadTitle).where(IxHeadTitle.xbrl_id == item_in.xbrl_id)
+    statement = select(IxHeadTitle).where(IxHeadTitle.item_key == item_in.item_key)
     result = session.exec(statement)
     item_exists = result.first()
 
@@ -44,7 +45,7 @@ def create_ix_head_title_item_exists(
         session.refresh(new_item)
         return f"Item {new_item.name} created"
 
-    return f"Item {item_in.name} already exists for xbrl_id {item_in.xbrl_id}"
+    return f"Item {item_in.name} already exists for head_item_key {item_in.item_key}"
 
 
 @router.post("/ix/head/list/", response_model=str)
@@ -56,7 +57,7 @@ def create_ix_head_title_items_exists(
     """
     new_items = []
     for item in items_in.data:
-        statement = select(IxHeadTitle).where(IxHeadTitle.xbrl_id == item.xbrl_id)
+        statement = select(IxHeadTitle).where(IxHeadTitle.item_key == item.item_key)
         result = session.exec(statement)
         item_exists = result.first()
 
@@ -72,13 +73,13 @@ def create_ix_head_title_items_exists(
     return "Items already exists"
 
 
-@router.get("/ix/head/is/{xbrl_id}/", response_model=bool)
-def is_ix_head_title_item_exists(*, session: SessionDep, xbrl_id: str) -> Any:
+@router.get("/ix/head/is/{head_item_key}/", response_model=bool)
+def is_ix_head_title_item_exists(*, session: SessionDep, head_item_key: str) -> Any:
     """
     Check if item exists.
     """
     statement = select(IxHeadTitle).where(
-        IxHeadTitle.xbrl_id == xbrl_id, IxHeadTitle.is_active == True
+        IxHeadTitle.item_key == head_item_key, IxHeadTitle.is_active == True
     )
     result = session.exec(statement)
     item_exists = result.first()
@@ -241,11 +242,13 @@ def select_ix_head_title_items(
 
 
 @router.delete("/ix/head/delete/", response_model=bool)
-def delete_ix_head_title_item(*, session: SessionDep, xbrl_id: str = Query(...)) -> Any:
+def delete_ix_head_title_item(
+    *, session: SessionDep, head_item_key: str = Query(...)
+) -> Any:
     """
     Delete item.
     """
-    statement = select(IxHeadTitle).where(IxHeadTitle.xbrl_id == xbrl_id)
+    statement = select(IxHeadTitle).where(IxHeadTitle.item_key == head_item_key)
     result = session.exec(statement)
     item = result.first()
 
@@ -262,11 +265,13 @@ def delete_ix_head_title_item(*, session: SessionDep, xbrl_id: str = Query(...))
 
 
 @router.put("/ix/head/active/", response_model=bool)
-def active_ix_head_title_item(*, session: SessionDep, xbrl_id: str = Query(...)) -> Any:
+def active_ix_head_title_item(
+    *, session: SessionDep, head_item_key: str = Query(...)
+) -> Any:
     """
     Active item.
     """
-    statement = select(IxHeadTitle).where(IxHeadTitle.xbrl_id == xbrl_id)
+    statement = select(IxHeadTitle).where(IxHeadTitle.item_key == head_item_key)
     result = session.exec(statement)
     item = result.first()
 
@@ -281,11 +286,11 @@ def active_ix_head_title_item(*, session: SessionDep, xbrl_id: str = Query(...))
 
 
 @router.get("/ix/head/is_active/", response_model=bool)
-def is_ix_head_title_item_active(*, session: SessionDep, xbrl_id: str) -> Any:
+def is_ix_head_title_item_active(*, session: SessionDep, head_item_key: str) -> Any:
     """
     Check if item is active.
     """
-    statement = select(IxHeadTitle).where(IxHeadTitle.xbrl_id == xbrl_id)
+    statement = select(IxHeadTitle).where(IxHeadTitle.item_key == head_item_key)
     result = session.exec(statement)
     item = result.first()
 
@@ -293,3 +298,117 @@ def is_ix_head_title_item_active(*, session: SessionDep, xbrl_id: str) -> Any:
         return True
 
     return False
+
+
+@router.get("/ix/head/generate/")
+def generate_ix_head_title_item(
+    *, session: SessionDep, head_item_key: Optional[str] = Query(None)
+) -> Any:
+    """
+    Extraction item.
+    """
+    if head_item_key is None:
+        statement = select(IxHeadTitle.item_key).where(
+            IxHeadTitle.is_active == True, IxHeadTitle.is_generated == False
+        )
+        result = session.exec(statement)
+        head_item_key_list = result.all()
+    else:
+        head_item_key_list = [head_item_key]
+
+    for head_item_key_item in head_item_key_list:
+        results = {}
+        context = {}
+        period = find_ix_non_num(session, head_item_key_item, "TypeOfCurrentPeriod")
+        if period is None:
+            continue
+
+        if period == "FY":
+            context["result"] = ("Current", "Result")
+            context["forecast"] = ("Next", "Forecast")
+        else:
+            context["result"] = ("Current", "Result")
+            context["forecast"] = ("Current", "Forecast")
+
+        # region 経常利益進捗率
+        name = "\_OrdinaryIncome"
+        ord_res = find_ix_non_frac(
+            session,
+            head_item_key_item,
+            name,
+            context["result"][0],
+            context["result"][1],
+        )
+        ord_fore = find_ix_non_frac(
+            session,
+            head_item_key_item,
+            name,
+            context["forecast"][0],
+            context["forecast"][1],
+        )
+        try:
+            print(ord_res, ord_fore)
+            if ord_res > 0 | ord_fore > 0:
+                results["oi_prog_rt"] = round(ord_res / ord_fore * 100, 1)
+        except ZeroDivisionError:
+            continue
+        except TypeError:
+            continue
+        if results["oi_prog_rt"] > 100 | results["oi_prog_rt"] < 0:
+            print(ord_res, ord_fore)
+        # endregion
+
+        statement = select(IxHeadTitle).where(
+            IxHeadTitle.item_key == head_item_key_item
+        )
+        result = session.exec(statement)
+        item = result.first()
+
+        if item is None:
+            continue
+
+        item.oi_prog_rt = results["oi_prog_rt"]
+        session.add(item)
+        session.commit()
+
+    return True
+
+
+def find_ix_non_num(
+    session: SessionDep, head_item_key: str, name: str
+) -> Optional[str]:
+    """
+    Search item.
+    """
+    statement = select(IxNonNumeric).where(
+        IxNonNumeric.head_item_key == head_item_key,
+        IxNonNumeric.name.ilike(f"%{name}%"),
+    )
+    result = session.exec(statement)
+    item = result.first()
+
+    if item:
+        return item.value
+
+    return None
+
+
+def find_ix_non_frac(
+    session: SessionDep, head_item_key: str, name: str, *context: str
+) -> Optional[Decimal]:
+    """
+    Search item.
+    """
+    statement = select(IxNonFraction).where(
+        IxNonFraction.head_item_key == head_item_key,
+        IxNonFraction.name.ilike(f"%{name}%"),
+    )
+    for item in context:
+        statement = statement.where(IxNonFraction.context.ilike(f"%{item}%"))
+    result = session.exec(statement)
+    item = result.first()
+
+    if item:
+        return item.numeric
+
+    return None

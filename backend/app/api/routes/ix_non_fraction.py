@@ -38,7 +38,7 @@ def create_ix_non_fraction_items_exists(
         statement = select(IxNonFraction).where(
             IxNonFraction.context == item.context,
             IxNonFraction.name == item.name,
-            IxNonFraction.xbrl_id == item.xbrl_id,
+            IxNonFraction.head_item_key == item.head_item_key,
         )
         result = session.exec(statement)
         item_exists = result.first()
@@ -72,13 +72,14 @@ def is_ix_non_fraction_item_exists(*, session: SessionDep, source_file_id: str) 
     return False
 
 
-@router.get("/isConsolidated/{xbrl_id}/", response_model=bool)
-def is_consolidated(*, session: SessionDep, xbrl_id: str) -> Any:
+@router.get("/isConsolidated/{head_item_key}/", response_model=bool)
+def is_consolidated(*, session: SessionDep, head_item_key: str) -> Any:
     """
     Check if item exists.
     """
     statement = select(IxNonFraction).where(
-        IxNonFraction.xbrl_id == xbrl_id, IxNonFraction.context.like("%_Consolidated%")
+        IxNonFraction.head_item_key == head_item_key,
+        IxNonFraction.context.like("%_Consolidated%"),
     )
     result = session.exec(statement)
     item_exists = result.first()
@@ -91,12 +92,14 @@ def is_consolidated(*, session: SessionDep, xbrl_id: str) -> Any:
 
 @router.delete("/ix/non_fraction/delete/", response_model=bool)
 def delete_ix_non_fraction_item(
-    *, session: SessionDep, xbrl_id: str = Query(...)
+    *, session: SessionDep, head_item_key: str = Query(...)
 ) -> Any:
     """
     Delete item.
     """
-    statement = select(IxNonFraction).where(IxNonFraction.xbrl_id == xbrl_id)
+    statement = select(IxNonFraction).where(
+        IxNonFraction.head_item_key == head_item_key
+    )
     result = session.exec(statement)
     items = result.all()
 

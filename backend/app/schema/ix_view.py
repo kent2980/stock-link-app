@@ -3,17 +3,16 @@ import re
 from decimal import Decimal
 from typing import List, Optional, Union
 
-from pydantic import BaseModel, validator
-
 import app.schema as sc
 from app.models import Field, SQLModel
+from pydantic import BaseModel, validator
 
 
 # region /stock/all endpoint
 class StockRecordInfo(SQLModel):
     """iXBRLのヘッダー情報を表すクラス"""
 
-    xbrl_id: str = Field(default=None, description="iXBRLのソースID")
+    head_item_key: str = Field(default=None, description="iXBRLのソースID")
     company_name: str = Field(default=None, description="上場会社名")
     securities_code: str = Field(default=None, description="証券コード")
     current_period: Optional[str] = Field(default=None, description="四半期")
@@ -41,7 +40,7 @@ class StockRecordInfos(SQLModel):
 class HeadItem(SQLModel):
     """iXBRLのソースID情報を表すクラス"""
 
-    xbrl_id: str
+    head_item_key: str
     company_name: str
     securities_code: str
     document_name: str

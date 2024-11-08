@@ -12,7 +12,9 @@ class IxQualitativeCreate(SQLModel):
     type: Optional[str] = Field(default=None, max_length=255, description="タイプ")
     content: Optional[str] = Field(default=None, description="内容")
     order: Optional[int] = Field(default=None, description="順序")
-    xbrl_id: Optional[str] = Field(default=None, max_length=36, description="XBRL-ID")
+    head_item_key: Optional[str] = Field(
+        default=None, max_length=36, description="XBRL-ID"
+    )
     source_file_id: Optional[str] = Field(
         default=None, max_length=36, description="ソースファイルID"
     )
@@ -33,7 +35,7 @@ class IxQualitativePublic(SQLModel):
     type: Optional[str]
     content: Optional[str]
     order: Optional[int]
-    xbrl_id: Optional[str]
+    head_item_key: Optional[str]
     photo_url: Optional[str]
 
 

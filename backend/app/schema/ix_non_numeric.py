@@ -7,7 +7,7 @@ class IxNonNumericCreate(SQLModel):
     """iXBRLの非数値情報を表すクラス"""
 
     item_key: Optional[str] = Field(max_length=36, min_length=36)
-    xbrl_id: str = Field(max_length=255)
+    head_item_key: str = Field(max_length=255)
     context: Optional[str] = Field(max_length=255)
     name: str = Field(default=None)
     xsi_nil: Optional[bool] = Field(default=None)
@@ -23,7 +23,7 @@ class IxNonNumericCreate(SQLModel):
 class IxNonNumericPublic(SQLModel):
     """iXBRLの非数値情報を表すクラス"""
 
-    xbrl_id: Optional[str]
+    head_item_key: Optional[str]
     context: str
     name: str
     xsi_nil: Optional[bool]

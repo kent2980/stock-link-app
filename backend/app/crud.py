@@ -149,7 +149,7 @@ T1 = TypeVar("T1", bound=IxArcsBase)
 T2 = TypeVar("T2", bound=IxLocsBase)
 
 
-def read_menu_label(session: Session, xbrl_id: str, type: str):
+def read_menu_label(session: Session, head_item_key: str, type: str):
     abr = aliased(ScLinkBaseRef)
     ida = aliased(IxDefinitionArc)
     idl = aliased(IxDefinitionLoc)
@@ -164,9 +164,9 @@ def read_menu_label(session: Session, xbrl_id: str, type: str):
         "sm": "http://www.xbrl.org/2003/role/label",
         "fr": "http://www.xbrl.org/2003/role/verboseLabel",
     }
-    # xbrl_idからサブタイトルを抽出
+    # head_item_keyからサブタイトルを抽出
     statement = (
-        select(abr.xbrl_id, ida.xlink_from, idl.xlink_href)
+        select(abr.head_item_key, ida.xlink_from, idl.xlink_href)
         .join(ida, abr.href_source_file_id == ida.source_file_id)
         .join(
             idl,
@@ -176,7 +176,7 @@ def read_menu_label(session: Session, xbrl_id: str, type: str):
             ),
         )
         .where(
-            abr.xbrl_id == xbrl_id,
+            abr.head_item_key == head_item_key,
             abr.xbrl_type == type,
             ida.xlink_arcrole.in_(arcrole),
         )
@@ -185,7 +185,7 @@ def read_menu_label(session: Session, xbrl_id: str, type: str):
     subquery = statement.subquery()
     statement2 = (
         select(subquery.c.xlink_href, ilv.label)
-        .join(abr, subquery.c.xbrl_id == abr.xbrl_id)
+        .join(abr, subquery.c.head_item_key == abr.head_item_key)
         .join(
             ill,
             and_(
@@ -216,7 +216,7 @@ def read_menu_label(session: Session, xbrl_id: str, type: str):
 
 
 def read_menu_items(
-    session: Session, xbrl_id: str, xbrl_type: str
+    session: Session, head_item_key: str, xbrl_type: str
 ) -> sc.ix_global.MenuItems:
     """メニューアイテムを取得する"""
 
@@ -241,14 +241,14 @@ def read_menu_items(
         )
         .join(
             IxDefinitionLoc,
-            (IxDefinitionArc.xbrl_id == IxDefinitionLoc.xbrl_id)
+            (IxDefinitionArc.head_item_key == IxDefinitionLoc.head_item_key)
             & (IxDefinitionArc.xlink_from == IxDefinitionLoc.xlink_label)
             & (IxDefinitionArc.attr_value == IxDefinitionLoc.attr_value),
             isouter=True,
         )
         .join(
             idl,
-            (IxDefinitionArc.xbrl_id == idl.xbrl_id)
+            (IxDefinitionArc.head_item_key == idl.head_item_key)
             & (IxDefinitionArc.xlink_to == idl.xlink_label)
             & (IxDefinitionArc.attr_value == idl.attr_value),
             isouter=True,
@@ -259,7 +259,7 @@ def read_menu_items(
             & (ScLinkBaseRef.xbrl_type == xbrl_type),
         )
         .where(
-            IxDefinitionArc.xbrl_id == xbrl_id,
+            IxDefinitionArc.head_item_key == head_item_key,
             IxDefinitionArc.xlink_arcrole
             != "http://www.xbrl.org/2003/arcrole/general-special",
         )
@@ -321,7 +321,7 @@ def read_menu_items(
 
 
 def read_finance_item(
-    session: Session, xbrl_id: str, xbrl_type: str
+    session: Session, head_item_key: str, xbrl_type: str
 ) -> Optional[sc.ix_global.IxViewFinances]:
     """財務情報を取得"""
 
@@ -329,7 +329,7 @@ def read_finance_item(
 
     # region 非分数データの取得
     infQuery = select(IxNonFraction).where(
-        IxNonFraction.xbrl_id == xbrl_id,
+        IxNonFraction.head_item_key == head_item_key,
         IxNonFraction.xbrl_type == xbrl_type,
         IxNonFraction.xsi_nil == False,
     )
@@ -351,7 +351,7 @@ def read_finance_item(
 
     # region 非数値データの取得
     innQuery = select(IxNonNumeric).where(
-        IxNonNumeric.xbrl_id == xbrl_id,
+        IxNonNumeric.head_item_key == head_item_key,
         IxNonNumeric.xbrl_type == xbrl_type,
         IxNonNumeric.xsi_nil == False,
         not_(
@@ -379,7 +379,7 @@ def read_finance_item(
 
 def read_finance_item_label(
     session: Session,
-    xbrl_id: str,
+    head_item_key: str,
     xbrl_type: str,
     name: str,
 ) -> str:
@@ -401,7 +401,7 @@ def read_finance_item_label(
         )
         .join(
             ScLinkBaseRef,
-            (ScLinkBaseRef.xbrl_id == xbrl_id)
+            (ScLinkBaseRef.head_item_key == head_item_key)
             & (ScLinkBaseRef.xbrl_type == xbrl_type)
             & (IxLabelValue.source_file_id == ScLinkBaseRef.href_source_file_id),
         )
@@ -423,7 +423,7 @@ def read_finance_item_label(
 
 def read_finance_item_labels(
     session: Session,
-    xbrl_id: str,
+    head_item_key: str,
     xbrl_type: str,
     names: List[str],
 ) -> sc.ix_global.TreeLabels:
@@ -445,7 +445,7 @@ def read_finance_item_labels(
         )
         .join(
             ScLinkBaseRef,
-            (ScLinkBaseRef.xbrl_id == xbrl_id)
+            (ScLinkBaseRef.head_item_key == head_item_key)
             & (ScLinkBaseRef.xbrl_type == xbrl_type)
             & (IxLabelValue.source_file_id == ScLinkBaseRef.href_source_file_id),
         )
@@ -467,11 +467,11 @@ def read_finance_item_labels(
     # endregion
 
 
-def is_specific(session: Session, xbrl_id: str):
+def is_specific(session: Session, head_item_key: str):
     """特定事業会社かどうかを取得"""
 
     statement = select(IxNonNumeric.value).where(
-        IxNonNumeric.xbrl_id == xbrl_id,
+        IxNonNumeric.head_item_key == head_item_key,
         IxNonNumeric.name == "tse-ed-t_SpecificBusiness",
     )
     result = session.exec(statement).first()
@@ -482,11 +482,11 @@ def is_specific(session: Session, xbrl_id: str):
         return False
 
 
-def get_accounting_standard(session: Session, xbrl_id: str):
+def get_accounting_standard(session: Session, head_item_key: str):
     """会計基準を取得"""
 
     statement = select(IxNonNumeric.value).where(
-        IxNonNumeric.xbrl_id == xbrl_id,
+        IxNonNumeric.head_item_key == head_item_key,
         IxNonNumeric.name == "jpdei_cor_AccountingStandardsDEI",
     )
     result = session.exec(statement).first()
@@ -494,7 +494,7 @@ def get_accounting_standard(session: Session, xbrl_id: str):
     return result
 
 
-def get_tree_items(*, session: Session, xbrl_id: str, xbrl_type: str) -> List:
+def get_tree_items(*, session: Session, head_item_key: str, xbrl_type: str) -> List:
     """ツリーアイテムを取得する"""
 
     NonFrac = aliased(IxNonFraction)
@@ -502,6 +502,6 @@ def get_tree_items(*, session: Session, xbrl_id: str, xbrl_type: str) -> List:
 
     # 非分数データの取得
     statement = select(NonFrac).where(
-        NonFrac.xbrl_id == xbrl_id,
+        NonFrac.head_item_key == head_item_key,
         NonFrac.xbrl_type == xbrl_type,
     )

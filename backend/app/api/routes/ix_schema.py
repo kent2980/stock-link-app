@@ -39,7 +39,7 @@ def create_ix_schema_linkbase_items_exists(
         for item in items_in.data:
             statement = select(ScLinkBaseRef).where(
                 ScLinkBaseRef.xlink_href == item.xlink_href,
-                ScLinkBaseRef.xbrl_id == item.xbrl_id,
+                ScLinkBaseRef.head_item_key == item.head_item_key,
                 ScLinkBaseRef.href_source_file_id == item.href_source_file_id,
                 ScLinkBaseRef.source_file_id == item.source_file_id,
                 ScLinkBaseRef.xbrl_type == item.xbrl_type,
@@ -67,12 +67,14 @@ def create_ix_schema_linkbase_items_exists(
     return "Items already exists"
 
 
-@router.get("/schema/linkbase/is/{xbrl_id}/", response_model=bool)
-def is_ix_schema_item_exists(*, session: SessionDep, xbrl_id: str) -> Any:
+@router.get("/schema/linkbase/is/{head_item_key}/", response_model=bool)
+def is_ix_schema_item_exists(*, session: SessionDep, head_item_key: str) -> Any:
     """
     Check if item exists.
     """
-    statement = select(ScLinkBaseRef).where(ScLinkBaseRef.xbrl_id == xbrl_id)
+    statement = select(ScLinkBaseRef).where(
+        ScLinkBaseRef.head_item_key == head_item_key
+    )
     result = session.exec(statement)
     item_exists = result.first()
 
@@ -83,11 +85,15 @@ def is_ix_schema_item_exists(*, session: SessionDep, xbrl_id: str) -> Any:
 
 
 @router.delete("/schema/linkbase/delete/", response_model=bool)
-def delete_ix_schema_item(*, session: SessionDep, xbrl_id: str = Query(...)) -> Any:
+def delete_ix_schema_item(
+    *, session: SessionDep, head_item_key: str = Query(...)
+) -> Any:
     """
     Delete item.
     """
-    statement = select(ScLinkBaseRef).where(ScLinkBaseRef.xbrl_id == xbrl_id)
+    statement = select(ScLinkBaseRef).where(
+        ScLinkBaseRef.head_item_key == head_item_key
+    )
     result = session.exec(statement)
     item_exists = result.all()
 

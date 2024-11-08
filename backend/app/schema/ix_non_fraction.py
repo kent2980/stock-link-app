@@ -10,7 +10,7 @@ class IxNonFractionCreate(SQLModel):
     """iXBRLの非分数情報を表すクラス"""
 
     item_key: Optional[str] = Field(max_length=36, min_length=36)
-    xbrl_id: str = Field(max_length=255)
+    head_item_key: str = Field(max_length=255)
     context: str = Field(max_length=255)
     decimals: Optional[Decimal] = Field(default=None, sa_column=Column(DECIMAL(5, 2)))
     format: Optional[str] = Field(max_length=255)
@@ -34,7 +34,7 @@ class IxNonFractionPublic(SQLModel):
     id: Optional[int]
     insert_date: datetime
     update_date: datetime
-    xbrl_id: Optional[str]
+    head_item_key: Optional[str]
     context: str
     decimals: Optional[Decimal]
     format: Optional[str]

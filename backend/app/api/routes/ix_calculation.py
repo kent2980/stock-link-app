@@ -138,12 +138,14 @@ def get_ix_cal_arc_item(*, session: SessionDep, source_file_id: str) -> Any:
 
 @router.delete("/link/cal/loc/delete/", response_model=bool)
 def delete_ix_cal_loc_item(
-    *, session: SessionDep, xbrl_id: Optional[str] = Query(...)
+    *, session: SessionDep, head_item_key: Optional[str] = Query(...)
 ) -> Any:
     """
     Delete item.
     """
-    statement = select(IxCalculationLoc).where(IxCalculationLoc.xbrl_id == xbrl_id)
+    statement = select(IxCalculationLoc).where(
+        IxCalculationLoc.head_item_key == head_item_key
+    )
     result = session.exec(statement)
     items = result.all()
 
@@ -159,12 +161,14 @@ def delete_ix_cal_loc_item(
 
 @router.delete("/link/cal/arc/delete/", response_model=bool)
 def delete_ix_cal_arc_item(
-    *, session: SessionDep, xbrl_id: Optional[str] = Query(...)
+    *, session: SessionDep, head_item_key: Optional[str] = Query(...)
 ) -> Any:
     """
     Delete item.
     """
-    statement = select(IxCalculationArc).where(IxCalculationArc.xbrl_id == xbrl_id)
+    statement = select(IxCalculationArc).where(
+        IxCalculationArc.head_item_key == head_item_key
+    )
     result = session.exec(statement)
     items = result.all()
 

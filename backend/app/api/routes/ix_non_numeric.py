@@ -36,7 +36,7 @@ def create_ix_non_numeric_items_exists(
         statement = select(IxNonNumeric).where(
             IxNonNumeric.context == item.context,
             IxNonNumeric.name == item.name,
-            IxNonNumeric.xbrl_id == item.xbrl_id,
+            IxNonNumeric.head_item_key == item.head_item_key,
         )
         result = session.exec(statement)
         item_exists = result.first()
@@ -72,12 +72,12 @@ def is_ix_non_numeric_item_exists(*, session: SessionDep, source_file_id: str) -
 
 @router.delete("/ix/non_numeric/delete/", response_model=bool)
 def delete_ix_non_numeric_item(
-    *, session: SessionDep, xbrl_id: str = Query(...)
+    *, session: SessionDep, head_item_key: str = Query(...)
 ) -> Any:
     """
     Delete item.
     """
-    statement = select(IxNonNumeric).where(IxNonNumeric.xbrl_id == xbrl_id)
+    statement = select(IxNonNumeric).where(IxNonNumeric.head_item_key == head_item_key)
     result = session.exec(statement)
     items = result.all()
 

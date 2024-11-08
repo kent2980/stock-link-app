@@ -10,7 +10,7 @@ class IxDefinitionLocCreate(SQLModel):
     """XBRLの表示リンクロケーションを表すクラス"""
 
     item_key: Optional[str] = Field(max_length=36, min_length=36)
-    xbrl_id: str = Field(foreign_key="ix_head_title.xbrl_id", nullable=False)
+    head_item_key: str = Field(foreign_key="ix_head_title.item_key", nullable=False)
     attr_value: Optional[str] = Field(max_length=255)
     xlink_href: Optional[str] = Field(nullable=False)
     xlink_type: Optional[str] = Field(max_length=255)
@@ -23,7 +23,7 @@ class IxDefinitionArcCreate(SQLModel):
     """XBRLの表示リンクアークを表すクラス"""
 
     item_key: Optional[str] = Field(max_length=36, min_length=36)
-    xbrl_id: str = Field(foreign_key="ix_head_title.xbrl_id", nullable=False)
+    head_item_key: str = Field(foreign_key="ix_head_title.item_key", nullable=False)
     attr_value: Optional[str] = Field(max_length=255)
     xlink_order: Decimal = Field(sa_column=Column(DECIMAL(5, 2)))
     xlink_weight: Optional[Decimal] = Field(
@@ -67,7 +67,7 @@ class IxDefinitionArcPublic(SQLModel):
     id: Optional[int]
     insert_date: datetime
     update_date: datetime
-    xbrl_id: Optional[str]
+    head_item_key: Optional[str]
     attr_value: Optional[str]
     xlink_order: Decimal
     xlink_weight: Optional[Decimal]
@@ -97,7 +97,7 @@ class ReadElementArc(SQLModel):
 
     id: int
     from_id: int
-    xbrl_id: str
+    head_item_key: str
     attr_value: str
     xlink_order: Decimal
     xlink_weight: Optional[Decimal]

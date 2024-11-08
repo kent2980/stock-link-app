@@ -28,24 +28,25 @@ def create_ix_file_path_item(
 def is_ix_file_path_item_exists(
     *,
     session: SessionDep,
-    xbrl_id: Optional[str] = Query(None),
+    head_item_key: Optional[str] = Query(None),
     file_path: Optional[str] = Query(None),
 ) -> Any:
-    """XBRL_IDまたは、ファイルパスを指定して、レコードが存在するか確認する"""
+    """head_item_keyまたは、ファイルパスを指定して、レコードが存在するか確認する"""
 
-    if xbrl_id is None and file_path is None:
-        raise HTTPException(
-            status_code=400, detail="XBRL_IDまたは、ファイルパスを指定してください"
-        )
-
-    if xbrl_id is not None and file_path is not None:
+    if head_item_key is None and file_path is None:
         raise HTTPException(
             status_code=400,
-            detail="XBRL_IDまたは、ファイルパスのどちらか一方を指定してください",
+            detail="head_item_keyまたは、ファイルパスを指定してください",
         )
 
-    if xbrl_id is not None:
-        statement = select(IxFilePath).where(IxFilePath.xbrl_id == xbrl_id)
+    if head_item_key is not None and file_path is not None:
+        raise HTTPException(
+            status_code=400,
+            detail="head_item_keyまたは、ファイルパスのどちらか一方を指定してください",
+        )
+
+    if head_item_key is not None:
+        statement = select(IxFilePath).where(IxFilePath.head_item_key == head_item_key)
 
     if file_path is not None:
         statement = select(IxFilePath).where(IxFilePath.path == file_path)

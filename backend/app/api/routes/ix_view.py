@@ -50,15 +50,15 @@ def read_head_items(
 def read_head_item(
     *,
     session: SessionDep,
-    xbrl_id: str = Query(...),  # XBRLファイルのID
+    head_item_key: str = Query(...),  # XBRLファイルのID
 ) -> sc.ix_view.HeadItem:
     """XBRLファイルのIDからXBRLファイルの情報を取得する
     Args:
-        xbrl_id (str): XBRLファイルのID
+        head_item_key (str): XBRLファイルのID
     """
 
     statement = select(IxHeadTitle).where(
-        IxHeadTitle.xbrl_id == xbrl_id, IxHeadTitle.is_active == True
+        IxHeadTitle.item_key == head_item_key, IxHeadTitle.is_active == True
     )
     items = session.exec(statement).first()
 
@@ -66,15 +66,15 @@ def read_head_item(
 
 
 @router.get("/summary/item/select/", response_model=sc.ix_view.SummaryItemsAbstractJp)
-def read_summary_item_by_xbrl_id(
+def read_summary_item_by_head_item_key(
     *,
     session: SessionDep,
-    xbrl_id: str = Query(...),  # XBRLファイルのID
+    head_item_key: str = Query(...),  # XBRLファイルのID
 ) -> sc.ix_view.SummaryItemsAbstractJp:
     """XBRLファイルのIDから決算情報を取得する"""
 
     # region ツリーの生成
-    tree = create_menu_items_tree(session=session, id=xbrl_id, type="sm")
+    tree = create_menu_items_tree(session=session, id=head_item_key, type="sm")
     # endregion
 
     summary = summary_result(tree)
@@ -89,7 +89,7 @@ def create_menu_items_tree(*, session, id: str, type: str, header: str = None) -
     start = datetime.datetime.now()
 
     # region データベースからアイテムを取得
-    items = crud.read_menu_items(session=session, xbrl_id=id, xbrl_type=type).data
+    items = crud.read_menu_items(session=session, head_item_key=id, xbrl_type=type).data
     # endregion
 
     endTime = datetime.datetime.now()
@@ -182,7 +182,7 @@ def create_menu_items_tree(*, session, id: str, type: str, header: str = None) -
     context_id = create_context_id(tree=tree)
     finance_item = crud.read_finance_item(
         session=session,
-        xbrl_id=id,
+        head_item_key=id,
         xbrl_type=type,
     )
     for nodes in tree.children("root"):

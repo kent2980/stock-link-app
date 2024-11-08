@@ -1,9 +1,10 @@
 import re
 from collections import namedtuple
+from typing import List
 
 import app.schema as sc
 from app.api.deps import SessionDep
-from app.models import IxQualitative
+from app.models import IxHeadTitle, IxQualitative
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
 from treelib import Node, Tree
@@ -58,7 +59,7 @@ def create_ix_qualitative_items_exists(
     try:
         first_item = items_in.data[0]
         statement = select(IxQualitative).where(
-            IxQualitative.xbrl_id == first_item.xbrl_id
+            IxQualitative.head_item_key == first_item.head_item_key
         )
         result = session.exec(statement).first()
 
@@ -97,7 +98,7 @@ def update_ix_qualitative_items(
     try:
         first_item = items_in.data[0]
         statement = select(IxQualitative).where(
-            IxQualitative.xbrl_id == first_item.xbrl_id
+            IxQualitative.head_item_key == first_item.head_item_key
         )
         result = session.exec(statement).first()
 
@@ -123,8 +124,8 @@ def update_ix_qualitative_items(
     return sc.ix_qualitative.IxQualitativePublics(count=len(new_items), data=new_items)
 
 
-@router.get("/qualitative/is/{xbrl_id}/", response_model=bool)
-def is_ix_qualitative_item_exists(*, session: SessionDep, xbrl_id: str) -> bool:
+@router.get("/qualitative/is/{head_item_key}/", response_model=bool)
+def is_ix_qualitative_item_exists(*, session: SessionDep, head_item_key: str) -> bool:
     """
     提携情報がIxQualitativeテーブルに存在するか確認する
 
@@ -137,7 +138,9 @@ def is_ix_qualitative_item_exists(*, session: SessionDep, xbrl_id: str) -> bool:
 
 @router.get("/qualitative/", response_model=sc.ix_qualitative.QualitativeInfoHeader)
 def read_ix_qualitative_item(
-    *, session: SessionDep, xbrl_id: str = Query(..., min_length=36, max_length=36)
+    *,
+    session: SessionDep,
+    head_item_key: str = Query(..., min_length=36, max_length=36),
 ) -> sc.ix_qualitative.QualitativeInfoHeader:
     """
     提携情報をIxQualitativeテーブルから取得する
@@ -151,7 +154,7 @@ def read_ix_qualitative_item(
 
     statement = (
         select(IxQualitative)
-        .where(IxQualitative.xbrl_id == xbrl_id)
+        .where(IxQualitative.head_item_key == head_item_key)
         .order_by(IxQualitative.id)
     )
     result = session.exec(statement).all()
@@ -263,7 +266,7 @@ def extract_tree_content(tree: Tree):
 
 @router.delete("/qualitative/delete/", response_model=bool)
 def delete_ix_qualitative_item(
-    *, session: SessionDep, xbrl_id: str = Query(...)
+    *, session: SessionDep, head_item_key: str = Query(...)
 ) -> bool:
     """
     提携情報をIxQualitativeテーブルから削除する
@@ -275,7 +278,9 @@ def delete_ix_qualitative_item(
         bool: 削除した場合はTrue
     """
 
-    statement = select(IxQualitative).where(IxQualitative.xbrl_id == xbrl_id)
+    statement = select(IxQualitative).where(
+        IxQualitative.head_item_key == head_item_key
+    )
     result = session.exec(statement).all()
 
     if result is None:
@@ -287,3 +292,27 @@ def delete_ix_qualitative_item(
     session.commit()
 
     return True
+
+
+@router.get("/content/search/", response_model=List[str])
+def search_content(*, session: SessionDep, keyword: str = Query(...)) -> List[str]:
+    """
+    定性情報から指定したキーワードを検索し、該当する証券コードを取得します
+
+    Properties:
+        - session: SessionDep - セッション
+        - keyword: str      - 検索キーワード
+
+    Returns:
+        List[str]: 証券コードのリスト
+    """
+
+    statement = (
+        select(IxHeadTitle.securities_code)
+        .distinct()
+        .join(IxQualitative, IxHeadTitle.item_key == IxQualitative.head_item_key)
+        .where(IxQualitative.content.ilike(f"%{keyword}%"))
+    )
+    result = session.exec(statement).all()
+
+    return result

@@ -139,8 +139,9 @@ class XbrlBase(SQLModel):
 
     Properties:
         id int: インスタンスのIDです。
-        insert_date (datetime.datetime): 挿入日時です。
-        update_date (datetime.datetime): 更新日時です。
+        item_key str: アイテムキーです。
+        insert_date datetime: 挿入日時です。
+        update_date datetime: 更新日時です。
     """
 
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -188,9 +189,10 @@ class IxFilePath(XbrlBase, table=True):
 
     __tablename__ = "ix_file_path"
 
-    xbrl_id: str = Field(
+    head_item_key: str = Field(
         max_length=36,
         unique=True,
+        foreign_key="ix_head_title.item_key",
     )
     path: str = Field(default=None)
 
@@ -200,12 +202,14 @@ class IxHeadTitle(XbrlBase, table=True):
 
     __tablename__ = "ix_head_title"
 
+    item_key: str = Field(
+        max_length=36, unique=True, foreign_key="ix_file_path.head_item_key"
+    )
     company_name: Optional[str] = Field(max_length=255, description="企業名")
     securities_code: str = Field(max_length=4, description="証券コード")
     document_name: Optional[str] = Field(max_length=255, description="書類名")
     reporting_date: date = Field(description="報告日")
     current_period: Optional[str] = Field(max_length=255, description="決算期")
-    xbrl_id: str = Field(max_length=36, unique=True, foreign_key="ix_file_path.xbrl_id")
     report_type: Optional[str] = Field(max_length=4, description="報告書種別")
     listed_market: Optional[str] = Field(default=None, description="上場市場")
     market_section: Optional[str] = Field(default=None, description="市場区分")
@@ -222,19 +226,19 @@ class IxHeadTitle(XbrlBase, table=True):
     is_sfp: bool = Field(
         default=False, nullable=True, description="株主資本等変動計算書"
     )
-    fiscal_year_end: Optional[str] = Field(default=None, description="決算期")
+    fy_year_end: Optional[str] = Field(default=None, description="決算期")
     tel: Optional[str] = Field(default=None, description="電話番号")
-    is_dividend_revision: Optional[bool] = Field(
+    is_div_rev: Optional[bool] = Field(
         default=None, nullable=True, description="配当修正"
     )
-    dividend_increase_rate: Optional[str] = Field(default=None, description="増配率")
-    is_earnings_forecast_revision: Optional[bool] = Field(
+    div_inc_rt: Optional[str] = Field(default=None, description="増配率")
+    is_fcst_rev: Optional[bool] = Field(
         default=None, nullable=True, description="業績予想の修正"
     )
-    forecast_ordinary_income_growth_rate: Optional[str] = Field(
-        default=None, description="予想経常利益増益率"
-    )
+    fcst_oi_gr_rt: Optional[str] = Field(default=None, description="予想経常利益増益率")
+    oi_prog_rt: Optional[float] = Field(default=None, description="経常利益進捗率")
     is_active: bool = Field(default=False, nullable=False, description="有効フラグ")
+    is_generated: bool = Field(default=False, nullable=False, description="生成フラグ")
 
 
 class IxCalculationLoc(IxLocsBase, table=True):
@@ -242,7 +246,9 @@ class IxCalculationLoc(IxLocsBase, table=True):
 
     __tablename__ = "ix_calculation_loc"
 
-    xbrl_id: str = Field(default=None, max_length=36)
+    head_item_key: str = Field(
+        default=None, max_length=36, foreign_key="ix_head_title.item_key"
+    )
     attr_value: Optional[str] = Field(max_length=255)
     xlink_href: Optional[str] = Field(default=None)
     source_file_id: Optional[str] = Field(
@@ -255,7 +261,9 @@ class IxCalculationArc(IxArcsBase, table=True):
 
     __tablename__ = "ix_calculation_arc"
 
-    xbrl_id: str = Field(default=None, max_length=36)
+    head_item_key: str = Field(
+        default=None, max_length=36, foreign_key="ix_head_title.item_key"
+    )
     attr_value: Optional[str] = Field(max_length=255)
     xlink_order: Optional[Decimal] = Field(
         default=None, sa_column=Column(DECIMAL(5, 2))
@@ -273,7 +281,9 @@ class IxDefinitionLoc(IxLocsBase, table=True):
 
     __tablename__ = "ix_definition_loc"
 
-    xbrl_id: str = Field(default=None, max_length=36)
+    head_item_key: str = Field(
+        default=None, max_length=36, foreign_key="ix_head_title.item_key"
+    )
     attr_value: Optional[str] = Field(max_length=255)
     xlink_href: Optional[str] = Field(default=None)
     source_file_id: Optional[str] = Field(
@@ -281,7 +291,7 @@ class IxDefinitionLoc(IxLocsBase, table=True):
     )
 
     __table_args__ = (
-        Index("idx_ix_definition_loc_xbrl_id", "xbrl_id"),
+        Index("idx_ix_definition_loc_head_item_key", "head_item_key"),
         Index("idx_ix_definition_loc_source_file_id", "source_file_id"),
         Index("idx_ix_definition_loc_xlink_label", "xlink_label"),
         Index("idx_ix_definition_loc_attr_value", "attr_value"),
@@ -290,7 +300,7 @@ class IxDefinitionLoc(IxLocsBase, table=True):
             "idx_ix_definition_loc_attr_value_xlink_label", "attr_value", "xlink_label"
         ),
         UniqueConstraint(
-            "xbrl_id",
+            "head_item_key",
             "source_file_id",
             "xlink_label",
             "xlink_href",
@@ -305,7 +315,9 @@ class IxDefinitionArc(IxArcsBase, table=True):
 
     __tablename__ = "ix_definition_arc"
 
-    xbrl_id: str = Field(default=None, max_length=36)
+    head_item_key: str = Field(
+        default=None, max_length=36, foreign_key="ix_head_title.item_key"
+    )
     xlink_to: str = Field(max_length=255)
     xlink_from: str = Field(max_length=255)
     attr_value: Optional[str] = Field(max_length=255)
@@ -318,7 +330,7 @@ class IxDefinitionArc(IxArcsBase, table=True):
     )
 
     __table_args__ = (
-        Index("idx_ix_definition_arc_xbrl_id", "xbrl_id"),
+        Index("idx_ix_definition_arc_head_item_key", "head_item_key"),
         Index("idx_ix_definition_arc_xlink_to", "xlink_to"),
         Index("idx_ix_definition_arc_attr_value", "attr_value"),
         Index("idx_ix_definition_arc_xlink_from", "xlink_from"),
@@ -335,7 +347,7 @@ class IxDefinitionArc(IxArcsBase, table=True):
             "attr_value",
         ),
         UniqueConstraint(
-            "xbrl_id",
+            "head_item_key",
             "source_file_id",
             "xlink_from",
             "xlink_to",
@@ -423,7 +435,9 @@ class IxNonFraction(XbrlBase, table=True):
 
     __tablename__ = "ix_non_fraction"
 
-    xbrl_id: str = Field(default=None, max_length=36)
+    head_item_key: str = Field(
+        default=None, max_length=36, foreign_key="ix_head_title.item_key"
+    )
     context: str = Field(default=None)
     decimals: Optional[Decimal] = Field(default=None, sa_column=Column(DECIMAL(5, 2)))
     format: Optional[str] = Field(max_length=255)
@@ -443,7 +457,7 @@ class IxNonFraction(XbrlBase, table=True):
     display_scale: Optional[str] = Field(default=None)
 
     __table_args__ = (
-        Index("idx_ix_non_fraction_xbrl_id", "xbrl_id"),
+        Index("idx_ix_non_fraction_head_item_key", "head_item_key"),
         Index("idx_ix_non_fraction_name", "name"),
         Index("idx_ix_non_fraction_xbrl_type", "xbrl_type"),
         Index("idx_ix_non_fraction_context", "context"),
@@ -457,7 +471,9 @@ class IxNonNumeric(XbrlBase, table=True):
 
     __tablename__ = "ix_non_numeric"
 
-    xbrl_id: str = Field(default=None, max_length=36)
+    head_item_key: str = Field(
+        default=None, max_length=36, foreign_key="ix_head_title.item_key"
+    )
     context: str = Field(default=None)
     name: str = Field(default=None)
     xsi_nil: Optional[bool] = Field(default=None)
@@ -472,7 +488,7 @@ class IxNonNumeric(XbrlBase, table=True):
     xbrl_type: Optional[str] = Field(max_length=2)
 
     __table_args__ = (
-        Index("idx_ix_non_numeric_xbrl_id", "xbrl_id"),
+        Index("idx_ix_non_numeric_head_item_key", "head_item_key"),
         Index("idx_ix_non_numeric_name", "name"),
         Index("idx_ix_non_numeric_xbrl_type", "xbrl_type"),
         Index("idx_ix_non_numeric_context", "context"),
@@ -486,7 +502,9 @@ class IxPresentationLoc(IxLocsBase, table=True):
 
     __tablename__ = "ix_presentation_loc"
 
-    xbrl_id: str = Field(default=None, max_length=36)
+    head_item_key: str = Field(
+        default=None, max_length=36, foreign_key="ix_head_title.item_key"
+    )
     attr_value: Optional[str] = Field(max_length=255)
     xlink_href: Optional[str] = Field(default=None)
     source_file_id: Optional[str] = Field(
@@ -499,7 +517,9 @@ class IxPresentationArc(IxArcsBase, table=True):
 
     __tablename__ = "ix_presentation_arc"
 
-    xbrl_id: str = Field(default=None, max_length=36)
+    head_item_key: str = Field(
+        default=None, max_length=36, foreign_key="ix_head_title.item_key"
+    )
     attr_value: Optional[str] = Field(max_length=255)
     xlink_order: Optional[Decimal] = Field(
         default=None, sa_column=Column(DECIMAL(5, 2))
@@ -520,7 +540,9 @@ class IxSourceFile(XbrlBase, table=True):
     id: Optional[str] = Field(max_length=36, primary_key=True)
     name: Optional[str] = Field(max_length=255)
     type: Optional[str] = Field(max_length=255)
-    xbrl_id: Optional[str] = Field(max_length=36, foreign_key="ix_head_title.xbrl_id")
+    head_item_key: Optional[str] = Field(
+        max_length=36, foreign_key="ix_head_title.item_key"
+    )
     url: Optional[str] = Field(max_length=255)
 
     __table_args__ = (Index("idx_ix_source_file_id", "id"),)
@@ -538,16 +560,20 @@ class ScLinkBaseRef(XbrlBase, table=True):
     source_file_id: Optional[str] = Field(
         max_length=36, foreign_key="ix_source_file.id"
     )
-    xbrl_id: str = Field(max_length=36)
+    head_item_key: str = Field(max_length=36, foreign_key="ix_head_title.item_key")
     xbrl_type: Optional[str] = Field(max_length=255)
     href_source_file_id: Optional[str] = Field(
         max_length=36, foreign_key="ix_source_file.id"
     )
 
     __table_args__ = (
-        Index("idx_ix_schema_linkbase_xbrl_id", "xbrl_id"),
+        Index("idx_ix_schema_linkbase_head_item_key", "head_item_key"),
         Index("idx_ix_schema_linkbase_xbrl_type", "xbrl_type"),
-        Index("idx_ix_schema_linkbase_xbrl_id_xlink_role", "xbrl_id", "xlink_role"),
+        Index(
+            "idx_ix_schema_linkbase_head_item_key_xlink_role",
+            "head_item_key",
+            "xlink_role",
+        ),
         Index("idx_ix_schema_linkbase_href_source_file_id", "href_source_file_id"),
     )
 
@@ -562,10 +588,11 @@ class IxQualitative(XbrlBase, table=True):
     type: Optional[str] = Field(default=None, max_length=255, description="種類")
     content: Optional[str] = Field(default=None, description="タイトル、本文")
     order: Optional[int] = Field(default=None, description="順序")
-    xbrl_id: str = Field(
+    head_item_key: str = Field(
         default=None,
         max_length=36,
         description="XBRL ID",
+        foreign_key="ix_head_title.item_key",
     )
     source_file_id: Optional[str] = Field(
         default=None,
@@ -574,6 +601,11 @@ class IxQualitative(XbrlBase, table=True):
         foreign_key="ix_source_file.id",
     )
     photo_url: Optional[str] = Field(default=None, description="画像URL")
+
+    __table_args__ = (
+        Index("idx_ix_qualitative_head_item_key", "head_item_key"),
+        Index("idx_ix_qualitative_content", "content"),
+    )
 
 
 class IxStockInfos(XbrlBase, table=True):

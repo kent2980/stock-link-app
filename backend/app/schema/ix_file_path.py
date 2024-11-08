@@ -8,7 +8,9 @@ class IxFilePathCreate(SQLModel):
 
     item_key: Optional[str] = Field(max_length=36, min_length=36)
     path: str = Field(default=None)
-    xbrl_id: Optional[str] = Field(max_length=36)
+    head_item_key: Optional[str] = Field(
+        max_length=36, foreign_key="ix_head_title.item_key"
+    )
 
 
 class IxFilePathCreateList(SQLModel):
@@ -21,7 +23,7 @@ class IxFilePathPublic(SQLModel):
     """iXBRLのファイルパス情報を公開するためのクラス"""
 
     path: str
-    xbrl_id: str
+    head_item_key: str
 
 
 class IxFilePathPublicList(SQLModel):

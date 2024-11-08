@@ -130,11 +130,15 @@ def get_ix_pre_arc_item(*, session: SessionDep, source_file_id: str) -> Any:
 
 
 @router.delete("/link/pre/loc/delete/", response_model=bool)
-def delete_ix_pre_loc_item(*, session: SessionDep, xbrl_id: str = Query(...)) -> Any:
+def delete_ix_pre_loc_item(
+    *, session: SessionDep, head_item_key: str = Query(...)
+) -> Any:
     """
     Delete item.
     """
-    statement = select(IxPresentationLoc).where(IxPresentationLoc.xbrl_id == xbrl_id)
+    statement = select(IxPresentationLoc).where(
+        IxPresentationLoc.head_item_key == head_item_key
+    )
     result = session.exec(statement)
     items = result.all()
 
@@ -148,11 +152,15 @@ def delete_ix_pre_loc_item(*, session: SessionDep, xbrl_id: str = Query(...)) ->
 
 
 @router.delete("/link/pre/arc/delete/", response_model=bool)
-def delete_ix_pre_arc_item(*, session: SessionDep, xbrl_id: str = Query(...)) -> Any:
+def delete_ix_pre_arc_item(
+    *, session: SessionDep, head_item_key: str = Query(...)
+) -> Any:
     """
     Delete item.
     """
-    statement = select(IxPresentationArc).where(IxPresentationArc.xbrl_id == xbrl_id)
+    statement = select(IxPresentationArc).where(
+        IxPresentationArc.head_item_key == head_item_key
+    )
     result = session.exec(statement)
     items = result.all()
 

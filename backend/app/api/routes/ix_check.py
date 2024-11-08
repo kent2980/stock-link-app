@@ -16,37 +16,37 @@ router = APIRouter()
 
 
 @router.get("/model/", response_model=bool)
-def is_model_checking(*, session: SessionDep, xbrl_id: str = Query(...)) -> bool:
-    """XBRL_IDがすべてのテーブルに存在するか確認します
+def is_model_checking(*, session: SessionDep, head_item_key: str = Query(...)) -> bool:
+    """head_item_keyがすべてのテーブルに存在するか確認します
 
     Properties:
     - session: SessionDep
-    - xbrl_id: str
+    - head_item_key: str
 
     Returns:
     - bool
 
     Raises:
-    - HTTPException: テーブルにXBRL_IDが存在しない場合
+    - HTTPException: テーブルにhead_item_keyが存在しない場合
     """
 
-    is_exists(session, IxHeadTitle, xbrl_id)
-    is_exists(session, IxFilePath, xbrl_id)
-    is_exists(session, IxNonNumeric, xbrl_id)
-    is_exists(session, IxNonFraction, xbrl_id)
-    is_exists(session, IxSourceFile, xbrl_id)
-    is_exists(session, ScLinkBaseRef, xbrl_id)
+    is_exists(session, IxHeadTitle, head_item_key)
+    is_exists(session, IxFilePath, head_item_key)
+    is_exists(session, IxNonNumeric, head_item_key)
+    is_exists(session, IxNonFraction, head_item_key)
+    is_exists(session, IxSourceFile, head_item_key)
+    is_exists(session, ScLinkBaseRef, head_item_key)
 
     return True
 
 
-def is_exists(session: Session, model: Any, xbrl_id: str) -> bool:
-    """モデルにXBRL_IDが存在するか確認する"""
-    statement = select(model).where(model.xbrl_id == xbrl_id)
+def is_exists(session: Session, model: Any, head_item_key: str) -> bool:
+    """モデルにhead_item_keyが存在するか確認する"""
+    statement = select(model).where(model.head_item_key == head_item_key)
     result = session.exec(statement)
     item_exists = result.first()
 
     if not item_exists:
         raise HTTPException(
-            status_code=400, detail=f"{model.__name__}にXBRL_IDが存在しません"
+            status_code=400, detail=f"{model.__name__}にhead_item_keyが存在しません"
         )

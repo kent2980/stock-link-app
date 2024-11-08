@@ -9,7 +9,7 @@ class IxPresentationLocCreate(SQLModel):
     """XBRLの表示リンクロケーションを表すクラス"""
 
     item_key: Optional[str] = Field(max_length=36, min_length=36)
-    xbrl_id: str = Field(foreign_key="ix_head_title.xbrl_id", nullable=False)
+    head_item_key: str = Field(foreign_key="ix_head_title.item_key", nullable=False)
     attr_value: Optional[str] = Field(max_length=255)
     xlink_href: Optional[str] = Field(nullable=False)
     xlink_type: Optional[str] = Field(max_length=255)
@@ -22,7 +22,7 @@ class IxPresentationArcCreate(SQLModel):
     """XBRLの表示リンクアークを表すクラス"""
 
     item_key: Optional[str] = Field(max_length=36, min_length=36)
-    xbrl_id: str = Field(foreign_key="ix_head_title.xbrl_id", nullable=False)
+    head_item_key: str = Field(foreign_key="ix_head_title.item_key", nullable=False)
     attr_value: Optional[str] = Field(max_length=255)
     xlink_order: Optional[Decimal] = Field(
         default=None, sa_column=Column(DECIMAL(5, 2))

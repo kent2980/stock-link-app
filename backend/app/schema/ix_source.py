@@ -10,7 +10,7 @@ class IxSourceFileCreate(SQLModel):
     item_key: Optional[str] = Field(max_length=36, min_length=36)
     name: str = Field(max_length=255)
     type: str = Field(max_length=255)
-    xbrl_id: Optional[str] = Field(max_length=36)
+    head_item_key: Optional[str] = Field(max_length=36)
     url: Optional[str] = Field(max_length=255)
 
 
@@ -26,7 +26,7 @@ class IxSourceFilePublic(SQLModel):
     item_key: Optional[str]
     name: str
     type: str
-    xbrl_id: str
+    head_item_key: str
     url: str
 
 

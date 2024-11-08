@@ -98,12 +98,12 @@ def get_ix_source_file_item(*, session: SessionDep, source_file_id: str) -> Any:
 
 @router.delete("/source/delete/", response_model=bool)
 def delete_ix_source_file_item(
-    *, session: SessionDep, xbrl_id: str = Query(...)
+    *, session: SessionDep, head_item_key: str = Query(...)
 ) -> Any:
     """
     Delete item.
     """
-    statement = select(IxSourceFile).where(IxSourceFile.xbrl_id == xbrl_id)
+    statement = select(IxSourceFile).where(IxSourceFile.head_item_key == head_item_key)
     result = session.exec(statement)
     items = result.all()
 
@@ -118,12 +118,12 @@ def delete_ix_source_file_item(
 
 @router.get("/source/id_list/", response_model=List[str])
 def get_ix_source_file_id_list(
-    *, session: SessionDep, xbrl_id: str = Query(...)
+    *, session: SessionDep, head_item_key: str = Query(...)
 ) -> Any:
     """
     Get item.
     """
-    statement = select(IxSourceFile).where(IxSourceFile.xbrl_id == xbrl_id)
+    statement = select(IxSourceFile).where(IxSourceFile.head_item_key == head_item_key)
     result = session.exec(statement)
     items = result.all()
 
