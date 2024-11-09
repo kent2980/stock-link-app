@@ -11,11 +11,11 @@ skip?: number
                 
             }
 export type TDataReadHeadItem = {
-                xbrlId: string
+                headItemKey: string
                 
             }
-export type TDataReadSummaryItemByXbrlId = {
-                xbrlId: string
+export type TDataReadSummaryItemByHeadItemKey = {
+                headItemKey: string
                 
             }
 
@@ -53,19 +53,19 @@ skip = 0,
 	 * Read Head Item
 	 * XBRLファイルのIDからXBRLファイルの情報を取得する
  * Args:
- * xbrl_id (str): XBRLファイルのID
+ * head_item_key (str): XBRLファイルのID
 	 * @returns HeadItem Successful Response
 	 * @throws ApiError
 	 */
 	public static readHeadItem(data: TDataReadHeadItem): CancelablePromise<HeadItem> {
 		const {
-xbrlId,
+headItemKey,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
 			url: '/api/v1/xbrl/view/head_item/select/',
 			query: {
-				xbrl_id: xbrlId
+				head_item_key: headItemKey
 			},
 			errors: {
 				422: `Validation Error`,
@@ -74,20 +74,61 @@ xbrlId,
 	}
 
 	/**
-	 * Read Summary Item By Xbrl Id
+	 * Read Summary Item By Head Item Key
 	 * XBRLファイルのIDから決算情報を取得する
 	 * @returns SummaryItemsAbstractJp Successful Response
 	 * @throws ApiError
 	 */
-	public static readSummaryItemByXbrlId(data: TDataReadSummaryItemByXbrlId): CancelablePromise<SummaryItemsAbstractJp> {
+	public static readSummaryItemByHeadItemKey(data: TDataReadSummaryItemByHeadItemKey): CancelablePromise<SummaryItemsAbstractJp> {
 		const {
-xbrlId,
+headItemKey,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
 			url: '/api/v1/xbrl/view/summary/item/select/',
 			query: {
-				xbrl_id: xbrlId
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+}
+
+export type TDataIsModelChecking = {
+                headItemKey: string
+                
+            }
+
+export class XbrlCheckService {
+
+	/**
+	 * Is Model Checking
+	 * head_item_keyがすべてのテーブルに存在するか確認します
+ * 
+ * Properties:
+ * - session: SessionDep
+ * - head_item_key: str
+ * 
+ * Returns:
+ * - bool
+ * 
+ * Raises:
+ * - HTTPException: テーブルにhead_item_keyが存在しない場合
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static isModelChecking(data: TDataIsModelChecking): CancelablePromise<boolean> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/xbrl/check/model/',
+			query: {
+				head_item_key: headItemKey
 			},
 			errors: {
 				422: `Validation Error`,
@@ -110,7 +151,7 @@ export type TDataCreateIxHeadTitleItemsExists = {
                 
             }
 export type TDataIsIxHeadTitleItemExists = {
-                xbrlId: string
+                headItemKey: string
                 
             }
 export type TDataGetCountReportType = {
@@ -119,6 +160,22 @@ export type TDataGetCountReportType = {
             }
 export type TDataSelectIxHeadTitleItems = {
                 dateStr: string
+                
+            }
+export type TDataDeleteIxHeadTitleItem = {
+                headItemKey: string
+                
+            }
+export type TDataActiveIxHeadTitleItem = {
+                headItemKey: string
+                
+            }
+export type TDataIsIxHeadTitleItemActive = {
+                headItemKey: string
+                
+            }
+export type TDataGenerateIxHeadTitleItem = {
+                headItemKey?: string | null
                 
             }
 
@@ -195,13 +252,13 @@ requestBody,
 	 */
 	public static isIxHeadTitleItemExists(data: TDataIsIxHeadTitleItemExists): CancelablePromise<boolean> {
 		const {
-xbrlId,
+headItemKey,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/api/v1/xbrl/ix/head/is/{xbrl_id}/',
+			url: '/api/v1/xbrl/ix/head/is/{head_item_key}/',
 			path: {
-				xbrl_id: xbrlId
+				head_item_key: headItemKey
 			},
 			errors: {
 				422: `Validation Error`,
@@ -253,6 +310,94 @@ dateStr,
 		});
 	}
 
+	/**
+	 * Delete Ix Head Title Item
+	 * Delete item.
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static deleteIxHeadTitleItem(data: TDataDeleteIxHeadTitleItem): CancelablePromise<boolean> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'DELETE',
+			url: '/api/v1/xbrl/ix/head/delete/',
+			query: {
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Active Ix Head Title Item
+	 * Active item.
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static activeIxHeadTitleItem(data: TDataActiveIxHeadTitleItem): CancelablePromise<boolean> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'PUT',
+			url: '/api/v1/xbrl/ix/head/active/',
+			query: {
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Is Ix Head Title Item Active
+	 * Check if item is active.
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static isIxHeadTitleItemActive(data: TDataIsIxHeadTitleItemActive): CancelablePromise<boolean> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/xbrl/ix/head/is_active/',
+			query: {
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Generate Ix Head Title Item
+	 * Extraction item.
+	 * @returns unknown Successful Response
+	 * @throws ApiError
+	 */
+	public static generateIxHeadTitleItem(data: TDataGenerateIxHeadTitleItem = {}): CancelablePromise<unknown> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'PUT',
+			url: '/api/v1/xbrl/ix/head/generate/',
+			query: {
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
 }
 
 export type TDataCreateIxNonNumericItem = {
@@ -265,6 +410,10 @@ export type TDataCreateIxNonNumericItemsExists = {
             }
 export type TDataIsIxNonNumericItemExists = {
                 sourceFileId: string
+                
+            }
+export type TDataDeleteIxNonNumericItem = {
+                headItemKey: string
                 
             }
 export type TDataCreateIxNonFractionItem = {
@@ -280,7 +429,11 @@ export type TDataIsIxNonFractionItemExists = {
                 
             }
 export type TDataIsConsolidated = {
-                xbrlId: string
+                headItemKey: string
+                
+            }
+export type TDataDeleteIxNonFractionItem = {
+                headItemKey: string
                 
             }
 
@@ -343,6 +496,28 @@ sourceFileId,
 			url: '/api/v1/xbrl/ix/non_numeric/is/{source_file_id}/',
 			path: {
 				source_file_id: sourceFileId
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Delete Ix Non Numeric Item
+	 * Delete item.
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static deleteIxNonNumericItem(data: TDataDeleteIxNonNumericItem): CancelablePromise<boolean> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'DELETE',
+			url: '/api/v1/xbrl/ix/non_numeric/delete/',
+			query: {
+				head_item_key: headItemKey
 			},
 			errors: {
 				422: `Validation Error`,
@@ -422,13 +597,35 @@ sourceFileId,
 	 */
 	public static isConsolidated(data: TDataIsConsolidated): CancelablePromise<boolean> {
 		const {
-xbrlId,
+headItemKey,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/api/v1/xbrl/isConsolidated/{xbrl_id}/',
+			url: '/api/v1/xbrl/isConsolidated/{head_item_key}/',
 			path: {
-				xbrl_id: xbrlId
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Delete Ix Non Fraction Item
+	 * Delete item.
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static deleteIxNonFractionItem(data: TDataDeleteIxNonFractionItem): CancelablePromise<boolean> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'DELETE',
+			url: '/api/v1/xbrl/ix/non_fraction/delete/',
+			query: {
+				head_item_key: headItemKey
 			},
 			errors: {
 				422: `Validation Error`,
@@ -472,6 +669,18 @@ export type TDataGetIxLabelArcItem = {
             }
 export type TDataGetIxLabelValueItem = {
                 sourceFileId: string
+                
+            }
+export type TDataDeleteIxLabelLocItem = {
+                requestBody: Array<string>
+                
+            }
+export type TDataDeleteIxLabelArcItem = {
+                requestBody: Array<string>
+                
+            }
+export type TDataDeleteIxLabelValueItem = {
+                requestBody: Array<string>
                 
             }
 
@@ -669,6 +878,69 @@ sourceFileId,
 		});
 	}
 
+	/**
+	 * Delete Ix Label Loc Item
+	 * Delete item.
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static deleteIxLabelLocItem(data: TDataDeleteIxLabelLocItem): CancelablePromise<boolean> {
+		const {
+requestBody,
+} = data;
+		return __request(OpenAPI, {
+			method: 'DELETE',
+			url: '/api/v1/xbrl/link/lab/loc/delete/',
+			body: requestBody,
+			mediaType: 'application/json',
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Delete Ix Label Arc Item
+	 * Delete item.
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static deleteIxLabelArcItem(data: TDataDeleteIxLabelArcItem): CancelablePromise<boolean> {
+		const {
+requestBody,
+} = data;
+		return __request(OpenAPI, {
+			method: 'DELETE',
+			url: '/api/v1/xbrl/link/lab/arc/delete/',
+			body: requestBody,
+			mediaType: 'application/json',
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Delete Ix Label Value Item
+	 * Delete item.
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static deleteIxLabelValueItem(data: TDataDeleteIxLabelValueItem): CancelablePromise<boolean> {
+		const {
+requestBody,
+} = data;
+		return __request(OpenAPI, {
+			method: 'DELETE',
+			url: '/api/v1/xbrl/link/lab/value/delete/',
+			body: requestBody,
+			mediaType: 'application/json',
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
 }
 
 export type TDataCreateIxCalLocItem = {
@@ -693,6 +965,14 @@ export type TDataGetIxCalLocItem = {
             }
 export type TDataGetIxCalArcItem = {
                 sourceFileId: string
+                
+            }
+export type TDataDeleteIxCalLocItem = {
+                headItemKey: string | null
+                
+            }
+export type TDataDeleteIxCalArcItem = {
+                headItemKey: string | null
                 
             }
 
@@ -826,6 +1106,50 @@ sourceFileId,
 		});
 	}
 
+	/**
+	 * Delete Ix Cal Loc Item
+	 * Delete item.
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static deleteIxCalLocItem(data: TDataDeleteIxCalLocItem): CancelablePromise<boolean> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'DELETE',
+			url: '/api/v1/xbrl/link/cal/loc/delete/',
+			query: {
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Delete Ix Cal Arc Item
+	 * Delete item.
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static deleteIxCalArcItem(data: TDataDeleteIxCalArcItem): CancelablePromise<boolean> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'DELETE',
+			url: '/api/v1/xbrl/link/cal/arc/delete/',
+			query: {
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
 }
 
 export type TDataCreateIxDefLocItem = {
@@ -850,6 +1174,14 @@ export type TDataGetIxDefLocItem = {
             }
 export type TDataGetIxDefArcItem = {
                 sourceFileId: string
+                
+            }
+export type TDataDeleteIxDefLocItem = {
+                headItemKey: string
+                
+            }
+export type TDataDeleteIxDefArcItem = {
+                headItemKey: string
                 
             }
 
@@ -983,6 +1315,50 @@ sourceFileId,
 		});
 	}
 
+	/**
+	 * Delete Ix Def Loc Item
+	 * Delete item.
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static deleteIxDefLocItem(data: TDataDeleteIxDefLocItem): CancelablePromise<boolean> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'DELETE',
+			url: '/api/v1/xbrl/link/def/loc/delete/',
+			query: {
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Delete Ix Def Arc Item
+	 * Delete item.
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static deleteIxDefArcItem(data: TDataDeleteIxDefArcItem): CancelablePromise<boolean> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'DELETE',
+			url: '/api/v1/xbrl/link/def/arc/delete/',
+			query: {
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
 }
 
 export type TDataCreateIxPreLocItem = {
@@ -1007,6 +1383,14 @@ export type TDataGetIxPreLocItem = {
             }
 export type TDataGetIxPreArcItem = {
                 sourceFileId: string
+                
+            }
+export type TDataDeleteIxPreLocItem = {
+                headItemKey: string
+                
+            }
+export type TDataDeleteIxPreArcItem = {
+                headItemKey: string
                 
             }
 
@@ -1140,6 +1524,50 @@ sourceFileId,
 		});
 	}
 
+	/**
+	 * Delete Ix Pre Loc Item
+	 * Delete item.
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static deleteIxPreLocItem(data: TDataDeleteIxPreLocItem): CancelablePromise<boolean> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'DELETE',
+			url: '/api/v1/xbrl/link/pre/loc/delete/',
+			query: {
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Delete Ix Pre Arc Item
+	 * Delete item.
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static deleteIxPreArcItem(data: TDataDeleteIxPreArcItem): CancelablePromise<boolean> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'DELETE',
+			url: '/api/v1/xbrl/link/pre/arc/delete/',
+			query: {
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
 }
 
 export type TDataCreateIxSourceFileItem = {
@@ -1156,6 +1584,14 @@ export type TDataCreateIxSourceFileItemsExists = {
             }
 export type TDataGetIxSourceFileItem = {
                 sourceFileId: string
+                
+            }
+export type TDataDeleteIxSourceFileItem = {
+                headItemKey: string
+                
+            }
+export type TDataGetIxSourceFileIdList = {
+                headItemKey: string
                 
             }
 
@@ -1236,9 +1672,53 @@ sourceFileId,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/api/v1/xbrl/source/is/{source_file_id}/',
-			path: {
+			url: '/api/v1/xbrl/is/exits/source_file_id/',
+			query: {
 				source_file_id: sourceFileId
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Delete Ix Source File Item
+	 * Delete item.
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static deleteIxSourceFileItem(data: TDataDeleteIxSourceFileItem): CancelablePromise<boolean> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'DELETE',
+			url: '/api/v1/xbrl/source/delete/',
+			query: {
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Get Ix Source File Id List
+	 * Get item.
+	 * @returns string Successful Response
+	 * @throws ApiError
+	 */
+	public static getIxSourceFileIdList(data: TDataGetIxSourceFileIdList): CancelablePromise<Array<string>> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/xbrl/source/id_list/',
+			query: {
+				head_item_key: headItemKey
 			},
 			errors: {
 				422: `Validation Error`,
@@ -1257,7 +1737,11 @@ export type TDataCreateIxSchemaLinkbaseItemsExists = {
                 
             }
 export type TDataIsIxSchemaItemExists = {
-                xbrlId: string
+                headItemKey: string
+                
+            }
+export type TDataDeleteIxSchemaItem = {
+                headItemKey: string
                 
             }
 
@@ -1313,13 +1797,35 @@ requestBody,
 	 */
 	public static isIxSchemaItemExists(data: TDataIsIxSchemaItemExists): CancelablePromise<boolean> {
 		const {
-xbrlId,
+headItemKey,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/api/v1/xbrl/schema/linkbase/is/{xbrl_id}/',
+			url: '/api/v1/xbrl/schema/linkbase/is/{head_item_key}/',
 			path: {
-				xbrl_id: xbrlId
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Delete Ix Schema Item
+	 * Delete item.
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static deleteIxSchemaItem(data: TDataDeleteIxSchemaItem): CancelablePromise<boolean> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'DELETE',
+			url: '/api/v1/xbrl/schema/linkbase/delete/',
+			query: {
+				head_item_key: headItemKey
 			},
 			errors: {
 				422: `Validation Error`,
@@ -1334,7 +1840,12 @@ export type TDataCreateIxFilePathItem = {
                 
             }
 export type TDataIsIxFilePathItemExists = {
-                xbrlId: string
+                filePath?: string | null
+headItemKey?: string | null
+                
+            }
+export type TDataDeleteIxFilePathItem = {
+                filePath: string
                 
             }
 
@@ -1363,19 +1874,42 @@ requestBody,
 
 	/**
 	 * Is Ix File Path Item Exists
-	 * Check if item exists.
+	 * head_item_keyまたは、ファイルパスを指定して、レコードが存在するか確認する
 	 * @returns boolean Successful Response
 	 * @throws ApiError
 	 */
-	public static isIxFilePathItemExists(data: TDataIsIxFilePathItemExists): CancelablePromise<boolean> {
+	public static isIxFilePathItemExists(data: TDataIsIxFilePathItemExists = {}): CancelablePromise<boolean> {
 		const {
-xbrlId,
+filePath,
+headItemKey,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/api/v1/xbrl/ix/file_path/is/{xbrl_id}',
-			path: {
-				xbrl_id: xbrlId
+			url: '/api/v1/xbrl/is/file_path/',
+			query: {
+				head_item_key: headItemKey, file_path: filePath
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Delete Ix File Path Item
+	 * Delete item.
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static deleteIxFilePathItem(data: TDataDeleteIxFilePathItem): CancelablePromise<boolean> {
+		const {
+filePath,
+} = data;
+		return __request(OpenAPI, {
+			method: 'DELETE',
+			url: '/api/v1/xbrl/ix/file_path/delete/',
+			query: {
+				file_path: filePath
 			},
 			errors: {
 				422: `Validation Error`,
@@ -1390,7 +1924,7 @@ export type TDataCreateIxQualitativeItem = {
                 
             }
 export type TDataReadIxQualitativeItem = {
-                xbrlId: string
+                headItemKey: string
                 
             }
 export type TDataCreateIxQualitativeItemsExists = {
@@ -1402,7 +1936,15 @@ export type TDataUpdateIxQualitativeItems = {
                 
             }
 export type TDataIsIxQualitativeItemExists = {
-                xbrlId: string
+                headItemKey: string
+                
+            }
+export type TDataDeleteIxQualitativeItem = {
+                headItemKey: string
+                
+            }
+export type TDataSearchContent = {
+                keyword: string
                 
             }
 
@@ -1449,13 +1991,13 @@ requestBody,
 	 */
 	public static readIxQualitativeItem(data: TDataReadIxQualitativeItem): CancelablePromise<QualitativeInfoHeader> {
 		const {
-xbrlId,
+headItemKey,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
 			url: '/api/v1/xbrl/qualitative/',
 			query: {
-				xbrl_id: xbrlId
+				head_item_key: headItemKey
 			},
 			errors: {
 				422: `Validation Error`,
@@ -1528,13 +2070,70 @@ requestBody,
 	 */
 	public static isIxQualitativeItemExists(data: TDataIsIxQualitativeItemExists): CancelablePromise<boolean> {
 		const {
-xbrlId,
+headItemKey,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/api/v1/xbrl/qualitative/is/{xbrl_id}/',
+			url: '/api/v1/xbrl/qualitative/is/{head_item_key}/',
 			path: {
-				xbrl_id: xbrlId
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Delete Ix Qualitative Item
+	 * 提携情報をIxQualitativeテーブルから削除する
+ * 
+ * Raises:
+ * HTTPException: アイテムが存在しない場合
+ * 
+ * Returns:
+ * bool: 削除した場合はTrue
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static deleteIxQualitativeItem(data: TDataDeleteIxQualitativeItem): CancelablePromise<boolean> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'DELETE',
+			url: '/api/v1/xbrl/qualitative/delete/',
+			query: {
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Search Content
+	 * 定性情報から指定したキーワードを検索し、該当する証券コードを取得します
+ * 
+ * Properties:
+ * - session: SessionDep - セッション
+ * - keyword: str      - 検索キーワード
+ * 
+ * Returns:
+ * List[str]: 証券コードのリスト
+	 * @returns string Successful Response
+	 * @throws ApiError
+	 */
+	public static searchContent(data: TDataSearchContent): CancelablePromise<Array<string>> {
+		const {
+keyword,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/xbrl/content/search/',
+			query: {
+				keyword
 			},
 			errors: {
 				422: `Validation Error`,

@@ -41,7 +41,7 @@ const StockSummary: React.FC<StockSummaryProps> = ({ code, ...props }) => {
     <Box {...props} w="full" p={0} bg="gray.100">
       <Stack spacing={0}>
         {items.data.map((item) => (
-          <LinkBox key={item.xbrl_id}>
+          <LinkBox key={item.head_item_key}>
             <Stack
               direction={"column"}
               spacing={2}
@@ -65,7 +65,7 @@ const StockSummary: React.FC<StockSummaryProps> = ({ code, ...props }) => {
               <Heading size="xs" color="gray.700">
                 <LinkOverlay
                   as={RouterLink}
-                  to={`/summary/${item.xbrl_id}`}
+                  to={`/summary/${item.head_item_key}`}
                   replace
                 >
                   {item.document_name}

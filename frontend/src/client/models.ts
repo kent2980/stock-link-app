@@ -279,7 +279,7 @@ export type HTTPValidationError = {
  * iXBRLのソースID情報を表すクラス
  */
 export type HeadItem = {
-	xbrl_id: string;
+	item_key: string;
 	company_name: string;
 	securities_code: string;
 	document_name: string;
@@ -295,8 +295,13 @@ export type HeadItem = {
 	is_ci: boolean | null;
 	is_sce: boolean | null;
 	is_sfp: boolean | null;
-	fiscal_year_end: string | null;
+	fy_year_end: string | null;
 	tel: string | null;
+	is_div_rev: boolean | null;
+	div_inc_rt: string | null;
+	is_fcst_rev: boolean | null;
+	fcst_oi_gr_rt: string | null;
+	oi_prog_rt: number | null;
 };
 
 
@@ -394,7 +399,7 @@ export type ItemsPublic = {
  */
 export type IxCalculationArcCreate_Input = {
 	item_key: string | null;
-	xbrl_id: string;
+	head_item_key: string;
 	attr_value: string | null;
 	xlink_order?: number | string | null;
 	xlink_weight?: number | string | null;
@@ -412,7 +417,7 @@ export type IxCalculationArcCreate_Input = {
  */
 export type IxCalculationArcCreate_Output = {
 	item_key: string | null;
-	xbrl_id: string;
+	head_item_key: string;
 	attr_value: string | null;
 	xlink_order?: string | null;
 	xlink_weight?: string | null;
@@ -439,7 +444,7 @@ export type IxCalculationArcCreateList = {
  */
 export type IxCalculationLocCreate = {
 	item_key: string | null;
-	xbrl_id: string;
+	head_item_key: string;
 	attr_value: string | null;
 	xlink_href: string | null;
 	xlink_type: string | null;
@@ -464,7 +469,7 @@ export type IxCalculationLocCreateList = {
  */
 export type IxDefinitionArcCreate_Input = {
 	item_key: string | null;
-	xbrl_id: string;
+	head_item_key: string;
 	attr_value: string | null;
 	xlink_order: number | string;
 	xlink_weight?: number | string | null;
@@ -482,7 +487,7 @@ export type IxDefinitionArcCreate_Input = {
  */
 export type IxDefinitionArcCreate_Output = {
 	item_key: string | null;
-	xbrl_id: string;
+	head_item_key: string;
 	attr_value: string | null;
 	xlink_order: string;
 	xlink_weight?: string | null;
@@ -509,7 +514,7 @@ export type IxDefinitionArcCreateList = {
  */
 export type IxDefinitionLocCreate = {
 	item_key: string | null;
-	xbrl_id: string;
+	head_item_key: string;
 	attr_value: string | null;
 	xlink_href: string | null;
 	xlink_type: string | null;
@@ -535,7 +540,7 @@ export type IxDefinitionLocCreateList = {
 export type IxFilePathCreate = {
 	item_key: string | null;
 	path?: string;
-	xbrl_id: string | null;
+	head_item_key: string | null;
 };
 
 
@@ -545,7 +550,7 @@ export type IxFilePathCreate = {
  */
 export type IxFilePathPublic = {
 	path: string;
-	xbrl_id: string;
+	head_item_key: string;
 };
 
 
@@ -554,41 +559,24 @@ export type IxFilePathPublic = {
  * iXBRLのヘッダー情報を表すクラス
  */
 export type IxHeadTitleCreate = {
-	item_key: string | null;
-	company_name: string | null;
-	securities_code: string | null;
-	document_name: string | null;
-	reporting_date: string;
-	current_period: string | null;
-	xbrl_id: string | null;
-	report_type: string | null;
+	item_key: string;
+	company_name?: string | null;
+	securities_code?: string | null;
+	document_name?: string | null;
+	reporting_date?: string | null;
+	current_period?: string | null;
+	report_type?: string | null;
 	listed_market?: string | null;
 	market_section?: string | null;
 	url?: string | null;
-	is_bs?: boolean;
-	is_pl?: boolean;
-	is_cf?: boolean;
-	is_ci?: boolean;
-	is_sce?: boolean;
-	is_sfp?: boolean;
-	fiscal_year_end?: string | null;
+	is_bs?: boolean | null;
+	is_pl?: boolean | null;
+	is_cf?: boolean | null;
+	is_ci?: boolean | null;
+	is_sce?: boolean | null;
+	is_sfp?: boolean | null;
+	fy_year_end?: string | null;
 	tel?: string | null;
-	/**
-	 * 配当予想の修正
-	 */
-	is_dividend_revision?: boolean | null;
-	/**
-	 * 増配率
-	 */
-	dividend_increase_rate?: string | null;
-	/**
-	 * 業績予想の修正
-	 */
-	is_earnings_forecast_revision?: boolean | null;
-	/**
-	 * 予想経常利益増益率
-	 */
-	forecast_ordinary_income_growth_rate?: string | null;
 };
 
 
@@ -606,11 +594,11 @@ export type IxHeadTitleCreateList = {
  * iXBRLのヘッダー情報を表すクラス
  */
 export type IxHeadTitlePublic = {
-	xbrl_id: string;
-	company_name: string;
-	securities_code: string;
-	document_name: string;
-	reporting_date: string;
+	item_key: string;
+	company_name: string | null;
+	securities_code: string | null;
+	document_name: string | null;
+	reporting_date: string | null;
 	current_period: string | null;
 	report_type: string | null;
 	listed_market: string | null;
@@ -622,12 +610,13 @@ export type IxHeadTitlePublic = {
 	is_ci: boolean | null;
 	is_sce: boolean | null;
 	is_sfp: boolean | null;
-	fiscal_year_end: string | null;
+	fy_year_end: string | null;
 	tel: string | null;
-	is_dividend_revision: boolean | null;
-	dividend_increase_rate: string | null;
-	is_earnings_forecast_revision: boolean | null;
-	forecast_ordinary_income_growth_rate: string | null;
+	is_div_rev: boolean | null;
+	div_inc_rt: string | null;
+	is_fcst_rev: boolean | null;
+	fcst_oi_gr_rt: string | null;
+	oi_prog_rt: number | null;
 };
 
 
@@ -717,7 +706,7 @@ export type IxLabelValueCreateList = {
  */
 export type IxNonFractionCreate_Input = {
 	item_key: string | null;
-	xbrl_id: string;
+	head_item_key: string;
 	context: string;
 	decimals?: number | string | null;
 	format: string | null;
@@ -742,7 +731,7 @@ export type IxNonFractionCreate_Input = {
  */
 export type IxNonFractionCreate_Output = {
 	item_key: string | null;
-	xbrl_id: string;
+	head_item_key: string;
 	context: string;
 	decimals?: string | null;
 	format: string | null;
@@ -776,7 +765,7 @@ export type IxNonFractionCreateList = {
  */
 export type IxNonNumericCreate = {
 	item_key: string | null;
-	xbrl_id: string;
+	head_item_key: string;
 	context: string | null;
 	name?: string;
 	xsi_nil?: boolean | null;
@@ -805,7 +794,7 @@ export type IxNonNumericCreateList = {
  */
 export type IxPresentationArcCreate_Input = {
 	item_key: string | null;
-	xbrl_id: string;
+	head_item_key: string;
 	attr_value: string | null;
 	xlink_order?: number | string | null;
 	xlink_weight?: number | string | null;
@@ -823,7 +812,7 @@ export type IxPresentationArcCreate_Input = {
  */
 export type IxPresentationArcCreate_Output = {
 	item_key: string | null;
-	xbrl_id: string;
+	head_item_key: string;
 	attr_value: string | null;
 	xlink_order?: string | null;
 	xlink_weight?: string | null;
@@ -850,7 +839,7 @@ export type IxPresentationArcCreateList = {
  */
 export type IxPresentationLocCreate = {
 	item_key: string | null;
-	xbrl_id: string;
+	head_item_key: string;
 	attr_value: string | null;
 	xlink_href: string | null;
 	xlink_type: string | null;
@@ -901,7 +890,7 @@ export type IxQualitativeCreate = {
 	/**
 	 * XBRL-ID
 	 */
-	xbrl_id?: string | null;
+	head_item_key?: string | null;
 	/**
 	 * ソースファイルID
 	 */
@@ -932,7 +921,7 @@ export type IxQualitativePublic = {
 	type: string | null;
 	content: string | null;
 	order: number | null;
-	xbrl_id: string | null;
+	head_item_key: string | null;
 	photo_url: string | null;
 };
 
@@ -974,7 +963,7 @@ export type IxReportTypeCountList = {
  */
 export type IxSchemaLinkBaseCreate = {
 	item_key: string | null;
-	xbrl_id: string;
+	head_item_key: string;
 	xlink_arcrole: string | null;
 	xlink_href: string | null;
 	xlink_role: string | null;
@@ -1003,7 +992,7 @@ export type IxSourceFileCreate = {
 	item_key: string | null;
 	name: string;
 	type: string;
-	xbrl_id: string | null;
+	head_item_key: string | null;
 	url: string | null;
 };
 

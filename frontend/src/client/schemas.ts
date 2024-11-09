@@ -569,7 +569,7 @@ export const $HTTPValidationError = {
 export const $HeadItem = {
 	description: `iXBRLのソースID情報を表すクラス`,
 	properties: {
-		xbrl_id: {
+		item_key: {
 	type: 'string',
 	isRequired: true,
 },
@@ -689,7 +689,7 @@ export const $HeadItem = {
 }],
 	isRequired: true,
 },
-		fiscal_year_end: {
+		fy_year_end: {
 	type: 'any-of',
 	contains: [{
 	type: 'string',
@@ -702,6 +702,51 @@ export const $HeadItem = {
 	type: 'any-of',
 	contains: [{
 	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		is_div_rev: {
+	type: 'any-of',
+	contains: [{
+	type: 'boolean',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		div_inc_rt: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		is_fcst_rev: {
+	type: 'any-of',
+	contains: [{
+	type: 'boolean',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		fcst_oi_gr_rt: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		oi_prog_rt: {
+	type: 'any-of',
+	contains: [{
+	type: 'number',
 }, {
 	type: 'null',
 }],
@@ -887,7 +932,7 @@ export const $IxCalculationArcCreate_Input = {
 }],
 	isRequired: true,
 },
-		xbrl_id: {
+		head_item_key: {
 	type: 'string',
 	isRequired: true,
 },
@@ -984,7 +1029,7 @@ export const $IxCalculationArcCreate_Output = {
 }],
 	isRequired: true,
 },
-		xbrl_id: {
+		head_item_key: {
 	type: 'string',
 	isRequired: true,
 },
@@ -1090,7 +1135,7 @@ export const $IxCalculationLocCreate = {
 }],
 	isRequired: true,
 },
-		xbrl_id: {
+		head_item_key: {
 	type: 'string',
 	isRequired: true,
 },
@@ -1181,7 +1226,7 @@ export const $IxDefinitionArcCreate_Input = {
 }],
 	isRequired: true,
 },
-		xbrl_id: {
+		head_item_key: {
 	type: 'string',
 	isRequired: true,
 },
@@ -1269,7 +1314,7 @@ export const $IxDefinitionArcCreate_Output = {
 }],
 	isRequired: true,
 },
-		xbrl_id: {
+		head_item_key: {
 	type: 'string',
 	isRequired: true,
 },
@@ -1363,7 +1408,7 @@ export const $IxDefinitionLocCreate = {
 }],
 	isRequired: true,
 },
-		xbrl_id: {
+		head_item_key: {
 	type: 'string',
 	isRequired: true,
 },
@@ -1457,7 +1502,7 @@ export const $IxFilePathCreate = {
 		path: {
 	type: 'string',
 },
-		xbrl_id: {
+		head_item_key: {
 	type: 'any-of',
 	contains: [{
 	type: 'string',
@@ -1477,7 +1522,7 @@ export const $IxFilePathPublic = {
 	type: 'string',
 	isRequired: true,
 },
-		xbrl_id: {
+		head_item_key: {
 	type: 'string',
 	isRequired: true,
 },
@@ -1488,80 +1533,59 @@ export const $IxHeadTitleCreate = {
 	description: `iXBRLのヘッダー情報を表すクラス`,
 	properties: {
 		item_key: {
-	type: 'any-of',
-	contains: [{
 	type: 'string',
+	isRequired: true,
 	maxLength: 36,
 	minLength: 36,
-}, {
-	type: 'null',
-}],
-	isRequired: true,
 },
 		company_name: {
 	type: 'any-of',
 	contains: [{
 	type: 'string',
-	maxLength: 255,
 }, {
 	type: 'null',
 }],
-	isRequired: true,
 },
 		securities_code: {
 	type: 'any-of',
 	contains: [{
 	type: 'string',
-	maxLength: 4,
 }, {
 	type: 'null',
 }],
-	isRequired: true,
 },
 		document_name: {
 	type: 'any-of',
 	contains: [{
 	type: 'string',
-	maxLength: 255,
 }, {
 	type: 'null',
 }],
-	isRequired: true,
 },
 		reporting_date: {
+	type: 'any-of',
+	contains: [{
 	type: 'string',
-	isRequired: true,
 	format: 'date',
+}, {
+	type: 'null',
+}],
 },
 		current_period: {
 	type: 'any-of',
 	contains: [{
 	type: 'string',
-	maxLength: 255,
 }, {
 	type: 'null',
 }],
-	isRequired: true,
-},
-		xbrl_id: {
-	type: 'any-of',
-	contains: [{
-	type: 'string',
-	maxLength: 255,
-}, {
-	type: 'null',
-}],
-	isRequired: true,
 },
 		report_type: {
 	type: 'any-of',
 	contains: [{
 	type: 'string',
-	maxLength: 4,
 }, {
 	type: 'null',
 }],
-	isRequired: true,
 },
 		listed_market: {
 	type: 'any-of',
@@ -1588,30 +1612,54 @@ export const $IxHeadTitleCreate = {
 }],
 },
 		is_bs: {
+	type: 'any-of',
+	contains: [{
 	type: 'boolean',
-	default: false,
+}, {
+	type: 'null',
+}],
 },
 		is_pl: {
+	type: 'any-of',
+	contains: [{
 	type: 'boolean',
-	default: false,
+}, {
+	type: 'null',
+}],
 },
 		is_cf: {
+	type: 'any-of',
+	contains: [{
 	type: 'boolean',
-	default: false,
+}, {
+	type: 'null',
+}],
 },
 		is_ci: {
+	type: 'any-of',
+	contains: [{
 	type: 'boolean',
-	default: false,
+}, {
+	type: 'null',
+}],
 },
 		is_sce: {
+	type: 'any-of',
+	contains: [{
 	type: 'boolean',
-	default: false,
+}, {
+	type: 'null',
+}],
 },
 		is_sfp: {
+	type: 'any-of',
+	contains: [{
 	type: 'boolean',
-	default: false,
+}, {
+	type: 'null',
+}],
 },
-		fiscal_year_end: {
+		fy_year_end: {
 	type: 'any-of',
 	contains: [{
 	type: 'string',
@@ -1621,42 +1669,6 @@ export const $IxHeadTitleCreate = {
 },
 		tel: {
 	type: 'any-of',
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-},
-		is_dividend_revision: {
-	type: 'any-of',
-	description: `配当予想の修正`,
-	contains: [{
-	type: 'boolean',
-}, {
-	type: 'null',
-}],
-},
-		dividend_increase_rate: {
-	type: 'any-of',
-	description: `増配率`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-},
-		is_earnings_forecast_revision: {
-	type: 'any-of',
-	description: `業績予想の修正`,
-	contains: [{
-	type: 'boolean',
-}, {
-	type: 'null',
-}],
-},
-		forecast_ordinary_income_growth_rate: {
-	type: 'any-of',
-	description: `予想経常利益増益率`,
 	contains: [{
 	type: 'string',
 }, {
@@ -1682,26 +1694,46 @@ export const $IxHeadTitleCreateList = {
 export const $IxHeadTitlePublic = {
 	description: `iXBRLのヘッダー情報を表すクラス`,
 	properties: {
-		xbrl_id: {
+		item_key: {
 	type: 'string',
 	isRequired: true,
 },
 		company_name: {
+	type: 'any-of',
+	contains: [{
 	type: 'string',
+}, {
+	type: 'null',
+}],
 	isRequired: true,
 },
 		securities_code: {
+	type: 'any-of',
+	contains: [{
 	type: 'string',
+}, {
+	type: 'null',
+}],
 	isRequired: true,
 },
 		document_name: {
+	type: 'any-of',
+	contains: [{
 	type: 'string',
+}, {
+	type: 'null',
+}],
 	isRequired: true,
 },
 		reporting_date: {
+	type: 'any-of',
+	contains: [{
 	type: 'string',
-	isRequired: true,
 	format: 'date',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
 },
 		current_period: {
 	type: 'any-of',
@@ -1802,7 +1834,7 @@ export const $IxHeadTitlePublic = {
 }],
 	isRequired: true,
 },
-		fiscal_year_end: {
+		fy_year_end: {
 	type: 'any-of',
 	contains: [{
 	type: 'string',
@@ -1820,7 +1852,7 @@ export const $IxHeadTitlePublic = {
 }],
 	isRequired: true,
 },
-		is_dividend_revision: {
+		is_div_rev: {
 	type: 'any-of',
 	contains: [{
 	type: 'boolean',
@@ -1829,7 +1861,7 @@ export const $IxHeadTitlePublic = {
 }],
 	isRequired: true,
 },
-		dividend_increase_rate: {
+		div_inc_rt: {
 	type: 'any-of',
 	contains: [{
 	type: 'string',
@@ -1838,7 +1870,7 @@ export const $IxHeadTitlePublic = {
 }],
 	isRequired: true,
 },
-		is_earnings_forecast_revision: {
+		is_fcst_rev: {
 	type: 'any-of',
 	contains: [{
 	type: 'boolean',
@@ -1847,10 +1879,19 @@ export const $IxHeadTitlePublic = {
 }],
 	isRequired: true,
 },
-		forecast_ordinary_income_growth_rate: {
+		fcst_oi_gr_rt: {
 	type: 'any-of',
 	contains: [{
 	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		oi_prog_rt: {
+	type: 'any-of',
+	contains: [{
+	type: 'number',
 }, {
 	type: 'null',
 }],
@@ -2048,7 +2089,7 @@ export const $IxNonFractionCreate_Input = {
 }],
 	isRequired: true,
 },
-		xbrl_id: {
+		head_item_key: {
 	type: 'string',
 	isRequired: true,
 	maxLength: 255,
@@ -2195,7 +2236,7 @@ export const $IxNonFractionCreate_Output = {
 }],
 	isRequired: true,
 },
-		xbrl_id: {
+		head_item_key: {
 	type: 'string',
 	isRequired: true,
 	maxLength: 255,
@@ -2349,7 +2390,7 @@ export const $IxNonNumericCreate = {
 }],
 	isRequired: true,
 },
-		xbrl_id: {
+		head_item_key: {
 	type: 'string',
 	isRequired: true,
 	maxLength: 255,
@@ -2461,7 +2502,7 @@ export const $IxPresentationArcCreate_Input = {
 }],
 	isRequired: true,
 },
-		xbrl_id: {
+		head_item_key: {
 	type: 'string',
 	isRequired: true,
 },
@@ -2558,7 +2599,7 @@ export const $IxPresentationArcCreate_Output = {
 }],
 	isRequired: true,
 },
-		xbrl_id: {
+		head_item_key: {
 	type: 'string',
 	isRequired: true,
 },
@@ -2664,7 +2705,7 @@ export const $IxPresentationLocCreate = {
 }],
 	isRequired: true,
 },
-		xbrl_id: {
+		head_item_key: {
 	type: 'string',
 	isRequired: true,
 },
@@ -2797,7 +2838,7 @@ export const $IxQualitativeCreate = {
 	type: 'null',
 }],
 },
-		xbrl_id: {
+		head_item_key: {
 	type: 'any-of',
 	description: `XBRL-ID`,
 	contains: [{
@@ -2885,7 +2926,7 @@ export const $IxQualitativePublic = {
 }],
 	isRequired: true,
 },
-		xbrl_id: {
+		head_item_key: {
 	type: 'any-of',
 	contains: [{
 	type: 'string',
@@ -2972,7 +3013,7 @@ export const $IxSchemaLinkBaseCreate = {
 }],
 	isRequired: true,
 },
-		xbrl_id: {
+		head_item_key: {
 	type: 'string',
 	isRequired: true,
 },
@@ -3096,7 +3137,7 @@ export const $IxSourceFileCreate = {
 	isRequired: true,
 	maxLength: 255,
 },
-		xbrl_id: {
+		head_item_key: {
 	type: 'any-of',
 	contains: [{
 	type: 'string',

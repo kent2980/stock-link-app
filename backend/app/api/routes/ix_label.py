@@ -94,25 +94,8 @@ def create_ix_label_loc_items_exists(
     """
     Create new items.(Insert Select ... Not Exists)
     """
-    source_file_id_list = []
-    for item in items_in.data:
-        source_file_id_list.append(item.source_file_id)
-
-    source_file_id_list = list(set(source_file_id_list))
-    for source_file_id in source_file_id_list:
-        statement = select(IxLabelLoc).where(
-            IxLabelLoc.source_file_id == source_file_id
-        )
-        result = session.exec(statement)
-        item_exists = result.first()
-
-        source_file_id_list.remove(source_file_id)
-
     new_items = []
     for item in items_in.data:
-        if not item.source_file_id in source_file_id_list:
-            continue
-
         statement = select(IxLabelLoc).where(
             IxLabelLoc.xlink_label == item.xlink_label,
             IxLabelLoc.xlink_href == item.xlink_href,
@@ -145,25 +128,8 @@ def create_ix_label_arc_items_exists(
     """
     Create new items.(Insert Select ... Not Exists)
     """
-    source_file_id_list = []
-    for item in items_in.data:
-        source_file_id_list.append(item.source_file_id)
-
-    source_file_id_list = list(set(source_file_id_list))
-    for source_file_id in source_file_id_list:
-        statement = select(IxLabelArc).where(
-            IxLabelArc.source_file_id == source_file_id
-        )
-        result = session.exec(statement)
-        item_exists = result.first()
-
-        source_file_id_list.remove(source_file_id)
-
     new_items = []
     for item in items_in.data:
-        if not item.source_file_id in source_file_id_list:
-            continue
-
         statement = select(IxLabelArc).where(
             IxLabelArc.xlink_from == item.xlink_from,
             IxLabelArc.xlink_to == item.xlink_to,
@@ -196,25 +162,8 @@ def create_ix_label_value_items_exists(
     """
     Create new items.(Insert Select ... Not Exists)
     """
-    source_file_id_list = []
-    for item in items_in.data:
-        source_file_id_list.append(item.source_file_id)
-
-    source_file_id_list = list(set(source_file_id_list))
-    for source_file_id in source_file_id_list:
-        statement = select(IxLabelValue).where(
-            IxLabelValue.source_file_id == source_file_id
-        )
-        result = session.exec(statement)
-        item_exists = result.first()
-
-        source_file_id_list.remove(source_file_id)
-
     new_items = []
     for item in items_in.data:
-        if not item.source_file_id in source_file_id_list:
-            continue
-
         statement = select(IxLabelValue).where(
             IxLabelValue.xlink_label == item.xlink_label,
             IxLabelValue.source_file_id == item.source_file_id,

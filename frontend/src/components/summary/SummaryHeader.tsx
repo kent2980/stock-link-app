@@ -3,15 +3,18 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { XbrlViewService } from "../../client";
 interface SummaryHeaderProps extends BoxProps {
-  xbrl_id: string;
+  head_item_key: string;
 }
 
-const SummaryHeader: React.FC<SummaryHeaderProps> = ({ xbrl_id, ...props }) => {
+const SummaryHeader: React.FC<SummaryHeaderProps> = ({
+  head_item_key,
+  ...props
+}) => {
   const { data: item, status } = useQuery({
-    queryKey: ["head", xbrl_id],
+    queryKey: ["head", head_item_key],
     queryFn: () =>
       XbrlViewService.readHeadItem({
-        xbrlId: xbrl_id,
+        headItemKey: head_item_key,
       }),
     staleTime: 1000 * 60 * 60 * 24 * 7,
     gcTime: 1000 * 60 * 60 * 24 * 30,

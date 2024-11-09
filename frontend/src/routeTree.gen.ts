@@ -20,7 +20,7 @@ import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutSettingsImport } from './routes/_layout/settings'
 import { Route as LayoutItemsImport } from './routes/_layout/items'
 import { Route as LayoutAdminImport } from './routes/_layout/admin'
-import { Route as LayoutSummaryXbrlidImport } from './routes/_layout/summary.$xbrl_id'
+import { Route as LayoutSummaryHeaditemkeyImport } from './routes/_layout/summary.$head_item_key'
 import { Route as LayoutMenuSelectedDateImport } from './routes/_layout/menu.$selectedDate'
 
 // Create/Update Routes
@@ -70,8 +70,8 @@ const LayoutAdminRoute = LayoutAdminImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutSummaryXbrlidRoute = LayoutSummaryXbrlidImport.update({
-  path: '/summary/$xbrl_id',
+const LayoutSummaryHeaditemkeyRoute = LayoutSummaryHeaditemkeyImport.update({
+  path: '/summary/$head_item_key',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -124,8 +124,8 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutMenuSelectedDateImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/summary/$xbrl_id': {
-      preLoaderRoute: typeof LayoutSummaryXbrlidImport
+    '/_layout/summary/$head_item_key': {
+      preLoaderRoute: typeof LayoutSummaryHeaditemkeyImport
       parentRoute: typeof LayoutImport
     }
   }
@@ -140,7 +140,7 @@ export const routeTree = rootRoute.addChildren([
     LayoutSettingsRoute,
     LayoutIndexRoute,
     LayoutMenuSelectedDateRoute,
-    LayoutSummaryXbrlidRoute,
+    LayoutSummaryHeaditemkeyRoute,
   ]),
   LoginRoute,
   RecoverPasswordRoute,

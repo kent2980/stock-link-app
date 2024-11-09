@@ -8,14 +8,14 @@ import DividendTableArea from "./table/DividendTableArea";
 import OperatingTableArea from "./table/OperatingTableArea";
 
 interface SummaryBoxProps extends BoxProps {
-  xbrl_id: string;
+  head_item_key: string;
 }
-const SummaryBox: React.FC<SummaryBoxProps> = ({ xbrl_id, ...props }) => {
+const SummaryBox: React.FC<SummaryBoxProps> = ({ head_item_key, ...props }) => {
   const { data: items, status } = useQuery({
-    queryKey: ["summary", xbrl_id],
+    queryKey: ["summary", head_item_key],
     queryFn: () =>
-      XbrlViewService.readSummaryItemByXbrlId({
-        xbrlId: xbrl_id,
+      XbrlViewService.readSummaryItemByHeadItemKey({
+        headItemKey: head_item_key,
       }),
     staleTime: 1000 * 60 * 60 * 24 * 7,
     gcTime: 1000 * 60 * 60 * 24 * 30,

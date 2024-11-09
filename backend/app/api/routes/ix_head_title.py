@@ -1,7 +1,7 @@
 import datetime
 import re
 from decimal import Decimal
-from typing import Any, Optional
+from typing import Any, List, Optional
 
 import app.schema as sc
 from app.api.deps import SessionDep

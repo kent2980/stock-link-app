@@ -13,11 +13,11 @@ import React from "react";
 import { XbrlQualitativeService } from "../../client";
 
 interface SummaryQualitativeProps extends StackProps {
-  xbrl_id: string;
+  head_item_key: string;
 }
 
 const SummaryQualitative: React.FC<SummaryQualitativeProps> = ({
-  xbrl_id,
+  head_item_key,
   ...props
 }) => {
   // フェードインアニメーション
@@ -28,10 +28,10 @@ const SummaryQualitative: React.FC<SummaryQualitativeProps> = ({
 
   // qualitative data
   const { data: items, status } = useQuery({
-    queryKey: ["qualitative", xbrl_id],
+    queryKey: ["qualitative", head_item_key],
     queryFn: async () =>
       XbrlQualitativeService.readIxQualitativeItem({
-        xbrlId: xbrl_id,
+        headItemKey: head_item_key,
       }),
     staleTime: 1000 * 60 * 60 * 24 * 7,
     gcTime: 1000 * 60 * 60 * 24 * 30,

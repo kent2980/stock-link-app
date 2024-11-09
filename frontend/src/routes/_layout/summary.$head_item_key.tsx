@@ -13,19 +13,19 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { XbrlViewService } from "../../client";
 
-function queryOptions(xbrl_id: string) {
+function queryOptions(head_item_key: string) {
   return {
-    queryKey: ["summary", xbrl_id],
+    queryKey: ["summary", head_item_key],
     queryFn: () =>
-      XbrlViewService.readSummaryItemByXbrlId({
-        xbrlId: xbrl_id,
+      XbrlViewService.readSummaryItemByHeadItemKey({
+        headItemKey: head_item_key,
       }),
   };
 }
 
-export const Route = createFileRoute("/_layout/summary/$xbrl_id")({
-  loader: async ({ context: { queryClient }, params: { xbrl_id } }) => {
-    return queryClient.ensureQueryData(queryOptions(xbrl_id));
+export const Route = createFileRoute("/_layout/summary/$head_item_key")({
+  loader: async ({ context: { queryClient }, params: { head_item_key } }) => {
+    return queryClient.ensureQueryData(queryOptions(head_item_key));
   },
   component: Summary,
   pendingComponent: () => <Box>Loading...</Box>,
@@ -34,12 +34,12 @@ export const Route = createFileRoute("/_layout/summary/$xbrl_id")({
 });
 
 function Summary() {
-  const { xbrl_id } = Route.useParams();
+  const { head_item_key } = Route.useParams();
   // モバイルの場合
   if (window.innerWidth < 768) {
     return (
       <>
-        <SummaryHeader xbrl_id={xbrl_id} height="80px" />
+        <SummaryHeader head_item_key={head_item_key} height="80px" />
         <Swiper
           modules={[EffectCube, Scrollbar, Navigation, Pagination]}
           spaceBetween={0}
@@ -58,10 +58,16 @@ function Summary() {
           }}
         >
           <SwiperSlide>
-            <SummaryBox xbrl_id={xbrl_id} className="swiper-child" />
+            <SummaryBox
+              head_item_key={head_item_key}
+              className="swiper-child"
+            />
           </SwiperSlide>
           <SwiperSlide>
-            <SummaryQualitative xbrl_id={xbrl_id} className="swiper-child" />
+            <SummaryQualitative
+              head_item_key={head_item_key}
+              className="swiper-child"
+            />
           </SwiperSlide>
         </Swiper>
       </>
@@ -69,10 +75,10 @@ function Summary() {
   } else {
     return (
       <Box>
-        <SummaryHeader xbrl_id={xbrl_id} />
+        <SummaryHeader head_item_key={head_item_key} />
         <Stack direction={"row"} marginTop={24} alignItems="flex-start">
-          <SummaryBox xbrl_id={xbrl_id} width="32%" />
-          <SummaryQualitative xbrl_id={xbrl_id} width="66%" />
+          <SummaryBox head_item_key={head_item_key} width="32%" />
+          <SummaryQualitative head_item_key={head_item_key} width="66%" />
         </Stack>
       </Box>
     );

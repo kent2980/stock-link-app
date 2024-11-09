@@ -122,9 +122,12 @@ const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
         <Box h="40px" />
         {data?.data?.map((item) => {
           return (
-            <Link to="/summary/$xbrl_id" params={{ xbrl_id: item.xbrl_id }}>
+            <Link
+              to="/summary/$head_item_key"
+              params={{ head_item_key: item.item_key }}
+            >
               <Box
-                key={item.xbrl_id}
+                key={item.item_key}
                 w="100%"
                 borderBottom="1px"
                 borderColor="gray.200"

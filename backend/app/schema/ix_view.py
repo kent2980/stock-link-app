@@ -40,7 +40,7 @@ class StockRecordInfos(SQLModel):
 class HeadItem(SQLModel):
     """iXBRLのソースID情報を表すクラス"""
 
-    head_item_key: str
+    item_key: str
     company_name: str
     securities_code: str
     document_name: str
@@ -56,8 +56,13 @@ class HeadItem(SQLModel):
     is_ci: Optional[bool]
     is_sce: Optional[bool]
     is_sfp: Optional[bool]
-    fiscal_year_end: Optional[str]
+    fy_year_end: Optional[str]
     tel: Optional[str]
+    is_div_rev: Optional[bool]
+    div_inc_rt: Optional[str]
+    is_fcst_rev: Optional[bool]
+    fcst_oi_gr_rt: Optional[str]
+    oi_prog_rt: Optional[float]
 
 
 class HeadItems(SQLModel):

@@ -23,12 +23,13 @@ class IxHeadTitlePublic(SQLModel):
     is_ci: Optional[bool]
     is_sce: Optional[bool]
     is_sfp: Optional[bool]
-    fiscal_year_end: Optional[str]
+    fy_year_end: Optional[str]
     tel: Optional[str]
-    is_dividend_revision: Optional[bool]
-    dividend_increase_rate: Optional[str]
-    is_earnings_forecast_revision: Optional[bool]
-    forecast_ordinary_income_growth_rate: Optional[str]
+    is_div_rev: Optional[bool]
+    div_inc_rt: Optional[str]
+    is_fcst_rev: Optional[bool]
+    fcst_oi_gr_rt: Optional[str]
+    oi_prog_rt: Optional[float]
 
 
 class IxHeadTitleCreate(SQLModel):
