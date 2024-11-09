@@ -81,7 +81,7 @@ def create_ix_source_file_items_exists(
     return f"Items already exists"
 
 
-@router.get("/is/source_file_id/", response_model=bool)
+@router.get("/is/exits/source_file_id/", response_model=bool)
 def get_ix_source_file_item(
     *, session: SessionDep, source_file_id: str = Query(...)
 ) -> Any:
