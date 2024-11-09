@@ -54,9 +54,9 @@ const StockItem: React.FC<StockItemProps> = ({ item }) => {
     }
     return "";
   };
-  const year = item.fiscal_year_end; // 決算期
+  const year = item.fy_year_end; // 決算期
   const isDividendRevision = () => {
-    if (item.is_dividend_revision) {
+    if (item.is_div_rev) {
       return (
         <Text>
           <Highlight
@@ -77,9 +77,9 @@ const StockItem: React.FC<StockItemProps> = ({ item }) => {
       return <Text textAlign="center">無</Text>;
     }
   };
-  const dividendIncreaseRate = item.dividend_increase_rate; // 配当増加率
+  const dividendIncreaseRate = item.div_inc_rt; // 配当増加率
   const isEarningsForecastRevision = () => {
-    if (item.is_earnings_forecast_revision) {
+    if (item.is_fcst_rev) {
       return (
         <Text>
           <Highlight
@@ -100,8 +100,7 @@ const StockItem: React.FC<StockItemProps> = ({ item }) => {
       return <Text textAlign="center">無</Text>;
     }
   };
-  const forecastOrdinaryIncomeGrowthRate =
-    item.forecast_ordinary_income_growth_rate; // 営業利益増加率
+  const forecastOrdinaryIncomeGrowthRate = item.fcst_oi_gr_rt; // 営業利益増加率
   return (
     <VStack m={2} w="100%" spacing={5}>
       <HStack justify="flex-start" w="100%">
