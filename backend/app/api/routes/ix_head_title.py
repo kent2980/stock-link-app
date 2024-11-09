@@ -301,7 +301,7 @@ def is_ix_head_title_item_active(*, session: SessionDep, head_item_key: str) -> 
     return False
 
 
-@router.get("/ix/head/generate/")
+@router.put("/ix/head/generate/")
 def generate_ix_head_title_item(
     *, session: SessionDep, head_item_key: Optional[str] = Query(None)
 ) -> Any:
@@ -348,15 +348,11 @@ def generate_ix_head_title_item(
             context["forecast"][1],
         )
         try:
-            print(ord_res, ord_fore)
-            if ord_res > 0 | ord_fore > 0:
-                results["oi_prog_rt"] = round(ord_res / ord_fore * 100, 1)
+            results["oi_prog_rt"] = round(ord_res / ord_fore * 100, 1)
         except ZeroDivisionError:
             continue
         except TypeError:
             continue
-        if results["oi_prog_rt"] > 100 | results["oi_prog_rt"] < 0:
-            print(ord_res, ord_fore)
         # endregion
 
         statement = select(IxHeadTitle).where(

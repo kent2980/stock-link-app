@@ -35,6 +35,23 @@ class IxHeadTitleCreate(SQLModel):
     """iXBRLのヘッダー情報を表すクラス"""
 
     item_key: str = Field(max_length=36, min_length=36, unique=True)
+    company_name: Optional[str] = Field(default=None)
+    securities_code: Optional[str] = Field(default=None)
+    document_name: Optional[str] = Field(default=None)
+    reporting_date: Optional[datetime.date] = Field(default=None)
+    current_period: Optional[str] = Field(default=None)
+    report_type: Optional[str] = Field(default=None)
+    listed_market: Optional[str] = Field(default=None)
+    market_section: Optional[str] = Field(default=None)
+    url: Optional[str] = Field(default=None)
+    is_bs: Optional[bool] = Field(default=None)
+    is_pl: Optional[bool] = Field(default=None)
+    is_cf: Optional[bool] = Field(default=None)
+    is_ci: Optional[bool] = Field(default=None)
+    is_sce: Optional[bool] = Field(default=None)
+    is_sfp: Optional[bool] = Field(default=None)
+    fy_year_end: Optional[str] = Field(default=None)
+    tel: Optional[str] = Field(default=None)
 
 
 class IxHeadTitlesPublic(SQLModel):
