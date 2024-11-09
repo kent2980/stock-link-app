@@ -81,8 +81,10 @@ def create_ix_source_file_items_exists(
     return f"Items already exists"
 
 
-@router.get("/source/is/{source_file_id}/", response_model=bool)
-def get_ix_source_file_item(*, session: SessionDep, source_file_id: str) -> Any:
+@router.get("/is/source_file_id/", response_model=bool)
+def get_ix_source_file_item(
+    *, session: SessionDep, source_file_id: str = Query(...)
+) -> Any:
     """
     Get item.
     """
@@ -92,8 +94,8 @@ def get_ix_source_file_item(*, session: SessionDep, source_file_id: str) -> Any:
 
     if item_exists:
         return True
-
-    return False
+    else:
+        raise HTTPException(status_code=404, detail="Item not found")
 
 
 @router.delete("/source/delete/", response_model=bool)
