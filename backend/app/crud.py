@@ -282,8 +282,9 @@ def read_menu_items(
             isouter=True,
         )
         .where(
+            IxDefinitionArc.head_item_key == head_item_key,
             IxDefinitionArc.xlink_arcrole
-            != "http://xbrl.org/int/dim/arcrole/dimension-default"
+            != "http://xbrl.org/int/dim/arcrole/dimension-default",
         )
         .subquery()
     )
