@@ -8,20 +8,16 @@ import SummaryQualitative from "../../components/summary/SummaryQualitative";
 
 import "swiper/css";
 import "swiper/css/effect-cube";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
-import { XbrlViewService } from "../../client";
 
-function queryOptions(head_item_key: string) {
-  return {
-    queryKey: ["summary", head_item_key],
-    queryFn: () =>
-      XbrlViewService.readSummaryItemByHeadItemKey({
-        headItemKey: head_item_key,
-      }),
-  };
-}
+// function queryOptions(head_item_key: string) {
+//   return {
+//     queryKey: ["summary", head_item_key],
+//     queryFn: () =>
+//       XbrlViewService.readSummaryItemByHeadItemKey({
+//         headItemKey: head_item_key,
+//       }),
+//   };
+// }
 
 export const Route = createFileRoute("/_layout/summary/$head_item_key")({
   // loader: async ({ context: { queryClient }, params: { head_item_key } }) => {
