@@ -253,6 +253,14 @@ class IxHeadTitle(XbrlBase, table=True):
     is_active: bool = Field(default=False, nullable=False, description="有効フラグ")
     is_generated: bool = Field(default=False, nullable=False, description="生成フラグ")
 
+    __table_args__ = (
+        Index("idx_ix_head_title_item_key", "item_key"),
+        Index("idx_ix_head_title_reporting_date", "reporting_date"),
+        Index("idx_ix_head_title_report_type", "report_type"),
+        Index("idx_ix_head_title_is_active", "is_active"),
+        Index("idx_ix_head_title_is_generated", "is_generated"),
+    )
+
 
 class IxSourceFile(XbrlBase, table=True):
     """ソースファイル情報を表すクラス"""

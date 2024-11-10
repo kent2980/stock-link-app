@@ -28,9 +28,36 @@ interface StockListProps extends BoxProps {
  * @returns {React.FC<StockListProps>} 指定された日付の株式リストを表示するコンポーネント
  */
 const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
+  const scaleTime = () => {
+    // selectDateを日付型に変換
+    const date = new Date(selectDate);
+    const today = new Date();
+    if (date.getTime() === today.getTime()) {
+      return 0;
+    } else {
+      // 7日間の秒数
+      return 7 * 24 * 60 * 60 * 1000;
+    }
+  };
+  const gcTime = scaleTime();
+  // IR報告書タイプごとの件数データを取得
+  const { data, status } = useQuery({
+    queryKey: ["stock_list", selectDate],
+    queryFn: () =>
+      XbrlIxHeadService.selectIxHeadTitleItems({ dateStr: selectDate }),
+    staleTime: scaleTime(),
+    gcTime: gcTime,
+  });
+
+  // スクロール位置を保持するためのRef
   const StockListRef = useRef<HTMLDivElement>(null);
+
+  // ルーティング用のフック
   const navigate = useNavigate({ from: "/menu" });
+
+  // スワイプイベントのハンドラ
   const handlers = useSwipeable({
+    // 左スワイプイベントのハンドラ
     onSwipedLeft: () => {
       console.log("swipe left");
       // 1日後の日付を取得
@@ -48,6 +75,7 @@ const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
         };
       });
     },
+    // 右スワイプイベントのハンドラ
     onSwipedRight: () => {
       console.log("swipe right");
       // 1日前の日付を取得
@@ -68,23 +96,21 @@ const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
       });
     },
   });
-  const { data } = useQuery({
-    queryKey: ["stock_list", selectDate],
-    queryFn: () =>
-      XbrlIxHeadService.selectIxHeadTitleItems({ dateStr: selectDate }),
-  });
 
+  // スクロール位置をStoreから取得
   const scrollPosition = useStore(
     StockListStore,
     (state) => state[selectDate]?.scrollPosition ?? 0
   );
 
+  // スクロール位置の記憶・復元処理 ※selectDateが変更された場合のみ実行
   useEffect(() => {
+    // スクロール位置を設定
     if (StockListRef.current) {
       console.log("set scroll position", scrollPosition);
       StockListRef.current.scrollTop = scrollPosition;
     }
-
+    // スクロールイベントのハンドラ
     const handleScroll = () => {
       if (StockListRef.current) {
         StockListStore.setState((state) => {
@@ -97,12 +123,11 @@ const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
         });
       }
     };
-
+    // スクロールイベントのリスナーを登録
     const currentRef = StockListRef.current;
     if (currentRef) {
       currentRef.addEventListener("scroll", handleScroll);
     }
-
     // クリーンアップ関数
     return () => {
       if (currentRef) {
@@ -110,6 +135,10 @@ const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
       }
     };
   }, [selectDate]);
+
+  if (status === "pending") {
+    return <Box />;
+  }
 
   return (
     <Box {...props} {...handlers}>

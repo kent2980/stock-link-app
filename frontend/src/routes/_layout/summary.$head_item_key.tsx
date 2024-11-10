@@ -1,4 +1,4 @@
-import { Box, Stack } from "@chakra-ui/react";
+import { Box, Spinner, Stack } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { EffectCube, Navigation, Pagination, Scrollbar } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -8,35 +8,36 @@ import SummaryQualitative from "../../components/summary/SummaryQualitative";
 
 import "swiper/css";
 import "swiper/css/effect-cube";
+import { XbrlViewService } from "../../client";
 
-// function queryOptions(head_item_key: string) {
-//   return {
-//     queryKey: ["summary", head_item_key],
-//     queryFn: () =>
-//       XbrlViewService.readSummaryItemByHeadItemKey({
-//         headItemKey: head_item_key,
-//       }),
-//   };
-// }
+function queryOptions(head_item_key: string) {
+  return {
+    queryKey: ["summary", head_item_key],
+    queryFn: () =>
+      XbrlViewService.readSummaryItemByHeadItemKey({
+        headItemKey: head_item_key,
+      }),
+  };
+}
 
 export const Route = createFileRoute("/_layout/summary/$head_item_key")({
-  // loader: async ({ context: { queryClient }, params: { head_item_key } }) => {
-  //   return queryClient.ensureQueryData(queryOptions(head_item_key));
-  // },
+  loader: async ({ context: { queryClient }, params: { head_item_key } }) => {
+    return queryClient.ensureQueryData(queryOptions(head_item_key));
+  },
   component: Summary,
-  // pendingComponent: () => (
-  //   <Box>
-  //     <Spinner
-  //       size="xl"
-  //       thickness="10px"
-  //       speed="1s"
-  //       emptyColor="gray.200"
-  //       color="blue.500"
-  //     />
-  //   </Box>
-  // ),
-  // notFoundComponent: () => <Box>Not found</Box>,
-  // errorComponent: () => <Box>Error</Box>,
+  pendingComponent: () => (
+    <Box>
+      <Spinner
+        size="xl"
+        thickness="10px"
+        speed="1s"
+        emptyColor="gray.200"
+        color="blue.500"
+      />
+    </Box>
+  ),
+  notFoundComponent: () => <Box>Not found</Box>,
+  errorComponent: () => <Box>Error</Box>,
 });
 
 function Summary() {

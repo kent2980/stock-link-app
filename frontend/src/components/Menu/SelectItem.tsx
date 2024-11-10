@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { XbrlIxHeadService } from "../../client";
 import StockList from "./StockList";
 
@@ -20,12 +20,28 @@ interface SelectItemProps extends BoxProps {
 }
 
 const SelectItem: React.FC<SelectItemProps> = ({ selectDate, ...props }) => {
-  const { data: reportCount } = useQuery({
+  const [date, setDate] = useState(selectDate);
+  const scaleTime = () => {
+    // selectDateを日付型に変換
+    const date = new Date(selectDate);
+    const today = new Date();
+    if (date.getTime() === today.getTime()) {
+      return 0;
+    } else {
+      // 7日間の秒数
+      return 7 * 24 * 60 * 60 * 1000;
+    }
+  };
+  const gcTime = scaleTime();
+
+  const { data: reportCount, status } = useQuery({
     queryKey: ["report_type_count", selectDate],
     queryFn: () =>
       XbrlIxHeadService.getCountReportType({
         dateStr: selectDate,
       }),
+    staleTime: scaleTime(),
+    gcTime: gcTime,
   });
 
   let earningsReportCount = 0;
@@ -42,6 +58,10 @@ const SelectItem: React.FC<SelectItemProps> = ({ selectDate, ...props }) => {
     }
   });
 
+  useEffect(() => {
+    setDate(selectDate);
+  }, [selectDate]);
+
   return (
     <Box {...props} w="100vw">
       <Box
@@ -56,9 +76,7 @@ const SelectItem: React.FC<SelectItemProps> = ({ selectDate, ...props }) => {
         left={2}
         zIndex={1}
       >
-        <Text textAlign="center">
-          {dayjs(selectDate).format("YYYY.MM.DD (ddd)")}
-        </Text>
+        <Text textAlign="center">{dayjs(date).format("YYYY.MM.DD (ddd)")}</Text>
       </Box>
       <Box
         bg="white"
@@ -89,32 +107,36 @@ const SelectItem: React.FC<SelectItemProps> = ({ selectDate, ...props }) => {
           <Input variant="filled" placeholder="銘柄コードで検索" />
         </Box>
         <Box borderBottom="1px" borderColor="gray.200" w="full">
-          <HStack
-            align="end"
-            m={1}
-            p={2}
-            spacing={2}
-            color="gray.600"
-            fontWeight="500"
-            fontSize="10px"
-            justifyContent="space-between"
-          >
-            <Tag>
-              <TagLabel fontSize="12px">
-                決算短信 {earningsReportCount} 件
-              </TagLabel>
-            </Tag>
-            <Tag>
-              <TagLabel fontSize="12px">
-                業績予想の修正 {performanceForecastRevisionCount} 件
-              </TagLabel>
-            </Tag>
-            <Tag>
-              <TagLabel fontSize="12px">
-                配当予想の修正 {dividendForecastRevisionCount} 件
-              </TagLabel>
-            </Tag>
-          </HStack>
+          {status === "pending" ? (
+            <Box />
+          ) : (
+            <HStack
+              align="end"
+              m={1}
+              p={2}
+              spacing={2}
+              color="gray.600"
+              fontWeight="500"
+              fontSize="10px"
+              justifyContent="space-between"
+            >
+              <Tag>
+                <TagLabel fontSize="12px">
+                  決算短信 {earningsReportCount} 件
+                </TagLabel>
+              </Tag>
+              <Tag>
+                <TagLabel fontSize="12px">
+                  業績予想の修正 {performanceForecastRevisionCount} 件
+                </TagLabel>
+              </Tag>
+              <Tag>
+                <TagLabel fontSize="12px">
+                  配当予想の修正 {dividendForecastRevisionCount} 件
+                </TagLabel>
+              </Tag>
+            </HStack>
+          )}
         </Box>
 
         <StockList selectDate={selectDate} />

@@ -43,7 +43,7 @@ const StockItem: React.FC<StockItemProps> = ({ item }) => {
   };
   const year = item.fy_year_end; // 決算期
   return (
-    <VStack m={2} w="100%" spacing={5} height="600px">
+    <VStack m={2} w="100%" spacing={5} height="300px">
       <HStack justify="flex-start" w="100%">
         <Box>
           <Text px="2" py="1" rounded="10%" bg="gray.200" color="black">
@@ -67,6 +67,14 @@ const StockItem: React.FC<StockItemProps> = ({ item }) => {
         <Badge display={period() === "" ? "none" : "block"}>{period()}</Badge>
         <Badge>{report_type()}</Badge>
       </HStack>
+      <VStack>
+        <Heading as="h3" size="sm" textAlign="left" w="100%">
+          経常利益進捗率
+        </Heading>
+        <Text textAlign="left" w="100%">
+          {item.oi_prog_rt}%
+        </Text>
+      </VStack>
     </VStack>
   );
 };
