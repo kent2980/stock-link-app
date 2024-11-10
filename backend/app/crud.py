@@ -241,21 +241,24 @@ def read_menu_items(
         )
         .join(
             IxDefinitionLoc,
-            (IxDefinitionArc.head_item_key == IxDefinitionLoc.head_item_key)
+            (IxDefinitionLoc.head_item_key == head_item_key)
+            & (IxDefinitionArc.head_item_key == IxDefinitionLoc.head_item_key)
             & (IxDefinitionArc.xlink_from == IxDefinitionLoc.xlink_label)
             & (IxDefinitionArc.attr_value == IxDefinitionLoc.attr_value),
             isouter=True,
         )
         .join(
             idl,
-            (IxDefinitionArc.head_item_key == idl.head_item_key)
+            (idl.head_item_key == head_item_key)
+            & (IxDefinitionArc.head_item_key == idl.head_item_key)
             & (IxDefinitionArc.xlink_to == idl.xlink_label)
             & (IxDefinitionArc.attr_value == idl.attr_value),
             isouter=True,
         )
         .join(
             ScLinkBaseRef,
-            (IxDefinitionArc.source_file_id == ScLinkBaseRef.href_source_file_id)
+            (ScLinkBaseRef.head_item_key == head_item_key)
+            & (IxDefinitionArc.source_file_id == ScLinkBaseRef.href_source_file_id)
             & (ScLinkBaseRef.xbrl_type == xbrl_type),
         )
         .where(
@@ -276,7 +279,8 @@ def read_menu_items(
         )
         .join(
             IxDefinitionLoc,
-            (IxDefinitionArc.source_file_id == IxDefinitionLoc.source_file_id)
+            (IxDefinitionLoc.head_item_key == head_item_key)
+            & (IxDefinitionArc.source_file_id == IxDefinitionLoc.source_file_id)
             & (IxDefinitionArc.xlink_to == IxDefinitionLoc.xlink_label)
             & (IxDefinitionArc.attr_value == IxDefinitionLoc.attr_value),
             isouter=True,
