@@ -4,6 +4,7 @@ import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxCalculationArc, IxCalculationLoc
 from fastapi import APIRouter, HTTPException, Query
+from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
 router = APIRouter()
@@ -49,24 +50,14 @@ def create_ix_cal_loc_items_exists(
 
     new_items = []
     for item in items_in.data:
-        statement = select(IxCalculationLoc).where(
-            IxCalculationLoc.xlink_label == item.xlink_label,
-            IxCalculationLoc.xlink_href == item.xlink_href,
-            IxCalculationLoc.xlink_schema == item.xlink_schema,
-            IxCalculationLoc.source_file_id == item.source_file_id,
-        )
-        result = session.exec(statement)
-        item_exists = result.first()
-
-        if not item_exists:
-            new_item = IxCalculationLoc.model_validate(item)
-            session.add(new_item)
-            new_items.append(new_item)
-
-    if new_items:
-        session.commit()
-        for new_item in new_items:
+        new_item = IxCalculationLoc.model_validate(item)
+        session.add(new_item)
+        try:
+            session.commit()
             session.refresh(new_item)
+            new_items.append(new_item)
+        except IntegrityError:
+            session.rollback()
 
     return f"{len(new_items)} items created."
 
@@ -81,24 +72,14 @@ def create_ix_cal_arc_items_exists(
 
     new_items = []
     for item in items_in.data:
-        statement = select(IxCalculationArc).where(
-            IxCalculationArc.xlink_from == item.xlink_from,
-            IxCalculationArc.xlink_to == item.xlink_to,
-            IxCalculationArc.source_file_id == item.source_file_id,
-        )
-        result = session.exec(statement)
-        item_exists = result.first()
-
-        if not item_exists:
-            new_item = IxCalculationArc.model_validate(item)
-            session.add(new_item)
-            new_items.append(new_item)
-
-    if new_items:
-        session.commit()
-        for new_item in new_items:
+        new_item = IxCalculationArc.model_validate(item)
+        session.add(new_item)
+        try:
+            session.commit()
             session.refresh(new_item)
-
+            new_items.append(new_item)
+        except IntegrityError:
+            session.rollback()
     return f"{len(new_items)} items created."
 
 

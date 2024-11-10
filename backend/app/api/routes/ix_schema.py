@@ -32,39 +32,18 @@ def create_ix_schema_linkbase_items_exists(
     """
     Create new items.(Insert Select ... Not Exists)
     """
-    try:
-
-        new_items = []
-
-        for item in items_in.data:
-            statement = select(ScLinkBaseRef).where(
-                ScLinkBaseRef.xlink_href == item.xlink_href,
-                ScLinkBaseRef.head_item_key == item.head_item_key,
-                ScLinkBaseRef.href_source_file_id == item.href_source_file_id,
-                ScLinkBaseRef.source_file_id == item.source_file_id,
-                ScLinkBaseRef.xbrl_type == item.xbrl_type,
-            )
-            result = session.exec(statement)
-            item_exists = result.first()
-
-            if not item_exists:
-                new_item = ScLinkBaseRef.model_validate(item)
-                session.add(new_item)
-                new_items.append(new_item)
-
-        if new_items:
+    new_items = []
+    for item in items_in.data:
+        new_item = ScLinkBaseRef.model_validate(item)
+        session.add(new_item)
+        try:
             session.commit()
-            return f"Items {new_items} created"
+            session.refresh(new_item)
+            new_items.append(new_item)
+        except IntegrityError:
+            session.rollback()
 
-    except IntegrityError as e:
-        session.rollback()
-        if "foreign key constraint" in str(e):
-            raise HTTPException(
-                status_code=400, detail="Foreign key constraint violated"
-            )
-        raise HTTPException(status_code=500, detail="Internal Server Error")
-
-    return "Items already exists"
+    return f"{len(new_items)} items created."
 
 
 @router.get("/schema/linkbase/is/{head_item_key}/", response_model=bool)

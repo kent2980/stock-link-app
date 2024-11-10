@@ -7,6 +7,7 @@ import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric
 from fastapi import APIRouter, HTTPException, Query
+from sqlalchemy.exc import IntegrityError
 from sqlmodel import func, select
 
 router = APIRouter()
@@ -57,20 +58,16 @@ def create_ix_head_title_items_exists(
     """
     new_items = []
     for item in items_in.data:
-        statement = select(IxHeadTitle).where(IxHeadTitle.item_key == item.item_key)
-        result = session.exec(statement)
-        item_exists = result.first()
-
-        if not item_exists:
-            new_item = IxHeadTitle.model_validate(item)
-            session.add(new_item)
+        new_item = IxHeadTitle.model_validate(item)
+        session.add(new_item)
+        try:
+            session.commit()
+            session.refresh(new_item)
             new_items.append(new_item)
+        except IntegrityError:
+            session.rollback()
 
-    if new_items:
-        session.commit()
-        return f"Items {len(new_items)} created"
-
-    return "Items already exists"
+    return f"{len(new_items)} items created."
 
 
 @router.get("/ix/head/is/{head_item_key}/", response_model=bool)

@@ -6,6 +6,7 @@ import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxHeadTitle, IxQualitative
 from fastapi import APIRouter, HTTPException, Query
+from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 from treelib import Node, Tree
 
@@ -56,26 +57,16 @@ def create_ix_qualitative_items_exists(
         sc.ix_qualitative.IxQualitativePublics: 登録したアイテム
     """
 
-    try:
-        first_item = items_in.data[0]
-        statement = select(IxQualitative).where(
-            IxQualitative.head_item_key == first_item.head_item_key
-        )
-        result = session.exec(statement).first()
-
-        if result is not None:
-            raise HTTPException(status_code=400, detail="Item already exists")
-    except IndexError:
-        return sc.ix_qualitative.IxQualitativePublics(count=0, data=[])
-
     new_items = []
     for item in items_in.data:
         item = IxQualitative.model_validate(item)
         session.add(item)
-        new_items.append(item)
-
-    session.commit()
-
+        try:
+            session.commit()
+            session.refresh(item)
+            new_items.append(item)
+        except IntegrityError:
+            session.rollback()
     return sc.ix_qualitative.IxQualitativePublics(count=len(new_items), data=new_items)
 
 

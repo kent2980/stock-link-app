@@ -4,6 +4,7 @@ import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxNonNumeric
 from fastapi import APIRouter, Query
+from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
 router = APIRouter()
@@ -33,24 +34,16 @@ def create_ix_non_numeric_items_exists(
     """
     new_items = []
     for item in items_in.data:
-        statement = select(IxNonNumeric).where(
-            IxNonNumeric.context == item.context,
-            IxNonNumeric.name == item.name,
-            IxNonNumeric.head_item_key == item.head_item_key,
-        )
-        result = session.exec(statement)
-        item_exists = result.first()
-
-        if not item_exists:
-            new_item = IxNonNumeric.model_validate(item)
-            session.add(new_item)
+        new_item = IxNonNumeric.model_validate(item)
+        session.add(new_item)
+        try:
+            session.commit()
+            session.refresh(new_item)
             new_items.append(new_item)
+        except IntegrityError:
+            session.rollback()
 
-    if new_items:
-        session.commit()
-        return f"Items {len(new_items)} created"
-
-    return "Items already exists"
+    return f"{len(new_items)} items created."
 
 
 @router.get("/ix/non_numeric/is/{source_file_id}/", response_model=bool)

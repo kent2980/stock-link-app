@@ -50,25 +50,16 @@ def create_ix_pre_loc_items_exists(
 
     new_items = []
     for item in items_in.data:
-        statement = select(IxPresentationLoc).where(
-            IxPresentationLoc.xlink_label == item.xlink_label,
-            IxPresentationLoc.xlink_href == item.xlink_href,
-            IxPresentationLoc.xlink_schema == item.xlink_schema,
-            IxPresentationLoc.source_file_id == item.source_file_id,
-        )
-        result = session.exec(statement)
-        item_exists = result.first()
-
-        if not item_exists:
-            new_item = IxPresentationLoc.model_validate(item)
-            session.add(new_item)
+        new_item = IxPresentationLoc.model_validate(item)
+        session.add(new_item)
+        try:
+            session.commit()
+            session.refresh(new_item)
             new_items.append(new_item)
+        except IntegrityError:
+            session.rollback()
 
-    if new_items:
-        session.commit()
-        return f"Items {new_items} created"
-
-    return "Items already exists"
+    return f"{len(new_items)} items created."
 
 
 @router.post("/link/pre/arc/list/", response_model=str)
@@ -81,24 +72,16 @@ def create_ix_pre_arc_items_exists(
 
     new_items = []
     for item in items_in.data:
-        statement = select(IxPresentationArc).where(
-            IxPresentationArc.xlink_to == item.xlink_to,
-            IxPresentationArc.xlink_from == item.xlink_from,
-            IxPresentationArc.source_file_id == item.source_file_id,
-        )
-        result = session.exec(statement)
-        item_exists = result.first()
-
-        if not item_exists:
-            new_item = IxPresentationArc.model_validate(item)
-            session.add(new_item)
+        new_item = IxPresentationArc.model_validate(item)
+        session.add(new_item)
+        try:
+            session.commit()
+            session.refresh(new_item)
             new_items.append(new_item)
+        except IntegrityError:
+            session.rollback()
 
-    if new_items:
-        session.commit()
-        return f"Items {new_items} created"
-
-    return "Items already exists"
+    return f"{len(new_items)} items created."
 
 
 @router.get("/link/pre/loc/is/{source_file_id}/", response_model=bool)
