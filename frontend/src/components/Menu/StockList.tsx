@@ -125,6 +125,7 @@ const StockList: React.FC<StockListProps> = ({ selectDate, ...props }) => {
             <Link
               to="/summary/$head_item_key"
               params={{ head_item_key: item.item_key }}
+              key={item.item_key}
             >
               <Box
                 key={item.item_key}

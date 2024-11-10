@@ -24,13 +24,23 @@ function queryOptions(head_item_key: string) {
 }
 
 export const Route = createFileRoute("/_layout/summary/$head_item_key")({
-  loader: async ({ context: { queryClient }, params: { head_item_key } }) => {
-    return queryClient.ensureQueryData(queryOptions(head_item_key));
-  },
+  // loader: async ({ context: { queryClient }, params: { head_item_key } }) => {
+  //   return queryClient.ensureQueryData(queryOptions(head_item_key));
+  // },
   component: Summary,
-  pendingComponent: () => <Box>Loading...</Box>,
-  notFoundComponent: () => <Box>Not found</Box>,
-  errorComponent: () => <Box>Error</Box>,
+  // pendingComponent: () => (
+  //   <Box>
+  //     <Spinner
+  //       size="xl"
+  //       thickness="10px"
+  //       speed="1s"
+  //       emptyColor="gray.200"
+  //       color="blue.500"
+  //     />
+  //   </Box>
+  // ),
+  // notFoundComponent: () => <Box>Not found</Box>,
+  // errorComponent: () => <Box>Error</Box>,
 });
 
 function Summary() {

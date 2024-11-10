@@ -75,10 +75,10 @@ function Menu() {
               to="/menu/$selectedDate"
               params={{ selectedDate: date }}
               replace
+              key={date}
             >
               <Box
                 className="date-box"
-                key={date}
                 _hover={
                   selectedDate === date
                     ? { cursor: "pointer", bgColor: "blue.500" }

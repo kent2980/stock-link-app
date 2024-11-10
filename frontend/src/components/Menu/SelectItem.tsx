@@ -26,8 +26,6 @@ const SelectItem: React.FC<SelectItemProps> = ({ selectDate, ...props }) => {
       XbrlIxHeadService.getCountReportType({
         dateStr: selectDate,
       }),
-    // gcTime: 1000 * 60 * 60 * 24,
-    // staleTime: 1000 * 60 * 60 * 24,
   });
 
   let earningsReportCount = 0;
