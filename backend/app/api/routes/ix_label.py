@@ -96,14 +96,28 @@ def create_ix_label_loc_items_exists(
     """
     new_items = []
     for item in items_in.data:
-        new_item = IxLabelLoc.model_validate(item)
-        session.add(new_item)
-        try:
-            session.commit()
-            session.refresh(new_item)
+        statement = select(IxLabelLoc).where(
+            IxLabelLoc.xlink_label == item.xlink_label,
+            IxLabelLoc.xlink_href == item.xlink_href,
+            IxLabelLoc.xlink_schema == item.xlink_schema,
+            IxLabelLoc.source_file_id == item.source_file_id,
+        )
+        result = session.exec(statement)
+        item_exists = result.first()
+
+        if not item_exists:
+            new_item = IxLabelLoc.model_validate(item)
+            session.add(new_item)
             new_items.append(new_item)
-        except IntegrityError:
-            session.rollback()
+
+    if len(new_items) == 0:
+        return "Items already exists"
+
+    if new_items:
+        session.commit()
+        for new_item in new_items:
+            session.refresh(new_item)
+
     return f"{len(new_items)} items created."
 
 
@@ -116,14 +130,28 @@ def create_ix_label_arc_items_exists(
     """
     new_items = []
     for item in items_in.data:
-        new_item = IxLabelArc.model_validate(item)
-        session.add(new_item)
-        try:
-            session.commit()
-            session.refresh(new_item)
+        statement = select(IxLabelArc).where(
+            IxLabelArc.xlink_from == item.xlink_from,
+            IxLabelArc.xlink_to == item.xlink_to,
+            item.xlink_arcrole == item.xlink_arcrole,
+            IxLabelArc.source_file_id == item.source_file_id,
+        )
+        result = session.exec(statement)
+        item_exists = result.first()
+
+        if not item_exists:
+            new_item = IxLabelArc.model_validate(item)
+            session.add(new_item)
             new_items.append(new_item)
-        except IntegrityError:
-            session.rollback()
+
+    if len(new_items) == 0:
+        return "Items already exists"
+
+    if new_items:
+        session.commit()
+        for new_item in new_items:
+            session.refresh(new_item)
+
     return f"{len(new_items)} items created."
 
 
@@ -136,14 +164,26 @@ def create_ix_label_value_items_exists(
     """
     new_items = []
     for item in items_in.data:
-        new_item = IxLabelValue.model_validate(item)
-        session.add(new_item)
-        try:
-            session.commit()
-            session.refresh(new_item)
+        statement = select(IxLabelValue).where(
+            IxLabelValue.xlink_label == item.xlink_label,
+            IxLabelValue.source_file_id == item.source_file_id,
+        )
+        result = session.exec(statement)
+        item_exists = result.first()
+
+        if not item_exists:
+            new_item = IxLabelValue.model_validate(item)
+            session.add(new_item)
             new_items.append(new_item)
-        except IntegrityError:
-            session.rollback()
+
+    if len(new_items) == 0:
+        return "Items already exists"
+
+    if new_items:
+        session.commit()
+        for new_item in new_items:
+            session.refresh(new_item)
+
     return f"{len(new_items)} items created."
 
 
