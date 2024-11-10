@@ -39,7 +39,16 @@ def create_ix_schema_linkbase_items_exists(
         session.commit()
     except IntegrityError:
         session.rollback()
-        return "Some items already exist or an error occurred."
+        new_items = []
+        for item in items_in.data:
+            new_item = ScLinkBaseRef.model_validate(item)
+            session.add(new_item)
+            try:
+                session.commit()
+                session.refresh(new_item)
+                new_items.append(new_item)
+            except IntegrityError:
+                session.rollback()
 
     return f"{len(new_items)} items created."
 

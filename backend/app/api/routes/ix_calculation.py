@@ -54,7 +54,17 @@ def create_ix_cal_loc_items_exists(
         session.commit()
     except IntegrityError:
         session.rollback()
-        return "Some items already exist or an error occurred."
+        # 一意制約違反が発生した場合、個別に追加を試みる
+        new_items = []
+        for item in items_in.data:
+            new_item = IxCalculationLoc.model_validate(item)
+            session.add(new_item)
+            try:
+                session.commit()
+                session.refresh(new_item)
+                new_items.append(new_item)
+            except IntegrityError:
+                session.rollback()  # コミット失敗時にロールバック
 
     return f"{len(new_items)} items created."
 
@@ -73,9 +83,17 @@ def create_ix_cal_arc_items_exists(
         session.commit()
     except IntegrityError:
         session.rollback()
-        return "Some items already exist or an error occurred."
-
-    return f"{len(new_items)} items created."
+        # 一意制約違反が発生した場合、個別に追加を試みる
+        new_items = []
+        for item in items_in.data:
+            new_item = IxCalculationArc.model_validate(item)
+            session.add(new_item)
+            try:
+                session.commit()
+                session.refresh(new_item)
+                new_items.append(new_item)
+            except IntegrityError:
+                session.rollback()
 
 
 @router.get("/link/cal/loc/is/{source_file_id}/", response_model=bool)

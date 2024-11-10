@@ -64,7 +64,16 @@ def create_ix_qualitative_items_exists(
         session.commit()
     except IntegrityError:
         session.rollback()
-        return sc.ix_qualitative.IxQualitativePublics(count=0, data=[])
+        new_items = []
+        for item in items_in.data:
+            new_item = IxQualitative.model_validate(item)
+            session.add(new_item)
+            try:
+                session.commit()
+                session.refresh(new_item)
+                new_items.append(new_item)
+            except IntegrityError:
+                session.rollback()  # コミット失敗時にロールバック
 
     return sc.ix_qualitative.IxQualitativePublics(count=len(new_items), data=new_items)
 

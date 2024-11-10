@@ -101,7 +101,16 @@ def create_ix_label_loc_items_exists(
         session.commit()
     except IntegrityError:
         session.rollback()
-        return "Some items already exist or an error occurred."
+        new_items = []
+        for item in items_in.data:
+            new_item = IxLabelLoc.model_validate(item)
+            session.add(new_item)
+            try:
+                session.commit()
+                session.refresh(new_item)
+                new_items.append(new_item)
+            except IntegrityError:
+                session.rollback()  # コミット失敗時にロールバック
 
     return f"{len(new_items)} items created."
 
@@ -120,7 +129,16 @@ def create_ix_label_arc_items_exists(
         session.commit()
     except IntegrityError:
         session.rollback()
-        return "Some items already exist or an error occurred."
+        new_items = []
+        for item in items_in.data:
+            new_item = IxLabelArc.model_validate(item)
+            session.add(new_item)
+            try:
+                session.commit()
+                session.refresh(new_item)
+                new_items.append(new_item)
+            except IntegrityError:
+                session.rollback()
 
     return f"{len(new_items)} items created."
 
@@ -139,7 +157,16 @@ def create_ix_label_value_items_exists(
         session.commit()
     except IntegrityError:
         session.rollback()
-        return "Some items already exist or an error occurred."
+        new_items = []
+        for item in items_in.data:
+            new_item = IxLabelValue.model_validate(item)
+            session.add(new_item)
+            try:
+                session.commit()
+                session.refresh(new_item)
+                new_items.append(new_item)
+            except IntegrityError:
+                session.rollback()
 
     return f"{len(new_items)} items created."
 
