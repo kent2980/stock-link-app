@@ -95,6 +95,8 @@ def create_ix_cal_arc_items_exists(
             except IntegrityError:
                 session.rollback()
 
+    return f"{len(new_items)} items created."
+
 
 @router.get("/link/cal/loc/is/{source_file_id}/", response_model=bool)
 def get_ix_cal_loc_item(*, session: SessionDep, source_file_id: str) -> Any:
