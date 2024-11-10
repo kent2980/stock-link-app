@@ -47,17 +47,14 @@ def create_ix_cal_loc_items_exists(
     """
     Create new items.(Insert Select ... Not Exists)
     """
+    new_items = [IxCalculationLoc.model_validate(item) for item in items_in.data]
 
-    new_items = []
-    for item in items_in.data:
-        new_item = IxCalculationLoc.model_validate(item)
-        session.add(new_item)
-        try:
-            session.commit()
-            session.refresh(new_item)
-            new_items.append(new_item)
-        except IntegrityError:
-            session.rollback()
+    try:
+        session.bulk_save_objects(new_items)
+        session.commit()
+    except IntegrityError:
+        session.rollback()
+        return "Some items already exist or an error occurred."
 
     return f"{len(new_items)} items created."
 
@@ -69,17 +66,15 @@ def create_ix_cal_arc_items_exists(
     """
     Create new items.(Insert Select ... Not Exists)
     """
+    new_items = [IxCalculationArc.model_validate(item) for item in items_in.data]
 
-    new_items = []
-    for item in items_in.data:
-        new_item = IxCalculationArc.model_validate(item)
-        session.add(new_item)
-        try:
-            session.commit()
-            session.refresh(new_item)
-            new_items.append(new_item)
-        except IntegrityError:
-            session.rollback()
+    try:
+        session.bulk_save_objects(new_items)
+        session.commit()
+    except IntegrityError:
+        session.rollback()
+        return "Some items already exist or an error occurred."
+
     return f"{len(new_items)} items created."
 
 

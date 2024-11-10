@@ -48,16 +48,14 @@ def create_ix_pre_loc_items_exists(
     Create new items.(Insert Select ... Not Exists)
     """
 
-    new_items = []
-    for item in items_in.data:
-        new_item = IxPresentationLoc.model_validate(item)
-        session.add(new_item)
-        try:
-            session.commit()
-            session.refresh(new_item)
-            new_items.append(new_item)
-        except IntegrityError:
-            session.rollback()
+    new_items = [IxPresentationLoc.model_validate(item) for item in items_in.data]
+
+    try:
+        session.bulk_save_objects(new_items)
+        session.commit()
+    except IntegrityError:
+        session.rollback()
+        return "Some items already exist or an error occurred."
 
     return f"{len(new_items)} items created."
 
@@ -70,16 +68,14 @@ def create_ix_pre_arc_items_exists(
     Create new items.(Insert Select ... Not Exists)
     """
 
-    new_items = []
-    for item in items_in.data:
-        new_item = IxPresentationArc.model_validate(item)
-        session.add(new_item)
-        try:
-            session.commit()
-            session.refresh(new_item)
-            new_items.append(new_item)
-        except IntegrityError:
-            session.rollback()
+    new_items = [IxPresentationArc.model_validate(item) for item in items_in.data]
+
+    try:
+        session.bulk_save_objects(new_items)
+        session.commit()
+    except IntegrityError:
+        session.rollback()
+        return "Some items already exist or an error occurred."
 
     return f"{len(new_items)} items created."
 

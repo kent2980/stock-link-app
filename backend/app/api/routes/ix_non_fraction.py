@@ -33,16 +33,14 @@ def create_ix_non_fraction_items_exists(
     """
     Create new items.(Insert Select ... Not Exists)
     """
-    new_items = []
-    for item in items_in.data:
-        new_item = IxNonFraction.model_validate(item)
-        session.add(new_item)
-        try:
-            session.commit()
-            session.refresh(new_item)
-            new_items.append(new_item)
-        except IntegrityError:
-            session.rollback()
+    new_items = [IxNonFraction.model_validate(item) for item in items_in.data]
+
+    try:
+        session.bulk_save_objects(new_items)
+        session.commit()
+    except IntegrityError:
+        session.rollback()
+        return "Some items already exist or an error occurred."
 
     return f"{len(new_items)} items created."
 

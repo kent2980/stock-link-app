@@ -57,16 +57,15 @@ def create_ix_qualitative_items_exists(
         sc.ix_qualitative.IxQualitativePublics: 登録したアイテム
     """
 
-    new_items = []
-    for item in items_in.data:
-        item = IxQualitative.model_validate(item)
-        session.add(item)
-        try:
-            session.commit()
-            session.refresh(item)
-            new_items.append(item)
-        except IntegrityError:
-            session.rollback()
+    new_items = [IxQualitative.model_validate(item) for item in items_in.data]
+
+    try:
+        session.bulk_save_objects(new_items)
+        session.commit()
+    except IntegrityError:
+        session.rollback()
+        return sc.ix_qualitative.IxQualitativePublics(count=0, data=[])
+
     return sc.ix_qualitative.IxQualitativePublics(count=len(new_items), data=new_items)
 
 
