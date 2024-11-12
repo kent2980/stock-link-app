@@ -109,3 +109,25 @@ def delete_ix_non_fraction_item(
         return True
 
     return False
+
+
+@router.get("/item/net_sales/", response_model=int)
+def get_ix_non_fraction_item_count(
+    *, session: SessionDep, head_id_key: str = Query(...)
+) -> Any:
+    """
+    Get item count.
+    """
+    statement = select(IxHeadTitle).where(IxHeadTitle.head_id_key == head_id_key)
+    result = session.exec(statement)
+    head_item = result.first()
+    statement = select(IxNonFraction).where(IxNonFraction.head_id_key == head_id_key)
+    result = session.exec(statement)
+    items = result.all()
+
+    item = ElementsFilter(
+        items,
+        head_item.current_period,
+    )
+
+    return len(items)

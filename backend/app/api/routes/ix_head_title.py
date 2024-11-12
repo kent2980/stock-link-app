@@ -307,7 +307,7 @@ def is_ix_head_title_item_active(*, session: SessionDep, head_item_key: str) -> 
 
 
 @router.put("/ix/head/generate/")
-def generate_ix_head_title_item(
+def ix_head_generate(
     *, session: SessionDep, head_item_key: Optional[str] = Query(None)
 ) -> Any:
     """

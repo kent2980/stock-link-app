@@ -4,6 +4,7 @@ from app.api.routes import (
     ix_check,
     ix_definition,
     ix_file_path,
+    ix_generate_class,
     ix_head_title,
     ix_label,
     ix_non_fraction,
@@ -20,6 +21,7 @@ from app.api.routes import (
 from fastapi import APIRouter
 
 api_router = APIRouter()
+api_router.include_router(ix_generate_class.router, prefix="/generate", tags=["xbrl"])
 api_router.include_router(ix_view.router, prefix="/xbrl/view", tags=["xbrl_view"])
 api_router.include_router(ix_check.router, prefix="/xbrl/check", tags=["xbrl_check"])
 api_router.include_router(ix_head_title.router, prefix="/xbrl", tags=["xbrl_ix_head"])

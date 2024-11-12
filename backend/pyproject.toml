@@ -24,6 +24,8 @@ dependencies = [
     "treelib<2.0.0,>=1.6.1",
     "pandas>=2.2.3",
     "ruff>=0.6.7",
+    "inflect>=7.4.0",
+    "pyhumps>=3.8.0",
 ]
 
 [tool.uv]

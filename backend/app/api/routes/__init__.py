@@ -3,6 +3,7 @@ from . import (
     ix_calculation,
     ix_definition,
     ix_file_path,
+    ix_generate_class,
     ix_head_title,
     ix_label,
     ix_non_fraction,
@@ -34,4 +35,5 @@ __all__ = [
     "ix_file_path",
     "ix_view",
     "ix_qualitative",
+    "ix_generate_class",
 ]
