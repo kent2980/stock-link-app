@@ -5,6 +5,15 @@ from typing import Any, List, Optional
 
 import app.schema as sc
 from app.api.deps import SessionDep
+
+# from app.extract import (
+#     ix_non_fraction_edif,
+#     ix_non_fraction_edjp,
+#     ix_non_fraction_edus,
+#     ix_non_numeric_edif,
+#     ix_non_numeric_edjp,
+#     ix_non_numeric_edus,
+# )
 from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
@@ -306,111 +315,67 @@ def is_ix_head_title_item_active(*, session: SessionDep, head_item_key: str) -> 
     return False
 
 
-@router.put("/ix/head/generate/")
-def ix_head_generate(
-    *, session: SessionDep, head_item_key: Optional[str] = Query(None)
-) -> Any:
-    """
-    Extraction item.
-    """
-    if head_item_key is None:
-        statement = select(IxHeadTitle.item_key).where(
-            IxHeadTitle.is_active == True, IxHeadTitle.is_generated == False
-        )
-        result = session.exec(statement)
-        head_item_key_list = result.all()
-    else:
-        head_item_key_list = [head_item_key]
+# @router.put("/ix/head/generate/")
+# def ix_head_generate(
+#     *, session: SessionDep, head_item_key: Optional[str] = Query(None)
+# ) -> Any:
+#     """
+#     Extraction item.
+#     """
+#     if head_item_key is None:
+#         statement = select(IxHeadTitle).where(
+#             IxHeadTitle.is_active == True, IxHeadTitle.is_generated == False
+#         )
+#     else:
+#         statement = select(IxHeadTitle).where(
+#             IxHeadTitle.is_active == True,
+#             IxHeadTitle.is_generated == False,
+#             IxHeadTitle.item_key == head_item_key,
+#         )
 
-    for head_item_key_item in head_item_key_list:
-        results = {}
-        context = {}
-        period = find_ix_non_num(session, head_item_key_item, "TypeOfCurrentPeriod")
-        if period is None:
-            continue
+#     result = session.exec(statement)
+#     items = result.all()
 
-        if period == "FY":
-            context["result"] = ("Current", "Result")
-            context["forecast"] = ("Next", "Forecast")
-        else:
-            context["result"] = ("Current", "Result")
-            context["forecast"] = ("Current", "Forecast")
+#     for item in items:
+#         period = item.current_period
+#         report_type = item.report_type
+#         document_name = item.document_name
+#         consolidated = (
+#             "_NonConsolidated" if "非連結" in document_name else "_Consolidated"
+#         )
+#         if not report_type in ["edjp", "edif", "edus"]:
+#             continue
+#         result_regex = f"(?=.*Current)(?=.*\{consolidated}.*)(?=Result.*)"
+#         if period == "FY":
+#             forecast_regex = f"(?=.*Next)(?=.*\{consolidated}.*)(?=Forecast.*)"
+#         else:
+#             forecast_regex = f"(?=.*Current)(?=.*\{consolidated}.*)(?=Forecast.*)"
 
-        # region 経常利益進捗率
-        name = "\_OrdinaryIncome"
-        ord_res = find_ix_non_frac(
-            session,
-            head_item_key_item,
-            name,
-            context["result"][0],
-            context["result"][1],
-        )
-        ord_fore = find_ix_non_frac(
-            session,
-            head_item_key_item,
-            name,
-            context["forecast"][0],
-            context["forecast"][1],
-        )
-        try:
-            results["oi_prog_rt"] = round(ord_res / ord_fore * 100, 1)
-        except ZeroDivisionError:
-            continue
-        except TypeError:
-            continue
-        # endregion
+#         ord_income = None
+#         try:
+#             if report_type == "edjp":
+#                 try:
+#                     ord_income = ix_non_fraction_edjp.ordinary_income(
+#                         session, item.item_key, result_regex
+#                     )
+#                 except ValueError:
+#                     try:
+#                         ord_income = ix_non_fraction_edjp.ordinary_revenues_bk(
+#                             session, item.item_key, result_regex
+#                         )
+#                     except ValueError:
+#                         ord_income = ix_non_fraction_edjp.ordinary_revenues_in(
+#                             session, item.item_key, result_regex
+#                         )
+#             elif report_type == "edif":
+#                 ord_income = ix_non_fraction_edif.profit_before_tax_ifrs(
+#                     session, item.item_key, result_regex
+#                 )
+#             elif report_type == "edus":
+#                 ord_income = ix_non_fraction_edus.income_before_income_taxes_us(
+#                     session, item.item_key, result_regex
+#                 )
+#         except ValueError:
+#             ord_income = None
 
-        statement = select(IxHeadTitle).where(
-            IxHeadTitle.item_key == head_item_key_item
-        )
-        result = session.exec(statement)
-        item = result.first()
-
-        if item is None:
-            continue
-
-        item.oi_prog_rt = results["oi_prog_rt"]
-        session.add(item)
-        session.commit()
-
-    return True
-
-
-def find_ix_non_num(
-    session: SessionDep, head_item_key: str, name: str
-) -> Optional[str]:
-    """
-    Search item.
-    """
-    statement = select(IxNonNumeric).where(
-        IxNonNumeric.head_item_key == head_item_key,
-        IxNonNumeric.name.ilike(f"%{name}%"),
-    )
-    result = session.exec(statement)
-    item = result.first()
-
-    if item:
-        return item.value
-
-    return None
-
-
-def find_ix_non_frac(
-    session: SessionDep, head_item_key: str, name: str, *context: str
-) -> Optional[Decimal]:
-    """
-    Search item.
-    """
-    statement = select(IxNonFraction).where(
-        IxNonFraction.head_item_key == head_item_key,
-        IxNonFraction.name.ilike(f"%{name}%"),
-    )
-    for item in context:
-        statement = statement.where(IxNonFraction.context.ilike(f"%{item}%"))
-    result = session.exec(statement)
-    item = result.first()
-
-    if item:
-        return item.numeric
-
-    return None
+#         return ord_income
