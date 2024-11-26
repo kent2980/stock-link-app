@@ -252,6 +252,7 @@ class IxHeadTitle(XbrlBase, table=True):
     oi_prog_rt: Optional[float] = Field(default=None, description="経常利益進捗率")
     is_active: bool = Field(default=False, nullable=False, description="有効フラグ")
     is_generated: bool = Field(default=False, nullable=False, description="生成フラグ")
+    specific_business: Optional[bool] = Field(default=None, description="特定事業")
 
     __table_args__ = (
         Index("idx_ix_head_title_item_key", "item_key"),
@@ -259,6 +260,8 @@ class IxHeadTitle(XbrlBase, table=True):
         Index("idx_ix_head_title_report_type", "report_type"),
         Index("idx_ix_head_title_is_active", "is_active"),
         Index("idx_ix_head_title_is_generated", "is_generated"),
+        Index("idx_ix_head_title_current_period", "current_period"),
+        Index("idx_ix_head_specific_business", "specific_business"),
     )
 
 
@@ -438,6 +441,8 @@ class IxLabelArc(IxArcsBase, table=True):
             "idx_ix_label_arc_source_file_id_xlink_from", "source_file_id", "xlink_from"
         ),
         Index("idx_ix_label_arc_source_file_id_xlink_to", "source_file_id", "xlink_to"),
+        Index("idx_ix_label_arc_xlink_from", "xlink_from"),
+        Index("idx_ix_label_arc_xlink_to", "xlink_to"),
         ForeignKeyConstraint(["source_file_id"], ["ix_source_file.id"]),
     )
 
@@ -490,6 +495,7 @@ class IxNonFraction(XbrlBase, table=True):
         Index("idx_ix_non_fraction_name", "name"),
         Index("idx_ix_non_fraction_xbrl_type", "xbrl_type"),
         Index("idx_ix_non_fraction_context", "context"),
+        Index("idx_ix_non_fraction_report_type", "report_type"),
         ForeignKeyConstraint(["head_item_key"], ["ix_head_title.item_key"]),
         ForeignKeyConstraint(["source_file_id"], ["ix_source_file.id"]),
     )
@@ -519,6 +525,7 @@ class IxNonNumeric(XbrlBase, table=True):
         Index("idx_ix_non_numeric_name", "name"),
         Index("idx_ix_non_numeric_xbrl_type", "xbrl_type"),
         Index("idx_ix_non_numeric_context", "context"),
+        Index("idx_ix_non_numeric_report_type", "report_type"),
         ForeignKeyConstraint(["head_item_key"], ["ix_head_title.item_key"]),
         ForeignKeyConstraint(["source_file_id"], ["ix_source_file.id"]),
     )

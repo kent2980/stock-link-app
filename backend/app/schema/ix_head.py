@@ -30,6 +30,7 @@ class IxHeadTitlePublic(SQLModel):
     is_fcst_rev: Optional[bool]
     fcst_oi_gr_rt: Optional[str]
     oi_prog_rt: Optional[float]
+    specific_business: Optional[bool]
 
 
 class IxHeadTitleCreate(SQLModel):
@@ -53,6 +54,7 @@ class IxHeadTitleCreate(SQLModel):
     is_sfp: Optional[bool] = Field(default=None)
     fy_year_end: Optional[str] = Field(default=None)
     tel: Optional[str] = Field(default=None)
+    specific_business: Optional[bool] = Field(default=None)
 
 
 class IxHeadTitlesPublic(SQLModel):

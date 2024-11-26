@@ -13,6 +13,7 @@ from app.api.routes import (
     ix_qualitative,
     ix_schema,
     ix_source,
+    ix_summary,
     ix_view,
     login,
     users,
@@ -22,6 +23,7 @@ from fastapi import APIRouter
 
 api_router = APIRouter()
 api_router.include_router(ix_generate_class.router, prefix="/generate", tags=["xbrl"])
+api_router.include_router(ix_summary.router, prefix="/ix/summary", tags=["summary"])
 api_router.include_router(ix_view.router, prefix="/xbrl/view", tags=["xbrl_view"])
 api_router.include_router(ix_check.router, prefix="/xbrl/check", tags=["xbrl_check"])
 api_router.include_router(ix_head_title.router, prefix="/xbrl", tags=["xbrl_ix_head"])

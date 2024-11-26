@@ -1,13 +1,12 @@
 import os
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List
 
-import alembic
 import humps
 import requests
 
 
 def generate_extract_model(
-    name_list: List[Tuple[str, str]],
+    name_list: List[Dict[str, str]],
     report_type: str,
     xbrl_type: str,
     non_fraction: bool = True,
@@ -41,9 +40,9 @@ def generate_extract_model(
         else:
             f.write(f"from sqlmodel import Session, select\n")
         f.write(f"\n")
-        for name_dict in name_list:
-            name = name_dict[0]
-            label = name_dict[1]
+        for item in name_list:
+            name = item["name"]
+            label = item["label"]
 
             def_name = name.split("_")[1:][-1]
             def_name = humps.decamelize(def_name)
@@ -82,8 +81,8 @@ def generate_extract_model(
 
 
 def generate_schema_file(
-    name_list: List[Tuple[str, str]],
-    context_list: Dict[Any, Any],
+    name_list: List[Dict[str, str]],
+    context_list: Dict[str, Dict[str, List]],
     report_type: str,
     xbrl_type: str,
     non_fraction: bool = True,
@@ -113,34 +112,68 @@ def generate_schema_file(
     if os.path.exists(file_path):
         os.remove(file_path)
 
-    field_name_list = []
-    # 新しくクラスファイルを作成
+    schema_names = {}
     with open(file_path, "w") as f:
         f.write(f"from app.models import Field, SQLModel\n")
         f.write(f"from app.schema.{model_name_snake} import {model_name_pascal}\n")
         f.write(f"from typing import Optional\n")
         f.write(f"\n")
-        f.write(f"class {class_name}(SQLModel):\n")
-        for name_dict in name_list:
-            name = name_dict[0]
-            label = name_dict[1]
+        for name, context_dict in context_list.items():
+            name = name.split("_")[-1]
+            if not name.endswith("Parent"):
+                continue
+            f.write(f"class {name}(SQLModel):\n")
+            f.write(f'    """"{context_dict["label"]}"""\n')
+            f.write(f"    pass\n\n\n")
+            schema_names[humps.decamelize(name.split("_")[0])] = name
 
-            field_name = name.split("_")[1:][-1]
+    # 新しくクラスファイルを作成
+    with open(file_path, "a") as f:
+        for name, context_dict in context_list.items():
+            if context_dict["parent"] is None:
+                continue
+            context_class_name = name
+            f.write(f"class {context_class_name}({context_dict['parent']}):\n")
+            if len(context_dict["label"]) > 0:
+                f.write(f'    """"{context_dict["label"]}"""\n')
+            for item in context_dict["item"]:
+                context = item["context"]
+                label = item["label"]
+                context_snake = humps.decamelize(context)
+                f.write(
+                    f"    {context_snake}: Optional[{model_name_pascal}] = Field(default=None, description='{label}')\n"
+                )
+                if len(label) > 0:
+                    f.write(f'    """ {label} """\n')
+            f.write(f"\n")
+        f.write(f"\n")
+
+    field_name_list = []
+    with open(file_path, "a") as f:
+        f.write(f"class {class_name}(SQLModel):\n")
+        for item in name_list:
+            name = item["name"]
+            label = item["label"]
+
+            field_name = name.split("_")[-1]
             field_name = humps.decamelize(field_name)
             if field_name in field_name_list:
                 continue
             field_name_list.append(field_name)
-            f.write(
-                f"    {field_name}: Optional[{model_name_pascal}] = Field(default=None, description='{label}')\n"
-            )
-            f.write(f'    """ {label} """\n')
+            try:
+                f.write(
+                    f"    {field_name}: Optional[{schema_names[field_name]}] = Field(default=None, description='{label}')\n"
+                )
+                f.write(f'    """ {label} """\n')
+            except KeyError:
+                continue
         f.write(f"\n")
 
     return file_path
 
 
 def generate_context_file(
-    name_list: Dict[Any, Any],
+    context_list: Dict[str, Dict[str, List]],
     report_type: str,
     xbrl_type: str,
     non_fraction: bool = True,
@@ -158,7 +191,7 @@ def generate_context_file(
     module_name = (
         f"{model_name_snake}_{report_type}_{xbrl_type}"  # ix_non_fraction_edjp
     )
-    dir_path = "app/context"
+    dir_path = "../context"
     file_path = f"{dir_path}/{module_name}.py"
 
     # ディレクトリが存在しない場合は作成
@@ -169,15 +202,27 @@ def generate_context_file(
     if os.path.exists(file_path):
         os.remove(file_path)
 
-    # 新しくクラスファイルを作成
     with open(file_path, "w") as f:
         f.write(f"from enum import Enum\n")
         f.write(f"\n")
-        for name, context_list in name_list.items():
-            f.write(f"class {name.split('_')[-1]}(Enum):\n")  # Enumの定義
-            if len(context_list["label"]) > 0:
-                f.write(f'    """"{context_list["label"]}"""\n')  # docstringの開始
-            for context in context_list["item"]:
+        for name, context_dict in context_list.items():
+            name = name.split("_")[-1]
+            if not name.endswith("Parent"):
+                continue
+            f.write(f"class {name}(Enum):\n")  # Enumの定義
+            f.write(f'    """"{context_dict["label"]}"""\n')  # docstringの開始
+            f.write(f"    pass\n\n\n")
+
+    with open(file_path, "a") as f:
+        for name, context_dict in context_list.items():
+            original_name = name
+            name = name.split("_")[-1]
+            if name.endswith("Parent"):
+                continue
+            f.write(f"class {name}({context_dict['parent']}):\n")  # Enumの定義
+            if len(context_dict["label"]) > 0:
+                f.write(f'    """"{context_dict['label']}"""\n')  # docstringの開始
+            for context in context_dict["item"]:
                 try:
                     context_value = context["context"]
                 except KeyError:
@@ -225,11 +270,6 @@ if __name__ == "__main__":
                 if len(name_list) == 0:
                     continue
 
-                # ファイルを生成
-                extract_file_path = generate_extract_model(
-                    name_list, report_type, xbrl_type, non_fraction
-                )
-
                 # contextを取得
                 context_response = requests.get(
                     f"{API_BASE_URL}{API_ENDPOINTS['context']}",
@@ -244,6 +284,11 @@ if __name__ == "__main__":
 
                 if len(context_list) == 0:
                     continue
+
+                # ファイルを生成
+                extract_file_path = generate_extract_model(
+                    name_list, report_type, xbrl_type, non_fraction
+                )
 
                 context_file_path = generate_context_file(
                     context_list, report_type, xbrl_type, non_fraction

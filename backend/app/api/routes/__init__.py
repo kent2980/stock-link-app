@@ -12,6 +12,7 @@ from . import (
     ix_qualitative,
     ix_schema,
     ix_source,
+    ix_summary,
     ix_view,
     login,
     users,
@@ -36,4 +37,5 @@ __all__ = [
     "ix_view",
     "ix_qualitative",
     "ix_generate_class",
+    "ix_summary",
 ]
