@@ -29,23 +29,31 @@ def get_grouping_dict(items):
     return grouped_data
 
 
-def generate_module_non_fraction(base_url: str):
+def generate_schema(base_url: str):
 
     url = f"{base_url}/generate/grouping/non_fraction/"
     response = requests.get(url)
     items = response.json().get("item")
 
-    grouped_data = get_grouping_dict(items)
+    grouping_data = get_grouping_dict(items)
+
+    grouped_keys = defaultdict(list)
+    for key in grouping_data.keys():
+        grouped_context = defaultdict(list)
+        print(key)
+        for item in grouping_data[key]:
+            print(item)
+            grouped_context[item["name"]].append(item["context"])
+        grouped_keys[key] = grouped_context
+
+    print(grouped_keys)
 
     base_dir = os.path.dirname(__file__)
-    json_path = os.path.join(base_dir, "../json/grouped_data_non_fraction.json")
+    json_path = os.path.join(base_dir, "../json/grouped_data_non_fraction_name.json")
     with open(json_path, "w") as f:
-        f.write(json.dumps(grouped_data, ensure_ascii=False, indent=4))
-
-    return grouped_data
+        f.write(json.dumps(grouped_keys, ensure_ascii=False, indent=4))
 
 
 if __name__ == "__main__":
-
     base_url = "http://localhost:8000/api/v1"
-    grouped_data = generate_module_non_fraction(base_url)
+    generate_schema(base_url)

@@ -166,7 +166,7 @@ def get_summary_items(
 
     # 絶対パスを使用
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    json_path = os.path.join(base_dir, "../../scripts/grouped_data_non_fraction.json")
+    json_path = os.path.join(base_dir, "../../json/grouped_data_non_fraction.json")
 
     with open(json_path, "r") as f:
         data = json.load(f)
