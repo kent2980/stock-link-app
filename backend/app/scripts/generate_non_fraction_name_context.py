@@ -11,16 +11,21 @@ def get_grouping_dict(items):
     for item in items:
         if item["current_period"]:
             if item["specific_business"] is True:
-                key = f"{item["report_type"]}_{item["xbrl_type"]}_{item["current_period"]}_specific_business"
+                key = f"{item["report_type"]}_{item["ixbrl_role"]}_{item["current_period"]}_specific_business"
             else:
-                key = f"{item["report_type"]}_{item["xbrl_type"]}_{item["current_period"]}"
+                key = f"{item["report_type"]}_{item["ixbrl_role"]}_{item["current_period"]}"
         else:
             if item["specific_business"] is True:
-                key = f"{item["report_type"]}_{item["xbrl_type"]}_specific_business"
+                key = f"{item["report_type"]}_{item["ixbrl_role"]}_specific_business"
             else:
-                key = f"{item["report_type"]}_{item["xbrl_type"]}"
+                key = f"{item["report_type"]}_{item["ixbrl_role"]}"
         grouped_data[key].append(
-            {"name": item["name"], "context": item["context"], "label": item["label"]}
+            {
+                "name": item["name"],
+                "context": item["context"],
+                "label": item["label"],
+                "context_label": item["context_label"],
+            }
         )
 
     # defaultdictを通常の辞書に変換
@@ -39,17 +44,19 @@ def generate_schema(base_url: str):
 
     grouped_keys = defaultdict(list)
     for key in grouping_data.keys():
-        grouped_context = defaultdict(list)
-        print(key)
+        grouped_context = {}
         for item in grouping_data[key]:
-            print(item)
-            grouped_context[item["name"]].append(item["context"])
+            if item["name"] not in grouped_context:
+                grouped_context[item["name"]] = {"label": item["label"], "item": []}
+            grouped_context[item["name"]]["item"].append(
+                {"context": item["context"], "context_label": item["context_label"]}
+            )
         grouped_keys[key] = grouped_context
 
     print(grouped_keys)
 
     base_dir = os.path.dirname(__file__)
-    json_path = os.path.join(base_dir, "../json/grouped_data_non_fraction_name.json")
+    json_path = os.path.join(base_dir, "../json/non_fraction_name_context.json")
     with open(json_path, "w") as f:
         f.write(json.dumps(grouped_keys, ensure_ascii=False, indent=4))
 

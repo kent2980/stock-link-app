@@ -1,7 +1,11 @@
 import json
 import os
+from collections import defaultdict
+from pprint import pprint
 from typing import Dict, List
 
+import app.schema as sc
+import humps
 from app.api.deps import SessionDep
 from app.models import IxHeadTitle, IxLabelValue, IxNonFraction
 from fastapi import APIRouter, Query
@@ -61,11 +65,16 @@ def get_summary_key(
     head_item = get_summary_head(session=session, code=code, year=year, period=period)
 
     specific_business = head_item.specific_business
-
-    if specific_business:
-        key = f"{head_item.report_type}_sm_{head_item.current_period}_specific_business"
+    if head_item.current_period:
+        if specific_business:
+            key = f"{head_item.report_type}_FinancialReportSummary_{head_item.current_period}_specific_business"
+        else:
+            key = f"{head_item.report_type}_FinancialReportSummary_{head_item.current_period}"
     else:
-        key = f"{head_item.report_type}_sm_{head_item.current_period}"
+        if specific_business:
+            key = f"{head_item.report_type}_FinancialReportSummary_specific_business"
+        else:
+            key = f"{head_item.report_type}_FinancialReportSummary"
 
     return {"head_item_key": head_item.item_key, "key": key}
 
@@ -189,26 +198,8 @@ def get_summary_items(
     # クエリ結果を辞書に変換
     non_fraction_dict = {(nf.name, nf.context): nf for nf in non_fractions}
 
-    # コンテキストをコンテキストを収集
-    contexts = [
-        item.get("context") for item in items if item.get("context") is not None
-    ]
-
-    # コンテキストラベルを取得
-    context_labels = get_summary_context_labels(session=session, contexts=contexts)
-
+    dict1 = {}
     for item in items:
-        # region コンテキストラベルを取得
-        context = item.get("context")
-        context_label = ""
-        if context:
-            contexts = context.split("_")
-            for context in contexts:
-                if context_label:
-                    context_label += f"_{context_labels.get(context)}"
-                else:
-                    context_label += context_labels.get(context)
-        # endregion
         non_fraction = non_fraction_dict.get((item.get("name"), item.get("context")))
         if non_fraction:
             non_fraction_list.append(
@@ -216,9 +207,26 @@ def get_summary_items(
                     "name": item.get("name"),
                     "context": item.get("context"),
                     "label": item.get("label"),
-                    "context_label": context_label,
                     "item": non_fraction,
                 }
             )
+            name = humps.decamelize(item.get("name").split("_")[-1]).replace("__", "_")
+            context = humps.decamelize(item.get("context")).replace("__", "_")
+            if name not in dict1:
+                dict1[name] = {}
+            dict1[name][context] = non_fraction.model_dump()
 
-    return non_fraction_list
+    if key.get("key") == "edjp_FinancialReportSummary_Q1":
+        schema = sc.ix_summary.edjp_FinancialReportSummary_Q1(**dict1)
+    elif key.get("key") == "edjp_FinancialReportSummary_Q2":
+        schema = sc.ix_summary.edjp_FinancialReportSummary_Q2(**dict1)
+    elif key.get("key") == "edjp_FinancialReportSummary_Q3":
+        schema = sc.ix_summary.edjp_FinancialReportSummary_Q3(**dict1)
+    elif key.get("key") == "edjp_FinancialReportSummary_FY":
+        schema = sc.ix_summary.edjp_FinancialReportSummary_FY(**dict1)
+    elif key.get("key") == "edjp_FinancialReportSummary":
+        schema = sc.ix_summary.edjp_FinancialReportSummary(**dict1)
+    elif key.get("key") == "edjp_FinancialReportSummary_HY_specific_business":
+        schema = sc.ix_summary.edjp_FinancialReportSummary_HY_specific_business(**dict1)
+
+    return schema

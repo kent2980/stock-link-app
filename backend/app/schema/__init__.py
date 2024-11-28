@@ -12,6 +12,7 @@ from . import (  # ix_non_fraction_edif_fr,; ix_non_fraction_edif_sm,; ix_non_fr
     ix_qualitative,
     ix_schema,
     ix_source,
+    ix_summary,
     ix_view,
     settings,
 )
@@ -32,6 +33,7 @@ __all__ = [
     "ix_global",
     "ix_qualitative",
     "ix_generate_class",
+    "ix_summary",
     # "ix_non_fraction_edif_sm",
     # "ix_non_fraction_edif_fr",
     # "ix_non_fraction_edjp_sm",

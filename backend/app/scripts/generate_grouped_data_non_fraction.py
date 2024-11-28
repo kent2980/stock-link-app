@@ -11,16 +11,21 @@ def get_grouping_dict(items):
     for item in items:
         if item["current_period"]:
             if item["specific_business"] is True:
-                key = f"{item["report_type"]}_{item["xbrl_type"]}_{item["current_period"]}_specific_business"
+                key = f"{item["report_type"]}_{item["ixbrl_role"]}_{item["current_period"]}_specific_business"
             else:
-                key = f"{item["report_type"]}_{item["xbrl_type"]}_{item["current_period"]}"
+                key = f"{item["report_type"]}_{item["ixbrl_role"]}_{item["current_period"]}"
         else:
             if item["specific_business"] is True:
-                key = f"{item["report_type"]}_{item["xbrl_type"]}_specific_business"
+                key = f"{item["report_type"]}_{item["ixbrl_role"]}_specific_business"
             else:
-                key = f"{item["report_type"]}_{item["xbrl_type"]}"
+                key = f"{item["report_type"]}_{item["ixbrl_role"]}"
         grouped_data[key].append(
-            {"name": item["name"], "context": item["context"], "label": item["label"]}
+            {
+                "name": item["name"],
+                "context": item["context"],
+                "label": item["label"],
+                "context_label": item["context_label"],
+            }
         )
 
     # defaultdictを通常の辞書に変換

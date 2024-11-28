@@ -1,5 +1,9 @@
 {
+  "FilingDateInstant": "提出日時点",
+  "CurrentQuarterInstant": "当四半期時点",
   "CurrentYearDuration": "当年度会計期間",
+  "CurrentYTDDuration": "当年度期初から当日まで",
+  "CurrentQuarterDuration": "当四半期会計期間",
   "CurrentAccumulatedQ1Duration": "当年度期初から第１四半期間",
   "CurrentAccumulatedQ2Duration": "当年度期初から第２四半期間",
   "CurrentAccumulatedQ3Duration": "当年度期初から第３四半期間",
@@ -9,6 +13,10 @@
   "NextAccumulatedQ2Duration": "次年度期初から第２四半期間",
   "NextAccumulatedQ3Duration": "次年度期初から第３四半期間",
   "PriorYearDuration": "前年度会計期間",
+  "Prior1YearDuration": "前々年度会計期間",
+  "Prior1QuarterDuration": "前々四半期会計期間",
+  "Prior1YTDDuration": "前々年度期初から当日まで",
+  "Prior1QuarterInstant": "前々四半期時点",
   "PriorAccumulatedQ1Duration": "前年度期初から第１四半期間",
   "PriorAccumulatedQ2Duration": "前年度期初から第２四半期間",
   "PriorAccumulatedQ3Duration": "前年度期初から第３四半期間",
@@ -22,7 +30,13 @@
   "NextAccumulatedQ2Instant": "次年度期初から第２四半期間時点",
   "NextAccumulatedQ3Instant": "次年度期初から第３四半期間時点",
   "PriorYearInstant": "前年度時点",
+  "Prior1YearInstant": "前々年度時点",
+  "Prior2YearInstant": "前々年度時点",
   "PriorAccumulatedQ1Instant": "前年度期初から第１四半期間時点",
   "PriorAccumulatedQ2Instant": "前年度期初から第２四半期間時点",
-  "PriorAccumulatedQ3Instant": "前年度期初から第３四半期間時点"
+  "PriorAccumulatedQ3Instant": "前年度期初から第３四半期間時点",
+  "InterimDuration": "中間期間",
+  "Prior1InterimDuration": "前々中間期間",
+  "InterimInstant": "中間時点",
+  "Prior1InterimInstant": "前々中間時点"
 }

@@ -21,11 +21,12 @@ class ContextList(SQLModel):
 class GroupingNonFraction(SQLModel):
     report_type: Optional[str]
     specific_business: Optional[bool]
-    xbrl_type: Optional[str]
+    ixbrl_role: Optional[str]
     current_period: Optional[str]
     name: str
     context: str
     label: Optional[str]
+    context_label: Optional[str]
 
 
 class GroupingNonFractionList(SQLModel):
