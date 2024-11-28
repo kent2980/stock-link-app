@@ -2,46 +2,90 @@ import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
 
-import type { HeadItem,HeadItems,SummaryItemsAbstractJp,IxHeadTitleCreate,IxHeadTitleCreateList,IxHeadTitlePublic,IxHeadTitlesPublic,IxReportTypeCountList,IxNonFractionCreate_Input,IxNonFractionCreate_Output,IxNonFractionCreateList,IxNonNumericCreate,IxNonNumericCreateList,IxLabelArcCreate,IxLabelArcCreateList,IxLabelLocCreate,IxLabelLocCreateList,IxLabelValueCreate,IxLabelValueCreateList,IxCalculationArcCreate_Input,IxCalculationArcCreate_Output,IxCalculationArcCreateList,IxCalculationLocCreate,IxCalculationLocCreateList,IxDefinitionArcCreate_Input,IxDefinitionArcCreate_Output,IxDefinitionArcCreateList,IxDefinitionLocCreate,IxDefinitionLocCreateList,IxPresentationArcCreate_Input,IxPresentationArcCreate_Output,IxPresentationArcCreateList,IxPresentationLocCreate,IxPresentationLocCreateList,IxSourceFileCreate,IxSourceFileCreateList,IxSchemaLinkBaseCreate,IxSchemaLinkBaseCreateList,IxFilePathCreate,IxFilePathPublic,IxQualitativeCreate,IxQualitativeCreates,IxQualitativePublic,IxQualitativePublics,QualitativeInfoHeader,Body_login_login_access_token,Message,NewPassword,Token,UserPublic,UpdatePassword,UserCreate,UserRegister,UsersPublic,UserUpdate,UserUpdateMe,ItemCreate,ItemPublic,ItemsPublic,ItemUpdate } from './models';
+import type { GroupingNonFractionList,edjp_FinancialReportSummary,edjp_FinancialReportSummary_FY,edjp_FinancialReportSummary_HY_specific_business,edjp_FinancialReportSummary_Q1,edjp_FinancialReportSummary_Q2,edjp_FinancialReportSummary_Q3,IxHeadTitleCreate,IxHeadTitleCreateList,IxHeadTitlePublic,IxHeadTitlesPublic,IxReportTypeCountList,IxNonFractionCreate_Input,IxNonFractionCreate_Output,IxNonFractionCreateList,IxNonNumericCreate,IxNonNumericCreateList,IxLabelArcCreate,IxLabelArcCreateList,IxLabelLocCreate,IxLabelLocCreateList,IxLabelValueCreate,IxLabelValueCreateList,IxCalculationArcCreate_Input,IxCalculationArcCreate_Output,IxCalculationArcCreateList,IxCalculationLocCreate,IxCalculationLocCreateList,IxDefinitionArcCreate_Input,IxDefinitionArcCreate_Output,IxDefinitionArcCreateList,IxDefinitionLocCreate,IxDefinitionLocCreateList,IxPresentationArcCreate_Input,IxPresentationArcCreate_Output,IxPresentationArcCreateList,IxPresentationLocCreate,IxPresentationLocCreateList,IxSourceFileCreate,IxSourceFileCreateList,IxSchemaLinkBaseCreate,IxSchemaLinkBaseCreateList,IxFilePathCreate,IxFilePathPublic,IxQualitativeCreate,IxQualitativeCreates,IxQualitativePublic,IxQualitativePublics,QualitativeInfoHeader,Body_login_login_access_token,Message,NewPassword,Token,UserPublic,UpdatePassword,UserCreate,UserRegister,UsersPublic,UserUpdate,UserUpdateMe,ItemCreate,ItemPublic,ItemsPublic,ItemUpdate } from './models';
 
-export type TDataReadHeadItems = {
-                code?: string
-limit?: number
-skip?: number
-                
-            }
-export type TDataReadHeadItem = {
-                headItemKey: string
-                
-            }
-export type TDataReadSummaryItemByHeadItemKey = {
-                headItemKey: string
+export type TDataGetSummaryContextLabels = {
+                contexts: Array<string>
                 
             }
 
-export class XbrlViewService {
+export class XbrlService {
 
 	/**
-	 * Read Head Items
-	 * 銘柄コードからXBRLファイルのIDを取得する
- * Args:
- * code (str): 銘柄コード
- * limit (int): 取得数
- * skip (int): スキップ数
-	 * @returns HeadItems Successful Response
+	 * Get Summary Context Labels
+	 * Get context labels
+	 * @returns unknown Successful Response
 	 * @throws ApiError
 	 */
-	public static readHeadItems(data: TDataReadHeadItems = {}): CancelablePromise<HeadItems> {
+	public static getSummaryContextLabels(data: TDataGetSummaryContextLabels): CancelablePromise<unknown> {
+		const {
+contexts,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/generate/context_labels/',
+			query: {
+				contexts
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Get Grouping Non Fraction
+	 * 分数でないグルーピングされた項目名とコンテキストを取得する
+	 * @returns GroupingNonFractionList Successful Response
+	 * @throws ApiError
+	 */
+	public static getGroupingNonFraction(): CancelablePromise<GroupingNonFractionList> {
+				return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/generate/grouping/non_fraction/',
+		});
+	}
+
+}
+
+export type TDataGetSummaryHead = {
+                code: string
+period: number
+year: number
+                
+            }
+export type TDataGetSummaryKey = {
+                code: string
+period: number
+year: number
+                
+            }
+export type TDataGetSummaryItems = {
+                code: string
+period: number
+year: number
+                
+            }
+
+export class SummaryService {
+
+	/**
+	 * Get Summary Head
+	 * Get summary of all items.
+	 * @returns unknown Successful Response
+	 * @throws ApiError
+	 */
+	public static getSummaryHead(data: TDataGetSummaryHead): CancelablePromise<unknown> {
 		const {
 code,
-limit = 10,
-skip = 0,
+period,
+year,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/api/v1/xbrl/view/head_item/all/',
+			url: '/api/v1/ix/summary/head/',
 			query: {
-				code, limit, skip
+				code, year, period
 			},
 			errors: {
 				422: `Validation Error`,
@@ -50,22 +94,22 @@ skip = 0,
 	}
 
 	/**
-	 * Read Head Item
-	 * XBRLファイルのIDからXBRLファイルの情報を取得する
- * Args:
- * head_item_key (str): XBRLファイルのID
-	 * @returns HeadItem Successful Response
+	 * Get Summary Key
+	 * Get summary of all items.
+	 * @returns string Successful Response
 	 * @throws ApiError
 	 */
-	public static readHeadItem(data: TDataReadHeadItem): CancelablePromise<HeadItem> {
+	public static getSummaryKey(data: TDataGetSummaryKey): CancelablePromise<Record<string, string>> {
 		const {
-headItemKey,
+code,
+period,
+year,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/api/v1/xbrl/view/head_item/select/',
+			url: '/api/v1/ix/summary/key/',
 			query: {
-				head_item_key: headItemKey
+				code, year, period
 			},
 			errors: {
 				422: `Validation Error`,
@@ -74,20 +118,22 @@ headItemKey,
 	}
 
 	/**
-	 * Read Summary Item By Head Item Key
-	 * XBRLファイルのIDから決算情報を取得する
-	 * @returns SummaryItemsAbstractJp Successful Response
+	 * Get Summary Items
+	 * Get summary of all items.
+	 * @returns unknown Successful Response
 	 * @throws ApiError
 	 */
-	public static readSummaryItemByHeadItemKey(data: TDataReadSummaryItemByHeadItemKey): CancelablePromise<SummaryItemsAbstractJp> {
+	public static getSummaryItems(data: TDataGetSummaryItems): CancelablePromise<edjp_FinancialReportSummary_HY_specific_business | edjp_FinancialReportSummary_Q1 | edjp_FinancialReportSummary_Q2 | edjp_FinancialReportSummary_Q3 | edjp_FinancialReportSummary_FY | edjp_FinancialReportSummary> {
 		const {
-headItemKey,
+code,
+period,
+year,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/api/v1/xbrl/view/summary/item/select/',
+			url: '/api/v1/ix/summary/items/',
 			query: {
-				head_item_key: headItemKey
+				code, year, period
 			},
 			errors: {
 				422: `Validation Error`,
@@ -172,10 +218,6 @@ export type TDataActiveIxHeadTitleItem = {
             }
 export type TDataIsIxHeadTitleItemActive = {
                 headItemKey: string
-                
-            }
-export type TDataGenerateIxHeadTitleItem = {
-                headItemKey?: string | null
                 
             }
 
@@ -376,28 +418,6 @@ headItemKey,
 		});
 	}
 
-	/**
-	 * Generate Ix Head Title Item
-	 * Extraction item.
-	 * @returns unknown Successful Response
-	 * @throws ApiError
-	 */
-	public static generateIxHeadTitleItem(data: TDataGenerateIxHeadTitleItem = {}): CancelablePromise<unknown> {
-		const {
-headItemKey,
-} = data;
-		return __request(OpenAPI, {
-			method: 'PUT',
-			url: '/api/v1/xbrl/ix/head/generate/',
-			query: {
-				head_item_key: headItemKey
-			},
-			errors: {
-				422: `Validation Error`,
-			},
-		});
-	}
-
 }
 
 export type TDataCreateIxNonNumericItem = {
@@ -434,6 +454,10 @@ export type TDataIsConsolidated = {
             }
 export type TDataDeleteIxNonFractionItem = {
                 headItemKey: string
+                
+            }
+export type TDataGetIxNonFractionItemCount = {
+                headIdKey: string
                 
             }
 
@@ -626,6 +650,28 @@ headItemKey,
 			url: '/api/v1/xbrl/ix/non_fraction/delete/',
 			query: {
 				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Get Ix Non Fraction Item Count
+	 * Get item count.
+	 * @returns number Successful Response
+	 * @throws ApiError
+	 */
+	public static getIxNonFractionItemCount(data: TDataGetIxNonFractionItemCount): CancelablePromise<number> {
+		const {
+headIdKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/xbrl/item/net_sales/',
+			query: {
+				head_id_key: headIdKey
 			},
 			errors: {
 				422: `Validation Error`,

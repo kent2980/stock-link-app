@@ -1,3 +1,99 @@
+/**
+ * 期中平均株式数 
+ */
+export type AverageNumberOfShares_edjp_FinancialReportSummary = {
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 期中平均株式数 
+ */
+export type AverageNumberOfShares_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_非連結又は個別_実績
+	 */
+	current_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_非連結又は個別_実績
+	 */
+	prior_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 期中平均株式数 
+ */
+export type AverageNumberOfShares_edjp_FinancialReportSummary_HY_specific_business = {
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 期中平均株式数 
+ */
+export type AverageNumberOfShares_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 期中平均株式数 
+ */
+export type AverageNumberOfShares_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 期中平均株式数 
+ */
+export type AverageNumberOfShares_edjp_FinancialReportSummary_Q3 = {
+	/**
+	 * 当年度期初から第３四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q3_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第３四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q3_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
 export type Body_login_login_access_token = {
 	grant_type?: string | null;
 	username: string;
@@ -10,261 +106,2173 @@ export type Body_login_login_access_token = {
 
 
 /**
- * 業績及び財政状態に関する注記を公開するためのクラス
+ * 自己資本比率 
  */
-export type BusinessResultsFinancialPositionsJp = {
+export type CapitalAdequacyRatio_edjp_FinancialReportSummary = {
 	/**
-	 * 順序
+	 * 当年度期初から第２四半期間時点_連結_実績
 	 */
-	order?: number | null;
+	current_accumulated_q2_instant_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * ラベル
+	 * 前年度時点_連結_実績
 	 */
-	Label?: string | null;
-	/**
-	 * 財政状態の概要
-	 */
-	FinancialPositions?: FinancialPositionsAbstractJp;
-	/**
-	 * 連結財務諸表に関する注記
-	 */
-	NoteToFinancialPositions?: NoteToFinancialPositionsAbstractJp;
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
 };
 
 
 
 /**
- * 1株当たり配当に関する情報を公開するためのクラス
+ * 自己資本比率 
  */
-export type DividendPerShareJp = {
+export type CapitalAdequacyRatio_edjp_FinancialReportSummary_FY = {
 	/**
-	 * 順序
+	 * 当年度時点_連結_実績
 	 */
-	order?: number | null;
+	current_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * ラベル
+	 * 当年度時点_非連結又は個別_実績
 	 */
-	Label?: string | null;
+	current_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 昨季Q1期末1株当たり配当実績
+	 * 前年度時点_連結_実績
 	 */
-	FirstQuarterPriorYearResults?: stockNumeric | null;
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 昨季中間期末1株当たり配当実績
+	 * 前年度時点_非連結又は個別_実績
 	 */
-	SecondQuarterPriorYearResults?: stockNumeric | null;
-	/**
-	 * 昨季Q3期末1株当たり配当実績
-	 */
-	ThirdQuarterPriorYearResults?: stockNumeric | null;
-	/**
-	 * 昨季期末1株当たり配当実績
-	 */
-	YearEndPriorYearResults?: stockNumeric | null;
-	/**
-	 * 昨季年間1株当たり配当実績
-	 */
-	AnnualPriorYearResults?: stockNumeric | null;
-	/**
-	 * 今期Q1期末1株当たり配当実績
-	 */
-	FirstQuarterCurrentYearResults?: stockNumeric | null;
-	/**
-	 * 今期中間期末1株当たり配当実績
-	 */
-	SecondQuarterCurrentYearResults?: stockNumeric | null;
-	/**
-	 * 今期Q3期末1株当たり配当実績
-	 */
-	ThirdQuarterCurrentYearResults?: stockNumeric | null;
-	/**
-	 * 今期期末1株当たり配当実績
-	 */
-	YearEndCurrentYearResults?: stockNumeric | null;
-	/**
-	 * 今期年間1株当たり配当実績
-	 */
-	AnnualCurrentYearResults?: stockNumeric | null;
-	/**
-	 * 今期Q1期末1株当たり配当予想
-	 */
-	FirstQuarterCurrentYearForecasts?: stockNumeric | null;
-	/**
-	 * 今期中間期末1株当たり配当予想
-	 */
-	SecondQuarterCurrentYearForecasts?: stockNumeric | null;
-	/**
-	 * 今期Q3期末1株当たり配当予想
-	 */
-	ThirdQuarterCurrentYearForecasts?: stockNumeric | null;
-	/**
-	 * 今期期末1株当たり配当予想
-	 */
-	YearEndCurrentYearForecasts?: stockNumeric | null;
-	/**
-	 * 今期年間1株当たり配当予想
-	 */
-	AnnualCurrentYearForecasts?: stockNumeric | null;
-	/**
-	 * 来期Q1期末1株当たり配当予想
-	 */
-	FirstQuarterNextYearForecasts?: stockNumeric | null;
-	/**
-	 * 来期中間期末1株当たり配当予想
-	 */
-	SecondQuarterNextYearForecasts?: stockNumeric | null;
-	/**
-	 * 来期Q3期末1株当たり配当予想
-	 */
-	ThirdQuarterNextYearForecasts?: stockNumeric | null;
-	/**
-	 * 来期期末1株当たり配当予想
-	 */
-	YearEndNextYearForecasts?: stockNumeric | null;
-	/**
-	 * 来期年間1株当たり配当予想
-	 */
-	AnnualNextYearForecasts?: stockNumeric | null;
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 };
 
 
 
 /**
- * 四半期配当に関する注記を公開するためのクラス
+ * 自己資本比率 
  */
-export type DividendsJp = {
+export type CapitalAdequacyRatio_edjp_FinancialReportSummary_HY_specific_business = {
 	/**
-	 * 順序
+	 * 当年度期初から第２四半期間時点_連結_実績
 	 */
-	order?: number | null;
+	current_accumulated_q2_instant_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * ラベル
+	 * 当年度期初から第２四半期間時点_非連結又は個別_実績
 	 */
-	Label?: string | null;
+	current_accumulated_q2_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 1株当たり配当
+	 * 前年度時点_連結_実績
 	 */
-	DividendPerShare?: DividendPerShareJp | null;
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 当四半期における配当予想の修正
+	 * 前年度時点_非連結又は個別_実績
 	 */
-	CorrectionOfDividendForecast?: stockNumeric | null;
-	/**
-	 * 期末1株当たり配当の内訳
-	 */
-	DetailOfDividendPerShareFiscalYearEndAbstract?: stockNumeric | null;
-	/**
-	 * 配当に関する注記
-	 */
-	NoteToDividends?: stockNumeric | null;
-	/**
-	 * 配当性向
-	 */
-	DividendPayoutRatioPriorYear?: stockNumeric | null;
-	/**
-	 * 配当性向
-	 */
-	DividendPayoutRatioCurrentYear?: stockNumeric | null;
-	/**
-	 * 配当性向
-	 */
-	DividendPayoutRatioNextYear?: stockNumeric | null;
-	/**
-	 * 配当総額純資産比率
-	 */
-	RatioOfTotalAmountOfDividendsToNetAssets?: stockNumeric | null;
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 };
 
 
 
 /**
- * 財政状態の概要を公開するためのクラス
+ * 自己資本比率 
  */
-export type FinancialPositionsAbstractJp = {
+export type CapitalAdequacyRatio_edjp_FinancialReportSummary_Q1 = {
 	/**
-	 * 順序
+	 * 当年度期初から第１四半期間時点_連結_実績
 	 */
-	order?: number | null;
+	current_accumulated_q1_instant_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * ラベル
+	 * 当年度期初から第１四半期間時点_非連結又は個別_実績
 	 */
-	Label?: string | null;
+	current_accumulated_q1_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 総資産
+	 * 前年度時点_連結_実績
 	 */
-	CapitalAdequacyRatio?: stockNumeric | null;
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 純資産
+	 * 前年度時点_非連結又は個別_実績
 	 */
-	NetAssets?: stockNumeric | null;
-	/**
-	 * 自己資本
-	 */
-	TotalAssets?: stockNumeric | null;
-	/**
-	 * 昨年度総資産
-	 */
-	PeriodCapitalAdequacyRatio?: stockNumeric | null;
-	/**
-	 * 昨年度純資産
-	 */
-	PeriodNetAssets?: stockNumeric | null;
-	/**
-	 * 昨年度自己資本
-	 */
-	PeriodTotalAssets?: stockNumeric | null;
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 };
 
 
 
 /**
- * 四半期予想に関する注記を公開するためのクラス
+ * 自己資本比率 
  */
-export type ForecastsJp = {
+export type CapitalAdequacyRatio_edjp_FinancialReportSummary_Q2 = {
 	/**
-	 * 順序
+	 * 当年度期初から第２四半期間時点_連結_実績
 	 */
-	order?: number | null;
+	current_accumulated_q2_instant_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * ラベル
+	 * 当年度期初から第２四半期間時点_非連結又は個別_実績
 	 */
-	Label?: string | null;
+	current_accumulated_q2_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 予想のタイトル
+	 * 前年度時点_連結_実績
 	 */
-	TitleForForecasts?: stockNumeric | null;
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 当四半期における連結業績予想の修正
+	 * 前年度時点_非連結又は個別_実績
 	 */
-	CorrectionOfFinancialForecastInThisQuarter?: stockNumeric | null;
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 自己資本比率 
+ */
+export type CapitalAdequacyRatio_edjp_FinancialReportSummary_Q3 = {
 	/**
-	 * 売上高
+	 * 当年度期初から第３四半期間時点_連結_実績
 	 */
-	NetSales?: abstract | null;
+	current_accumulated_q3_instant_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 営業利益
+	 * 前年度時点_連結_実績
 	 */
-	OperatingIncome?: abstract | null;
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 現金及び現金同等物期末残高 
+ */
+export type CashAndEquivalentsEndOfPeriod_edjp_FinancialReportSummary_FY = {
 	/**
-	 * 経常利益
+	 * 当年度時点_連結_実績
 	 */
-	OrdinaryIncome?: abstract | null;
+	current_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 親会社株主に帰属する当期純利益
+	 * 当年度時点_非連結又は個別_実績
 	 */
-	ProfitAttributableToOwnersOfParent?: abstract | null;
+	current_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 1株当たり当期純利益
+	 * 前年度時点_連結_実績
 	 */
-	NetIncomePerShare?: stockNumeric | null;
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 予想に関する注記
+	 * 前年度時点_非連結又は個別_実績
 	 */
-	NoteToForecasts?: stockNumeric | null;
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 財務活動によるキャッシュ・フロー 
+ */
+export type CashFlowsFromFinancingActivities_edjp_FinancialReportSummary_FY = {
 	/**
-	 * 予想の前文
+	 * 当年度会計期間_連結_実績
 	 */
-	PreambleToForecasts?: stockNumeric | null;
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_実績
+	 */
+	current_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_連結_実績
+	 */
+	prior_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_非連結又は個別_実績
+	 */
+	prior_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 投資活動によるキャッシュ・フロー 
+ */
+export type CashFlowsFromInvestingActivities_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_連結_実績
+	 */
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_実績
+	 */
+	current_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_連結_実績
+	 */
+	prior_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_非連結又は個別_実績
+	 */
+	prior_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 営業活動によるキャッシュ・フロー 
+ */
+export type CashFlowsFromOperatingActivities_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_連結_実績
+	 */
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_実績
+	 */
+	current_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_連結_実績
+	 */
+	prior_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_非連結又は個別_実績
+	 */
+	prior_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 包括利益増減率 
+ */
+export type ChangeInComprehensiveIncome_edjp_FinancialReportSummary = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 包括利益増減率 
+ */
+export type ChangeInComprehensiveIncome_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_連結_実績
+	 */
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_連結_実績
+	 */
+	prior_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 包括利益増減率 
+ */
+export type ChangeInComprehensiveIncome_edjp_FinancialReportSummary_HY_specific_business = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 包括利益増減率 
+ */
+export type ChangeInComprehensiveIncome_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間_連結_実績
+	 */
+	current_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_連結_実績
+	 */
+	prior_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 包括利益増減率 
+ */
+export type ChangeInComprehensiveIncome_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 包括利益増減率 
+ */
+export type ChangeInComprehensiveIncome_edjp_FinancialReportSummary_Q3 = {
+	/**
+	 * 当年度期初から第３四半期間_連結_実績
+	 */
+	current_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第３四半期間_連結_実績
+	 */
+	prior_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、当期純利益 
+ */
+export type ChangeInNetIncome_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_非連結又は個別_実績
+	 */
+	current_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_予想
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_下限
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_上限
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_予想
+	 */
+	next_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_下限
+	 */
+	next_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_上限
+	 */
+	next_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_非連結又は個別_実績
+	 */
+	prior_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、当期純利益 
+ */
+export type ChangeInNetIncome_edjp_FinancialReportSummary_HY_specific_business = {
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、当期純利益 
+ */
+export type ChangeInNetIncome_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_予想
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_下限
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_上限
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、当期純利益 
+ */
+export type ChangeInNetIncome_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、純営業収益、証券 
+ */
+export type ChangeInNetOperatingRevenuesSE_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、売上高 
+ */
+export type ChangeInNetSales_edjp_FinancialReportSummary = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、売上高 
+ */
+export type ChangeInNetSales_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_連結_実績
+	 */
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_実績
+	 */
+	current_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_予想
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_下限
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_上限
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_予想
+	 */
+	next_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_下限
+	 */
+	next_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_上限
+	 */
+	next_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_予想
+	 */
+	next_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_下限
+	 */
+	next_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_上限
+	 */
+	next_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_連結_実績
+	 */
+	prior_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_非連結又は個別_実績
+	 */
+	prior_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、売上高 
+ */
+export type ChangeInNetSales_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間_連結_実績
+	 */
+	current_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_予想
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_下限
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_上限
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_連結_実績
+	 */
+	prior_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、売上高 
+ */
+export type ChangeInNetSales_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、売上高 
+ */
+export type ChangeInNetSales_edjp_FinancialReportSummary_Q3 = {
+	/**
+	 * 当年度期初から第３四半期間_連結_実績
+	 */
+	current_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第３四半期間_連結_実績
+	 */
+	prior_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、営業利益 
+ */
+export type ChangeInOperatingIncome_edjp_FinancialReportSummary = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、営業利益 
+ */
+export type ChangeInOperatingIncome_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_連結_実績
+	 */
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_実績
+	 */
+	current_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_予想
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_下限
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_上限
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_予想
+	 */
+	next_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_下限
+	 */
+	next_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_上限
+	 */
+	next_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_予想
+	 */
+	next_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_下限
+	 */
+	next_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_上限
+	 */
+	next_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_連結_実績
+	 */
+	prior_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_非連結又は個別_実績
+	 */
+	prior_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、営業利益 
+ */
+export type ChangeInOperatingIncome_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間_連結_実績
+	 */
+	current_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_予想
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_下限
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_上限
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_連結_実績
+	 */
+	prior_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、営業利益 
+ */
+export type ChangeInOperatingIncome_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、営業利益 
+ */
+export type ChangeInOperatingIncome_edjp_FinancialReportSummary_Q3 = {
+	/**
+	 * 当年度期初から第３四半期間_連結_実績
+	 */
+	current_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第３四半期間_連結_実績
+	 */
+	prior_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、営業収益、証券 
+ */
+export type ChangeInOperatingRevenuesSE_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、営業収益 
+ */
+export type ChangeInOperatingRevenues_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、経常利益 
+ */
+export type ChangeInOrdinaryIncome_edjp_FinancialReportSummary = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、経常利益 
+ */
+export type ChangeInOrdinaryIncome_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_連結_実績
+	 */
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_実績
+	 */
+	current_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_予想
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_下限
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_上限
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_予想
+	 */
+	next_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_下限
+	 */
+	next_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_上限
+	 */
+	next_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_予想
+	 */
+	next_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_下限
+	 */
+	next_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_上限
+	 */
+	next_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_連結_実績
+	 */
+	prior_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_非連結又は個別_実績
+	 */
+	prior_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、経常利益 
+ */
+export type ChangeInOrdinaryIncome_edjp_FinancialReportSummary_HY_specific_business = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、経常利益 
+ */
+export type ChangeInOrdinaryIncome_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間_連結_実績
+	 */
+	current_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_予想
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_下限
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_上限
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_連結_実績
+	 */
+	prior_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、経常利益 
+ */
+export type ChangeInOrdinaryIncome_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、経常利益 
+ */
+export type ChangeInOrdinaryIncome_edjp_FinancialReportSummary_Q3 = {
+	/**
+	 * 当年度期初から第３四半期間_連結_実績
+	 */
+	current_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第３四半期間_連結_実績
+	 */
+	prior_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、経常収益、銀行 
+ */
+export type ChangeInOrdinaryRevenuesBK_edjp_FinancialReportSummary_HY_specific_business = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、親会社株主に帰属する当期純利益 
+ */
+export type ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、親会社株主に帰属する当期純利益 
+ */
+export type ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_連結_実績
+	 */
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_予想
+	 */
+	next_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_下限
+	 */
+	next_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_上限
+	 */
+	next_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_連結_実績
+	 */
+	prior_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、親会社株主に帰属する当期純利益 
+ */
+export type ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_HY_specific_business = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、親会社株主に帰属する当期純利益 
+ */
+export type ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間_連結_実績
+	 */
+	current_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_連結_実績
+	 */
+	prior_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、親会社株主に帰属する当期純利益 
+ */
+export type ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 増減率、親会社株主に帰属する当期純利益 
+ */
+export type ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q3 = {
+	/**
+	 * 当年度期初から第３四半期間_連結_実績
+	 */
+	current_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第３四半期間_連結_実績
+	 */
+	prior_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 記念配当 
+ */
+export type CommemorativeDividend_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_年間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_annual_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 包括利益 
+ */
+export type ComprehensiveIncome_edjp_FinancialReportSummary = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 包括利益 
+ */
+export type ComprehensiveIncome_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_連結_実績
+	 */
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_連結_実績
+	 */
+	prior_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 包括利益 
+ */
+export type ComprehensiveIncome_edjp_FinancialReportSummary_HY_specific_business = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 包括利益 
+ */
+export type ComprehensiveIncome_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間_連結_実績
+	 */
+	current_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_連結_実績
+	 */
+	prior_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 包括利益 
+ */
+export type ComprehensiveIncome_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 包括利益 
+ */
+export type ComprehensiveIncome_edjp_FinancialReportSummary_Q3 = {
+	/**
+	 * 当年度期初から第３四半期間_連結_実績
+	 */
+	current_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第３四半期間_連結_実績
+	 */
+	prior_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 潜在株式調整後1株当たり当期純利益 
+ */
+export type DilutedNetIncomePerShare_edjp_FinancialReportSummary = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 潜在株式調整後1株当たり当期純利益 
+ */
+export type DilutedNetIncomePerShare_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_連結_実績
+	 */
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_実績
+	 */
+	current_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_連結_実績
+	 */
+	prior_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_非連結又は個別_実績
+	 */
+	prior_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 潜在株式調整後1株当たり当期純利益 
+ */
+export type DilutedNetIncomePerShare_edjp_FinancialReportSummary_HY_specific_business = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 潜在株式調整後1株当たり当期純利益 
+ */
+export type DilutedNetIncomePerShare_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間_連結_実績
+	 */
+	current_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_連結_実績
+	 */
+	prior_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 潜在株式調整後1株当たり当期純利益 
+ */
+export type DilutedNetIncomePerShare_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 潜在株式調整後1株当たり当期純利益 
+ */
+export type DilutedNetIncomePerShare_edjp_FinancialReportSummary_Q3 = {
+	/**
+	 * 当年度期初から第３四半期間_連結_実績
+	 */
+	current_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第３四半期間_連結_実績
+	 */
+	prior_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 1株当たり配当金 
+ */
+export type DividendPerShare_edjp_FinancialReportSummary = {
+	/**
+	 * 当年度会計期間_年間_非連結又は個別_予想
+	 */
+	current_year_duration_annual_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_年間_非連結又は個別_下限
+	 */
+	current_year_duration_annual_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_年間_非連結又は個別_上限
+	 */
+	current_year_duration_annual_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_1Q_非連結又は個別_実績
+	 */
+	current_year_duration_first_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_2Q_非連結又は個別_実績
+	 */
+	current_year_duration_second_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_3Q_非連結又は個別_予想
+	 */
+	current_year_duration_third_quarter_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_3Q_非連結又は個別_下限
+	 */
+	current_year_duration_third_quarter_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_3Q_非連結又は個別_上限
+	 */
+	current_year_duration_third_quarter_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_期末_非連結又は個別_予想
+	 */
+	current_year_duration_year_end_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_期末_非連結又は個別_下限
+	 */
+	current_year_duration_year_end_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_期末_非連結又は個別_上限
+	 */
+	current_year_duration_year_end_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_年間_非連結又は個別_実績
+	 */
+	prior_year_duration_annual_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_1Q_非連結又は個別_実績
+	 */
+	prior_year_duration_first_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_2Q_非連結又は個別_実績
+	 */
+	prior_year_duration_second_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_3Q_非連結又は個別_実績
+	 */
+	prior_year_duration_third_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_期末_非連結又は個別_実績
+	 */
+	prior_year_duration_year_end_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 1株当たり配当金 
+ */
+export type DividendPerShare_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_年間_非連結又は個別_実績
+	 */
+	current_year_duration_annual_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_1Q_非連結又は個別_実績
+	 */
+	current_year_duration_first_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_2Q_非連結又は個別_実績
+	 */
+	current_year_duration_second_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_3Q_非連結又は個別_実績
+	 */
+	current_year_duration_third_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_期末_非連結又は個別_実績
+	 */
+	current_year_duration_year_end_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_年間_非連結又は個別_予想
+	 */
+	next_year_duration_annual_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_年間_非連結又は個別_下限
+	 */
+	next_year_duration_annual_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_年間_非連結又は個別_上限
+	 */
+	next_year_duration_annual_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_1Q_非連結又は個別_予想
+	 */
+	next_year_duration_first_quarter_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_1Q_非連結又は個別_下限
+	 */
+	next_year_duration_first_quarter_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_1Q_非連結又は個別_上限
+	 */
+	next_year_duration_first_quarter_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_2Q_非連結又は個別_予想
+	 */
+	next_year_duration_second_quarter_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_2Q_非連結又は個別_下限
+	 */
+	next_year_duration_second_quarter_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_2Q_非連結又は個別_上限
+	 */
+	next_year_duration_second_quarter_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_3Q_非連結又は個別_予想
+	 */
+	next_year_duration_third_quarter_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_3Q_非連結又は個別_下限
+	 */
+	next_year_duration_third_quarter_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_3Q_非連結又は個別_上限
+	 */
+	next_year_duration_third_quarter_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_期末_非連結又は個別_予想
+	 */
+	next_year_duration_year_end_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_期末_非連結又は個別_下限
+	 */
+	next_year_duration_year_end_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_期末_非連結又は個別_上限
+	 */
+	next_year_duration_year_end_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_年間_非連結又は個別_実績
+	 */
+	prior_year_duration_annual_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_1Q_非連結又は個別_実績
+	 */
+	prior_year_duration_first_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_2Q_非連結又は個別_実績
+	 */
+	prior_year_duration_second_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_3Q_非連結又は個別_実績
+	 */
+	prior_year_duration_third_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_期末_非連結又は個別_実績
+	 */
+	prior_year_duration_year_end_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 1株当たり配当金 
+ */
+export type DividendPerShare_edjp_FinancialReportSummary_HY_specific_business = {
+	/**
+	 * 当年度会計期間_年間_非連結又は個別_予想
+	 */
+	current_year_duration_annual_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_年間_非連結又は個別_下限
+	 */
+	current_year_duration_annual_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_年間_非連結又は個別_上限
+	 */
+	current_year_duration_annual_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_1Q_非連結又は個別_実績
+	 */
+	current_year_duration_first_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_2Q_非連結又は個別_実績
+	 */
+	current_year_duration_second_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_3Q_非連結又は個別_予想
+	 */
+	current_year_duration_third_quarter_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_3Q_非連結又は個別_下限
+	 */
+	current_year_duration_third_quarter_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_3Q_非連結又は個別_上限
+	 */
+	current_year_duration_third_quarter_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_期末_非連結又は個別_予想
+	 */
+	current_year_duration_year_end_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_期末_非連結又は個別_下限
+	 */
+	current_year_duration_year_end_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_期末_非連結又は個別_上限
+	 */
+	current_year_duration_year_end_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_年間_非連結又は個別_実績
+	 */
+	prior_year_duration_annual_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_1Q_非連結又は個別_実績
+	 */
+	prior_year_duration_first_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_2Q_非連結又は個別_実績
+	 */
+	prior_year_duration_second_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_3Q_非連結又は個別_実績
+	 */
+	prior_year_duration_third_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_期末_非連結又は個別_実績
+	 */
+	prior_year_duration_year_end_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 1株当たり配当金 
+ */
+export type DividendPerShare_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度会計期間_年間_非連結又は個別_予想
+	 */
+	current_year_duration_annual_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_年間_非連結又は個別_下限
+	 */
+	current_year_duration_annual_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_年間_非連結又は個別_上限
+	 */
+	current_year_duration_annual_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_1Q_非連結又は個別_実績
+	 */
+	current_year_duration_first_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_2Q_非連結又は個別_予想
+	 */
+	current_year_duration_second_quarter_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_2Q_非連結又は個別_下限
+	 */
+	current_year_duration_second_quarter_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_2Q_非連結又は個別_上限
+	 */
+	current_year_duration_second_quarter_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_3Q_非連結又は個別_予想
+	 */
+	current_year_duration_third_quarter_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_3Q_非連結又は個別_下限
+	 */
+	current_year_duration_third_quarter_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_3Q_非連結又は個別_上限
+	 */
+	current_year_duration_third_quarter_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_期末_非連結又は個別_予想
+	 */
+	current_year_duration_year_end_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_期末_非連結又は個別_下限
+	 */
+	current_year_duration_year_end_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_期末_非連結又は個別_上限
+	 */
+	current_year_duration_year_end_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_年間_非連結又は個別_実績
+	 */
+	prior_year_duration_annual_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_1Q_非連結又は個別_実績
+	 */
+	prior_year_duration_first_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_2Q_非連結又は個別_実績
+	 */
+	prior_year_duration_second_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_3Q_非連結又は個別_実績
+	 */
+	prior_year_duration_third_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_期末_非連結又は個別_実績
+	 */
+	prior_year_duration_year_end_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 1株当たり配当金 
+ */
+export type DividendPerShare_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度会計期間_年間_非連結又は個別_予想
+	 */
+	current_year_duration_annual_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_年間_非連結又は個別_下限
+	 */
+	current_year_duration_annual_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_年間_非連結又は個別_上限
+	 */
+	current_year_duration_annual_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_1Q_非連結又は個別_実績
+	 */
+	current_year_duration_first_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_2Q_非連結又は個別_実績
+	 */
+	current_year_duration_second_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_3Q_非連結又は個別_予想
+	 */
+	current_year_duration_third_quarter_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_3Q_非連結又は個別_下限
+	 */
+	current_year_duration_third_quarter_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_3Q_非連結又は個別_上限
+	 */
+	current_year_duration_third_quarter_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_期末_非連結又は個別_予想
+	 */
+	current_year_duration_year_end_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_期末_非連結又は個別_下限
+	 */
+	current_year_duration_year_end_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_期末_非連結又は個別_上限
+	 */
+	current_year_duration_year_end_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_年間_非連結又は個別_実績
+	 */
+	prior_year_duration_annual_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_1Q_非連結又は個別_実績
+	 */
+	prior_year_duration_first_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_2Q_非連結又は個別_実績
+	 */
+	prior_year_duration_second_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_3Q_非連結又は個別_実績
+	 */
+	prior_year_duration_third_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_期末_非連結又は個別_実績
+	 */
+	prior_year_duration_year_end_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 1株当たり配当金 
+ */
+export type DividendPerShare_edjp_FinancialReportSummary_Q3 = {
+	/**
+	 * 当年度会計期間_年間_非連結又は個別_予想
+	 */
+	current_year_duration_annual_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_年間_非連結又は個別_下限
+	 */
+	current_year_duration_annual_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_年間_非連結又は個別_上限
+	 */
+	current_year_duration_annual_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_1Q_非連結又は個別_実績
+	 */
+	current_year_duration_first_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_2Q_非連結又は個別_実績
+	 */
+	current_year_duration_second_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_3Q_非連結又は個別_実績
+	 */
+	current_year_duration_third_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_期末_非連結又は個別_予想
+	 */
+	current_year_duration_year_end_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_期末_非連結又は個別_下限
+	 */
+	current_year_duration_year_end_member_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_期末_非連結又は個別_上限
+	 */
+	current_year_duration_year_end_member_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_年間_非連結又は個別_実績
+	 */
+	prior_year_duration_annual_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_1Q_非連結又は個別_実績
+	 */
+	prior_year_duration_first_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_2Q_非連結又は個別_実績
+	 */
+	prior_year_duration_second_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_3Q_非連結又は個別_実績
+	 */
+	prior_year_duration_third_quarter_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_期末_非連結又は個別_実績
+	 */
+	prior_year_duration_year_end_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 特別配当 
+ */
+export type ExtraDividend_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_年間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_annual_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+export type GroupingNonFraction = {
+	report_type: string | null;
+	specific_business: boolean | null;
+	ixbrl_role: string | null;
+	current_period: string | null;
+	name: string;
+	context: string;
+	label: string | null;
+	context_label: string | null;
+};
+
+
+
+export type GroupingNonFractionList = {
+	count: number;
+	item: Array<GroupingNonFraction>;
 };
 
 
@@ -276,90 +2284,25 @@ export type HTTPValidationError = {
 
 
 /**
- * iXBRLのソースID情報を表すクラス
+ * 持分法投資損益 
  */
-export type HeadItem = {
-	item_key: string;
-	company_name: string;
-	securities_code: string;
-	document_name: string;
-	reporting_date: string;
-	current_period: string | null;
-	report_type: string | null;
-	listed_market: string | null;
-	market_section: string | null;
-	url: string | null;
-	is_bs: boolean | null;
-	is_pl: boolean | null;
-	is_cf: boolean | null;
-	is_ci: boolean | null;
-	is_sce: boolean | null;
-	is_sfp: boolean | null;
-	fy_year_end: string | null;
-	tel: string | null;
-	is_div_rev: boolean | null;
-	div_inc_rt: string | null;
-	is_fcst_rev: boolean | null;
-	fcst_oi_gr_rt: string | null;
-	oi_prog_rt: number | null;
-};
-
-
-
-/**
- * iXBRLのソースID情報のリストを表すクラス
- */
-export type HeadItems = {
-	data: Array<HeadItem>;
-	count: number;
-};
-
-
-
-/**
- * 損益計算書情報を公開するためのクラス
- */
-export type IncomeStatementsInformationAbstractJp = {
+export type InvestmentProfitLossOnEquityMethod_edjp_FinancialReportSummary_FY = {
 	/**
-	 * 順序
+	 * 当年度会計期間_連結_実績
 	 */
-	order?: number | null;
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * ラベル
+	 * 当年度会計期間_非連結又は個別_実績
 	 */
-	Label?: string | null;
+	current_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 売上高
+	 * 前年度会計期間_連結_実績
 	 */
-	NetSales?: abstract;
+	prior_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 昨年度売上高
+	 * 前年度会計期間_非連結又は個別_実績
 	 */
-	PeriodNetSales?: abstract;
-	/**
-	 * 営業利益
-	 */
-	OperatingIncome?: abstract;
-	/**
-	 * 昨年度営業利益
-	 */
-	PeriodOperatingIncome?: abstract;
-	/**
-	 * 経常利益
-	 */
-	OrdinaryIncome?: abstract;
-	/**
-	 * 昨年度経常利益
-	 */
-	PeriodOrdinaryIncome?: abstract;
-	/**
-	 * 親会社株主に帰属する当期純利益
-	 */
-	Profit?: abstract;
-	/**
-	 * 昨年度親会社株主に帰属する当期純利益
-	 */
-	PeriodProfit?: abstract;
+	prior_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
 };
 
 
@@ -577,6 +2520,7 @@ export type IxHeadTitleCreate = {
 	is_sfp?: boolean | null;
 	fy_year_end?: string | null;
 	tel?: string | null;
+	specific_business?: boolean | null;
 };
 
 
@@ -617,6 +2561,7 @@ export type IxHeadTitlePublic = {
 	is_fcst_rev: boolean | null;
 	fcst_oi_gr_rt: string | null;
 	oi_prog_rt: number | null;
+	specific_business: boolean | null;
 };
 
 
@@ -756,6 +2701,33 @@ export type IxNonFractionCreate_Output = {
  */
 export type IxNonFractionCreateList = {
 	data: Array<IxNonFractionCreate_Input>;
+};
+
+
+
+/**
+ * iXBRLの非分数情報を表すクラス
+ */
+export type IxNonFractionPublic = {
+	id: number | null;
+	insert_date: string;
+	update_date: string;
+	head_item_key: string | null;
+	context: string;
+	decimals: string | null;
+	format: string | null;
+	name: string;
+	scale: string | null;
+	sign: string | null;
+	unit_ref: string | null;
+	xsi_nil: boolean | null;
+	numeric: string | null;
+	report_type: string | null;
+	ixbrl_role: string | null;
+	source_file_id: string | null;
+	xbrl_type: string | null;
+	display_numeric: string | null;
+	display_scale: string | null;
 };
 
 
@@ -1013,6 +2985,942 @@ export type Message = {
 
 
 
+/**
+ * 1株当たり純資産 
+ */
+export type NetAssetsPerShare_edjp_FinancialReportSummary = {
+	/**
+	 * 当年度期初から第２四半期間時点_連結_実績
+	 */
+	current_accumulated_q2_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 1株当たり純資産 
+ */
+export type NetAssetsPerShare_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度時点_連結_実績
+	 */
+	current_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度時点_非連結又は個別_実績
+	 */
+	current_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_非連結又は個別_実績
+	 */
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 1株当たり純資産 
+ */
+export type NetAssetsPerShare_edjp_FinancialReportSummary_HY_specific_business = {
+	/**
+	 * 当年度期初から第２四半期間時点_連結_実績
+	 */
+	current_accumulated_q2_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間時点_非連結又は個別_実績
+	 */
+	current_accumulated_q2_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_非連結又は個別_実績
+	 */
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 1株当たり純資産 
+ */
+export type NetAssetsPerShare_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間時点_連結_実績
+	 */
+	current_accumulated_q1_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第１四半期間時点_非連結又は個別_実績
+	 */
+	current_accumulated_q1_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_非連結又は個別_実績
+	 */
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 1株当たり純資産 
+ */
+export type NetAssetsPerShare_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間時点_連結_実績
+	 */
+	current_accumulated_q2_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間時点_非連結又は個別_実績
+	 */
+	current_accumulated_q2_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_非連結又は個別_実績
+	 */
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 1株当たり純資産 
+ */
+export type NetAssetsPerShare_edjp_FinancialReportSummary_Q3 = {
+	/**
+	 * 当年度期初から第３四半期間時点_連結_実績
+	 */
+	current_accumulated_q3_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 純資産 
+ */
+export type NetAssets_edjp_FinancialReportSummary = {
+	/**
+	 * 当年度期初から第２四半期間時点_連結_実績
+	 */
+	current_accumulated_q2_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 純資産 
+ */
+export type NetAssets_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度時点_連結_実績
+	 */
+	current_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度時点_非連結又は個別_実績
+	 */
+	current_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_非連結又は個別_実績
+	 */
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 純資産 
+ */
+export type NetAssets_edjp_FinancialReportSummary_HY_specific_business = {
+	/**
+	 * 当年度期初から第２四半期間時点_連結_実績
+	 */
+	current_accumulated_q2_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間時点_非連結又は個別_実績
+	 */
+	current_accumulated_q2_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_非連結又は個別_実績
+	 */
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 純資産 
+ */
+export type NetAssets_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間時点_連結_実績
+	 */
+	current_accumulated_q1_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第１四半期間時点_非連結又は個別_実績
+	 */
+	current_accumulated_q1_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_非連結又は個別_実績
+	 */
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 純資産 
+ */
+export type NetAssets_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間時点_連結_実績
+	 */
+	current_accumulated_q2_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間時点_非連結又は個別_実績
+	 */
+	current_accumulated_q2_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_非連結又は個別_実績
+	 */
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 純資産 
+ */
+export type NetAssets_edjp_FinancialReportSummary_Q3 = {
+	/**
+	 * 当年度期初から第３四半期間時点_連結_実績
+	 */
+	current_accumulated_q3_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 1株当たり当期純利益 
+ */
+export type NetIncomePerShare_edjp_FinancialReportSummary = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 1株当たり当期純利益 
+ */
+export type NetIncomePerShare_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_連結_実績
+	 */
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_実績
+	 */
+	current_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_予想
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_下限
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_上限
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_予想
+	 */
+	next_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_下限
+	 */
+	next_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_上限
+	 */
+	next_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_予想
+	 */
+	next_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_下限
+	 */
+	next_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_上限
+	 */
+	next_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_連結_実績
+	 */
+	prior_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_非連結又は個別_実績
+	 */
+	prior_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 1株当たり当期純利益 
+ */
+export type NetIncomePerShare_edjp_FinancialReportSummary_HY_specific_business = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 1株当たり当期純利益 
+ */
+export type NetIncomePerShare_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間_連結_実績
+	 */
+	current_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_予想
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_下限
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_上限
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_連結_実績
+	 */
+	prior_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 1株当たり当期純利益 
+ */
+export type NetIncomePerShare_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 1株当たり当期純利益 
+ */
+export type NetIncomePerShare_edjp_FinancialReportSummary_Q3 = {
+	/**
+	 * 当年度期初から第３四半期間_連結_実績
+	 */
+	current_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第３四半期間_連結_実績
+	 */
+	prior_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 自己資本当期純利益率 
+ */
+export type NetIncomeToShareholdersEquityRatio_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_連結_実績
+	 */
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_実績
+	 */
+	current_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_連結_実績
+	 */
+	prior_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_非連結又は個別_実績
+	 */
+	prior_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 当期純利益 
+ */
+export type NetIncome_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_非連結又は個別_実績
+	 */
+	current_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_予想
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_下限
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_上限
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_予想
+	 */
+	next_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_下限
+	 */
+	next_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_上限
+	 */
+	next_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_非連結又は個別_実績
+	 */
+	prior_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 当期純利益 
+ */
+export type NetIncome_edjp_FinancialReportSummary_HY_specific_business = {
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 当期純利益 
+ */
+export type NetIncome_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_予想
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_下限
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_上限
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 当期純利益 
+ */
+export type NetIncome_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 純営業収益、証券 
+ */
+export type NetOperatingRevenuesSE_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 売上高 
+ */
+export type NetSales_edjp_FinancialReportSummary = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 売上高 
+ */
+export type NetSales_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_連結_実績
+	 */
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_実績
+	 */
+	current_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_予想
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_下限
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_上限
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_予想
+	 */
+	next_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_下限
+	 */
+	next_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_上限
+	 */
+	next_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_予想
+	 */
+	next_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_下限
+	 */
+	next_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_上限
+	 */
+	next_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_連結_実績
+	 */
+	prior_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_非連結又は個別_実績
+	 */
+	prior_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 売上高 
+ */
+export type NetSales_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間_連結_実績
+	 */
+	current_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_予想
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_下限
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_上限
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_連結_実績
+	 */
+	prior_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 売上高 
+ */
+export type NetSales_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 売上高 
+ */
+export type NetSales_edjp_FinancialReportSummary_Q3 = {
+	/**
+	 * 当年度期初から第３四半期間_連結_実績
+	 */
+	current_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第３四半期間_連結_実績
+	 */
+	prior_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
 export type NewPassword = {
 	token: string;
 	new_password: string;
@@ -1021,286 +3929,1237 @@ export type NewPassword = {
 
 
 /**
- * 連結財務諸表に関する注記を公開するためのクラス
+ * 期末発行済株式数（自己株式を含む） 
  */
-export type NoteToFinancialPositionsAbstractJp = {
+export type NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary = {
 	/**
-	 * 順序
+	 * 当年度期初から第２四半期間時点_非連結又は個別_実績
 	 */
-	order?: number | null;
+	current_accumulated_q2_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * ラベル
+	 * 前年度時点_非連結又は個別_実績
 	 */
-	Label?: string | null;
-	/**
-	 * 連結財務諸表に関する注記
-	 */
-	NoteToFinancialPositions?: stockNumeric | null;
-	/**
-	 * 自己資本
-	 */
-	OwnersEquity?: stockNumeric | null;
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 };
 
 
 
 /**
- * 連結財務諸表に関する注記を公開するためのクラス
+ * 期末発行済株式数（自己株式を含む） 
  */
-export type NoteToFinancialResultsJp = {
+export type NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_FY = {
 	/**
-	 * 順序
+	 * 当年度時点_非連結又は個別_実績
 	 */
-	order?: number | null;
+	current_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * ラベル
+	 * 前年度時点_非連結又は個別_実績
 	 */
-	Label?: string | null;
-	/**
-	 * 連結財務諸表に関する注記
-	 */
-	NoteToFinancialResults?: stockNumeric | null;
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 };
 
 
 
 /**
- * 損益計算書情報に関する注記を公開するためのクラス
+ * 期末発行済株式数（自己株式を含む） 
  */
-export type NoteToIncomeStatementsInformationAbstractJp = {
+export type NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_HY_specific_business = {
 	/**
-	 * 順序
+	 * 当年度期初から第２四半期間時点_非連結又は個別_実績
 	 */
-	order?: number | null;
+	current_accumulated_q2_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * ラベル
+	 * 前年度時点_非連結又は個別_実績
 	 */
-	Label?: string | null;
-	/**
-	 * 包括利益
-	 */
-	ComprehensiveIncomeAbstract?: abstract;
-	/**
-	 * 昨年度包括利益
-	 */
-	PeriodComprehensiveIncomeAbstract?: abstract;
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 };
 
 
 
 /**
- * 業績情報に関する注記を公開するためのクラス
+ * 期末発行済株式数（自己株式を含む） 
  */
-export type NoteToOperatingResultsAbstractJp = {
+export type NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_Q1 = {
 	/**
-	 * 順序
+	 * 当年度期初から第１四半期間時点_非連結又は個別_実績
 	 */
-	order?: number | null;
+	current_accumulated_q1_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * ラベル
+	 * 前年度時点_非連結又は個別_実績
 	 */
-	Label?: string | null;
-	/**
-	 * 業績情報に関する注記
-	 */
-	NoteToOperatingResults?: stockNumeric | null;
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 };
 
 
 
 /**
- * 四半期連結財務諸表に適用する特定会計基準に関する注記を公開するためのクラス
+ * 期末発行済株式数（自己株式を含む） 
  */
-export type NotesApplyingSpecificAccountingQuarterlyFinancialStatementsJp = {
+export type NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_Q2 = {
 	/**
-	 * 順序
+	 * 当年度期初から第２四半期間時点_非連結又は個別_実績
 	 */
-	order?: number | null;
+	current_accumulated_q2_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * ラベル
+	 * 前年度時点_非連結又は個別_実績
 	 */
-	Label?: string | null;
-	/**
-	 * 四半期連結財務諸表に適用する特定会計基準の適用状況
-	 */
-	ApplyingOfSpecificAccountingOfTheConsolidatedQuarterlyFinancialStatements?: stockNumeric | null;
-	/**
-	 * 四半期連結財務諸表に適用する特定会計基準に関する注記
-	 */
-	NoteToApplyingOfSpecificAccountingOfTheConsolidatedQuarterlyFinancialStatements?: stockNumeric | null;
-};
-
-
-
-export type NotesChangesAccountingPoliciesAccountingEstimatesRetrospectiveRestatementJp = {
-	/**
-	 * 順序
-	 */
-	order?: number | null;
-	/**
-	 * ラベル
-	 */
-	Label?: string | null;
-	/**
-	 * 会計基準の改正に基づく変更
-	 */
-	ChangesBasedOnRevisionsOfAccountingStandard?: stockNumeric | null;
-	/**
-	 * 会計上の見積りの変更
-	 */
-	ChangesInAccountingEstimates?: stockNumeric | null;
-	/**
-	 * 会計基準の改正以外の変更
-	 */
-	ChangesOtherThanOnesBasedOnRevisionsOfAccountingStandard?: stockNumeric | null;
-	/**
-	 * 遡及的な再表示
-	 */
-	RetrospectiveRestatement?: stockNumeric | null;
-	/**
-	 * 四半期連結財務諸表における会計方針の変更、会計上の見積りの変更及び遡及的な再表示に関する注記
-	 */
-	NoteToChangesInAccountingPoliciesAccountingEstimatesAndRetrospectiveRestatementQuarterly?: stockNumeric | null;
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 };
 
 
 
 /**
- * 四半期連結財務諸表における発行済株式数（普通株式）に関する注記を公開するためのクラス
+ * 期末発行済株式数（自己株式を含む） 
  */
-export type NotesNumberIssuedOutstandingSharesCommonStockJp = {
+export type NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_Q3 = {
 	/**
-	 * 順序
+	 * 当年度期初から第３四半期間時点_非連結又は個別_実績
 	 */
-	order?: number | null;
+	current_accumulated_q3_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * ラベル
+	 * 前年度時点_非連結又は個別_実績
 	 */
-	Label?: string | null;
-	/**
-	 * 四半期連結財務諸表における発行済株式数（普通株式）に関する注記
-	 */
-	NoteToNumberOfIssuedAndOutstandingSharesCommonStock?: stock | null;
-	/**
-	 * 平均発行株数
-	 */
-	AverageNumberOfShares?: stockNumeric | null;
-	/**
-	 * 期末発行済株式数（自己株式を含む）
-	 */
-	NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock?: stockNumeric | null;
-	/**
-	 * 期末自己株式数
-	 */
-	NumberOfTreasuryStockAtTheEndOfFiscalYear?: stockNumeric | null;
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 };
 
 
 
 /**
- * 業績情報を公開するためのクラス
+ * 除外 
  */
-export type OperatingResultJp = {
+export type NumberOfSubsidiariesExcludedFromConsolidation_edjp_FinancialReportSummary_FY = {
 	/**
-	 * 順序
+	 * 当年度会計期間_連結_実績
 	 */
-	order?: number | null;
-	/**
-	 * ラベル
-	 */
-	Label?: string | null;
-	/**
-	 * 業績情報
-	 */
-	OperatingResultsAbstract?: OperatingResultsAbstractJp;
-	/**
-	 * 業績情報に関する注記
-	 */
-	NoteToOperatingResultsAbstract?: NoteToOperatingResultsAbstractJp;
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
 };
 
 
 
 /**
- * 業績情報を公開するためのクラス
+ * 除外 
  */
-export type OperatingResultsAbstractJp = {
+export type NumberOfSubsidiariesExcludedFromConsolidation_edjp_FinancialReportSummary_Q1 = {
 	/**
-	 * 順序
+	 * 当年度期初から第１四半期間_連結_実績
 	 */
-	order?: number | null;
-	/**
-	 * ラベル
-	 */
-	Label?: string | null;
-	/**
-	 * 連結損益計算書情報
-	 */
-	IncomeStatementsInformationAbstract?: IncomeStatementsInformationAbstractJp;
-	/**
-	 * 連結損益計算書情報に関する注記
-	 */
-	NoteToIncomeStatementsInformationAbstract?: NoteToIncomeStatementsInformationAbstractJp;
-	/**
-	 * その他の連結経営成績の概要
-	 */
-	OtherOperatingResultsAbstract?: OtherOperatingResultsAbstractJp;
+	current_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
 };
 
 
 
 /**
- * その他の連結経営成績の概要を公開するためのクラス
+ * 除外 
  */
-export type OtherOperatingResultsAbstractJp = {
+export type NumberOfSubsidiariesExcludedFromConsolidation_edjp_FinancialReportSummary_Q2 = {
 	/**
-	 * 順序
+	 * 当年度期初から第２四半期間_連結_実績
 	 */
-	order?: number | null;
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 除外 
+ */
+export type NumberOfSubsidiariesExcludedFromConsolidation_edjp_FinancialReportSummary_Q3 = {
 	/**
-	 * ラベル
+	 * 当年度期初から第３四半期間_連結_実績
 	 */
-	Label?: string | null;
+	current_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 新規 
+ */
+export type NumberOfSubsidiariesNewlyConsolidated_edjp_FinancialReportSummary_FY = {
 	/**
-	 * 1株当たり当期純利益（基本）
+	 * 当年度会計期間_連結_実績
 	 */
-	NetIncomePerShare?: stockNumeric | null;
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 新規 
+ */
+export type NumberOfSubsidiariesNewlyConsolidated_edjp_FinancialReportSummary_Q1 = {
 	/**
-	 * 1株当たり当期純利益
+	 * 当年度期初から第１四半期間_連結_実績
 	 */
-	DilutedNetIncomePerShare?: stockNumeric | null;
+	current_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 新規 
+ */
+export type NumberOfSubsidiariesNewlyConsolidated_edjp_FinancialReportSummary_Q2 = {
 	/**
-	 * 自己資本当期純利益率
+	 * 当年度期初から第２四半期間_連結_実績
 	 */
-	NetIncomeToShareholdersEquityRatio?: stockNumeric | null;
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 新規 
+ */
+export type NumberOfSubsidiariesNewlyConsolidated_edjp_FinancialReportSummary_Q3 = {
 	/**
-	 * 総資産経常利益率
+	 * 当年度期初から第３四半期間_連結_実績
 	 */
-	OrdinaryIncomeToTotalAssetsRatio?: stockNumeric | null;
+	current_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 期末自己株式数 
+ */
+export type NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary = {
 	/**
-	 * 売上高営業利益率
+	 * 当年度期初から第２四半期間時点_非連結又は個別_実績
 	 */
-	OperatingIncomeToNetSalesRatio?: stockNumeric | null;
+	current_accumulated_q2_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 昨年度1株当たり当期純利益（基本）
+	 * 前年度時点_非連結又は個別_実績
 	 */
-	PeriodNetIncomePerShare?: stockNumeric | null;
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 期末自己株式数 
+ */
+export type NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_FY = {
 	/**
-	 * 昨年度1株当たり当期純利益
+	 * 当年度時点_非連結又は個別_実績
 	 */
-	PeriodDilutedNetIncomePerShare?: stockNumeric | null;
+	current_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 昨年度自己資本当期純利益率
+	 * 前年度時点_非連結又は個別_実績
 	 */
-	PeriodNetIncomeToShareholdersEquityRatio?: stockNumeric | null;
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 期末自己株式数 
+ */
+export type NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_HY_specific_business = {
 	/**
-	 * 昨年度総資産経常利益率
+	 * 当年度期初から第２四半期間時点_非連結又は個別_実績
 	 */
-	PeriodOrdinaryIncomeToTotalAssetsRatio?: stockNumeric | null;
+	current_accumulated_q2_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 昨年度売上高営業利益率
+	 * 前年度時点_非連結又は個別_実績
 	 */
-	PeriodOperatingIncomeToNetSalesRatio?: stockNumeric | null;
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 期末自己株式数 
+ */
+export type NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間時点_非連結又は個別_実績
+	 */
+	current_accumulated_q1_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_非連結又は個別_実績
+	 */
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 期末自己株式数 
+ */
+export type NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間時点_非連結又は個別_実績
+	 */
+	current_accumulated_q2_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_非連結又は個別_実績
+	 */
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 期末自己株式数 
+ */
+export type NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_Q3 = {
+	/**
+	 * 当年度期初から第３四半期間時点_非連結又は個別_実績
+	 */
+	current_accumulated_q3_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_非連結又は個別_実績
+	 */
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 売上高営業利益率 
+ */
+export type OperatingIncomeToNetSalesRatio_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_連結_実績
+	 */
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_実績
+	 */
+	current_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_連結_実績
+	 */
+	prior_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_非連結又は個別_実績
+	 */
+	prior_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 営業利益 
+ */
+export type OperatingIncome_edjp_FinancialReportSummary = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 営業利益 
+ */
+export type OperatingIncome_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_連結_実績
+	 */
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_実績
+	 */
+	current_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_予想
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_下限
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_上限
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_予想
+	 */
+	next_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_下限
+	 */
+	next_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_上限
+	 */
+	next_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_予想
+	 */
+	next_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_下限
+	 */
+	next_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_上限
+	 */
+	next_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_連結_実績
+	 */
+	prior_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_非連結又は個別_実績
+	 */
+	prior_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 営業利益 
+ */
+export type OperatingIncome_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間_連結_実績
+	 */
+	current_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_予想
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_下限
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_上限
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_連結_実績
+	 */
+	prior_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 営業利益 
+ */
+export type OperatingIncome_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 営業利益 
+ */
+export type OperatingIncome_edjp_FinancialReportSummary_Q3 = {
+	/**
+	 * 当年度期初から第３四半期間_連結_実績
+	 */
+	current_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第３四半期間_連結_実績
+	 */
+	prior_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 営業収益、証券 
+ */
+export type OperatingRevenuesSE_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 営業収益 
+ */
+export type OperatingRevenues_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 総資産経常利益率 
+ */
+export type OrdinaryIncomeToTotalAssetsRatio_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_連結_実績
+	 */
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_実績
+	 */
+	current_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_連結_実績
+	 */
+	prior_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_非連結又は個別_実績
+	 */
+	prior_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 経常利益 
+ */
+export type OrdinaryIncome_edjp_FinancialReportSummary = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 経常利益 
+ */
+export type OrdinaryIncome_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_連結_実績
+	 */
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_実績
+	 */
+	current_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_予想
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_下限
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度期初から第２四半期間_非連結又は個別_上限
+	 */
+	next_accumulated_q2_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_予想
+	 */
+	next_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_下限
+	 */
+	next_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_上限
+	 */
+	next_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_予想
+	 */
+	next_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_下限
+	 */
+	next_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_非連結又は個別_上限
+	 */
+	next_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_連結_実績
+	 */
+	prior_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_非連結又は個別_実績
+	 */
+	prior_year_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 経常利益 
+ */
+export type OrdinaryIncome_edjp_FinancialReportSummary_HY_specific_business = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 経常利益 
+ */
+export type OrdinaryIncome_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間_連結_実績
+	 */
+	current_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_予想
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_下限
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_上限
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_連結_実績
+	 */
+	prior_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q1_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 経常利益 
+ */
+export type OrdinaryIncome_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_予想
+	 */
+	current_year_duration_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_下限
+	 */
+	current_year_duration_non_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_非連結又は個別_上限
+	 */
+	current_year_duration_non_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 経常利益 
+ */
+export type OrdinaryIncome_edjp_FinancialReportSummary_Q3 = {
+	/**
+	 * 当年度期初から第３四半期間_連結_実績
+	 */
+	current_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第３四半期間_連結_実績
+	 */
+	prior_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 経常収益、銀行 
+ */
+export type OrdinaryRevenuesBK_edjp_FinancialReportSummary_HY_specific_business = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	current_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_非連結又は個別_実績
+	 */
+	prior_accumulated_q2_duration_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 自己資本 
+ */
+export type OwnersEquity_edjp_FinancialReportSummary = {
+	/**
+	 * 当年度期初から第２四半期間時点_連結_実績
+	 */
+	current_accumulated_q2_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 自己資本 
+ */
+export type OwnersEquity_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度時点_連結_実績
+	 */
+	current_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度時点_非連結又は個別_実績
+	 */
+	current_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_非連結又は個別_実績
+	 */
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 自己資本 
+ */
+export type OwnersEquity_edjp_FinancialReportSummary_HY_specific_business = {
+	/**
+	 * 当年度期初から第２四半期間時点_連結_実績
+	 */
+	current_accumulated_q2_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間時点_非連結又は個別_実績
+	 */
+	current_accumulated_q2_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_非連結又は個別_実績
+	 */
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 自己資本 
+ */
+export type OwnersEquity_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間時点_連結_実績
+	 */
+	current_accumulated_q1_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第１四半期間時点_非連結又は個別_実績
+	 */
+	current_accumulated_q1_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_非連結又は個別_実績
+	 */
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 自己資本 
+ */
+export type OwnersEquity_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間時点_連結_実績
+	 */
+	current_accumulated_q2_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間時点_非連結又は個別_実績
+	 */
+	current_accumulated_q2_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_非連結又は個別_実績
+	 */
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 自己資本 
+ */
+export type OwnersEquity_edjp_FinancialReportSummary_Q3 = {
+	/**
+	 * 当年度期初から第３四半期間時点_連結_実績
+	 */
+	current_accumulated_q3_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 配当性向 
+ */
+export type PayoutRatio_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_年間_連結_実績
+	 */
+	current_year_duration_annual_member_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_年間_非連結又は個別_実績
+	 */
+	current_year_duration_annual_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_年間_連結_予想
+	 */
+	next_year_duration_annual_member_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_年間_非連結又は個別_予想
+	 */
+	next_year_duration_annual_member_non_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_年間_連結_実績
+	 */
+	prior_year_duration_annual_member_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_年間_非連結又は個別_実績
+	 */
+	prior_year_duration_annual_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 親会社株主に帰属する当期純利益 
+ */
+export type ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 親会社株主に帰属する当期純利益 
+ */
+export type ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_連結_実績
+	 */
+	current_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_予想
+	 */
+	next_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_下限
+	 */
+	next_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 次年度会計期間_連結_上限
+	 */
+	next_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_連結_実績
+	 */
+	prior_year_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 親会社株主に帰属する当期純利益 
+ */
+export type ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_HY_specific_business = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 親会社株主に帰属する当期純利益 
+ */
+export type ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間_連結_実績
+	 */
+	current_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第１四半期間_連結_実績
+	 */
+	prior_accumulated_q1_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 親会社株主に帰属する当期純利益 
+ */
+export type ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間_連結_実績
+	 */
+	current_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第２四半期間_連結_実績
+	 */
+	prior_accumulated_q2_duration_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 親会社株主に帰属する当期純利益 
+ */
+export type ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q3 = {
+	/**
+	 * 当年度期初から第３四半期間_連結_実績
+	 */
+	current_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_予想
+	 */
+	current_year_duration_consolidated_member_forecast_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_下限
+	 */
+	current_year_duration_consolidated_member_lower_member?: IxNonFractionPublic;
+	/**
+	 * 当年度会計期間_連結_上限
+	 */
+	current_year_duration_consolidated_member_upper_member?: IxNonFractionPublic;
+	/**
+	 * 前年度期初から第３四半期間_連結_実績
+	 */
+	prior_accumulated_q3_duration_consolidated_member_result_member?: IxNonFractionPublic;
 };
 
 
@@ -1350,209 +5209,85 @@ export type QualitativeInfoSubTitle = {
 
 
 /**
- * 期間中の連結の範囲における重要な変更を公開するためのクラス
+ * 四半期 
  */
-export type SignificantChangesInTheScopeOfConsolidationDuringThePeriodJp = {
+export type QuarterlyPeriod_edjp_FinancialReportSummary = {
 	/**
-	 * 順序
+	 * 当年度期初から第２四半期間時点
 	 */
-	order?: number | null;
-	/**
-	 * ラベル
-	 */
-	Label?: string | null;
-	/**
-	 * 期間中の連結の範囲における重要な変更に関する注記
-	 */
-	NoteToSignificantChangesInTheScopeOfConsolidationDuringThePeriod?: stockNumeric | null;
-	/**
-	 * 連結から除外された子会社の名称
-	 */
-	NameOfSubsidiariesExcludedFromConsolidation?: stockNumeric | null;
-	/**
-	 * 新たに連結された子会社の名称
-	 */
-	NameOfSubsidiariesNewlyConsolidated?: stockNumeric | null;
-	/**
-	 * 連結から除外された子会社の数
-	 */
-	NumberOfSubsidiariesExcludedFromConsolidation?: stockNumeric | null;
-	/**
-	 * 新たに連結された子会社の数
-	 */
-	NumberOfSubsidiariesNewlyConsolidated?: stockNumeric | null;
+	current_accumulated_q2_instant?: IxNonFractionPublic;
 };
 
 
 
 /**
- * 四半期決算概要に関する特記事項を公開するためのクラス
+ * 四半期 
  */
-export type SpecialNotesJp = {
+export type QuarterlyPeriod_edjp_FinancialReportSummary_HY_specific_business = {
 	/**
-	 * 順序
+	 * 当年度期初から第２四半期間時点
 	 */
-	order?: number | null;
-	/**
-	 * ラベル
-	 */
-	Label?: string | null;
-	/**
-	 * 予想情報の利用等に関する注記
-	 */
-	NotesForUsingForecastedInformationAndOthers?: stock | null;
-	/**
-	 * 公認会計士若しくは監査法人による四半期連結財務諸表の監査の実施の有無
-	 */
-	ReviewOfAttachedConsolidatedQuarterlyFinancialStatementsByACertifiedPublicAccountantOrAnAuditFirm?: stockNumeric | null;
+	current_accumulated_q2_instant?: IxNonFractionPublic;
 };
 
 
 
 /**
- * 株式情報を公開するためのクラス
+ * 四半期 
  */
-export type StockInfo = {
+export type QuarterlyPeriod_edjp_FinancialReportSummary_Q1 = {
 	/**
-	 * 順序
+	 * 当年度期初から第１四半期間時点
 	 */
-	order?: number | null;
-	/**
-	 * ラベル
-	 */
-	Label?: string | null;
-	/**
-	 * 文書名
-	 */
-	DocumentName?: stock | null;
-	/**
-	 * 提出日
-	 */
-	FilingDate?: stock | null;
-	/**
-	 * 上場会社名
-	 */
-	CompanyName?: stock | null;
-	/**
-	 * 証券コード
-	 */
-	SecuritiesCode?: stock | null;
-	/**
-	 * URL
-	 */
-	URL?: stock | null;
-	/**
-	 * 代表者情報
-	 */
-	RepresentativeAbstract?: representative_abstract | null;
-	/**
-	 * 問合せ先情報
-	 */
-	InquiriesAbstract?: inquiries_abstract | null;
-	/**
-	 * 電話番号
-	 */
-	Tel?: stock | null;
-	/**
-	 * その他の上場会社情報
-	 */
-	OtherCompanyInformationAbstract?: other_company_information_abstract | null;
-	/**
-	 * 決算補足資料
-	 */
-	SupplementalMaterialOfAnnualResults?: stock | null;
-	/**
-	 * 決算補足資料の入手方法
-	 */
-	WayOfGettingSupplementalMaterialOfAnnualResults?: stock | null;
-	/**
-	 * 決算説明会の開催の有無
-	 */
-	ConveningBriefingOfAnnualResults?: stock | null;
-	/**
-	 * 決算説明会の対象者
-	 */
-	TargetAudienceBriefingOfAnnualResults?: stock | null;
-	/**
-	 * 端数処理方法に関する注記
-	 */
-	NoteToFractionProcessingMethod?: stock | null;
-	/**
-	 * 東京証券取引所の上場市場
-	 */
-	TokyoStockExchange?: stock | null;
-	/**
-	 * 事業会社種別
-	 */
-	BusinessCategory?: business_category | null;
-	/**
-	 * 決算期
-	 */
-	FiscalYearEnd?: stock | null;
-	/**
-	 * 四半期
-	 */
-	QuarterlyPeriod?: stock | null;
+	current_accumulated_q1_instant?: IxNonFractionPublic;
 };
 
 
 
 /**
- * 概要情報を公開するためのクラス
+ * 四半期 
  */
-export type SummaryItemsAbstractJp = {
+export type QuarterlyPeriod_edjp_FinancialReportSummary_Q2 = {
 	/**
-	 * タイプ
+	 * 当年度期初から第２四半期間時点
 	 */
-	type?: string | null;
+	current_accumulated_q2_instant?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 四半期 
+ */
+export type QuarterlyPeriod_edjp_FinancialReportSummary_Q3 = {
 	/**
-	 * XBRL識別子
+	 * 当年度期初から第３四半期間時点
 	 */
-	XbrlId?: string | null;
+	current_accumulated_q3_instant?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 純資産配当率 
+ */
+export type RatioOfTotalAmountOfDividendsToNetAssets_edjp_FinancialReportSummary_FY = {
 	/**
-	 * 上場会社情報
+	 * 当年度会計期間_年間_連結_実績
 	 */
-	DocumentEntityInformation?: StockInfo | null;
+	current_year_duration_annual_member_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 業績情報
+	 * 当年度会計期間_年間_非連結又は個別_実績
 	 */
-	OperatingResult?: OperatingResultJp | null;
+	current_year_duration_annual_member_non_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 連結財務諸表に関する注記
+	 * 前年度会計期間_年間_連結_実績
 	 */
-	NoteToFinancialResults?: NoteToFinancialResultsJp | null;
+	prior_year_duration_annual_member_consolidated_member_result_member?: IxNonFractionPublic;
 	/**
-	 * 業績及び財政状態に関する注記
+	 * 前年度会計期間_年間_非連結又は個別_実績
 	 */
-	BusinessResultsFinancialPositions?: BusinessResultsFinancialPositionsJp | null;
-	/**
-	 * 四半期連結財務諸表に適用する特定会計基準に関する注記
-	 */
-	NotesApplyingSpecificAccountingQuarterlyFinancialStatements?: NotesApplyingSpecificAccountingQuarterlyFinancialStatementsJp | null;
-	/**
-	 * 四半期連結財務諸表における会計方針の変更、会計上の見積りの変更及び遡及的な再表示に関する注記
-	 */
-	NotesChangesAccountingPoliciesAccountingEstimatesRetrospectiveRestatement?: NotesChangesAccountingPoliciesAccountingEstimatesRetrospectiveRestatementJp | null;
-	/**
-	 * 四半期連結財務諸表における発行済株式数（普通株式）に関する注記
-	 */
-	NotesNumberIssuedOutstandingSharesCommonStock?: NotesNumberIssuedOutstandingSharesCommonStockJp | null;
-	/**
-	 * 配当に関する注記
-	 */
-	Dividends?: DividendsJp | null;
-	/**
-	 * 四半期予想に関する注記
-	 */
-	Forecasts?: ForecastsJp | null;
-	/**
-	 * 期間中の連結の範囲における重要な変更
-	 */
-	SignificantChangesInTheScopeOfConsolidationDuringThePeriod?: SignificantChangesInTheScopeOfConsolidationDuringThePeriodJp | null;
-	/**
-	 * 四半期決算概要に関する特記事項
-	 */
-	SpecialNotes?: SpecialNotesJp | null;
+	prior_year_duration_annual_member_non_consolidated_member_result_member?: IxNonFractionPublic;
 };
 
 
@@ -1560,6 +5295,150 @@ export type SummaryItemsAbstractJp = {
 export type Token = {
 	access_token: string;
 	token_type?: string;
+};
+
+
+
+/**
+ * 総資産 
+ */
+export type TotalAssets_edjp_FinancialReportSummary = {
+	/**
+	 * 当年度期初から第２四半期間時点_連結_実績
+	 */
+	current_accumulated_q2_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 総資産 
+ */
+export type TotalAssets_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度時点_連結_実績
+	 */
+	current_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度時点_非連結又は個別_実績
+	 */
+	current_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_非連結又は個別_実績
+	 */
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 総資産 
+ */
+export type TotalAssets_edjp_FinancialReportSummary_HY_specific_business = {
+	/**
+	 * 当年度期初から第２四半期間時点_連結_実績
+	 */
+	current_accumulated_q2_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間時点_非連結又は個別_実績
+	 */
+	current_accumulated_q2_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_非連結又は個別_実績
+	 */
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 総資産 
+ */
+export type TotalAssets_edjp_FinancialReportSummary_Q1 = {
+	/**
+	 * 当年度期初から第１四半期間時点_連結_実績
+	 */
+	current_accumulated_q1_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第１四半期間時点_非連結又は個別_実績
+	 */
+	current_accumulated_q1_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_非連結又は個別_実績
+	 */
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 総資産 
+ */
+export type TotalAssets_edjp_FinancialReportSummary_Q2 = {
+	/**
+	 * 当年度期初から第２四半期間時点_連結_実績
+	 */
+	current_accumulated_q2_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 当年度期初から第２四半期間時点_非連結又は個別_実績
+	 */
+	current_accumulated_q2_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_非連結又は個別_実績
+	 */
+	prior_year_instant_non_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 総資産 
+ */
+export type TotalAssets_edjp_FinancialReportSummary_Q3 = {
+	/**
+	 * 当年度期初から第３四半期間時点_連結_実績
+	 */
+	current_accumulated_q3_instant_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度時点_連結_実績
+	 */
+	prior_year_instant_consolidated_member_result_member?: IxNonFractionPublic;
+};
+
+
+
+/**
+ * 配当金総額（合計） 
+ */
+export type TotalDividendPaidAnnual_edjp_FinancialReportSummary_FY = {
+	/**
+	 * 当年度会計期間_年間_非連結又は個別_実績
+	 */
+	current_year_duration_annual_member_non_consolidated_member_result_member?: IxNonFractionPublic;
+	/**
+	 * 前年度会計期間_年間_非連結又は個別_実績
+	 */
+	prior_year_duration_annual_member_non_consolidated_member_result_member?: IxNonFractionPublic;
 };
 
 
@@ -1631,166 +5510,687 @@ export type ValidationError = {
 
 
 
-/**
- * 概要を公開するためのクラス
- */
-export type abstract = {
+export type edjp_FinancialReportSummary = {
 	/**
-	 * 順序
+	 * 期中平均株式数
 	 */
-	order?: number | null;
+	average_number_of_shares?: AverageNumberOfShares_edjp_FinancialReportSummary;
 	/**
-	 * ラベル
+	 * 自己資本比率
 	 */
-	Label?: string | null;
+	capital_adequacy_ratio?: CapitalAdequacyRatio_edjp_FinancialReportSummary;
 	/**
-	 * 値
+	 * 包括利益増減率
 	 */
-	Values?: stockNumeric | null;
+	change_in_comprehensive_income?: ChangeInComprehensiveIncome_edjp_FinancialReportSummary;
 	/**
-	 * 増減
+	 * 増減率、売上高
 	 */
-	ChangeIn?: stockNumeric | null;
+	change_in_net_sales?: ChangeInNetSales_edjp_FinancialReportSummary;
+	/**
+	 * 増減率、営業利益
+	 */
+	change_in_operating_income?: ChangeInOperatingIncome_edjp_FinancialReportSummary;
+	/**
+	 * 増減率、経常利益
+	 */
+	change_in_ordinary_income?: ChangeInOrdinaryIncome_edjp_FinancialReportSummary;
+	/**
+	 * 増減率、親会社株主に帰属する当期純利益
+	 */
+	change_in_profit_attributable_to_owners_of_parent?: ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary;
+	/**
+	 * 包括利益
+	 */
+	comprehensive_income?: ComprehensiveIncome_edjp_FinancialReportSummary;
+	/**
+	 * 潜在株式調整後1株当たり当期純利益
+	 */
+	diluted_net_income_per_share?: DilutedNetIncomePerShare_edjp_FinancialReportSummary;
+	/**
+	 * 1株当たり配当金
+	 */
+	dividend_per_share?: DividendPerShare_edjp_FinancialReportSummary;
+	/**
+	 * 純資産
+	 */
+	net_assets?: NetAssets_edjp_FinancialReportSummary;
+	/**
+	 * 1株当たり純資産
+	 */
+	net_assets_per_share?: NetAssetsPerShare_edjp_FinancialReportSummary;
+	/**
+	 * 1株当たり当期純利益
+	 */
+	net_income_per_share?: NetIncomePerShare_edjp_FinancialReportSummary;
+	/**
+	 * 売上高
+	 */
+	net_sales?: NetSales_edjp_FinancialReportSummary;
+	/**
+	 * 期末発行済株式数（自己株式を含む）
+	 */
+	number_of_issued_and_outstanding_shares_at_the_end_of_fiscal_year_including_treasury_stock?: NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary;
+	/**
+	 * 期末自己株式数
+	 */
+	number_of_treasury_stock_at_the_end_of_fiscal_year?: NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary;
+	/**
+	 * 営業利益
+	 */
+	operating_income?: OperatingIncome_edjp_FinancialReportSummary;
+	/**
+	 * 経常利益
+	 */
+	ordinary_income?: OrdinaryIncome_edjp_FinancialReportSummary;
+	/**
+	 * 自己資本
+	 */
+	owners_equity?: OwnersEquity_edjp_FinancialReportSummary;
+	/**
+	 * 親会社株主に帰属する当期純利益
+	 */
+	profit_attributable_to_owners_of_parent?: ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary;
+	/**
+	 * 四半期
+	 */
+	quarterly_period?: QuarterlyPeriod_edjp_FinancialReportSummary;
+	/**
+	 * 総資産
+	 */
+	total_assets?: TotalAssets_edjp_FinancialReportSummary;
 };
 
 
 
-/**
- * 事業会社種別を公開するためのクラス
- */
-export type business_category = {
+export type edjp_FinancialReportSummary_FY = {
 	/**
-	 * 順序
+	 * 期中平均株式数
 	 */
-	order?: number | null;
+	average_number_of_shares?: AverageNumberOfShares_edjp_FinancialReportSummary_FY;
 	/**
-	 * ラベル
+	 * 自己資本比率
 	 */
-	Label?: string | null;
+	capital_adequacy_ratio?: CapitalAdequacyRatio_edjp_FinancialReportSummary_FY;
 	/**
-	 * 一般事業会社の可否
+	 * 現金及び現金同等物期末残高
 	 */
-	GeneralBusiness?: stock | null;
+	cash_and_equivalents_end_of_period?: CashAndEquivalentsEndOfPeriod_edjp_FinancialReportSummary_FY;
 	/**
-	 * 特定事業会社の可否
+	 * 財務活動によるキャッシュ・フロー
 	 */
-	SpecificBusiness?: stock | null;
+	cash_flows_from_financing_activities?: CashFlowsFromFinancingActivities_edjp_FinancialReportSummary_FY;
+	/**
+	 * 投資活動によるキャッシュ・フロー
+	 */
+	cash_flows_from_investing_activities?: CashFlowsFromInvestingActivities_edjp_FinancialReportSummary_FY;
+	/**
+	 * 営業活動によるキャッシュ・フロー
+	 */
+	cash_flows_from_operating_activities?: CashFlowsFromOperatingActivities_edjp_FinancialReportSummary_FY;
+	/**
+	 * 包括利益増減率
+	 */
+	change_in_comprehensive_income?: ChangeInComprehensiveIncome_edjp_FinancialReportSummary_FY;
+	/**
+	 * 増減率、当期純利益
+	 */
+	change_in_net_income?: ChangeInNetIncome_edjp_FinancialReportSummary_FY;
+	/**
+	 * 増減率、売上高
+	 */
+	change_in_net_sales?: ChangeInNetSales_edjp_FinancialReportSummary_FY;
+	/**
+	 * 増減率、営業利益
+	 */
+	change_in_operating_income?: ChangeInOperatingIncome_edjp_FinancialReportSummary_FY;
+	/**
+	 * 増減率、経常利益
+	 */
+	change_in_ordinary_income?: ChangeInOrdinaryIncome_edjp_FinancialReportSummary_FY;
+	/**
+	 * 増減率、親会社株主に帰属する当期純利益
+	 */
+	change_in_profit_attributable_to_owners_of_parent?: ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_FY;
+	/**
+	 * 包括利益
+	 */
+	comprehensive_income?: ComprehensiveIncome_edjp_FinancialReportSummary_FY;
+	/**
+	 * 潜在株式調整後1株当たり当期純利益
+	 */
+	diluted_net_income_per_share?: DilutedNetIncomePerShare_edjp_FinancialReportSummary_FY;
+	/**
+	 * 1株当たり配当金
+	 */
+	dividend_per_share?: DividendPerShare_edjp_FinancialReportSummary_FY;
+	/**
+	 * 持分法投資損益
+	 */
+	investment_profit_loss_on_equity_method?: InvestmentProfitLossOnEquityMethod_edjp_FinancialReportSummary_FY;
+	/**
+	 * 純資産
+	 */
+	net_assets?: NetAssets_edjp_FinancialReportSummary_FY;
+	/**
+	 * 1株当たり純資産
+	 */
+	net_assets_per_share?: NetAssetsPerShare_edjp_FinancialReportSummary_FY;
+	/**
+	 * 当期純利益
+	 */
+	net_income?: NetIncome_edjp_FinancialReportSummary_FY;
+	/**
+	 * 1株当たり当期純利益
+	 */
+	net_income_per_share?: NetIncomePerShare_edjp_FinancialReportSummary_FY;
+	/**
+	 * 自己資本当期純利益率
+	 */
+	net_income_to_shareholders_equity_ratio?: NetIncomeToShareholdersEquityRatio_edjp_FinancialReportSummary_FY;
+	/**
+	 * 売上高
+	 */
+	net_sales?: NetSales_edjp_FinancialReportSummary_FY;
+	/**
+	 * 期末発行済株式数（自己株式を含む）
+	 */
+	number_of_issued_and_outstanding_shares_at_the_end_of_fiscal_year_including_treasury_stock?: NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_FY;
+	/**
+	 * 除外
+	 */
+	number_of_subsidiaries_excluded_from_consolidation?: NumberOfSubsidiariesExcludedFromConsolidation_edjp_FinancialReportSummary_FY;
+	/**
+	 * 新規
+	 */
+	number_of_subsidiaries_newly_consolidated?: NumberOfSubsidiariesNewlyConsolidated_edjp_FinancialReportSummary_FY;
+	/**
+	 * 期末自己株式数
+	 */
+	number_of_treasury_stock_at_the_end_of_fiscal_year?: NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_FY;
+	/**
+	 * 営業利益
+	 */
+	operating_income?: OperatingIncome_edjp_FinancialReportSummary_FY;
+	/**
+	 * 売上高営業利益率
+	 */
+	operating_income_to_net_sales_ratio?: OperatingIncomeToNetSalesRatio_edjp_FinancialReportSummary_FY;
+	/**
+	 * 経常利益
+	 */
+	ordinary_income?: OrdinaryIncome_edjp_FinancialReportSummary_FY;
+	/**
+	 * 総資産経常利益率
+	 */
+	ordinary_income_to_total_assets_ratio?: OrdinaryIncomeToTotalAssetsRatio_edjp_FinancialReportSummary_FY;
+	/**
+	 * 自己資本
+	 */
+	owners_equity?: OwnersEquity_edjp_FinancialReportSummary_FY;
+	/**
+	 * 配当性向
+	 */
+	payout_ratio?: PayoutRatio_edjp_FinancialReportSummary_FY;
+	/**
+	 * 親会社株主に帰属する当期純利益
+	 */
+	profit_attributable_to_owners_of_parent?: ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_FY;
+	/**
+	 * 純資産配当率
+	 */
+	ratio_of_total_amount_of_dividends_to_net_assets?: RatioOfTotalAmountOfDividendsToNetAssets_edjp_FinancialReportSummary_FY;
+	/**
+	 * 総資産
+	 */
+	total_assets?: TotalAssets_edjp_FinancialReportSummary_FY;
+	/**
+	 * 配当金総額（合計）
+	 */
+	total_dividend_paid_annual?: TotalDividendPaidAnnual_edjp_FinancialReportSummary_FY;
 };
 
 
 
-export type inquiries_abstract = {
+export type edjp_FinancialReportSummary_HY_specific_business = {
 	/**
-	 * 順序
+	 * 期中平均株式数
 	 */
-	order?: number | null;
+	average_number_of_shares?: AverageNumberOfShares_edjp_FinancialReportSummary_HY_specific_business;
 	/**
-	 * ラベル
+	 * 自己資本比率
 	 */
-	Label?: string | null;
+	capital_adequacy_ratio?: CapitalAdequacyRatio_edjp_FinancialReportSummary_HY_specific_business;
 	/**
-	 * 問合せ先責任者氏名
+	 * 包括利益増減率
 	 */
-	NameInquiries?: stock | null;
+	change_in_comprehensive_income?: ChangeInComprehensiveIncome_edjp_FinancialReportSummary_HY_specific_business;
 	/**
-	 * 問合せ先責任者役職名
+	 * 増減率、当期純利益
 	 */
-	TitleInquiries?: stock | null;
+	change_in_net_income?: ChangeInNetIncome_edjp_FinancialReportSummary_HY_specific_business;
+	/**
+	 * 増減率、経常利益
+	 */
+	change_in_ordinary_income?: ChangeInOrdinaryIncome_edjp_FinancialReportSummary_HY_specific_business;
+	/**
+	 * 増減率、経常収益、銀行
+	 */
+	change_in_ordinary_revenues_bk?: ChangeInOrdinaryRevenuesBK_edjp_FinancialReportSummary_HY_specific_business;
+	/**
+	 * 増減率、親会社株主に帰属する当期純利益
+	 */
+	change_in_profit_attributable_to_owners_of_parent?: ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_HY_specific_business;
+	/**
+	 * 包括利益
+	 */
+	comprehensive_income?: ComprehensiveIncome_edjp_FinancialReportSummary_HY_specific_business;
+	/**
+	 * 潜在株式調整後1株当たり当期純利益
+	 */
+	diluted_net_income_per_share?: DilutedNetIncomePerShare_edjp_FinancialReportSummary_HY_specific_business;
+	/**
+	 * 1株当たり配当金
+	 */
+	dividend_per_share?: DividendPerShare_edjp_FinancialReportSummary_HY_specific_business;
+	/**
+	 * 純資産
+	 */
+	net_assets?: NetAssets_edjp_FinancialReportSummary_HY_specific_business;
+	/**
+	 * 1株当たり純資産
+	 */
+	net_assets_per_share?: NetAssetsPerShare_edjp_FinancialReportSummary_HY_specific_business;
+	/**
+	 * 当期純利益
+	 */
+	net_income?: NetIncome_edjp_FinancialReportSummary_HY_specific_business;
+	/**
+	 * 1株当たり当期純利益
+	 */
+	net_income_per_share?: NetIncomePerShare_edjp_FinancialReportSummary_HY_specific_business;
+	/**
+	 * 期末発行済株式数（自己株式を含む）
+	 */
+	number_of_issued_and_outstanding_shares_at_the_end_of_fiscal_year_including_treasury_stock?: NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_HY_specific_business;
+	/**
+	 * 期末自己株式数
+	 */
+	number_of_treasury_stock_at_the_end_of_fiscal_year?: NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_HY_specific_business;
+	/**
+	 * 経常利益
+	 */
+	ordinary_income?: OrdinaryIncome_edjp_FinancialReportSummary_HY_specific_business;
+	/**
+	 * 経常収益、銀行
+	 */
+	ordinary_revenues_bk?: OrdinaryRevenuesBK_edjp_FinancialReportSummary_HY_specific_business;
+	/**
+	 * 自己資本
+	 */
+	owners_equity?: OwnersEquity_edjp_FinancialReportSummary_HY_specific_business;
+	/**
+	 * 親会社株主に帰属する当期純利益
+	 */
+	profit_attributable_to_owners_of_parent?: ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_HY_specific_business;
+	/**
+	 * 四半期
+	 */
+	quarterly_period?: QuarterlyPeriod_edjp_FinancialReportSummary_HY_specific_business;
+	/**
+	 * 総資産
+	 */
+	total_assets?: TotalAssets_edjp_FinancialReportSummary_HY_specific_business;
 };
 
 
 
-export type other_company_information_abstract = {
+export type edjp_FinancialReportSummary_Q1 = {
 	/**
-	 * 順序
+	 * 期中平均株式数
 	 */
-	order?: number | null;
+	average_number_of_shares?: AverageNumberOfShares_edjp_FinancialReportSummary_Q1;
 	/**
-	 * ラベル
+	 * 自己資本比率
 	 */
-	Label?: string | null;
+	capital_adequacy_ratio?: CapitalAdequacyRatio_edjp_FinancialReportSummary_Q1;
 	/**
-	 * 有価証券報告書提出予定日
+	 * 包括利益増減率
 	 */
-	AnnualSecuritiesReportFilingDateAsPlanned?: stock | null;
+	change_in_comprehensive_income?: ChangeInComprehensiveIncome_edjp_FinancialReportSummary_Q1;
 	/**
-	 * 定時株主総会の開催予定日
+	 * 増減率、当期純利益
 	 */
-	DateOfGeneralShareholdersMeetingAsPlanned?: stock | null;
+	change_in_net_income?: ChangeInNetIncome_edjp_FinancialReportSummary_Q1;
 	/**
-	 * 配当支払予定日
+	 * 増減率、売上高
 	 */
-	DividendPayableDateAsPlanned?: stock | null;
+	change_in_net_sales?: ChangeInNetSales_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 増減率、営業利益
+	 */
+	change_in_operating_income?: ChangeInOperatingIncome_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 増減率、経常利益
+	 */
+	change_in_ordinary_income?: ChangeInOrdinaryIncome_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 増減率、親会社株主に帰属する当期純利益
+	 */
+	change_in_profit_attributable_to_owners_of_parent?: ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 包括利益
+	 */
+	comprehensive_income?: ComprehensiveIncome_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 潜在株式調整後1株当たり当期純利益
+	 */
+	diluted_net_income_per_share?: DilutedNetIncomePerShare_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 1株当たり配当金
+	 */
+	dividend_per_share?: DividendPerShare_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 純資産
+	 */
+	net_assets?: NetAssets_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 1株当たり純資産
+	 */
+	net_assets_per_share?: NetAssetsPerShare_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 当期純利益
+	 */
+	net_income?: NetIncome_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 1株当たり当期純利益
+	 */
+	net_income_per_share?: NetIncomePerShare_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 売上高
+	 */
+	net_sales?: NetSales_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 期末発行済株式数（自己株式を含む）
+	 */
+	number_of_issued_and_outstanding_shares_at_the_end_of_fiscal_year_including_treasury_stock?: NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 除外
+	 */
+	number_of_subsidiaries_excluded_from_consolidation?: NumberOfSubsidiariesExcludedFromConsolidation_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 新規
+	 */
+	number_of_subsidiaries_newly_consolidated?: NumberOfSubsidiariesNewlyConsolidated_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 期末自己株式数
+	 */
+	number_of_treasury_stock_at_the_end_of_fiscal_year?: NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 営業利益
+	 */
+	operating_income?: OperatingIncome_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 経常利益
+	 */
+	ordinary_income?: OrdinaryIncome_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 自己資本
+	 */
+	owners_equity?: OwnersEquity_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 親会社株主に帰属する当期純利益
+	 */
+	profit_attributable_to_owners_of_parent?: ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 四半期
+	 */
+	quarterly_period?: QuarterlyPeriod_edjp_FinancialReportSummary_Q1;
+	/**
+	 * 総資産
+	 */
+	total_assets?: TotalAssets_edjp_FinancialReportSummary_Q1;
 };
 
 
 
-export type representative_abstract = {
+export type edjp_FinancialReportSummary_Q2 = {
 	/**
-	 * 順序
+	 * 期中平均株式数
 	 */
-	order?: number | null;
+	average_number_of_shares?: AverageNumberOfShares_edjp_FinancialReportSummary_Q2;
 	/**
-	 * ラベル
+	 * 自己資本比率
 	 */
-	Label?: string | null;
+	capital_adequacy_ratio?: CapitalAdequacyRatio_edjp_FinancialReportSummary_Q2;
 	/**
-	 * 代表者氏名
+	 * 包括利益増減率
 	 */
-	NameRepresentative?: stock | null;
+	change_in_comprehensive_income?: ChangeInComprehensiveIncome_edjp_FinancialReportSummary_Q2;
 	/**
-	 * 代表者役職名
+	 * 増減率、当期純利益
 	 */
-	TitleRepresentative?: stock | null;
+	change_in_net_income?: ChangeInNetIncome_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 増減率、純営業収益、証券
+	 */
+	change_in_net_operating_revenues_se?: ChangeInNetOperatingRevenuesSE_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 増減率、売上高
+	 */
+	change_in_net_sales?: ChangeInNetSales_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 増減率、営業利益
+	 */
+	change_in_operating_income?: ChangeInOperatingIncome_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 増減率、営業収益
+	 */
+	change_in_operating_revenues?: ChangeInOperatingRevenues_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 増減率、営業収益、証券
+	 */
+	change_in_operating_revenues_se?: ChangeInOperatingRevenuesSE_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 増減率、経常利益
+	 */
+	change_in_ordinary_income?: ChangeInOrdinaryIncome_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 増減率、親会社株主に帰属する当期純利益
+	 */
+	change_in_profit_attributable_to_owners_of_parent?: ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 記念配当
+	 */
+	commemorative_dividend?: CommemorativeDividend_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 包括利益
+	 */
+	comprehensive_income?: ComprehensiveIncome_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 潜在株式調整後1株当たり当期純利益
+	 */
+	diluted_net_income_per_share?: DilutedNetIncomePerShare_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 1株当たり配当金
+	 */
+	dividend_per_share?: DividendPerShare_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 特別配当
+	 */
+	extra_dividend?: ExtraDividend_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 純資産
+	 */
+	net_assets?: NetAssets_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 1株当たり純資産
+	 */
+	net_assets_per_share?: NetAssetsPerShare_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 当期純利益
+	 */
+	net_income?: NetIncome_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 1株当たり当期純利益
+	 */
+	net_income_per_share?: NetIncomePerShare_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 純営業収益、証券
+	 */
+	net_operating_revenues_se?: NetOperatingRevenuesSE_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 売上高
+	 */
+	net_sales?: NetSales_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 期末発行済株式数（自己株式を含む）
+	 */
+	number_of_issued_and_outstanding_shares_at_the_end_of_fiscal_year_including_treasury_stock?: NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 除外
+	 */
+	number_of_subsidiaries_excluded_from_consolidation?: NumberOfSubsidiariesExcludedFromConsolidation_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 新規
+	 */
+	number_of_subsidiaries_newly_consolidated?: NumberOfSubsidiariesNewlyConsolidated_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 期末自己株式数
+	 */
+	number_of_treasury_stock_at_the_end_of_fiscal_year?: NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 営業利益
+	 */
+	operating_income?: OperatingIncome_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 営業収益
+	 */
+	operating_revenues?: OperatingRevenues_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 営業収益、証券
+	 */
+	operating_revenues_se?: OperatingRevenuesSE_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 経常利益
+	 */
+	ordinary_income?: OrdinaryIncome_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 自己資本
+	 */
+	owners_equity?: OwnersEquity_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 親会社株主に帰属する当期純利益
+	 */
+	profit_attributable_to_owners_of_parent?: ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 四半期
+	 */
+	quarterly_period?: QuarterlyPeriod_edjp_FinancialReportSummary_Q2;
+	/**
+	 * 総資産
+	 */
+	total_assets?: TotalAssets_edjp_FinancialReportSummary_Q2;
 };
 
 
 
-export type stock = {
+export type edjp_FinancialReportSummary_Q3 = {
 	/**
-	 * 有効なデータかどうか
+	 * 期中平均株式数
 	 */
-	is_valid?: boolean | null;
+	average_number_of_shares?: AverageNumberOfShares_edjp_FinancialReportSummary_Q3;
 	/**
-	 * ラベル
+	 * 自己資本比率
 	 */
-	label?: string | null;
+	capital_adequacy_ratio?: CapitalAdequacyRatio_edjp_FinancialReportSummary_Q3;
 	/**
-	 * 値
+	 * 包括利益増減率
 	 */
-	value?: string | null;
+	change_in_comprehensive_income?: ChangeInComprehensiveIncome_edjp_FinancialReportSummary_Q3;
 	/**
-	 * 順序
+	 * 増減率、売上高
 	 */
-	order?: number | null;
-};
-
-
-
-export type stockNumeric = {
+	change_in_net_sales?: ChangeInNetSales_edjp_FinancialReportSummary_Q3;
 	/**
-	 * 順序
+	 * 増減率、営業利益
 	 */
-	order?: number | null;
+	change_in_operating_income?: ChangeInOperatingIncome_edjp_FinancialReportSummary_Q3;
 	/**
-	 * 有効なデータかどうか
+	 * 増減率、経常利益
 	 */
-	is_valid?: boolean | null;
+	change_in_ordinary_income?: ChangeInOrdinaryIncome_edjp_FinancialReportSummary_Q3;
 	/**
-	 * ラベル
+	 * 増減率、親会社株主に帰属する当期純利益
 	 */
-	label?: string | null;
+	change_in_profit_attributable_to_owners_of_parent?: ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q3;
 	/**
-	 * 数値データ
+	 * 包括利益
 	 */
-	numeric?: number | null;
+	comprehensive_income?: ComprehensiveIncome_edjp_FinancialReportSummary_Q3;
 	/**
-	 * 値
+	 * 潜在株式調整後1株当たり当期純利益
 	 */
-	value?: string | null;
+	diluted_net_income_per_share?: DilutedNetIncomePerShare_edjp_FinancialReportSummary_Q3;
 	/**
-	 * スケール
+	 * 1株当たり配当金
 	 */
-	scale?: string | null;
+	dividend_per_share?: DividendPerShare_edjp_FinancialReportSummary_Q3;
+	/**
+	 * 純資産
+	 */
+	net_assets?: NetAssets_edjp_FinancialReportSummary_Q3;
+	/**
+	 * 1株当たり純資産
+	 */
+	net_assets_per_share?: NetAssetsPerShare_edjp_FinancialReportSummary_Q3;
+	/**
+	 * 1株当たり当期純利益
+	 */
+	net_income_per_share?: NetIncomePerShare_edjp_FinancialReportSummary_Q3;
+	/**
+	 * 売上高
+	 */
+	net_sales?: NetSales_edjp_FinancialReportSummary_Q3;
+	/**
+	 * 期末発行済株式数（自己株式を含む）
+	 */
+	number_of_issued_and_outstanding_shares_at_the_end_of_fiscal_year_including_treasury_stock?: NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_Q3;
+	/**
+	 * 除外
+	 */
+	number_of_subsidiaries_excluded_from_consolidation?: NumberOfSubsidiariesExcludedFromConsolidation_edjp_FinancialReportSummary_Q3;
+	/**
+	 * 新規
+	 */
+	number_of_subsidiaries_newly_consolidated?: NumberOfSubsidiariesNewlyConsolidated_edjp_FinancialReportSummary_Q3;
+	/**
+	 * 期末自己株式数
+	 */
+	number_of_treasury_stock_at_the_end_of_fiscal_year?: NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_Q3;
+	/**
+	 * 営業利益
+	 */
+	operating_income?: OperatingIncome_edjp_FinancialReportSummary_Q3;
+	/**
+	 * 経常利益
+	 */
+	ordinary_income?: OrdinaryIncome_edjp_FinancialReportSummary_Q3;
+	/**
+	 * 自己資本
+	 */
+	owners_equity?: OwnersEquity_edjp_FinancialReportSummary_Q3;
+	/**
+	 * 親会社株主に帰属する当期純利益
+	 */
+	profit_attributable_to_owners_of_parent?: ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q3;
+	/**
+	 * 四半期
+	 */
+	quarterly_period?: QuarterlyPeriod_edjp_FinancialReportSummary_Q3;
+	/**
+	 * 総資産
+	 */
+	total_assets?: TotalAssets_edjp_FinancialReportSummary_Q3;
 };
 

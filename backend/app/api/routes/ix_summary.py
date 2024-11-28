@@ -1,13 +1,11 @@
 import json
 import os
-from collections import defaultdict
-from pprint import pprint
 from typing import Dict, List
 
 import app.schema as sc
 import humps
 from app.api.deps import SessionDep
-from app.models import IxHeadTitle, IxLabelValue, IxNonFraction
+from app.models import IxHeadTitle, IxNonFraction
 from fastapi import APIRouter, Query
 from sqlmodel import or_, select, tuple_
 
@@ -79,93 +77,28 @@ def get_summary_key(
     return {"head_item_key": head_item.item_key, "key": key}
 
 
-@router.get("/context_label/", response_model=str)
-def get_summary_context_label(
-    *,
-    session: SessionDep,
-    context: str = Query(...),
-) -> str:
-
-    context_list = context.split("_")
-
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    json_path = os.path.join(base_dir, "../../json/context_label.json")
-
-    with open(json_path, "r") as f:
-        data = json.load(f)
-
-    count = 0
-    context_label = ""
-    label_role = "http://www.xbrl.org/2003/role/label"
-    for context_item in context_list:
-        if count == 0:
-            context_label += data[context_item]
-        elif count > 0:
-            statement = select(IxLabelValue.label).where(
-                IxLabelValue.xlink_label == f"label_{context_item}",
-                IxLabelValue.xlink_role == label_role,
-            )
-            result = session.exec(statement)
-            label = result.first()
-            if label:
-                context_label += f"_{label}"
-        count += 1
-
-    return context_label
-
-
-@router.get("/context_labels/")
-def get_summary_context_labels(
-    *,
-    session: SessionDep,
-    contexts: List[str] = Query(...),
-):
-    """Get context labels"""
-
-    # 空のcontext_listを作成
-    context_list = []
-
-    # contextを分割してリストに追加
-    for context in contexts:
-        if context:
-            context_list = context_list + context.split("_")
-    # 重複を削除
-    context_list = list(set(context_list))
-    # label_{context}の形式に変換
-    context_list = [f"label_{context}" for context in context_list]
-
-    # バッチクエリを実行
-    statement = select(IxLabelValue).where(IxLabelValue.xlink_label.in_(context_list))
-    result = session.exec(statement)
-    labels = result.all()
-
-    # 辞書に変換
-    label_dict = {
-        label.xlink_label.replace("label_", ""): label.label for label in labels
-    }
-
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    json_path = os.path.join(base_dir, "../../json/context_label.json")
-
-    with open(json_path, "r") as f:
-        data = json.load(f)
-
-    # dataを辞書に変換
-    data_dict = {f"{key}": value for key, value in data.items()}
-
-    # data_dictとlabel_dictを結合
-    label_dict = {**data_dict, **label_dict}
-
-    return label_dict
-
-
-@router.get("/items/")
+@router.get(
+    "/items/",
+    response_model=sc.ix_summary.edjp_FinancialReportSummary_HY_specific_business
+    | sc.ix_summary.edjp_FinancialReportSummary_Q1
+    | sc.ix_summary.edjp_FinancialReportSummary_Q2
+    | sc.ix_summary.edjp_FinancialReportSummary_Q3
+    | sc.ix_summary.edjp_FinancialReportSummary_FY
+    | sc.ix_summary.edjp_FinancialReportSummary,
+)
 def get_summary_items(
     *,
     session: SessionDep,
     code: str = Query(...),
     year: int = Query(...),
     period: int = Query(...),
+) -> (
+    sc.ix_summary.edjp_FinancialReportSummary_HY_specific_business
+    | sc.ix_summary.edjp_FinancialReportSummary_Q1
+    | sc.ix_summary.edjp_FinancialReportSummary_Q2
+    | sc.ix_summary.edjp_FinancialReportSummary_Q3
+    | sc.ix_summary.edjp_FinancialReportSummary_FY
+    | sc.ix_summary.edjp_FinancialReportSummary
 ):
     """
     Get summary of all items.

@@ -1,3 +1,87 @@
+export const $AverageNumberOfShares_edjp_FinancialReportSummary = {
+	description: `期中平均株式数 `,
+	properties: {
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $AverageNumberOfShares_edjp_FinancialReportSummary_FY = {
+	description: `期中平均株式数 `,
+	properties: {
+		current_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_実績`,
+},
+		prior_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $AverageNumberOfShares_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `期中平均株式数 `,
+	properties: {
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $AverageNumberOfShares_edjp_FinancialReportSummary_Q1 = {
+	description: `期中平均株式数 `,
+	properties: {
+		current_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_非連結又は個別_実績`,
+},
+		prior_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $AverageNumberOfShares_edjp_FinancialReportSummary_Q2 = {
+	description: `期中平均株式数 `,
+	properties: {
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $AverageNumberOfShares_edjp_FinancialReportSummary_Q3 = {
+	description: `期中平均株式数 `,
+	properties: {
+		current_accumulated_q3_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間_非連結又は個別_実績`,
+},
+		prior_accumulated_q3_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第３四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
 export const $Body_login_login_access_token = {
 	properties: {
 		grant_type: {
@@ -40,517 +124,2105 @@ export const $Body_login_login_access_token = {
 	},
 } as const;
 
-export const $BusinessResultsFinancialPositionsJp = {
-	description: `業績及び財政状態に関する注記を公開するためのクラス`,
+export const $CapitalAdequacyRatio_edjp_FinancialReportSummary = {
+	description: `自己資本比率 `,
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		current_accumulated_q2_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_連結_実績`,
 },
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-},
-		FinancialPositions: {
-	type: 'FinancialPositionsAbstractJp',
-	description: `財政状態の概要`,
-},
-		NoteToFinancialPositions: {
-	type: 'NoteToFinancialPositionsAbstractJp',
-	description: `連結財務諸表に関する注記`,
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
 },
 	},
 } as const;
 
-export const $DividendPerShareJp = {
-	description: `1株当たり配当に関する情報を公開するためのクラス`,
+export const $CapitalAdequacyRatio_edjp_FinancialReportSummary_FY = {
+	description: `自己資本比率 `,
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		current_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度時点_連結_実績`,
 },
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
+		current_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度時点_非連結又は個別_実績`,
 },
-		FirstQuarterPriorYearResults: {
-	type: 'any-of',
-	description: `昨季Q1期末1株当たり配当実績`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
 },
-		SecondQuarterPriorYearResults: {
-	type: 'any-of',
-	description: `昨季中間期末1株当たり配当実績`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		ThirdQuarterPriorYearResults: {
-	type: 'any-of',
-	description: `昨季Q3期末1株当たり配当実績`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		YearEndPriorYearResults: {
-	type: 'any-of',
-	description: `昨季期末1株当たり配当実績`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		AnnualPriorYearResults: {
-	type: 'any-of',
-	description: `昨季年間1株当たり配当実績`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		FirstQuarterCurrentYearResults: {
-	type: 'any-of',
-	description: `今期Q1期末1株当たり配当実績`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		SecondQuarterCurrentYearResults: {
-	type: 'any-of',
-	description: `今期中間期末1株当たり配当実績`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		ThirdQuarterCurrentYearResults: {
-	type: 'any-of',
-	description: `今期Q3期末1株当たり配当実績`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		YearEndCurrentYearResults: {
-	type: 'any-of',
-	description: `今期期末1株当たり配当実績`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		AnnualCurrentYearResults: {
-	type: 'any-of',
-	description: `今期年間1株当たり配当実績`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		FirstQuarterCurrentYearForecasts: {
-	type: 'any-of',
-	description: `今期Q1期末1株当たり配当予想`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		SecondQuarterCurrentYearForecasts: {
-	type: 'any-of',
-	description: `今期中間期末1株当たり配当予想`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		ThirdQuarterCurrentYearForecasts: {
-	type: 'any-of',
-	description: `今期Q3期末1株当たり配当予想`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		YearEndCurrentYearForecasts: {
-	type: 'any-of',
-	description: `今期期末1株当たり配当予想`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		AnnualCurrentYearForecasts: {
-	type: 'any-of',
-	description: `今期年間1株当たり配当予想`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		FirstQuarterNextYearForecasts: {
-	type: 'any-of',
-	description: `来期Q1期末1株当たり配当予想`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		SecondQuarterNextYearForecasts: {
-	type: 'any-of',
-	description: `来期中間期末1株当たり配当予想`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		ThirdQuarterNextYearForecasts: {
-	type: 'any-of',
-	description: `来期Q3期末1株当たり配当予想`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		YearEndNextYearForecasts: {
-	type: 'any-of',
-	description: `来期期末1株当たり配当予想`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		AnnualNextYearForecasts: {
-	type: 'any-of',
-	description: `来期年間1株当たり配当予想`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
 },
 	},
 } as const;
 
-export const $DividendsJp = {
-	description: `四半期配当に関する注記を公開するためのクラス`,
+export const $CapitalAdequacyRatio_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `自己資本比率 `,
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		current_accumulated_q2_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_連結_実績`,
 },
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
+		current_accumulated_q2_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_非連結又は個別_実績`,
 },
-		DividendPerShare: {
-	type: 'any-of',
-	description: `1株当たり配当`,
-	contains: [{
-	type: 'DividendPerShareJp',
-}, {
-	type: 'null',
-}],
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
 },
-		CorrectionOfDividendForecast: {
-	type: 'any-of',
-	description: `当四半期における配当予想の修正`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		DetailOfDividendPerShareFiscalYearEndAbstract: {
-	type: 'any-of',
-	description: `期末1株当たり配当の内訳`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		NoteToDividends: {
-	type: 'any-of',
-	description: `配当に関する注記`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		DividendPayoutRatioPriorYear: {
-	type: 'any-of',
-	description: `配当性向`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		DividendPayoutRatioCurrentYear: {
-	type: 'any-of',
-	description: `配当性向`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		DividendPayoutRatioNextYear: {
-	type: 'any-of',
-	description: `配当性向`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		RatioOfTotalAmountOfDividendsToNetAssets: {
-	type: 'any-of',
-	description: `配当総額純資産比率`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
 },
 	},
 } as const;
 
-export const $FinancialPositionsAbstractJp = {
-	description: `財政状態の概要を公開するためのクラス`,
+export const $CapitalAdequacyRatio_edjp_FinancialReportSummary_Q1 = {
+	description: `自己資本比率 `,
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		current_accumulated_q1_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間時点_連結_実績`,
 },
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
+		current_accumulated_q1_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間時点_非連結又は個別_実績`,
 },
-		CapitalAdequacyRatio: {
-	type: 'any-of',
-	description: `総資産`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
 },
-		NetAssets: {
-	type: 'any-of',
-	description: `純資産`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		TotalAssets: {
-	type: 'any-of',
-	description: `自己資本`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		PeriodCapitalAdequacyRatio: {
-	type: 'any-of',
-	description: `昨年度総資産`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		PeriodNetAssets: {
-	type: 'any-of',
-	description: `昨年度純資産`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		PeriodTotalAssets: {
-	type: 'any-of',
-	description: `昨年度自己資本`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
 },
 	},
 } as const;
 
-export const $ForecastsJp = {
-	description: `四半期予想に関する注記を公開するためのクラス`,
+export const $CapitalAdequacyRatio_edjp_FinancialReportSummary_Q2 = {
+	description: `自己資本比率 `,
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		current_accumulated_q2_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_連結_実績`,
 },
-		Label: {
+		current_accumulated_q2_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_非連結又は個別_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $CapitalAdequacyRatio_edjp_FinancialReportSummary_Q3 = {
+	description: `自己資本比率 `,
+	properties: {
+		current_accumulated_q3_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間時点_連結_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+	},
+} as const;
+
+export const $CashAndEquivalentsEndOfPeriod_edjp_FinancialReportSummary_FY = {
+	description: `現金及び現金同等物期末残高 `,
+	properties: {
+		current_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度時点_連結_実績`,
+},
+		current_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度時点_非連結又は個別_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $CashFlowsFromFinancingActivities_edjp_FinancialReportSummary_FY = {
+	description: `財務活動によるキャッシュ・フロー `,
+	properties: {
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
+},
+		current_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_実績`,
+},
+		prior_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_連結_実績`,
+},
+		prior_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $CashFlowsFromInvestingActivities_edjp_FinancialReportSummary_FY = {
+	description: `投資活動によるキャッシュ・フロー `,
+	properties: {
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
+},
+		current_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_実績`,
+},
+		prior_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_連結_実績`,
+},
+		prior_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $CashFlowsFromOperatingActivities_edjp_FinancialReportSummary_FY = {
+	description: `営業活動によるキャッシュ・フロー `,
+	properties: {
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
+},
+		current_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_実績`,
+},
+		prior_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_連結_実績`,
+},
+		prior_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInComprehensiveIncome_edjp_FinancialReportSummary = {
+	description: `包括利益増減率 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInComprehensiveIncome_edjp_FinancialReportSummary_FY = {
+	description: `包括利益増減率 `,
+	properties: {
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
+},
+		prior_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInComprehensiveIncome_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `包括利益増減率 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInComprehensiveIncome_edjp_FinancialReportSummary_Q1 = {
+	description: `包括利益増減率 `,
+	properties: {
+		current_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_連結_実績`,
+},
+		prior_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInComprehensiveIncome_edjp_FinancialReportSummary_Q2 = {
+	description: `包括利益増減率 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInComprehensiveIncome_edjp_FinancialReportSummary_Q3 = {
+	description: `包括利益増減率 `,
+	properties: {
+		current_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間_連結_実績`,
+},
+		prior_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第３四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInNetIncome_edjp_FinancialReportSummary_FY = {
+	description: `増減率、当期純利益 `,
+	properties: {
+		current_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_実績`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_予想`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_下限`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_上限`,
+},
+		next_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_予想`,
+},
+		next_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_下限`,
+},
+		next_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_上限`,
+},
+		prior_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInNetIncome_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `増減率、当期純利益 `,
+	properties: {
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInNetIncome_edjp_FinancialReportSummary_Q1 = {
+	description: `増減率、当期純利益 `,
+	properties: {
+		current_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_非連結又は個別_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_予想`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_下限`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_上限`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInNetIncome_edjp_FinancialReportSummary_Q2 = {
+	description: `増減率、当期純利益 `,
+	properties: {
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInNetOperatingRevenuesSE_edjp_FinancialReportSummary_Q2 = {
+	description: `増減率、純営業収益、証券 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInNetSales_edjp_FinancialReportSummary = {
+	description: `増減率、売上高 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInNetSales_edjp_FinancialReportSummary_FY = {
+	description: `増減率、売上高 `,
+	properties: {
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
+},
+		current_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_実績`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_予想`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_下限`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_上限`,
+},
+		next_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_予想`,
+},
+		next_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_下限`,
+},
+		next_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_上限`,
+},
+		next_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_予想`,
+},
+		next_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_下限`,
+},
+		next_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_上限`,
+},
+		prior_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_連結_実績`,
+},
+		prior_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInNetSales_edjp_FinancialReportSummary_Q1 = {
+	description: `増減率、売上高 `,
+	properties: {
+		current_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_連結_実績`,
+},
+		current_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_非連結又は個別_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_予想`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_下限`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_上限`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_連結_実績`,
+},
+		prior_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInNetSales_edjp_FinancialReportSummary_Q2 = {
+	description: `増減率、売上高 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInNetSales_edjp_FinancialReportSummary_Q3 = {
+	description: `増減率、売上高 `,
+	properties: {
+		current_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第３四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInOperatingIncome_edjp_FinancialReportSummary = {
+	description: `増減率、営業利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInOperatingIncome_edjp_FinancialReportSummary_FY = {
+	description: `増減率、営業利益 `,
+	properties: {
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
+},
+		current_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_実績`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_予想`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_下限`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_上限`,
+},
+		next_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_予想`,
+},
+		next_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_下限`,
+},
+		next_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_上限`,
+},
+		next_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_予想`,
+},
+		next_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_下限`,
+},
+		next_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_上限`,
+},
+		prior_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_連結_実績`,
+},
+		prior_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInOperatingIncome_edjp_FinancialReportSummary_Q1 = {
+	description: `増減率、営業利益 `,
+	properties: {
+		current_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_連結_実績`,
+},
+		current_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_非連結又は個別_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_予想`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_下限`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_上限`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_連結_実績`,
+},
+		prior_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInOperatingIncome_edjp_FinancialReportSummary_Q2 = {
+	description: `増減率、営業利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInOperatingIncome_edjp_FinancialReportSummary_Q3 = {
+	description: `増減率、営業利益 `,
+	properties: {
+		current_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第３四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInOperatingRevenuesSE_edjp_FinancialReportSummary_Q2 = {
+	description: `増減率、営業収益、証券 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInOperatingRevenues_edjp_FinancialReportSummary_Q2 = {
+	description: `増減率、営業収益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInOrdinaryIncome_edjp_FinancialReportSummary = {
+	description: `増減率、経常利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInOrdinaryIncome_edjp_FinancialReportSummary_FY = {
+	description: `増減率、経常利益 `,
+	properties: {
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
+},
+		current_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_実績`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_予想`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_下限`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_上限`,
+},
+		next_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_予想`,
+},
+		next_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_下限`,
+},
+		next_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_上限`,
+},
+		next_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_予想`,
+},
+		next_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_下限`,
+},
+		next_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_上限`,
+},
+		prior_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_連結_実績`,
+},
+		prior_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInOrdinaryIncome_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `増減率、経常利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInOrdinaryIncome_edjp_FinancialReportSummary_Q1 = {
+	description: `増減率、経常利益 `,
+	properties: {
+		current_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_連結_実績`,
+},
+		current_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_非連結又は個別_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_予想`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_下限`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_上限`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_連結_実績`,
+},
+		prior_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInOrdinaryIncome_edjp_FinancialReportSummary_Q2 = {
+	description: `増減率、経常利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInOrdinaryIncome_edjp_FinancialReportSummary_Q3 = {
+	description: `増減率、経常利益 `,
+	properties: {
+		current_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第３四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInOrdinaryRevenuesBK_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `増減率、経常収益、銀行 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary = {
+	description: `増減率、親会社株主に帰属する当期純利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_FY = {
+	description: `増減率、親会社株主に帰属する当期純利益 `,
+	properties: {
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
+},
+		next_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_予想`,
+},
+		next_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_下限`,
+},
+		next_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_上限`,
+},
+		prior_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `増減率、親会社株主に帰属する当期純利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q1 = {
+	description: `増減率、親会社株主に帰属する当期純利益 `,
+	properties: {
+		current_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q2 = {
+	description: `増減率、親会社株主に帰属する当期純利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q3 = {
+	description: `増減率、親会社株主に帰属する当期純利益 `,
+	properties: {
+		current_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第３四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $CommemorativeDividend_edjp_FinancialReportSummary_Q2 = {
+	description: `記念配当 `,
+	properties: {
+		current_accumulated_q2_duration_annual_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_年間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ComprehensiveIncome_edjp_FinancialReportSummary = {
+	description: `包括利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ComprehensiveIncome_edjp_FinancialReportSummary_FY = {
+	description: `包括利益 `,
+	properties: {
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
+},
+		prior_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ComprehensiveIncome_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `包括利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ComprehensiveIncome_edjp_FinancialReportSummary_Q1 = {
+	description: `包括利益 `,
+	properties: {
+		current_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_連結_実績`,
+},
+		prior_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ComprehensiveIncome_edjp_FinancialReportSummary_Q2 = {
+	description: `包括利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ComprehensiveIncome_edjp_FinancialReportSummary_Q3 = {
+	description: `包括利益 `,
+	properties: {
+		current_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間_連結_実績`,
+},
+		prior_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第３四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $DilutedNetIncomePerShare_edjp_FinancialReportSummary = {
+	description: `潜在株式調整後1株当たり当期純利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $DilutedNetIncomePerShare_edjp_FinancialReportSummary_FY = {
+	description: `潜在株式調整後1株当たり当期純利益 `,
+	properties: {
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
+},
+		current_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_実績`,
+},
+		prior_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_連結_実績`,
+},
+		prior_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $DilutedNetIncomePerShare_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `潜在株式調整後1株当たり当期純利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $DilutedNetIncomePerShare_edjp_FinancialReportSummary_Q1 = {
+	description: `潜在株式調整後1株当たり当期純利益 `,
+	properties: {
+		current_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_連結_実績`,
+},
+		current_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_非連結又は個別_実績`,
+},
+		prior_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_連結_実績`,
+},
+		prior_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $DilutedNetIncomePerShare_edjp_FinancialReportSummary_Q2 = {
+	description: `潜在株式調整後1株当たり当期純利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $DilutedNetIncomePerShare_edjp_FinancialReportSummary_Q3 = {
+	description: `潜在株式調整後1株当たり当期純利益 `,
+	properties: {
+		current_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間_連結_実績`,
+},
+		prior_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第３四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $DividendPerShare_edjp_FinancialReportSummary = {
+	description: `1株当たり配当金 `,
+	properties: {
+		current_year_duration_annual_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_非連結又は個別_予想`,
+},
+		current_year_duration_annual_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_非連結又は個別_下限`,
+},
+		current_year_duration_annual_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_非連結又は個別_上限`,
+},
+		current_year_duration_first_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_1Q_非連結又は個別_実績`,
+},
+		current_year_duration_second_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_2Q_非連結又は個別_実績`,
+},
+		current_year_duration_third_quarter_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_3Q_非連結又は個別_予想`,
+},
+		current_year_duration_third_quarter_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_3Q_非連結又は個別_下限`,
+},
+		current_year_duration_third_quarter_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_3Q_非連結又は個別_上限`,
+},
+		current_year_duration_year_end_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_期末_非連結又は個別_予想`,
+},
+		current_year_duration_year_end_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_期末_非連結又は個別_下限`,
+},
+		current_year_duration_year_end_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_期末_非連結又は個別_上限`,
+},
+		prior_year_duration_annual_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_年間_非連結又は個別_実績`,
+},
+		prior_year_duration_first_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_1Q_非連結又は個別_実績`,
+},
+		prior_year_duration_second_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_2Q_非連結又は個別_実績`,
+},
+		prior_year_duration_third_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_3Q_非連結又は個別_実績`,
+},
+		prior_year_duration_year_end_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_期末_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $DividendPerShare_edjp_FinancialReportSummary_FY = {
+	description: `1株当たり配当金 `,
+	properties: {
+		current_year_duration_annual_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_非連結又は個別_実績`,
+},
+		current_year_duration_first_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_1Q_非連結又は個別_実績`,
+},
+		current_year_duration_second_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_2Q_非連結又は個別_実績`,
+},
+		current_year_duration_third_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_3Q_非連結又は個別_実績`,
+},
+		current_year_duration_year_end_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_期末_非連結又は個別_実績`,
+},
+		next_year_duration_annual_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_年間_非連結又は個別_予想`,
+},
+		next_year_duration_annual_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_年間_非連結又は個別_下限`,
+},
+		next_year_duration_annual_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_年間_非連結又は個別_上限`,
+},
+		next_year_duration_first_quarter_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_1Q_非連結又は個別_予想`,
+},
+		next_year_duration_first_quarter_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_1Q_非連結又は個別_下限`,
+},
+		next_year_duration_first_quarter_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_1Q_非連結又は個別_上限`,
+},
+		next_year_duration_second_quarter_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_2Q_非連結又は個別_予想`,
+},
+		next_year_duration_second_quarter_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_2Q_非連結又は個別_下限`,
+},
+		next_year_duration_second_quarter_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_2Q_非連結又は個別_上限`,
+},
+		next_year_duration_third_quarter_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_3Q_非連結又は個別_予想`,
+},
+		next_year_duration_third_quarter_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_3Q_非連結又は個別_下限`,
+},
+		next_year_duration_third_quarter_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_3Q_非連結又は個別_上限`,
+},
+		next_year_duration_year_end_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_期末_非連結又は個別_予想`,
+},
+		next_year_duration_year_end_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_期末_非連結又は個別_下限`,
+},
+		next_year_duration_year_end_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_期末_非連結又は個別_上限`,
+},
+		prior_year_duration_annual_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_年間_非連結又は個別_実績`,
+},
+		prior_year_duration_first_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_1Q_非連結又は個別_実績`,
+},
+		prior_year_duration_second_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_2Q_非連結又は個別_実績`,
+},
+		prior_year_duration_third_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_3Q_非連結又は個別_実績`,
+},
+		prior_year_duration_year_end_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_期末_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $DividendPerShare_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `1株当たり配当金 `,
+	properties: {
+		current_year_duration_annual_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_非連結又は個別_予想`,
+},
+		current_year_duration_annual_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_非連結又は個別_下限`,
+},
+		current_year_duration_annual_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_非連結又は個別_上限`,
+},
+		current_year_duration_first_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_1Q_非連結又は個別_実績`,
+},
+		current_year_duration_second_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_2Q_非連結又は個別_実績`,
+},
+		current_year_duration_third_quarter_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_3Q_非連結又は個別_予想`,
+},
+		current_year_duration_third_quarter_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_3Q_非連結又は個別_下限`,
+},
+		current_year_duration_third_quarter_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_3Q_非連結又は個別_上限`,
+},
+		current_year_duration_year_end_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_期末_非連結又は個別_予想`,
+},
+		current_year_duration_year_end_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_期末_非連結又は個別_下限`,
+},
+		current_year_duration_year_end_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_期末_非連結又は個別_上限`,
+},
+		prior_year_duration_annual_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_年間_非連結又は個別_実績`,
+},
+		prior_year_duration_first_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_1Q_非連結又は個別_実績`,
+},
+		prior_year_duration_second_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_2Q_非連結又は個別_実績`,
+},
+		prior_year_duration_third_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_3Q_非連結又は個別_実績`,
+},
+		prior_year_duration_year_end_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_期末_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $DividendPerShare_edjp_FinancialReportSummary_Q1 = {
+	description: `1株当たり配当金 `,
+	properties: {
+		current_year_duration_annual_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_非連結又は個別_予想`,
+},
+		current_year_duration_annual_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_非連結又は個別_下限`,
+},
+		current_year_duration_annual_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_非連結又は個別_上限`,
+},
+		current_year_duration_first_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_1Q_非連結又は個別_実績`,
+},
+		current_year_duration_second_quarter_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_2Q_非連結又は個別_予想`,
+},
+		current_year_duration_second_quarter_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_2Q_非連結又は個別_下限`,
+},
+		current_year_duration_second_quarter_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_2Q_非連結又は個別_上限`,
+},
+		current_year_duration_third_quarter_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_3Q_非連結又は個別_予想`,
+},
+		current_year_duration_third_quarter_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_3Q_非連結又は個別_下限`,
+},
+		current_year_duration_third_quarter_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_3Q_非連結又は個別_上限`,
+},
+		current_year_duration_year_end_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_期末_非連結又は個別_予想`,
+},
+		current_year_duration_year_end_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_期末_非連結又は個別_下限`,
+},
+		current_year_duration_year_end_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_期末_非連結又は個別_上限`,
+},
+		prior_year_duration_annual_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_年間_非連結又は個別_実績`,
+},
+		prior_year_duration_first_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_1Q_非連結又は個別_実績`,
+},
+		prior_year_duration_second_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_2Q_非連結又は個別_実績`,
+},
+		prior_year_duration_third_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_3Q_非連結又は個別_実績`,
+},
+		prior_year_duration_year_end_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_期末_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $DividendPerShare_edjp_FinancialReportSummary_Q2 = {
+	description: `1株当たり配当金 `,
+	properties: {
+		current_year_duration_annual_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_非連結又は個別_予想`,
+},
+		current_year_duration_annual_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_非連結又は個別_下限`,
+},
+		current_year_duration_annual_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_非連結又は個別_上限`,
+},
+		current_year_duration_first_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_1Q_非連結又は個別_実績`,
+},
+		current_year_duration_second_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_2Q_非連結又は個別_実績`,
+},
+		current_year_duration_third_quarter_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_3Q_非連結又は個別_予想`,
+},
+		current_year_duration_third_quarter_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_3Q_非連結又は個別_下限`,
+},
+		current_year_duration_third_quarter_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_3Q_非連結又は個別_上限`,
+},
+		current_year_duration_year_end_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_期末_非連結又は個別_予想`,
+},
+		current_year_duration_year_end_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_期末_非連結又は個別_下限`,
+},
+		current_year_duration_year_end_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_期末_非連結又は個別_上限`,
+},
+		prior_year_duration_annual_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_年間_非連結又は個別_実績`,
+},
+		prior_year_duration_first_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_1Q_非連結又は個別_実績`,
+},
+		prior_year_duration_second_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_2Q_非連結又は個別_実績`,
+},
+		prior_year_duration_third_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_3Q_非連結又は個別_実績`,
+},
+		prior_year_duration_year_end_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_期末_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $DividendPerShare_edjp_FinancialReportSummary_Q3 = {
+	description: `1株当たり配当金 `,
+	properties: {
+		current_year_duration_annual_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_非連結又は個別_予想`,
+},
+		current_year_duration_annual_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_非連結又は個別_下限`,
+},
+		current_year_duration_annual_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_非連結又は個別_上限`,
+},
+		current_year_duration_first_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_1Q_非連結又は個別_実績`,
+},
+		current_year_duration_second_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_2Q_非連結又は個別_実績`,
+},
+		current_year_duration_third_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_3Q_非連結又は個別_実績`,
+},
+		current_year_duration_year_end_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_期末_非連結又は個別_予想`,
+},
+		current_year_duration_year_end_member_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_期末_非連結又は個別_下限`,
+},
+		current_year_duration_year_end_member_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_期末_非連結又は個別_上限`,
+},
+		prior_year_duration_annual_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_年間_非連結又は個別_実績`,
+},
+		prior_year_duration_first_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_1Q_非連結又は個別_実績`,
+},
+		prior_year_duration_second_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_2Q_非連結又は個別_実績`,
+},
+		prior_year_duration_third_quarter_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_3Q_非連結又は個別_実績`,
+},
+		prior_year_duration_year_end_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_期末_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ExtraDividend_edjp_FinancialReportSummary_Q2 = {
+	description: `特別配当 `,
+	properties: {
+		current_accumulated_q2_duration_annual_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_年間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $GroupingNonFraction = {
+	properties: {
+		report_type: {
 	type: 'any-of',
-	description: `ラベル`,
 	contains: [{
 	type: 'string',
 }, {
 	type: 'null',
 }],
+	isRequired: true,
 },
-		TitleForForecasts: {
+		specific_business: {
 	type: 'any-of',
-	description: `予想のタイトル`,
 	contains: [{
-	type: 'stockNumeric',
+	type: 'boolean',
 }, {
 	type: 'null',
 }],
+	isRequired: true,
 },
-		CorrectionOfFinancialForecastInThisQuarter: {
+		ixbrl_role: {
 	type: 'any-of',
-	description: `当四半期における連結業績予想の修正`,
 	contains: [{
-	type: 'stockNumeric',
+	type: 'string',
 }, {
 	type: 'null',
 }],
+	isRequired: true,
 },
-		NetSales: {
+		current_period: {
 	type: 'any-of',
-	description: `売上高`,
 	contains: [{
-	type: 'abstract',
+	type: 'string',
 }, {
 	type: 'null',
 }],
+	isRequired: true,
 },
-		OperatingIncome: {
+		name: {
+	type: 'string',
+	isRequired: true,
+},
+		context: {
+	type: 'string',
+	isRequired: true,
+},
+		label: {
 	type: 'any-of',
-	description: `営業利益`,
 	contains: [{
-	type: 'abstract',
+	type: 'string',
 }, {
 	type: 'null',
 }],
+	isRequired: true,
 },
-		OrdinaryIncome: {
+		context_label: {
 	type: 'any-of',
-	description: `経常利益`,
 	contains: [{
-	type: 'abstract',
+	type: 'string',
 }, {
 	type: 'null',
 }],
+	isRequired: true,
 },
-		ProfitAttributableToOwnersOfParent: {
-	type: 'any-of',
-	description: `親会社株主に帰属する当期純利益`,
-	contains: [{
-	type: 'abstract',
-}, {
-	type: 'null',
-}],
+	},
+} as const;
+
+export const $GroupingNonFractionList = {
+	properties: {
+		count: {
+	type: 'number',
+	isRequired: true,
 },
-		NetIncomePerShare: {
-	type: 'any-of',
-	description: `1株当たり当期純利益`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		NoteToForecasts: {
-	type: 'any-of',
-	description: `予想に関する注記`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		PreambleToForecasts: {
-	type: 'any-of',
-	description: `予想の前文`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+		item: {
+	type: 'array',
+	contains: {
+		type: 'GroupingNonFraction',
+	},
+	isRequired: true,
 },
 	},
 } as const;
@@ -566,264 +2238,24 @@ export const $HTTPValidationError = {
 	},
 } as const;
 
-export const $HeadItem = {
-	description: `iXBRLのソースID情報を表すクラス`,
+export const $InvestmentProfitLossOnEquityMethod_edjp_FinancialReportSummary_FY = {
+	description: `持分法投資損益 `,
 	properties: {
-		item_key: {
-	type: 'string',
-	isRequired: true,
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
 },
-		company_name: {
-	type: 'string',
-	isRequired: true,
+		current_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_実績`,
 },
-		securities_code: {
-	type: 'string',
-	isRequired: true,
+		prior_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_連結_実績`,
 },
-		document_name: {
-	type: 'string',
-	isRequired: true,
-},
-		reporting_date: {
-	type: 'string',
-	isRequired: true,
-	format: 'date',
-},
-		current_period: {
-	type: 'any-of',
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-	isRequired: true,
-},
-		report_type: {
-	type: 'any-of',
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-	isRequired: true,
-},
-		listed_market: {
-	type: 'any-of',
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-	isRequired: true,
-},
-		market_section: {
-	type: 'any-of',
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-	isRequired: true,
-},
-		url: {
-	type: 'any-of',
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-	isRequired: true,
-},
-		is_bs: {
-	type: 'any-of',
-	contains: [{
-	type: 'boolean',
-}, {
-	type: 'null',
-}],
-	isRequired: true,
-},
-		is_pl: {
-	type: 'any-of',
-	contains: [{
-	type: 'boolean',
-}, {
-	type: 'null',
-}],
-	isRequired: true,
-},
-		is_cf: {
-	type: 'any-of',
-	contains: [{
-	type: 'boolean',
-}, {
-	type: 'null',
-}],
-	isRequired: true,
-},
-		is_ci: {
-	type: 'any-of',
-	contains: [{
-	type: 'boolean',
-}, {
-	type: 'null',
-}],
-	isRequired: true,
-},
-		is_sce: {
-	type: 'any-of',
-	contains: [{
-	type: 'boolean',
-}, {
-	type: 'null',
-}],
-	isRequired: true,
-},
-		is_sfp: {
-	type: 'any-of',
-	contains: [{
-	type: 'boolean',
-}, {
-	type: 'null',
-}],
-	isRequired: true,
-},
-		fy_year_end: {
-	type: 'any-of',
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-	isRequired: true,
-},
-		tel: {
-	type: 'any-of',
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-	isRequired: true,
-},
-		is_div_rev: {
-	type: 'any-of',
-	contains: [{
-	type: 'boolean',
-}, {
-	type: 'null',
-}],
-	isRequired: true,
-},
-		div_inc_rt: {
-	type: 'any-of',
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-	isRequired: true,
-},
-		is_fcst_rev: {
-	type: 'any-of',
-	contains: [{
-	type: 'boolean',
-}, {
-	type: 'null',
-}],
-	isRequired: true,
-},
-		fcst_oi_gr_rt: {
-	type: 'any-of',
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-	isRequired: true,
-},
-		oi_prog_rt: {
-	type: 'any-of',
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
-	isRequired: true,
-},
-	},
-} as const;
-
-export const $HeadItems = {
-	description: `iXBRLのソースID情報のリストを表すクラス`,
-	properties: {
-		data: {
-	type: 'array',
-	contains: {
-		type: 'HeadItem',
-	},
-	isRequired: true,
-},
-		count: {
-	type: 'number',
-	isRequired: true,
-},
-	},
-} as const;
-
-export const $IncomeStatementsInformationAbstractJp = {
-	description: `損益計算書情報を公開するためのクラス`,
-	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
-},
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-},
-		NetSales: {
-	type: 'abstract',
-	description: `売上高`,
-},
-		PeriodNetSales: {
-	type: 'abstract',
-	description: `昨年度売上高`,
-},
-		OperatingIncome: {
-	type: 'abstract',
-	description: `営業利益`,
-},
-		PeriodOperatingIncome: {
-	type: 'abstract',
-	description: `昨年度営業利益`,
-},
-		OrdinaryIncome: {
-	type: 'abstract',
-	description: `経常利益`,
-},
-		PeriodOrdinaryIncome: {
-	type: 'abstract',
-	description: `昨年度経常利益`,
-},
-		Profit: {
-	type: 'abstract',
-	description: `親会社株主に帰属する当期純利益`,
-},
-		PeriodProfit: {
-	type: 'abstract',
-	description: `昨年度親会社株主に帰属する当期純利益`,
+		prior_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_非連結又は個別_実績`,
 },
 	},
 } as const;
@@ -1675,6 +3107,14 @@ export const $IxHeadTitleCreate = {
 	type: 'null',
 }],
 },
+		specific_business: {
+	type: 'any-of',
+	contains: [{
+	type: 'boolean',
+}, {
+	type: 'null',
+}],
+},
 	},
 } as const;
 
@@ -1892,6 +3332,15 @@ export const $IxHeadTitlePublic = {
 	type: 'any-of',
 	contains: [{
 	type: 'number',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		specific_business: {
+	type: 'any-of',
+	contains: [{
+	type: 'boolean',
 }, {
 	type: 'null',
 }],
@@ -2371,6 +3820,165 @@ export const $IxNonFractionCreateList = {
 	contains: {
 		type: 'IxNonFractionCreate_Input',
 	},
+	isRequired: true,
+},
+	},
+} as const;
+
+export const $IxNonFractionPublic = {
+	description: `iXBRLの非分数情報を表すクラス`,
+	properties: {
+		id: {
+	type: 'any-of',
+	contains: [{
+	type: 'number',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		insert_date: {
+	type: 'string',
+	isRequired: true,
+	format: 'date-time',
+},
+		update_date: {
+	type: 'string',
+	isRequired: true,
+	format: 'date-time',
+},
+		head_item_key: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		context: {
+	type: 'string',
+	isRequired: true,
+},
+		decimals: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		format: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		name: {
+	type: 'string',
+	isRequired: true,
+},
+		scale: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		sign: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		unit_ref: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		xsi_nil: {
+	type: 'any-of',
+	contains: [{
+	type: 'boolean',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		numeric: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		report_type: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		ixbrl_role: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		source_file_id: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		xbrl_type: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		display_numeric: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		display_scale: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
 	isRequired: true,
 },
 	},
@@ -3182,6 +4790,884 @@ export const $Message = {
 	},
 } as const;
 
+export const $NetAssetsPerShare_edjp_FinancialReportSummary = {
+	description: `1株当たり純資産 `,
+	properties: {
+		current_accumulated_q2_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_連結_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+	},
+} as const;
+
+export const $NetAssetsPerShare_edjp_FinancialReportSummary_FY = {
+	description: `1株当たり純資産 `,
+	properties: {
+		current_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度時点_連結_実績`,
+},
+		current_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度時点_非連結又は個別_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetAssetsPerShare_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `1株当たり純資産 `,
+	properties: {
+		current_accumulated_q2_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_連結_実績`,
+},
+		current_accumulated_q2_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_非連結又は個別_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetAssetsPerShare_edjp_FinancialReportSummary_Q1 = {
+	description: `1株当たり純資産 `,
+	properties: {
+		current_accumulated_q1_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間時点_連結_実績`,
+},
+		current_accumulated_q1_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間時点_非連結又は個別_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetAssetsPerShare_edjp_FinancialReportSummary_Q2 = {
+	description: `1株当たり純資産 `,
+	properties: {
+		current_accumulated_q2_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_連結_実績`,
+},
+		current_accumulated_q2_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_非連結又は個別_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetAssetsPerShare_edjp_FinancialReportSummary_Q3 = {
+	description: `1株当たり純資産 `,
+	properties: {
+		current_accumulated_q3_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間時点_連結_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+	},
+} as const;
+
+export const $NetAssets_edjp_FinancialReportSummary = {
+	description: `純資産 `,
+	properties: {
+		current_accumulated_q2_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_連結_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+	},
+} as const;
+
+export const $NetAssets_edjp_FinancialReportSummary_FY = {
+	description: `純資産 `,
+	properties: {
+		current_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度時点_連結_実績`,
+},
+		current_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度時点_非連結又は個別_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetAssets_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `純資産 `,
+	properties: {
+		current_accumulated_q2_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_連結_実績`,
+},
+		current_accumulated_q2_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_非連結又は個別_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetAssets_edjp_FinancialReportSummary_Q1 = {
+	description: `純資産 `,
+	properties: {
+		current_accumulated_q1_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間時点_連結_実績`,
+},
+		current_accumulated_q1_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間時点_非連結又は個別_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetAssets_edjp_FinancialReportSummary_Q2 = {
+	description: `純資産 `,
+	properties: {
+		current_accumulated_q2_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_連結_実績`,
+},
+		current_accumulated_q2_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_非連結又は個別_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetAssets_edjp_FinancialReportSummary_Q3 = {
+	description: `純資産 `,
+	properties: {
+		current_accumulated_q3_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間時点_連結_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+	},
+} as const;
+
+export const $NetIncomePerShare_edjp_FinancialReportSummary = {
+	description: `1株当たり当期純利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $NetIncomePerShare_edjp_FinancialReportSummary_FY = {
+	description: `1株当たり当期純利益 `,
+	properties: {
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
+},
+		current_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_実績`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_予想`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_下限`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_上限`,
+},
+		next_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_予想`,
+},
+		next_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_下限`,
+},
+		next_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_上限`,
+},
+		next_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_予想`,
+},
+		next_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_下限`,
+},
+		next_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_上限`,
+},
+		prior_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_連結_実績`,
+},
+		prior_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetIncomePerShare_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `1株当たり当期純利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetIncomePerShare_edjp_FinancialReportSummary_Q1 = {
+	description: `1株当たり当期純利益 `,
+	properties: {
+		current_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_連結_実績`,
+},
+		current_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_非連結又は個別_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_予想`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_下限`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_上限`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_連結_実績`,
+},
+		prior_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetIncomePerShare_edjp_FinancialReportSummary_Q2 = {
+	description: `1株当たり当期純利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetIncomePerShare_edjp_FinancialReportSummary_Q3 = {
+	description: `1株当たり当期純利益 `,
+	properties: {
+		current_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第３四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $NetIncomeToShareholdersEquityRatio_edjp_FinancialReportSummary_FY = {
+	description: `自己資本当期純利益率 `,
+	properties: {
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
+},
+		current_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_実績`,
+},
+		prior_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_連結_実績`,
+},
+		prior_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetIncome_edjp_FinancialReportSummary_FY = {
+	description: `当期純利益 `,
+	properties: {
+		current_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_実績`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_予想`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_下限`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_上限`,
+},
+		next_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_予想`,
+},
+		next_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_下限`,
+},
+		next_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_上限`,
+},
+		prior_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetIncome_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `当期純利益 `,
+	properties: {
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetIncome_edjp_FinancialReportSummary_Q1 = {
+	description: `当期純利益 `,
+	properties: {
+		current_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_非連結又は個別_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_予想`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_下限`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_上限`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetIncome_edjp_FinancialReportSummary_Q2 = {
+	description: `当期純利益 `,
+	properties: {
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetOperatingRevenuesSE_edjp_FinancialReportSummary_Q2 = {
+	description: `純営業収益、証券 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetSales_edjp_FinancialReportSummary = {
+	description: `売上高 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $NetSales_edjp_FinancialReportSummary_FY = {
+	description: `売上高 `,
+	properties: {
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
+},
+		current_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_実績`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_予想`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_下限`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_上限`,
+},
+		next_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_予想`,
+},
+		next_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_下限`,
+},
+		next_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_上限`,
+},
+		next_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_予想`,
+},
+		next_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_下限`,
+},
+		next_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_上限`,
+},
+		prior_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_連結_実績`,
+},
+		prior_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetSales_edjp_FinancialReportSummary_Q1 = {
+	description: `売上高 `,
+	properties: {
+		current_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_連結_実績`,
+},
+		current_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_非連結又は個別_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_予想`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_下限`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_上限`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_連結_実績`,
+},
+		prior_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetSales_edjp_FinancialReportSummary_Q2 = {
+	description: `売上高 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NetSales_edjp_FinancialReportSummary_Q3 = {
+	description: `売上高 `,
+	properties: {
+		current_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第３四半期間_連結_実績`,
+},
+	},
+} as const;
+
 export const $NewPassword = {
 	properties: {
 		token: {
@@ -3197,494 +5683,1140 @@ export const $NewPassword = {
 	},
 } as const;
 
-export const $NoteToFinancialPositionsAbstractJp = {
-	description: `連結財務諸表に関する注記を公開するためのクラス`,
+export const $NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary = {
+	description: `期末発行済株式数（自己株式を含む） `,
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		current_accumulated_q2_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_非連結又は個別_実績`,
 },
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-},
-		NoteToFinancialPositions: {
-	type: 'any-of',
-	description: `連結財務諸表に関する注記`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		OwnersEquity: {
-	type: 'any-of',
-	description: `自己資本`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
 },
 	},
 } as const;
 
-export const $NoteToFinancialResultsJp = {
-	description: `連結財務諸表に関する注記を公開するためのクラス`,
+export const $NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_FY = {
+	description: `期末発行済株式数（自己株式を含む） `,
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		current_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度時点_非連結又は個別_実績`,
 },
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-},
-		NoteToFinancialResults: {
-	type: 'any-of',
-	description: `連結財務諸表に関する注記`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
 },
 	},
 } as const;
 
-export const $NoteToIncomeStatementsInformationAbstractJp = {
-	description: `損益計算書情報に関する注記を公開するためのクラス`,
+export const $NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `期末発行済株式数（自己株式を含む） `,
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		current_accumulated_q2_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_非連結又は個別_実績`,
 },
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-},
-		ComprehensiveIncomeAbstract: {
-	type: 'abstract',
-	description: `包括利益`,
-},
-		PeriodComprehensiveIncomeAbstract: {
-	type: 'abstract',
-	description: `昨年度包括利益`,
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
 },
 	},
 } as const;
 
-export const $NoteToOperatingResultsAbstractJp = {
-	description: `業績情報に関する注記を公開するためのクラス`,
+export const $NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_Q1 = {
+	description: `期末発行済株式数（自己株式を含む） `,
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		current_accumulated_q1_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間時点_非連結又は個別_実績`,
 },
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-},
-		NoteToOperatingResults: {
-	type: 'any-of',
-	description: `業績情報に関する注記`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
 },
 	},
 } as const;
 
-export const $NotesApplyingSpecificAccountingQuarterlyFinancialStatementsJp = {
-	description: `四半期連結財務諸表に適用する特定会計基準に関する注記を公開するためのクラス`,
+export const $NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_Q2 = {
+	description: `期末発行済株式数（自己株式を含む） `,
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		current_accumulated_q2_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_非連結又は個別_実績`,
 },
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-},
-		ApplyingOfSpecificAccountingOfTheConsolidatedQuarterlyFinancialStatements: {
-	type: 'any-of',
-	description: `四半期連結財務諸表に適用する特定会計基準の適用状況`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		NoteToApplyingOfSpecificAccountingOfTheConsolidatedQuarterlyFinancialStatements: {
-	type: 'any-of',
-	description: `四半期連結財務諸表に適用する特定会計基準に関する注記`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
 },
 	},
 } as const;
 
-export const $NotesChangesAccountingPoliciesAccountingEstimatesRetrospectiveRestatementJp = {
+export const $NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_Q3 = {
+	description: `期末発行済株式数（自己株式を含む） `,
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		current_accumulated_q3_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間時点_非連結又は個別_実績`,
 },
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-},
-		ChangesBasedOnRevisionsOfAccountingStandard: {
-	type: 'any-of',
-	description: `会計基準の改正に基づく変更`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		ChangesInAccountingEstimates: {
-	type: 'any-of',
-	description: `会計上の見積りの変更`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		ChangesOtherThanOnesBasedOnRevisionsOfAccountingStandard: {
-	type: 'any-of',
-	description: `会計基準の改正以外の変更`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		RetrospectiveRestatement: {
-	type: 'any-of',
-	description: `遡及的な再表示`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		NoteToChangesInAccountingPoliciesAccountingEstimatesAndRetrospectiveRestatementQuarterly: {
-	type: 'any-of',
-	description: `四半期連結財務諸表における会計方針の変更、会計上の見積りの変更及び遡及的な再表示に関する注記`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
 },
 	},
 } as const;
 
-export const $NotesNumberIssuedOutstandingSharesCommonStockJp = {
-	description: `四半期連結財務諸表における発行済株式数（普通株式）に関する注記を公開するためのクラス`,
+export const $NumberOfSubsidiariesExcludedFromConsolidation_edjp_FinancialReportSummary_FY = {
+	description: `除外 `,
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
-},
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-},
-		NoteToNumberOfIssuedAndOutstandingSharesCommonStock: {
-	type: 'any-of',
-	description: `四半期連結財務諸表における発行済株式数（普通株式）に関する注記`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
-},
-		AverageNumberOfShares: {
-	type: 'any-of',
-	description: `平均発行株数`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock: {
-	type: 'any-of',
-	description: `期末発行済株式数（自己株式を含む）`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		NumberOfTreasuryStockAtTheEndOfFiscalYear: {
-	type: 'any-of',
-	description: `期末自己株式数`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
 },
 	},
 } as const;
 
-export const $OperatingResultJp = {
-	description: `業績情報を公開するためのクラス`,
+export const $NumberOfSubsidiariesExcludedFromConsolidation_edjp_FinancialReportSummary_Q1 = {
+	description: `除外 `,
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
-},
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-},
-		OperatingResultsAbstract: {
-	type: 'OperatingResultsAbstractJp',
-	description: `業績情報`,
-},
-		NoteToOperatingResultsAbstract: {
-	type: 'NoteToOperatingResultsAbstractJp',
-	description: `業績情報に関する注記`,
+		current_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_連結_実績`,
 },
 	},
 } as const;
 
-export const $OperatingResultsAbstractJp = {
-	description: `業績情報を公開するためのクラス`,
+export const $NumberOfSubsidiariesExcludedFromConsolidation_edjp_FinancialReportSummary_Q2 = {
+	description: `除外 `,
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
-},
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-},
-		IncomeStatementsInformationAbstract: {
-	type: 'IncomeStatementsInformationAbstractJp',
-	description: `連結損益計算書情報`,
-},
-		NoteToIncomeStatementsInformationAbstract: {
-	type: 'NoteToIncomeStatementsInformationAbstractJp',
-	description: `連結損益計算書情報に関する注記`,
-},
-		OtherOperatingResultsAbstract: {
-	type: 'OtherOperatingResultsAbstractJp',
-	description: `その他の連結経営成績の概要`,
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
 },
 	},
 } as const;
 
-export const $OtherOperatingResultsAbstractJp = {
-	description: `その他の連結経営成績の概要を公開するためのクラス`,
+export const $NumberOfSubsidiariesExcludedFromConsolidation_edjp_FinancialReportSummary_Q3 = {
+	description: `除外 `,
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		current_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間_連結_実績`,
 },
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
+	},
+} as const;
+
+export const $NumberOfSubsidiariesNewlyConsolidated_edjp_FinancialReportSummary_FY = {
+	description: `新規 `,
+	properties: {
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
 },
-		NetIncomePerShare: {
-	type: 'any-of',
-	description: `1株当たり当期純利益（基本）`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+	},
+} as const;
+
+export const $NumberOfSubsidiariesNewlyConsolidated_edjp_FinancialReportSummary_Q1 = {
+	description: `新規 `,
+	properties: {
+		current_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_連結_実績`,
 },
-		DilutedNetIncomePerShare: {
-	type: 'any-of',
-	description: `1株当たり当期純利益`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+	},
+} as const;
+
+export const $NumberOfSubsidiariesNewlyConsolidated_edjp_FinancialReportSummary_Q2 = {
+	description: `新規 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
 },
-		NetIncomeToShareholdersEquityRatio: {
-	type: 'any-of',
-	description: `自己資本当期純利益率`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+	},
+} as const;
+
+export const $NumberOfSubsidiariesNewlyConsolidated_edjp_FinancialReportSummary_Q3 = {
+	description: `新規 `,
+	properties: {
+		current_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間_連結_実績`,
 },
-		OrdinaryIncomeToTotalAssetsRatio: {
-	type: 'any-of',
-	description: `総資産経常利益率`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+	},
+} as const;
+
+export const $NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary = {
+	description: `期末自己株式数 `,
+	properties: {
+		current_accumulated_q2_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_非連結又は個別_実績`,
 },
-		OperatingIncomeToNetSalesRatio: {
-	type: 'any-of',
-	description: `売上高営業利益率`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
 },
-		PeriodNetIncomePerShare: {
-	type: 'any-of',
-	description: `昨年度1株当たり当期純利益（基本）`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+	},
+} as const;
+
+export const $NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_FY = {
+	description: `期末自己株式数 `,
+	properties: {
+		current_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度時点_非連結又は個別_実績`,
 },
-		PeriodDilutedNetIncomePerShare: {
-	type: 'any-of',
-	description: `昨年度1株当たり当期純利益`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
 },
-		PeriodNetIncomeToShareholdersEquityRatio: {
-	type: 'any-of',
-	description: `昨年度自己資本当期純利益率`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+	},
+} as const;
+
+export const $NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `期末自己株式数 `,
+	properties: {
+		current_accumulated_q2_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_非連結又は個別_実績`,
 },
-		PeriodOrdinaryIncomeToTotalAssetsRatio: {
-	type: 'any-of',
-	description: `昨年度総資産経常利益率`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
 },
-		PeriodOperatingIncomeToNetSalesRatio: {
-	type: 'any-of',
-	description: `昨年度売上高営業利益率`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+	},
+} as const;
+
+export const $NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_Q1 = {
+	description: `期末自己株式数 `,
+	properties: {
+		current_accumulated_q1_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間時点_非連結又は個別_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_Q2 = {
+	description: `期末自己株式数 `,
+	properties: {
+		current_accumulated_q2_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_非連結又は個別_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_Q3 = {
+	description: `期末自己株式数 `,
+	properties: {
+		current_accumulated_q3_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間時点_非連結又は個別_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $OperatingIncomeToNetSalesRatio_edjp_FinancialReportSummary_FY = {
+	description: `売上高営業利益率 `,
+	properties: {
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
+},
+		current_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_実績`,
+},
+		prior_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_連結_実績`,
+},
+		prior_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $OperatingIncome_edjp_FinancialReportSummary = {
+	description: `営業利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $OperatingIncome_edjp_FinancialReportSummary_FY = {
+	description: `営業利益 `,
+	properties: {
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
+},
+		current_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_実績`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_予想`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_下限`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_上限`,
+},
+		next_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_予想`,
+},
+		next_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_下限`,
+},
+		next_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_上限`,
+},
+		next_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_予想`,
+},
+		next_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_下限`,
+},
+		next_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_上限`,
+},
+		prior_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_連結_実績`,
+},
+		prior_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $OperatingIncome_edjp_FinancialReportSummary_Q1 = {
+	description: `営業利益 `,
+	properties: {
+		current_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_連結_実績`,
+},
+		current_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_非連結又は個別_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_予想`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_下限`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_上限`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_連結_実績`,
+},
+		prior_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $OperatingIncome_edjp_FinancialReportSummary_Q2 = {
+	description: `営業利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $OperatingIncome_edjp_FinancialReportSummary_Q3 = {
+	description: `営業利益 `,
+	properties: {
+		current_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第３四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $OperatingRevenuesSE_edjp_FinancialReportSummary_Q2 = {
+	description: `営業収益、証券 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $OperatingRevenues_edjp_FinancialReportSummary_Q2 = {
+	description: `営業収益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $OrdinaryIncomeToTotalAssetsRatio_edjp_FinancialReportSummary_FY = {
+	description: `総資産経常利益率 `,
+	properties: {
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
+},
+		current_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_実績`,
+},
+		prior_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_連結_実績`,
+},
+		prior_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $OrdinaryIncome_edjp_FinancialReportSummary = {
+	description: `経常利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $OrdinaryIncome_edjp_FinancialReportSummary_FY = {
+	description: `経常利益 `,
+	properties: {
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
+},
+		current_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_実績`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_予想`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_下限`,
+},
+		next_accumulated_q2_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度期初から第２四半期間_非連結又は個別_上限`,
+},
+		next_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_予想`,
+},
+		next_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_下限`,
+},
+		next_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_上限`,
+},
+		next_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_予想`,
+},
+		next_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_下限`,
+},
+		next_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_非連結又は個別_上限`,
+},
+		prior_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_連結_実績`,
+},
+		prior_year_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $OrdinaryIncome_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `経常利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $OrdinaryIncome_edjp_FinancialReportSummary_Q1 = {
+	description: `経常利益 `,
+	properties: {
+		current_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_連結_実績`,
+},
+		current_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_非連結又は個別_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_予想`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_下限`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_上限`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_連結_実績`,
+},
+		prior_accumulated_q1_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $OrdinaryIncome_edjp_FinancialReportSummary_Q2 = {
+	description: `経常利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		current_year_duration_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_予想`,
+},
+		current_year_duration_non_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_下限`,
+},
+		current_year_duration_non_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_非連結又は個別_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $OrdinaryIncome_edjp_FinancialReportSummary_Q3 = {
+	description: `経常利益 `,
+	properties: {
+		current_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第３四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $OrdinaryRevenuesBK_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `経常収益、銀行 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_非連結又は個別_実績`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+		prior_accumulated_q2_duration_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $OwnersEquity_edjp_FinancialReportSummary = {
+	description: `自己資本 `,
+	properties: {
+		current_accumulated_q2_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_連結_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+	},
+} as const;
+
+export const $OwnersEquity_edjp_FinancialReportSummary_FY = {
+	description: `自己資本 `,
+	properties: {
+		current_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度時点_連結_実績`,
+},
+		current_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度時点_非連結又は個別_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $OwnersEquity_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `自己資本 `,
+	properties: {
+		current_accumulated_q2_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_連結_実績`,
+},
+		current_accumulated_q2_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_非連結又は個別_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $OwnersEquity_edjp_FinancialReportSummary_Q1 = {
+	description: `自己資本 `,
+	properties: {
+		current_accumulated_q1_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間時点_連結_実績`,
+},
+		current_accumulated_q1_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間時点_非連結又は個別_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $OwnersEquity_edjp_FinancialReportSummary_Q2 = {
+	description: `自己資本 `,
+	properties: {
+		current_accumulated_q2_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_連結_実績`,
+},
+		current_accumulated_q2_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_非連結又は個別_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $OwnersEquity_edjp_FinancialReportSummary_Q3 = {
+	description: `自己資本 `,
+	properties: {
+		current_accumulated_q3_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間時点_連結_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+	},
+} as const;
+
+export const $PayoutRatio_edjp_FinancialReportSummary_FY = {
+	description: `配当性向 `,
+	properties: {
+		current_year_duration_annual_member_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_連結_実績`,
+},
+		current_year_duration_annual_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_非連結又は個別_実績`,
+},
+		next_year_duration_annual_member_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_年間_連結_予想`,
+},
+		next_year_duration_annual_member_non_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_年間_非連結又は個別_予想`,
+},
+		prior_year_duration_annual_member_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_年間_連結_実績`,
+},
+		prior_year_duration_annual_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_年間_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary = {
+	description: `親会社株主に帰属する当期純利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_FY = {
+	description: `親会社株主に帰属する当期純利益 `,
+	properties: {
+		current_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_実績`,
+},
+		next_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_予想`,
+},
+		next_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_下限`,
+},
+		next_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `次年度会計期間_連結_上限`,
+},
+		prior_year_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `親会社株主に帰属する当期純利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q1 = {
+	description: `親会社株主に帰属する当期純利益 `,
+	properties: {
+		current_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q1_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第１四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q2 = {
+	description: `親会社株主に帰属する当期純利益 `,
+	properties: {
+		current_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q2_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第２四半期間_連結_実績`,
+},
+	},
+} as const;
+
+export const $ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q3 = {
+	description: `親会社株主に帰属する当期純利益 `,
+	properties: {
+		current_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間_連結_実績`,
+},
+		current_year_duration_consolidated_member_forecast_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_予想`,
+},
+		current_year_duration_consolidated_member_lower_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_下限`,
+},
+		current_year_duration_consolidated_member_upper_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_連結_上限`,
+},
+		prior_accumulated_q3_duration_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度期初から第３四半期間_連結_実績`,
 },
 	},
 } as const;
@@ -3763,422 +6895,74 @@ export const $QualitativeInfoSubTitle = {
 	},
 } as const;
 
-export const $SignificantChangesInTheScopeOfConsolidationDuringThePeriodJp = {
-	description: `期間中の連結の範囲における重要な変更を公開するためのクラス`,
+export const $QuarterlyPeriod_edjp_FinancialReportSummary = {
+	description: `四半期 `,
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
-},
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-},
-		NoteToSignificantChangesInTheScopeOfConsolidationDuringThePeriod: {
-	type: 'any-of',
-	description: `期間中の連結の範囲における重要な変更に関する注記`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		NameOfSubsidiariesExcludedFromConsolidation: {
-	type: 'any-of',
-	description: `連結から除外された子会社の名称`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		NameOfSubsidiariesNewlyConsolidated: {
-	type: 'any-of',
-	description: `新たに連結された子会社の名称`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		NumberOfSubsidiariesExcludedFromConsolidation: {
-	type: 'any-of',
-	description: `連結から除外された子会社の数`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
-},
-		NumberOfSubsidiariesNewlyConsolidated: {
-	type: 'any-of',
-	description: `新たに連結された子会社の数`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+		current_accumulated_q2_instant: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点`,
 },
 	},
 } as const;
 
-export const $SpecialNotesJp = {
-	description: `四半期決算概要に関する特記事項を公開するためのクラス`,
+export const $QuarterlyPeriod_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `四半期 `,
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
-},
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-},
-		NotesForUsingForecastedInformationAndOthers: {
-	type: 'any-of',
-	description: `予想情報の利用等に関する注記`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
-},
-		ReviewOfAttachedConsolidatedQuarterlyFinancialStatementsByACertifiedPublicAccountantOrAnAuditFirm: {
-	type: 'any-of',
-	description: `公認会計士若しくは監査法人による四半期連結財務諸表の監査の実施の有無`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+		current_accumulated_q2_instant: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点`,
 },
 	},
 } as const;
 
-export const $StockInfo = {
-	description: `株式情報を公開するためのクラス`,
+export const $QuarterlyPeriod_edjp_FinancialReportSummary_Q1 = {
+	description: `四半期 `,
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
-},
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-},
-		DocumentName: {
-	type: 'any-of',
-	description: `文書名`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
-},
-		FilingDate: {
-	type: 'any-of',
-	description: `提出日`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
-},
-		CompanyName: {
-	type: 'any-of',
-	description: `上場会社名`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
-},
-		SecuritiesCode: {
-	type: 'any-of',
-	description: `証券コード`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
-},
-		URL: {
-	type: 'any-of',
-	description: `URL`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
-},
-		RepresentativeAbstract: {
-	type: 'any-of',
-	description: `代表者情報`,
-	contains: [{
-	type: 'representative_abstract',
-}, {
-	type: 'null',
-}],
-},
-		InquiriesAbstract: {
-	type: 'any-of',
-	description: `問合せ先情報`,
-	contains: [{
-	type: 'inquiries_abstract',
-}, {
-	type: 'null',
-}],
-},
-		Tel: {
-	type: 'any-of',
-	description: `電話番号`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
-},
-		OtherCompanyInformationAbstract: {
-	type: 'any-of',
-	description: `その他の上場会社情報`,
-	contains: [{
-	type: 'other_company_information_abstract',
-}, {
-	type: 'null',
-}],
-},
-		SupplementalMaterialOfAnnualResults: {
-	type: 'any-of',
-	description: `決算補足資料`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
-},
-		WayOfGettingSupplementalMaterialOfAnnualResults: {
-	type: 'any-of',
-	description: `決算補足資料の入手方法`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
-},
-		ConveningBriefingOfAnnualResults: {
-	type: 'any-of',
-	description: `決算説明会の開催の有無`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
-},
-		TargetAudienceBriefingOfAnnualResults: {
-	type: 'any-of',
-	description: `決算説明会の対象者`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
-},
-		NoteToFractionProcessingMethod: {
-	type: 'any-of',
-	description: `端数処理方法に関する注記`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
-},
-		TokyoStockExchange: {
-	type: 'any-of',
-	description: `東京証券取引所の上場市場`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
-},
-		BusinessCategory: {
-	type: 'any-of',
-	description: `事業会社種別`,
-	contains: [{
-	type: 'business_category',
-}, {
-	type: 'null',
-}],
-},
-		FiscalYearEnd: {
-	type: 'any-of',
-	description: `決算期`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
-},
-		QuarterlyPeriod: {
-	type: 'any-of',
-	description: `四半期`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
+		current_accumulated_q1_instant: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間時点`,
 },
 	},
 } as const;
 
-export const $SummaryItemsAbstractJp = {
-	description: `概要情報を公開するためのクラス`,
+export const $QuarterlyPeriod_edjp_FinancialReportSummary_Q2 = {
+	description: `四半期 `,
 	properties: {
-		type: {
-	type: 'any-of',
-	description: `タイプ`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
+		current_accumulated_q2_instant: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点`,
 },
-		XbrlId: {
-	type: 'any-of',
-	description: `XBRL識別子`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
+	},
+} as const;
+
+export const $QuarterlyPeriod_edjp_FinancialReportSummary_Q3 = {
+	description: `四半期 `,
+	properties: {
+		current_accumulated_q3_instant: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間時点`,
 },
-		DocumentEntityInformation: {
-	type: 'any-of',
-	description: `上場会社情報`,
-	contains: [{
-	type: 'StockInfo',
-}, {
-	type: 'null',
-}],
+	},
+} as const;
+
+export const $RatioOfTotalAmountOfDividendsToNetAssets_edjp_FinancialReportSummary_FY = {
+	description: `純資産配当率 `,
+	properties: {
+		current_year_duration_annual_member_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_連結_実績`,
 },
-		OperatingResult: {
-	type: 'any-of',
-	description: `業績情報`,
-	contains: [{
-	type: 'OperatingResultJp',
-}, {
-	type: 'null',
-}],
+		current_year_duration_annual_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_非連結又は個別_実績`,
 },
-		NoteToFinancialResults: {
-	type: 'any-of',
-	description: `連結財務諸表に関する注記`,
-	contains: [{
-	type: 'NoteToFinancialResultsJp',
-}, {
-	type: 'null',
-}],
+		prior_year_duration_annual_member_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_年間_連結_実績`,
 },
-		BusinessResultsFinancialPositions: {
-	type: 'any-of',
-	description: `業績及び財政状態に関する注記`,
-	contains: [{
-	type: 'BusinessResultsFinancialPositionsJp',
-}, {
-	type: 'null',
-}],
-},
-		NotesApplyingSpecificAccountingQuarterlyFinancialStatements: {
-	type: 'any-of',
-	description: `四半期連結財務諸表に適用する特定会計基準に関する注記`,
-	contains: [{
-	type: 'NotesApplyingSpecificAccountingQuarterlyFinancialStatementsJp',
-}, {
-	type: 'null',
-}],
-},
-		NotesChangesAccountingPoliciesAccountingEstimatesRetrospectiveRestatement: {
-	type: 'any-of',
-	description: `四半期連結財務諸表における会計方針の変更、会計上の見積りの変更及び遡及的な再表示に関する注記`,
-	contains: [{
-	type: 'NotesChangesAccountingPoliciesAccountingEstimatesRetrospectiveRestatementJp',
-}, {
-	type: 'null',
-}],
-},
-		NotesNumberIssuedOutstandingSharesCommonStock: {
-	type: 'any-of',
-	description: `四半期連結財務諸表における発行済株式数（普通株式）に関する注記`,
-	contains: [{
-	type: 'NotesNumberIssuedOutstandingSharesCommonStockJp',
-}, {
-	type: 'null',
-}],
-},
-		Dividends: {
-	type: 'any-of',
-	description: `配当に関する注記`,
-	contains: [{
-	type: 'DividendsJp',
-}, {
-	type: 'null',
-}],
-},
-		Forecasts: {
-	type: 'any-of',
-	description: `四半期予想に関する注記`,
-	contains: [{
-	type: 'ForecastsJp',
-}, {
-	type: 'null',
-}],
-},
-		SignificantChangesInTheScopeOfConsolidationDuringThePeriod: {
-	type: 'any-of',
-	description: `期間中の連結の範囲における重要な変更`,
-	contains: [{
-	type: 'SignificantChangesInTheScopeOfConsolidationDuringThePeriodJp',
-}, {
-	type: 'null',
-}],
-},
-		SpecialNotes: {
-	type: 'any-of',
-	description: `四半期決算概要に関する特記事項`,
-	contains: [{
-	type: 'SpecialNotesJp',
-}, {
-	type: 'null',
-}],
+		prior_year_duration_annual_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_年間_非連結又は個別_実績`,
 },
 	},
 } as const;
@@ -4192,6 +6976,136 @@ export const $Token = {
 		token_type: {
 	type: 'string',
 	default: 'bearer',
+},
+	},
+} as const;
+
+export const $TotalAssets_edjp_FinancialReportSummary = {
+	description: `総資産 `,
+	properties: {
+		current_accumulated_q2_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_連結_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+	},
+} as const;
+
+export const $TotalAssets_edjp_FinancialReportSummary_FY = {
+	description: `総資産 `,
+	properties: {
+		current_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度時点_連結_実績`,
+},
+		current_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度時点_非連結又は個別_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $TotalAssets_edjp_FinancialReportSummary_HY_specific_business = {
+	description: `総資産 `,
+	properties: {
+		current_accumulated_q2_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_連結_実績`,
+},
+		current_accumulated_q2_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_非連結又は個別_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $TotalAssets_edjp_FinancialReportSummary_Q1 = {
+	description: `総資産 `,
+	properties: {
+		current_accumulated_q1_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間時点_連結_実績`,
+},
+		current_accumulated_q1_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第１四半期間時点_非連結又は個別_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $TotalAssets_edjp_FinancialReportSummary_Q2 = {
+	description: `総資産 `,
+	properties: {
+		current_accumulated_q2_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_連結_実績`,
+},
+		current_accumulated_q2_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第２四半期間時点_非連結又は個別_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+		prior_year_instant_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_非連結又は個別_実績`,
+},
+	},
+} as const;
+
+export const $TotalAssets_edjp_FinancialReportSummary_Q3 = {
+	description: `総資産 `,
+	properties: {
+		current_accumulated_q3_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度期初から第３四半期間時点_連結_実績`,
+},
+		prior_year_instant_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度時点_連結_実績`,
+},
+	},
+} as const;
+
+export const $TotalDividendPaidAnnual_edjp_FinancialReportSummary_FY = {
+	description: `配当金総額（合計） `,
+	properties: {
+		current_year_duration_annual_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `当年度会計期間_年間_非連結又は個別_実績`,
+},
+		prior_year_duration_annual_member_non_consolidated_member_result_member: {
+	type: 'IxNonFractionPublic',
+	description: `前年度会計期間_年間_非連結又は個別_実績`,
 },
 	},
 } as const;
@@ -4413,318 +7327,688 @@ export const $ValidationError = {
 	},
 } as const;
 
-export const $abstract = {
-	description: `概要を公開するためのクラス`,
+export const $edjp_FinancialReportSummary = {
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		average_number_of_shares: {
+	type: 'AverageNumberOfShares_edjp_FinancialReportSummary',
+	description: `期中平均株式数`,
 },
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
+		capital_adequacy_ratio: {
+	type: 'CapitalAdequacyRatio_edjp_FinancialReportSummary',
+	description: `自己資本比率`,
 },
-		Values: {
-	type: 'any-of',
-	description: `値`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+		change_in_comprehensive_income: {
+	type: 'ChangeInComprehensiveIncome_edjp_FinancialReportSummary',
+	description: `包括利益増減率`,
 },
-		ChangeIn: {
-	type: 'any-of',
-	description: `増減`,
-	contains: [{
-	type: 'stockNumeric',
-}, {
-	type: 'null',
-}],
+		change_in_net_sales: {
+	type: 'ChangeInNetSales_edjp_FinancialReportSummary',
+	description: `増減率、売上高`,
+},
+		change_in_operating_income: {
+	type: 'ChangeInOperatingIncome_edjp_FinancialReportSummary',
+	description: `増減率、営業利益`,
+},
+		change_in_ordinary_income: {
+	type: 'ChangeInOrdinaryIncome_edjp_FinancialReportSummary',
+	description: `増減率、経常利益`,
+},
+		change_in_profit_attributable_to_owners_of_parent: {
+	type: 'ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary',
+	description: `増減率、親会社株主に帰属する当期純利益`,
+},
+		comprehensive_income: {
+	type: 'ComprehensiveIncome_edjp_FinancialReportSummary',
+	description: `包括利益`,
+},
+		diluted_net_income_per_share: {
+	type: 'DilutedNetIncomePerShare_edjp_FinancialReportSummary',
+	description: `潜在株式調整後1株当たり当期純利益`,
+},
+		dividend_per_share: {
+	type: 'DividendPerShare_edjp_FinancialReportSummary',
+	description: `1株当たり配当金`,
+},
+		net_assets: {
+	type: 'NetAssets_edjp_FinancialReportSummary',
+	description: `純資産`,
+},
+		net_assets_per_share: {
+	type: 'NetAssetsPerShare_edjp_FinancialReportSummary',
+	description: `1株当たり純資産`,
+},
+		net_income_per_share: {
+	type: 'NetIncomePerShare_edjp_FinancialReportSummary',
+	description: `1株当たり当期純利益`,
+},
+		net_sales: {
+	type: 'NetSales_edjp_FinancialReportSummary',
+	description: `売上高`,
+},
+		number_of_issued_and_outstanding_shares_at_the_end_of_fiscal_year_including_treasury_stock: {
+	type: 'NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary',
+	description: `期末発行済株式数（自己株式を含む）`,
+},
+		number_of_treasury_stock_at_the_end_of_fiscal_year: {
+	type: 'NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary',
+	description: `期末自己株式数`,
+},
+		operating_income: {
+	type: 'OperatingIncome_edjp_FinancialReportSummary',
+	description: `営業利益`,
+},
+		ordinary_income: {
+	type: 'OrdinaryIncome_edjp_FinancialReportSummary',
+	description: `経常利益`,
+},
+		owners_equity: {
+	type: 'OwnersEquity_edjp_FinancialReportSummary',
+	description: `自己資本`,
+},
+		profit_attributable_to_owners_of_parent: {
+	type: 'ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary',
+	description: `親会社株主に帰属する当期純利益`,
+},
+		quarterly_period: {
+	type: 'QuarterlyPeriod_edjp_FinancialReportSummary',
+	description: `四半期`,
+},
+		total_assets: {
+	type: 'TotalAssets_edjp_FinancialReportSummary',
+	description: `総資産`,
 },
 	},
 } as const;
 
-export const $business_category = {
-	description: `事業会社種別を公開するためのクラス`,
+export const $edjp_FinancialReportSummary_FY = {
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		average_number_of_shares: {
+	type: 'AverageNumberOfShares_edjp_FinancialReportSummary_FY',
+	description: `期中平均株式数`,
 },
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
+		capital_adequacy_ratio: {
+	type: 'CapitalAdequacyRatio_edjp_FinancialReportSummary_FY',
+	description: `自己資本比率`,
 },
-		GeneralBusiness: {
-	type: 'any-of',
-	description: `一般事業会社の可否`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
+		cash_and_equivalents_end_of_period: {
+	type: 'CashAndEquivalentsEndOfPeriod_edjp_FinancialReportSummary_FY',
+	description: `現金及び現金同等物期末残高`,
 },
-		SpecificBusiness: {
-	type: 'any-of',
-	description: `特定事業会社の可否`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
+		cash_flows_from_financing_activities: {
+	type: 'CashFlowsFromFinancingActivities_edjp_FinancialReportSummary_FY',
+	description: `財務活動によるキャッシュ・フロー`,
+},
+		cash_flows_from_investing_activities: {
+	type: 'CashFlowsFromInvestingActivities_edjp_FinancialReportSummary_FY',
+	description: `投資活動によるキャッシュ・フロー`,
+},
+		cash_flows_from_operating_activities: {
+	type: 'CashFlowsFromOperatingActivities_edjp_FinancialReportSummary_FY',
+	description: `営業活動によるキャッシュ・フロー`,
+},
+		change_in_comprehensive_income: {
+	type: 'ChangeInComprehensiveIncome_edjp_FinancialReportSummary_FY',
+	description: `包括利益増減率`,
+},
+		change_in_net_income: {
+	type: 'ChangeInNetIncome_edjp_FinancialReportSummary_FY',
+	description: `増減率、当期純利益`,
+},
+		change_in_net_sales: {
+	type: 'ChangeInNetSales_edjp_FinancialReportSummary_FY',
+	description: `増減率、売上高`,
+},
+		change_in_operating_income: {
+	type: 'ChangeInOperatingIncome_edjp_FinancialReportSummary_FY',
+	description: `増減率、営業利益`,
+},
+		change_in_ordinary_income: {
+	type: 'ChangeInOrdinaryIncome_edjp_FinancialReportSummary_FY',
+	description: `増減率、経常利益`,
+},
+		change_in_profit_attributable_to_owners_of_parent: {
+	type: 'ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_FY',
+	description: `増減率、親会社株主に帰属する当期純利益`,
+},
+		comprehensive_income: {
+	type: 'ComprehensiveIncome_edjp_FinancialReportSummary_FY',
+	description: `包括利益`,
+},
+		diluted_net_income_per_share: {
+	type: 'DilutedNetIncomePerShare_edjp_FinancialReportSummary_FY',
+	description: `潜在株式調整後1株当たり当期純利益`,
+},
+		dividend_per_share: {
+	type: 'DividendPerShare_edjp_FinancialReportSummary_FY',
+	description: `1株当たり配当金`,
+},
+		investment_profit_loss_on_equity_method: {
+	type: 'InvestmentProfitLossOnEquityMethod_edjp_FinancialReportSummary_FY',
+	description: `持分法投資損益`,
+},
+		net_assets: {
+	type: 'NetAssets_edjp_FinancialReportSummary_FY',
+	description: `純資産`,
+},
+		net_assets_per_share: {
+	type: 'NetAssetsPerShare_edjp_FinancialReportSummary_FY',
+	description: `1株当たり純資産`,
+},
+		net_income: {
+	type: 'NetIncome_edjp_FinancialReportSummary_FY',
+	description: `当期純利益`,
+},
+		net_income_per_share: {
+	type: 'NetIncomePerShare_edjp_FinancialReportSummary_FY',
+	description: `1株当たり当期純利益`,
+},
+		net_income_to_shareholders_equity_ratio: {
+	type: 'NetIncomeToShareholdersEquityRatio_edjp_FinancialReportSummary_FY',
+	description: `自己資本当期純利益率`,
+},
+		net_sales: {
+	type: 'NetSales_edjp_FinancialReportSummary_FY',
+	description: `売上高`,
+},
+		number_of_issued_and_outstanding_shares_at_the_end_of_fiscal_year_including_treasury_stock: {
+	type: 'NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_FY',
+	description: `期末発行済株式数（自己株式を含む）`,
+},
+		number_of_subsidiaries_excluded_from_consolidation: {
+	type: 'NumberOfSubsidiariesExcludedFromConsolidation_edjp_FinancialReportSummary_FY',
+	description: `除外`,
+},
+		number_of_subsidiaries_newly_consolidated: {
+	type: 'NumberOfSubsidiariesNewlyConsolidated_edjp_FinancialReportSummary_FY',
+	description: `新規`,
+},
+		number_of_treasury_stock_at_the_end_of_fiscal_year: {
+	type: 'NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_FY',
+	description: `期末自己株式数`,
+},
+		operating_income: {
+	type: 'OperatingIncome_edjp_FinancialReportSummary_FY',
+	description: `営業利益`,
+},
+		operating_income_to_net_sales_ratio: {
+	type: 'OperatingIncomeToNetSalesRatio_edjp_FinancialReportSummary_FY',
+	description: `売上高営業利益率`,
+},
+		ordinary_income: {
+	type: 'OrdinaryIncome_edjp_FinancialReportSummary_FY',
+	description: `経常利益`,
+},
+		ordinary_income_to_total_assets_ratio: {
+	type: 'OrdinaryIncomeToTotalAssetsRatio_edjp_FinancialReportSummary_FY',
+	description: `総資産経常利益率`,
+},
+		owners_equity: {
+	type: 'OwnersEquity_edjp_FinancialReportSummary_FY',
+	description: `自己資本`,
+},
+		payout_ratio: {
+	type: 'PayoutRatio_edjp_FinancialReportSummary_FY',
+	description: `配当性向`,
+},
+		profit_attributable_to_owners_of_parent: {
+	type: 'ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_FY',
+	description: `親会社株主に帰属する当期純利益`,
+},
+		ratio_of_total_amount_of_dividends_to_net_assets: {
+	type: 'RatioOfTotalAmountOfDividendsToNetAssets_edjp_FinancialReportSummary_FY',
+	description: `純資産配当率`,
+},
+		total_assets: {
+	type: 'TotalAssets_edjp_FinancialReportSummary_FY',
+	description: `総資産`,
+},
+		total_dividend_paid_annual: {
+	type: 'TotalDividendPaidAnnual_edjp_FinancialReportSummary_FY',
+	description: `配当金総額（合計）`,
 },
 	},
 } as const;
 
-export const $inquiries_abstract = {
+export const $edjp_FinancialReportSummary_HY_specific_business = {
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		average_number_of_shares: {
+	type: 'AverageNumberOfShares_edjp_FinancialReportSummary_HY_specific_business',
+	description: `期中平均株式数`,
 },
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
+		capital_adequacy_ratio: {
+	type: 'CapitalAdequacyRatio_edjp_FinancialReportSummary_HY_specific_business',
+	description: `自己資本比率`,
 },
-		NameInquiries: {
-	type: 'any-of',
-	description: `問合せ先責任者氏名`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
+		change_in_comprehensive_income: {
+	type: 'ChangeInComprehensiveIncome_edjp_FinancialReportSummary_HY_specific_business',
+	description: `包括利益増減率`,
 },
-		TitleInquiries: {
-	type: 'any-of',
-	description: `問合せ先責任者役職名`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
+		change_in_net_income: {
+	type: 'ChangeInNetIncome_edjp_FinancialReportSummary_HY_specific_business',
+	description: `増減率、当期純利益`,
+},
+		change_in_ordinary_income: {
+	type: 'ChangeInOrdinaryIncome_edjp_FinancialReportSummary_HY_specific_business',
+	description: `増減率、経常利益`,
+},
+		change_in_ordinary_revenues_bk: {
+	type: 'ChangeInOrdinaryRevenuesBK_edjp_FinancialReportSummary_HY_specific_business',
+	description: `増減率、経常収益、銀行`,
+},
+		change_in_profit_attributable_to_owners_of_parent: {
+	type: 'ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_HY_specific_business',
+	description: `増減率、親会社株主に帰属する当期純利益`,
+},
+		comprehensive_income: {
+	type: 'ComprehensiveIncome_edjp_FinancialReportSummary_HY_specific_business',
+	description: `包括利益`,
+},
+		diluted_net_income_per_share: {
+	type: 'DilutedNetIncomePerShare_edjp_FinancialReportSummary_HY_specific_business',
+	description: `潜在株式調整後1株当たり当期純利益`,
+},
+		dividend_per_share: {
+	type: 'DividendPerShare_edjp_FinancialReportSummary_HY_specific_business',
+	description: `1株当たり配当金`,
+},
+		net_assets: {
+	type: 'NetAssets_edjp_FinancialReportSummary_HY_specific_business',
+	description: `純資産`,
+},
+		net_assets_per_share: {
+	type: 'NetAssetsPerShare_edjp_FinancialReportSummary_HY_specific_business',
+	description: `1株当たり純資産`,
+},
+		net_income: {
+	type: 'NetIncome_edjp_FinancialReportSummary_HY_specific_business',
+	description: `当期純利益`,
+},
+		net_income_per_share: {
+	type: 'NetIncomePerShare_edjp_FinancialReportSummary_HY_specific_business',
+	description: `1株当たり当期純利益`,
+},
+		number_of_issued_and_outstanding_shares_at_the_end_of_fiscal_year_including_treasury_stock: {
+	type: 'NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_HY_specific_business',
+	description: `期末発行済株式数（自己株式を含む）`,
+},
+		number_of_treasury_stock_at_the_end_of_fiscal_year: {
+	type: 'NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_HY_specific_business',
+	description: `期末自己株式数`,
+},
+		ordinary_income: {
+	type: 'OrdinaryIncome_edjp_FinancialReportSummary_HY_specific_business',
+	description: `経常利益`,
+},
+		ordinary_revenues_bk: {
+	type: 'OrdinaryRevenuesBK_edjp_FinancialReportSummary_HY_specific_business',
+	description: `経常収益、銀行`,
+},
+		owners_equity: {
+	type: 'OwnersEquity_edjp_FinancialReportSummary_HY_specific_business',
+	description: `自己資本`,
+},
+		profit_attributable_to_owners_of_parent: {
+	type: 'ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_HY_specific_business',
+	description: `親会社株主に帰属する当期純利益`,
+},
+		quarterly_period: {
+	type: 'QuarterlyPeriod_edjp_FinancialReportSummary_HY_specific_business',
+	description: `四半期`,
+},
+		total_assets: {
+	type: 'TotalAssets_edjp_FinancialReportSummary_HY_specific_business',
+	description: `総資産`,
 },
 	},
 } as const;
 
-export const $other_company_information_abstract = {
+export const $edjp_FinancialReportSummary_Q1 = {
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		average_number_of_shares: {
+	type: 'AverageNumberOfShares_edjp_FinancialReportSummary_Q1',
+	description: `期中平均株式数`,
 },
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
+		capital_adequacy_ratio: {
+	type: 'CapitalAdequacyRatio_edjp_FinancialReportSummary_Q1',
+	description: `自己資本比率`,
 },
-		AnnualSecuritiesReportFilingDateAsPlanned: {
-	type: 'any-of',
-	description: `有価証券報告書提出予定日`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
+		change_in_comprehensive_income: {
+	type: 'ChangeInComprehensiveIncome_edjp_FinancialReportSummary_Q1',
+	description: `包括利益増減率`,
 },
-		DateOfGeneralShareholdersMeetingAsPlanned: {
-	type: 'any-of',
-	description: `定時株主総会の開催予定日`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
+		change_in_net_income: {
+	type: 'ChangeInNetIncome_edjp_FinancialReportSummary_Q1',
+	description: `増減率、当期純利益`,
 },
-		DividendPayableDateAsPlanned: {
-	type: 'any-of',
-	description: `配当支払予定日`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
+		change_in_net_sales: {
+	type: 'ChangeInNetSales_edjp_FinancialReportSummary_Q1',
+	description: `増減率、売上高`,
+},
+		change_in_operating_income: {
+	type: 'ChangeInOperatingIncome_edjp_FinancialReportSummary_Q1',
+	description: `増減率、営業利益`,
+},
+		change_in_ordinary_income: {
+	type: 'ChangeInOrdinaryIncome_edjp_FinancialReportSummary_Q1',
+	description: `増減率、経常利益`,
+},
+		change_in_profit_attributable_to_owners_of_parent: {
+	type: 'ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q1',
+	description: `増減率、親会社株主に帰属する当期純利益`,
+},
+		comprehensive_income: {
+	type: 'ComprehensiveIncome_edjp_FinancialReportSummary_Q1',
+	description: `包括利益`,
+},
+		diluted_net_income_per_share: {
+	type: 'DilutedNetIncomePerShare_edjp_FinancialReportSummary_Q1',
+	description: `潜在株式調整後1株当たり当期純利益`,
+},
+		dividend_per_share: {
+	type: 'DividendPerShare_edjp_FinancialReportSummary_Q1',
+	description: `1株当たり配当金`,
+},
+		net_assets: {
+	type: 'NetAssets_edjp_FinancialReportSummary_Q1',
+	description: `純資産`,
+},
+		net_assets_per_share: {
+	type: 'NetAssetsPerShare_edjp_FinancialReportSummary_Q1',
+	description: `1株当たり純資産`,
+},
+		net_income: {
+	type: 'NetIncome_edjp_FinancialReportSummary_Q1',
+	description: `当期純利益`,
+},
+		net_income_per_share: {
+	type: 'NetIncomePerShare_edjp_FinancialReportSummary_Q1',
+	description: `1株当たり当期純利益`,
+},
+		net_sales: {
+	type: 'NetSales_edjp_FinancialReportSummary_Q1',
+	description: `売上高`,
+},
+		number_of_issued_and_outstanding_shares_at_the_end_of_fiscal_year_including_treasury_stock: {
+	type: 'NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_Q1',
+	description: `期末発行済株式数（自己株式を含む）`,
+},
+		number_of_subsidiaries_excluded_from_consolidation: {
+	type: 'NumberOfSubsidiariesExcludedFromConsolidation_edjp_FinancialReportSummary_Q1',
+	description: `除外`,
+},
+		number_of_subsidiaries_newly_consolidated: {
+	type: 'NumberOfSubsidiariesNewlyConsolidated_edjp_FinancialReportSummary_Q1',
+	description: `新規`,
+},
+		number_of_treasury_stock_at_the_end_of_fiscal_year: {
+	type: 'NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_Q1',
+	description: `期末自己株式数`,
+},
+		operating_income: {
+	type: 'OperatingIncome_edjp_FinancialReportSummary_Q1',
+	description: `営業利益`,
+},
+		ordinary_income: {
+	type: 'OrdinaryIncome_edjp_FinancialReportSummary_Q1',
+	description: `経常利益`,
+},
+		owners_equity: {
+	type: 'OwnersEquity_edjp_FinancialReportSummary_Q1',
+	description: `自己資本`,
+},
+		profit_attributable_to_owners_of_parent: {
+	type: 'ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q1',
+	description: `親会社株主に帰属する当期純利益`,
+},
+		quarterly_period: {
+	type: 'QuarterlyPeriod_edjp_FinancialReportSummary_Q1',
+	description: `四半期`,
+},
+		total_assets: {
+	type: 'TotalAssets_edjp_FinancialReportSummary_Q1',
+	description: `総資産`,
 },
 	},
 } as const;
 
-export const $representative_abstract = {
+export const $edjp_FinancialReportSummary_Q2 = {
 	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		average_number_of_shares: {
+	type: 'AverageNumberOfShares_edjp_FinancialReportSummary_Q2',
+	description: `期中平均株式数`,
 },
-		Label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
+		capital_adequacy_ratio: {
+	type: 'CapitalAdequacyRatio_edjp_FinancialReportSummary_Q2',
+	description: `自己資本比率`,
 },
-		NameRepresentative: {
-	type: 'any-of',
-	description: `代表者氏名`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
+		change_in_comprehensive_income: {
+	type: 'ChangeInComprehensiveIncome_edjp_FinancialReportSummary_Q2',
+	description: `包括利益増減率`,
 },
-		TitleRepresentative: {
-	type: 'any-of',
-	description: `代表者役職名`,
-	contains: [{
-	type: 'stock',
-}, {
-	type: 'null',
-}],
+		change_in_net_income: {
+	type: 'ChangeInNetIncome_edjp_FinancialReportSummary_Q2',
+	description: `増減率、当期純利益`,
+},
+		change_in_net_operating_revenues_se: {
+	type: 'ChangeInNetOperatingRevenuesSE_edjp_FinancialReportSummary_Q2',
+	description: `増減率、純営業収益、証券`,
+},
+		change_in_net_sales: {
+	type: 'ChangeInNetSales_edjp_FinancialReportSummary_Q2',
+	description: `増減率、売上高`,
+},
+		change_in_operating_income: {
+	type: 'ChangeInOperatingIncome_edjp_FinancialReportSummary_Q2',
+	description: `増減率、営業利益`,
+},
+		change_in_operating_revenues: {
+	type: 'ChangeInOperatingRevenues_edjp_FinancialReportSummary_Q2',
+	description: `増減率、営業収益`,
+},
+		change_in_operating_revenues_se: {
+	type: 'ChangeInOperatingRevenuesSE_edjp_FinancialReportSummary_Q2',
+	description: `増減率、営業収益、証券`,
+},
+		change_in_ordinary_income: {
+	type: 'ChangeInOrdinaryIncome_edjp_FinancialReportSummary_Q2',
+	description: `増減率、経常利益`,
+},
+		change_in_profit_attributable_to_owners_of_parent: {
+	type: 'ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q2',
+	description: `増減率、親会社株主に帰属する当期純利益`,
+},
+		commemorative_dividend: {
+	type: 'CommemorativeDividend_edjp_FinancialReportSummary_Q2',
+	description: `記念配当`,
+},
+		comprehensive_income: {
+	type: 'ComprehensiveIncome_edjp_FinancialReportSummary_Q2',
+	description: `包括利益`,
+},
+		diluted_net_income_per_share: {
+	type: 'DilutedNetIncomePerShare_edjp_FinancialReportSummary_Q2',
+	description: `潜在株式調整後1株当たり当期純利益`,
+},
+		dividend_per_share: {
+	type: 'DividendPerShare_edjp_FinancialReportSummary_Q2',
+	description: `1株当たり配当金`,
+},
+		extra_dividend: {
+	type: 'ExtraDividend_edjp_FinancialReportSummary_Q2',
+	description: `特別配当`,
+},
+		net_assets: {
+	type: 'NetAssets_edjp_FinancialReportSummary_Q2',
+	description: `純資産`,
+},
+		net_assets_per_share: {
+	type: 'NetAssetsPerShare_edjp_FinancialReportSummary_Q2',
+	description: `1株当たり純資産`,
+},
+		net_income: {
+	type: 'NetIncome_edjp_FinancialReportSummary_Q2',
+	description: `当期純利益`,
+},
+		net_income_per_share: {
+	type: 'NetIncomePerShare_edjp_FinancialReportSummary_Q2',
+	description: `1株当たり当期純利益`,
+},
+		net_operating_revenues_se: {
+	type: 'NetOperatingRevenuesSE_edjp_FinancialReportSummary_Q2',
+	description: `純営業収益、証券`,
+},
+		net_sales: {
+	type: 'NetSales_edjp_FinancialReportSummary_Q2',
+	description: `売上高`,
+},
+		number_of_issued_and_outstanding_shares_at_the_end_of_fiscal_year_including_treasury_stock: {
+	type: 'NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_Q2',
+	description: `期末発行済株式数（自己株式を含む）`,
+},
+		number_of_subsidiaries_excluded_from_consolidation: {
+	type: 'NumberOfSubsidiariesExcludedFromConsolidation_edjp_FinancialReportSummary_Q2',
+	description: `除外`,
+},
+		number_of_subsidiaries_newly_consolidated: {
+	type: 'NumberOfSubsidiariesNewlyConsolidated_edjp_FinancialReportSummary_Q2',
+	description: `新規`,
+},
+		number_of_treasury_stock_at_the_end_of_fiscal_year: {
+	type: 'NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_Q2',
+	description: `期末自己株式数`,
+},
+		operating_income: {
+	type: 'OperatingIncome_edjp_FinancialReportSummary_Q2',
+	description: `営業利益`,
+},
+		operating_revenues: {
+	type: 'OperatingRevenues_edjp_FinancialReportSummary_Q2',
+	description: `営業収益`,
+},
+		operating_revenues_se: {
+	type: 'OperatingRevenuesSE_edjp_FinancialReportSummary_Q2',
+	description: `営業収益、証券`,
+},
+		ordinary_income: {
+	type: 'OrdinaryIncome_edjp_FinancialReportSummary_Q2',
+	description: `経常利益`,
+},
+		owners_equity: {
+	type: 'OwnersEquity_edjp_FinancialReportSummary_Q2',
+	description: `自己資本`,
+},
+		profit_attributable_to_owners_of_parent: {
+	type: 'ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q2',
+	description: `親会社株主に帰属する当期純利益`,
+},
+		quarterly_period: {
+	type: 'QuarterlyPeriod_edjp_FinancialReportSummary_Q2',
+	description: `四半期`,
+},
+		total_assets: {
+	type: 'TotalAssets_edjp_FinancialReportSummary_Q2',
+	description: `総資産`,
 },
 	},
 } as const;
 
-export const $stock = {
+export const $edjp_FinancialReportSummary_Q3 = {
 	properties: {
-		is_valid: {
-	type: 'any-of',
-	description: `有効なデータかどうか`,
-	contains: [{
-	type: 'boolean',
-}, {
-	type: 'null',
-}],
+		average_number_of_shares: {
+	type: 'AverageNumberOfShares_edjp_FinancialReportSummary_Q3',
+	description: `期中平均株式数`,
 },
-		label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
+		capital_adequacy_ratio: {
+	type: 'CapitalAdequacyRatio_edjp_FinancialReportSummary_Q3',
+	description: `自己資本比率`,
 },
-		value: {
-	type: 'any-of',
-	description: `値`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
+		change_in_comprehensive_income: {
+	type: 'ChangeInComprehensiveIncome_edjp_FinancialReportSummary_Q3',
+	description: `包括利益増減率`,
 },
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		change_in_net_sales: {
+	type: 'ChangeInNetSales_edjp_FinancialReportSummary_Q3',
+	description: `増減率、売上高`,
 },
-	},
-} as const;
-
-export const $stockNumeric = {
-	properties: {
-		order: {
-	type: 'any-of',
-	description: `順序`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		change_in_operating_income: {
+	type: 'ChangeInOperatingIncome_edjp_FinancialReportSummary_Q3',
+	description: `増減率、営業利益`,
 },
-		is_valid: {
-	type: 'any-of',
-	description: `有効なデータかどうか`,
-	contains: [{
-	type: 'boolean',
-}, {
-	type: 'null',
-}],
+		change_in_ordinary_income: {
+	type: 'ChangeInOrdinaryIncome_edjp_FinancialReportSummary_Q3',
+	description: `増減率、経常利益`,
 },
-		label: {
-	type: 'any-of',
-	description: `ラベル`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
+		change_in_profit_attributable_to_owners_of_parent: {
+	type: 'ChangeInProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q3',
+	description: `増減率、親会社株主に帰属する当期純利益`,
 },
-		numeric: {
-	type: 'any-of',
-	description: `数値データ`,
-	contains: [{
-	type: 'number',
-}, {
-	type: 'null',
-}],
+		comprehensive_income: {
+	type: 'ComprehensiveIncome_edjp_FinancialReportSummary_Q3',
+	description: `包括利益`,
 },
-		value: {
-	type: 'any-of',
-	description: `値`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
+		diluted_net_income_per_share: {
+	type: 'DilutedNetIncomePerShare_edjp_FinancialReportSummary_Q3',
+	description: `潜在株式調整後1株当たり当期純利益`,
 },
-		scale: {
-	type: 'any-of',
-	description: `スケール`,
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
+		dividend_per_share: {
+	type: 'DividendPerShare_edjp_FinancialReportSummary_Q3',
+	description: `1株当たり配当金`,
+},
+		net_assets: {
+	type: 'NetAssets_edjp_FinancialReportSummary_Q3',
+	description: `純資産`,
+},
+		net_assets_per_share: {
+	type: 'NetAssetsPerShare_edjp_FinancialReportSummary_Q3',
+	description: `1株当たり純資産`,
+},
+		net_income_per_share: {
+	type: 'NetIncomePerShare_edjp_FinancialReportSummary_Q3',
+	description: `1株当たり当期純利益`,
+},
+		net_sales: {
+	type: 'NetSales_edjp_FinancialReportSummary_Q3',
+	description: `売上高`,
+},
+		number_of_issued_and_outstanding_shares_at_the_end_of_fiscal_year_including_treasury_stock: {
+	type: 'NumberOfIssuedAndOutstandingSharesAtTheEndOfFiscalYearIncludingTreasuryStock_edjp_FinancialReportSummary_Q3',
+	description: `期末発行済株式数（自己株式を含む）`,
+},
+		number_of_subsidiaries_excluded_from_consolidation: {
+	type: 'NumberOfSubsidiariesExcludedFromConsolidation_edjp_FinancialReportSummary_Q3',
+	description: `除外`,
+},
+		number_of_subsidiaries_newly_consolidated: {
+	type: 'NumberOfSubsidiariesNewlyConsolidated_edjp_FinancialReportSummary_Q3',
+	description: `新規`,
+},
+		number_of_treasury_stock_at_the_end_of_fiscal_year: {
+	type: 'NumberOfTreasuryStockAtTheEndOfFiscalYear_edjp_FinancialReportSummary_Q3',
+	description: `期末自己株式数`,
+},
+		operating_income: {
+	type: 'OperatingIncome_edjp_FinancialReportSummary_Q3',
+	description: `営業利益`,
+},
+		ordinary_income: {
+	type: 'OrdinaryIncome_edjp_FinancialReportSummary_Q3',
+	description: `経常利益`,
+},
+		owners_equity: {
+	type: 'OwnersEquity_edjp_FinancialReportSummary_Q3',
+	description: `自己資本`,
+},
+		profit_attributable_to_owners_of_parent: {
+	type: 'ProfitAttributableToOwnersOfParent_edjp_FinancialReportSummary_Q3',
+	description: `親会社株主に帰属する当期純利益`,
+},
+		quarterly_period: {
+	type: 'QuarterlyPeriod_edjp_FinancialReportSummary_Q3',
+	description: `四半期`,
+},
+		total_assets: {
+	type: 'TotalAssets_edjp_FinancialReportSummary_Q3',
+	description: `総資産`,
 },
 	},
 } as const;
