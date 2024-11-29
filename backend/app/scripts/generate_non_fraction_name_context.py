@@ -3,22 +3,14 @@ import os
 from collections import defaultdict
 
 import requests
+from app.utils import summary
 
 
 def get_grouping_dict(items):
 
     grouped_data = defaultdict(list)
     for item in items:
-        if item["current_period"]:
-            if item["specific_business"] is True:
-                key = f"{item["report_type"]}_{item["ixbrl_role"]}_{item["current_period"]}_specific_business"
-            else:
-                key = f"{item["report_type"]}_{item["ixbrl_role"]}_{item["current_period"]}"
-        else:
-            if item["specific_business"] is True:
-                key = f"{item["report_type"]}_{item["ixbrl_role"]}_specific_business"
-            else:
-                key = f"{item["report_type"]}_{item["ixbrl_role"]}"
+        key = summary.generate_key(item)
         grouped_data[key].append(
             {
                 "name": item["name"],

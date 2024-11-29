@@ -81,6 +81,7 @@ def get_grouping_non_fraction(
             IxNonFraction.name,
             IxNonFraction.context,
             IxLabelValue.label,
+            IxHeadTitle.is_consolidated,
         )
         .join(IxHeadTitle, IxNonFraction.head_item_key == IxHeadTitle.item_key)
         .join(ScLinkBaseRef, ScLinkBaseRef.head_item_key == IxNonFraction.head_item_key)
@@ -118,6 +119,7 @@ def get_grouping_non_fraction(
             IxNonFraction.name,
             IxNonFraction.context,
             IxLabelValue.label,
+            IxHeadTitle.is_consolidated,
         )
         .order_by(
             IxHeadTitle.report_type.asc(),
@@ -154,6 +156,7 @@ def get_grouping_non_fraction(
             "name": item.name,
             "context": item.context,
             "label": item.label,
+            "is_consolidated": item.is_consolidated,
         }
         for item in name_list
     ]

@@ -27,6 +27,7 @@ class GroupingNonFraction(SQLModel):
     context: str
     label: Optional[str]
     context_label: Optional[str]
+    is_consolidated: Optional[bool]
 
 
 class GroupingNonFractionList(SQLModel):

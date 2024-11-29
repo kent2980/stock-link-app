@@ -15,12 +15,18 @@ def create_class_module(file_path: str):
         f.write(f"from app.models import Field, SQLModel\n")
         f.write("from app.schema.ix_non_fraction import IxNonFractionPublic\n")
         f.write("\n\n")
+        f.write("class IxbrlBase(SQLModel):\n")
+        f.write('    key: str = Field(default=None, description="識別キー")\n\n')
+        f.write("    def __init__(self, **kwargs):\n")
+        f.write("        super().__init__(**kwargs)\n")
+        f.write("        self.key = self.__class__.__name__\n")
+        f.write("\n\n")
 
 
 def write_key_schema(file_path: str, data: dict):
     with open(file_path, "a") as f:  # ファイルを追記モードで開く
         for key, value in data.items():
-            f.write(f"class {key}(SQLModel):\n")
+            f.write(f"class {key}(IxbrlBase):\n")
             for k, v in value.items():
                 f.write(
                     f"    {humps.depascalize(k.split('_')[-1]).replace('__','_')}:{k.split('_')[-1]}_{key} = Field(default=None, description=\"{v['label']}\")\n"

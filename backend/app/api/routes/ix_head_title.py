@@ -5,19 +5,10 @@ from typing import Any, List, Optional
 
 import app.schema as sc
 from app.api.deps import SessionDep
-
-# from app.extract import (
-#     ix_non_fraction_edif,
-#     ix_non_fraction_edjp,
-#     ix_non_fraction_edus,
-#     ix_non_numeric_edif,
-#     ix_non_numeric_edjp,
-#     ix_non_numeric_edus,
-# )
 from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
-from sqlmodel import func, select
+from sqlmodel import func, select, update
 
 router = APIRouter()
 
@@ -315,67 +306,32 @@ def is_ix_head_title_item_active(*, session: SessionDep, head_item_key: str) -> 
     return False
 
 
-# @router.put("/ix/head/generate/")
-# def ix_head_generate(
-#     *, session: SessionDep, head_item_key: Optional[str] = Query(None)
-# ) -> Any:
-#     """
-#     Extraction item.
-#     """
-#     if head_item_key is None:
-#         statement = select(IxHeadTitle).where(
-#             IxHeadTitle.is_active == True, IxHeadTitle.is_generated == False
-#         )
-#     else:
-#         statement = select(IxHeadTitle).where(
-#             IxHeadTitle.is_active == True,
-#             IxHeadTitle.is_generated == False,
-#             IxHeadTitle.item_key == head_item_key,
-#         )
+@router.post("/upgrade/is_consolidated/", response_model=str)
+def upgrade_is_consolidated(*, session: SessionDep) -> str:
+    """
+    Upgrade is_consolidated.
+    """
+    name = "jpdei_cor_WhetherConsolidatedFinancialStatementsArePreparedDEI"
+    statement = (
+        select(IxHeadTitle.id, IxNonNumeric.head_item_key, IxNonNumeric.value)
+        .join(IxHeadTitle, IxNonNumeric.head_item_key == IxHeadTitle.item_key)
+        .where(IxNonNumeric.name == name, IxHeadTitle.is_consolidated == None)
+    )
+    result = session.exec(statement)
+    items = result.all()
 
-#     result = session.exec(statement)
-#     items = result.all()
+    update_data = []
+    for item in items:
+        is_value = item.value == "true"
+        update_data.append(
+            {"id": item.id, "item_key": item.head_item_key, "is_consolidated": is_value}
+        )
 
-#     for item in items:
-#         period = item.current_period
-#         report_type = item.report_type
-#         document_name = item.document_name
-#         consolidated = (
-#             "_NonConsolidated" if "非連結" in document_name else "_Consolidated"
-#         )
-#         if not report_type in ["edjp", "edif", "edus"]:
-#             continue
-#         result_regex = f"(?=.*Current)(?=.*\{consolidated}.*)(?=Result.*)"
-#         if period == "FY":
-#             forecast_regex = f"(?=.*Next)(?=.*\{consolidated}.*)(?=Forecast.*)"
-#         else:
-#             forecast_regex = f"(?=.*Current)(?=.*\{consolidated}.*)(?=Forecast.*)"
+    if update_data:
+        session.bulk_update_mappings(IxHeadTitle, update_data)
+        session.commit()
 
-#         ord_income = None
-#         try:
-#             if report_type == "edjp":
-#                 try:
-#                     ord_income = ix_non_fraction_edjp.ordinary_income(
-#                         session, item.item_key, result_regex
-#                     )
-#                 except ValueError:
-#                     try:
-#                         ord_income = ix_non_fraction_edjp.ordinary_revenues_bk(
-#                             session, item.item_key, result_regex
-#                         )
-#                     except ValueError:
-#                         ord_income = ix_non_fraction_edjp.ordinary_revenues_in(
-#                             session, item.item_key, result_regex
-#                         )
-#             elif report_type == "edif":
-#                 ord_income = ix_non_fraction_edif.profit_before_tax_ifrs(
-#                     session, item.item_key, result_regex
-#                 )
-#             elif report_type == "edus":
-#                 ord_income = ix_non_fraction_edus.income_before_income_taxes_us(
-#                     session, item.item_key, result_regex
-#                 )
-#         except ValueError:
-#             ord_income = None
-
-#         return ord_income
+    if len(items) == 0:
+        return "No items to update."
+    else:
+        return f"{len(items)} items updated."

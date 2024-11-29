@@ -253,6 +253,7 @@ class IxHeadTitle(XbrlBase, table=True):
     is_active: bool = Field(default=False, nullable=False, description="有効フラグ")
     is_generated: bool = Field(default=False, nullable=False, description="生成フラグ")
     specific_business: Optional[bool] = Field(default=None, description="特定事業")
+    is_consolidated: Optional[bool] = Field(default=None, description="連結")
 
     __table_args__ = (
         Index("idx_ix_head_title_item_key", "item_key"),
@@ -262,6 +263,7 @@ class IxHeadTitle(XbrlBase, table=True):
         Index("idx_ix_head_title_is_generated", "is_generated"),
         Index("idx_ix_head_title_current_period", "current_period"),
         Index("idx_ix_head_specific_business", "specific_business"),
+        Index("idx_ix_head_title_is_consolidated", "is_consolidated"),
     )
 
 
