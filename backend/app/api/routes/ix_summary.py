@@ -149,25 +149,24 @@ def get_summary_items(
                 dict1[name] = {}
             dict1[name][context] = non_fraction.model_dump()
 
-    if key == "edjp_FinancialReportSummary_Nonconsolidated_Q1":
-        schema = sc.ix_summary.edjp_FinancialReportSummary_Nonconsolidated_Q1(**dict1)
-    elif key == "edjp_FinancialReportSummary_consolidated_Q1":
-        schema = sc.ix_summary.edjp_FinancialReportSummary_consolidated_Q1(**dict1)
-    elif key == "edjp_FinancialReportSummary_Nonconsolidated_Q2":
-        schema = sc.ix_summary.edjp_FinancialReportSummary_Nonconsolidated_Q2(**dict1)
-    elif key == "edjp_FinancialReportSummary_consolidated_Q2":
-        schema = sc.ix_summary.edjp_FinancialReportSummary_consolidated_Q2(**dict1)
-    elif key == "edif_FinancialReportSummary_consolidated_Q2":
-        schema = sc.ix_summary.edif_FinancialReportSummary_consolidated_Q2(**dict1)
-    elif key == "edjp_FinancialReportSummary_Nonconsolidated_Q3":
-        pass
-    elif key == "edjp_FinancialReportSummary_consolidated_Q3":
-        schema = sc.ix_summary.edjp_FinancialReportSummary_consolidated_Q3(**dict1)
-    elif key == "edif_FinancialReportSummary_consolidated_Q3":
-        schema = sc.ix_summary.edif_FinancialReportSummary_consolidated_Q3(**dict1)
-    elif key == "edjp_FinancialReportSummary_Nonconsolidated_FY":
-        schema = sc.ix_summary.edjp_FinancialReportSummary_Nonconsolidated_FY(**dict1)
-    elif key == "edjp_FinancialReportSummary_consolidated_FY":
-        schema = sc.ix_summary.edjp_FinancialReportSummary_consolidated_FY(**dict1)
+    schema_dict = {
+        "edjp_FinancialReportSummary_Nonconsolidated_Q1": sc.ix_summary.edjp_FinancialReportSummary_Nonconsolidated_Q1,
+        "edjp_FinancialReportSummary_consolidated_Q1": sc.ix_summary.edjp_FinancialReportSummary_consolidated_Q1,
+        "edjp_FinancialReportSummary_Nonconsolidated_Q2": sc.ix_summary.edjp_FinancialReportSummary_Nonconsolidated_Q2,
+        "edjp_FinancialReportSummary_consolidated_Q2": sc.ix_summary.edjp_FinancialReportSummary_consolidated_Q2,
+        "edif_FinancialReportSummary_consolidated_Q2": sc.ix_summary.edif_FinancialReportSummary_consolidated_Q2,
+        "edjp_FinancialReportSummary_Nonconsolidated_Q3": None,
+        "edjp_FinancialReportSummary_consolidated_Q3": sc.ix_summary.edjp_FinancialReportSummary_consolidated_Q3,
+        "edif_FinancialReportSummary_consolidated_Q3": sc.ix_summary.edif_FinancialReportSummary_consolidated_Q3,
+        "edjp_FinancialReportSummary_Nonconsolidated_FY": sc.ix_summary.edjp_FinancialReportSummary_Nonconsolidated_FY,
+        "edjp_FinancialReportSummary_consolidated_FY": sc.ix_summary.edjp_FinancialReportSummary_consolidated_FY,
+    }
 
-    return schema
+    try:
+        schema = schema_dict[key]
+    except KeyError:
+        raise HTTPException(
+            status_code=404, detail="指定したデータが見つかりませんでした。"
+        )
+
+    return schema(**dict1)
