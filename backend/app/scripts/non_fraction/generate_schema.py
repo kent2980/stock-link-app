@@ -57,11 +57,11 @@ def write_name_schema(file_path: str, data: dict):
 
 def generate_schema():
     base_dir = os.path.dirname(__file__)
-    json_path = os.path.join(base_dir, "../json/non_fraction_name_context.json")
+    json_path = os.path.join(base_dir, "../../json/non_fraction/name_context.json")
     with open(json_path, "r") as f:
         data = json.load(f)
 
-    schema_path = os.path.join(base_dir, "../schema/ix_summary.py")
+    schema_path = os.path.join(base_dir, "../../schema/ix_summary.py")
     create_class_module(schema_path)
     write_name_schema(schema_path, data)
     write_key_schema(schema_path, data)

@@ -35,7 +35,7 @@ def generate_module_non_fraction(base_url: str):
     grouped_data = get_grouping_dict(items)
 
     base_dir = os.path.dirname(__file__)
-    json_path = os.path.join(base_dir, "../json/grouped_data_non_fraction.json")
+    json_path = os.path.join(base_dir, "../../json/non_fraction/grouped_data.json")
     with open(json_path, "w") as f:
         f.write(json.dumps(grouped_data, ensure_ascii=False, indent=4))
 

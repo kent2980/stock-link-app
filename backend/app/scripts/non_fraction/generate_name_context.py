@@ -45,10 +45,8 @@ def generate_schema(base_url: str):
             )
         grouped_keys[key] = grouped_context
 
-    print(grouped_keys)
-
     base_dir = os.path.dirname(__file__)
-    json_path = os.path.join(base_dir, "../json/non_fraction_name_context.json")
+    json_path = os.path.join(base_dir, "../../json/non_fraction/name_context.json")
     with open(json_path, "w") as f:
         f.write(json.dumps(grouped_keys, ensure_ascii=False, indent=4))
 

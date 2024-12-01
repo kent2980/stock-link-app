@@ -9,7 +9,7 @@ from app.api.deps import SessionDep
 from app.models import IxHeadTitle, IxNonFraction
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import NoResultFound
-from sqlmodel import or_, select, tuple_
+from sqlmodel import col, select, tuple_
 
 router = APIRouter()
 
@@ -23,29 +23,28 @@ def get_summary_head(
     period: int = Query(...),
 ):
     """
-    Get summary of all items.
+    指定されたコード、年度、期間のサマリーのヘッダーを取得する
+
+    Args:
+        session (SessionDep): 接続セッション
+        code (str): 銘柄コード
+        year (int): 年度
+        period (int): 期間
     """
 
-    period_dict = {1: "Q1", 2: "Q2", 3: "Q3", 4: "FY"}
-    period_str = period_dict[period]
+    period_dict = {1: ["Q1"], 2: ["Q2", "FY"], 3: ["Q3"], 4: ["FY"]}
+    if period not in period_dict:
+        raise HTTPException(status_code=400, detail="Invalid period value.")
+    select_period = period_dict[period]
 
     statement = select(IxHeadTitle).where(
         IxHeadTitle.securities_code == code,
         IxHeadTitle.fy_year_end.like(f"{year}%"),
+        col(IxHeadTitle.current_period).in_(select_period),
     )
 
-    if period_str == "Q2":
-        statement = statement.where(
-            or_(
-                IxHeadTitle.current_period == "HY",
-                IxHeadTitle.current_period == "Q2",
-            )
-        )
-    else:
-        statement = statement.where(IxHeadTitle.current_period == period_str)
-
+    result = session.exec(statement)
     try:
-        result = session.exec(statement)
         item = result.one()
     except NoResultFound:
         raise HTTPException(
@@ -64,14 +63,20 @@ def get_summary_key(
     period: int = Query(...),
 ) -> Dict[str, str]:
     """
-    Get summary of all items.
+    指定されたコード、年度、期間のサマリーのキーを取得する
+
+    Args:
+        session (SessionDep): 接続セッション
+        code (str): 銘柄コード
+        year (int): 年度
+        period (int): 期間
     """
 
     head_item = get_summary_head(session=session, code=code, year=year, period=period)
 
-    if head_item.is_consolidated is True:
+    if head_item.is_consolidated:
         is_consolidated = "_consolidated"
-    elif head_item.is_consolidated is False:
+    elif not head_item.is_consolidated:
         is_consolidated = "_Nonconsolidated"
     else:
         is_consolidated = ""
@@ -99,7 +104,13 @@ def get_summary_items(
     period: int = Query(...),
 ) -> Any:
     """
-    Get summary of all items.
+    指定されたコード、年度、期間のサマリーを取得する
+
+    Args:
+        session (SessionDep): 接続セッション
+        code (str): 銘柄コード
+        year (int): 年度
+        period (int): 期間
     """
 
     head_item = get_summary_head(session=session, code=code, year=year, period=period)
@@ -113,7 +124,7 @@ def get_summary_items(
     with open(json_path, "r") as f:
         data = json.load(f)
 
-    items: List[Dict[str, str, str]] = data[key]
+    items: List[Dict[str, str]] = data[key]
 
     non_fraction_list = []
 
@@ -162,11 +173,10 @@ def get_summary_items(
         "edjp_FinancialReportSummary_consolidated_FY": sc.ix_summary.edjp_FinancialReportSummary_consolidated_FY,
     }
 
-    try:
-        schema = schema_dict[key]
-    except KeyError:
+    schema = schema_dict.get(key)(**summary_data)
+    if schema is None:
         raise HTTPException(
             status_code=404, detail="指定したデータが見つかりませんでした。"
         )
 
-    return schema(**dict1)
+    return schema
