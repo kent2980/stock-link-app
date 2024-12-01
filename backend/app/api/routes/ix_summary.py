@@ -131,7 +131,7 @@ def get_summary_items(
     # クエリ結果を辞書に変換
     non_fraction_dict = {(nf.name, nf.context): nf for nf in non_fractions}
 
-    dict1 = {}
+    summary_data = {}
     for item in items:
         non_fraction = non_fraction_dict.get((item.get("name"), item.get("context")))
         if non_fraction:
@@ -145,9 +145,9 @@ def get_summary_items(
             )
             name = humps.decamelize(item.get("name").split("_")[-1]).replace("__", "_")
             context = humps.decamelize(item.get("context")).replace("__", "_")
-            if name not in dict1:
-                dict1[name] = {}
-            dict1[name][context] = non_fraction.model_dump()
+            if name not in summary_data:
+                summary_data[name] = {}
+            summary_data[name][context] = non_fraction.model_dump()
 
     schema_dict = {
         "edjp_FinancialReportSummary_Nonconsolidated_Q1": sc.ix_summary.edjp_FinancialReportSummary_Nonconsolidated_Q1,
