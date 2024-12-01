@@ -13,7 +13,7 @@ def create_class_module(file_path: str):
 
     with open(file_path, "w") as f:  # ファイルを新規作成モードで開く
         f.write(f"from app.models import Field, SQLModel\n")
-        f.write("from app.schema.ix_non_fraction import IxNonFractionPublic\n")
+        f.write("from app.schema.ix_non_numeric import IxNonNumericPublic\n")
         f.write("\n\n")
         f.write("class IxbrlBase(SQLModel):\n")
         f.write('    key: str = Field(default=None, description="識別キー")\n\n')
@@ -47,7 +47,7 @@ def write_name_schema(file_path: str, data: dict):
                     f.write(f'    """ {v["label"]} """\n\n')
                     for item in v["item"]:
                         f.write(
-                            f"    {humps.depascalize(item['context']).replace('__','_')}: IxNonFractionPublic = Field(default=None, description=\"{item['context_label']}\")\n"
+                            f"    {humps.depascalize(item['context']).replace('__','_')}: IxNonNumericPublic = Field(default=None, description=\"{item['context_label']}\")\n"
                         )
                         f.write(f'    """ {item["context_label"]} """\n')
                     add_list.append(f"{k.split('_')[-1]}_{key}")
@@ -57,9 +57,9 @@ def write_name_schema(file_path: str, data: dict):
 
 def generate_schema_link_class(data: dict):
     base_dir = os.path.dirname(__file__)
-    json_path = os.path.join(base_dir, "../../utils/schema_class_non_fraction.py")
+    json_path = os.path.join(base_dir, "../../utils/schema_class_non_numeric.py")
     with open(json_path, "w") as f:  # ファイルを新規作成モードで開く
-        f.write("import app.schema.ix_summary_non_fraction as sc\n")
+        f.write("import app.schema.ix_summary_non_numeric as sc\n")
         f.write("\n\n")
         f.write("def get_schema_class(key: str):\n")
         for key in data.keys():
@@ -70,11 +70,11 @@ def generate_schema_link_class(data: dict):
 
 def generate_schema():
     base_dir = os.path.dirname(__file__)
-    json_path = os.path.join(base_dir, "../../json/non_fraction/name_context.json")
+    json_path = os.path.join(base_dir, "../../json/non_numeric/name_context.json")
     with open(json_path, "r") as f:
         data = json.load(f)
 
-    schema_path = os.path.join(base_dir, "../../schema/ix_summary_non_fraction.py")
+    schema_path = os.path.join(base_dir, "../../schema/ix_summary_non_numeric.py")
     create_class_module(schema_path)
     write_name_schema(schema_path, data)
     write_key_schema(schema_path, data)

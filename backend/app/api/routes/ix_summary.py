@@ -3,10 +3,12 @@ import os
 from typing import Any, Dict, List
 
 import app.schema as sc
+import app.utils.schema_class_non_fraction as scnf
+import app.utils.schema_class_non_numeric as scnn
 import app.utils.summary as summary
 import humps
 from app.api.deps import SessionDep
-from app.models import IxHeadTitle, IxNonFraction
+from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import NoResultFound
 from sqlmodel import col, select, tuple_
@@ -95,8 +97,8 @@ def get_summary_key(
     return {"head_item_key": head_item.item_key, "key": key}
 
 
-@router.get("/items/", response_model=Any)
-def get_summary_items(
+@router.get("/non_fraction/items/", response_model=Any)
+def get_summary_non_fraction_items(
     *,
     session: SessionDep,
     code: str = Query(...),
@@ -119,7 +121,7 @@ def get_summary_items(
 
     # 絶対パスを使用
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    json_path = os.path.join(base_dir, "../../json/grouped_data_non_fraction.json")
+    json_path = os.path.join(base_dir, "../../json/non_fraction/grouped_data.json")
 
     with open(json_path, "r") as f:
         data = json.load(f)
@@ -160,20 +162,81 @@ def get_summary_items(
                 summary_data[name] = {}
             summary_data[name][context] = non_fraction.model_dump()
 
-    schema_dict = {
-        "edjp_FinancialReportSummary_Nonconsolidated_Q1": sc.ix_summary.edjp_FinancialReportSummary_Nonconsolidated_Q1,
-        "edjp_FinancialReportSummary_consolidated_Q1": sc.ix_summary.edjp_FinancialReportSummary_consolidated_Q1,
-        "edjp_FinancialReportSummary_Nonconsolidated_Q2": sc.ix_summary.edjp_FinancialReportSummary_Nonconsolidated_Q2,
-        "edjp_FinancialReportSummary_consolidated_Q2": sc.ix_summary.edjp_FinancialReportSummary_consolidated_Q2,
-        "edif_FinancialReportSummary_consolidated_Q2": sc.ix_summary.edif_FinancialReportSummary_consolidated_Q2,
-        "edjp_FinancialReportSummary_Nonconsolidated_Q3": None,
-        "edjp_FinancialReportSummary_consolidated_Q3": sc.ix_summary.edjp_FinancialReportSummary_consolidated_Q3,
-        "edif_FinancialReportSummary_consolidated_Q3": sc.ix_summary.edif_FinancialReportSummary_consolidated_Q3,
-        "edjp_FinancialReportSummary_Nonconsolidated_FY": sc.ix_summary.edjp_FinancialReportSummary_Nonconsolidated_FY,
-        "edjp_FinancialReportSummary_consolidated_FY": sc.ix_summary.edjp_FinancialReportSummary_consolidated_FY,
-    }
+    schema = scnf.get_schema_class(key)(**summary_data)
+    if schema is None:
+        raise HTTPException(
+            status_code=404, detail="指定したデータが見つかりませんでした。"
+        )
 
-    schema = schema_dict.get(key)(**summary_data)
+    return schema
+
+
+@router.get("/non_numeric/items/", response_model=Any)
+def get_summary_non_numeric_items(
+    *,
+    session: SessionDep,
+    code: str = Query(...),
+    year: int = Query(...),
+    period: int = Query(...),
+) -> Any:
+    """
+    指定されたコード、年度、期間のサマリーを取得する
+
+    Args:
+        session (SessionDep): 接続セッション
+        code (str): 銘柄コード
+        year (int): 年度
+        period (int): 期間
+    """
+
+    head_item = get_summary_head(session=session, code=code, year=year, period=period)
+    head_item_key = head_item.item_key
+    key = summary.generate_key(head_item.model_dump(), "FinancialReportSummary")
+
+    # 絶対パスを使用
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    json_path = os.path.join(base_dir, "../../json/non_numeric/grouped_data.json")
+
+    with open(json_path, "r") as f:
+        data = json.load(f)
+
+    items: List[Dict[str, str]] = data[key]
+
+    non_numeric_list = []
+
+    # すべての必要なキーを収集
+    item_keys = [(item.get("name"), item.get("context")) for item in items]
+
+    # バッチクエリを実行
+    statement = select(IxNonNumeric).where(
+        IxNonNumeric.head_item_key == head_item_key,
+        tuple_(IxNonNumeric.name, IxNonNumeric.context).in_(item_keys),
+    )
+    result = session.exec(statement)
+    non_numerics = result.all()
+
+    # クエリ結果を辞書に変換
+    non_numeric_dict = {(nn.name, nn.context): nn for nn in non_numerics}
+
+    summary_data = {}
+    for item in items:
+        non_numeric = non_numeric_dict.get((item.get("name"), item.get("context")))
+        if non_numeric:
+            non_numeric_list.append(
+                {
+                    "name": item.get("name"),
+                    "context": item.get("context"),
+                    "label": item.get("label"),
+                    "item": non_numeric,
+                }
+            )
+            name = humps.decamelize(item.get("name").split("_")[-1]).replace("__", "_")
+            context = humps.decamelize(item.get("context")).replace("__", "_")
+            if name not in summary_data:
+                summary_data[name] = {}
+            summary_data[name][context] = non_numeric.model_dump()
+
+    schema = scnn.get_schema_class(key)(**summary_data)
     if schema is None:
         raise HTTPException(
             status_code=404, detail="指定したデータが見つかりませんでした。"

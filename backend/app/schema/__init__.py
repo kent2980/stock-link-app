@@ -12,7 +12,8 @@ from . import (
     ix_qualitative,
     ix_schema,
     ix_source,
-    ix_summary,
+    ix_summary_non_fraction,
+    ix_summary_non_numeric,
     settings,
 )
 
@@ -31,5 +32,6 @@ __all__ = [
     "ix_global",
     "ix_qualitative",
     "ix_generate_class",
-    "ix_summary",
+    "ix_summary_non_fraction",
+    "ix_summary_non_numeric",
 ]
