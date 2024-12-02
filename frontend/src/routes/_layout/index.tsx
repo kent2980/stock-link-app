@@ -1,10 +1,10 @@
-import { Container } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import "swiper/css";
 import "swiper/css/pagination";
+import Contents from "../../components/Index/Contents";
+import Header from "../../components/Index/Header";
 import "../../styles.css";
-
-import Home from "../../components/Index/Home";
 
 export const Route = createFileRoute("/_layout/")({
   component: Dashboard,
@@ -12,10 +12,9 @@ export const Route = createFileRoute("/_layout/")({
 
 function Dashboard() {
   return (
-    <>
-      <Container maxW="full" height="100vh">
-        <Home />
-      </Container>
-    </>
+    <VStack>
+      <Header />
+      <Contents />
+    </VStack>
   );
 }

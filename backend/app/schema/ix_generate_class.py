@@ -20,14 +20,14 @@ class ContextList(SQLModel):
 
 class GroupingNonFraction(SQLModel):
     report_type: Optional[str]
-    specific_business: Optional[bool]
-    ixbrl_role: Optional[str]
-    current_period: Optional[str]
+    # specific_business: Optional[bool]
+    # ixbrl_role: Optional[str]
+    # current_period: Optional[str]
     name: str
-    context: str
+    # context: str
     label: Optional[str]
-    context_label: Optional[str]
-    is_consolidated: Optional[bool]
+    # context_label: Optional[str]
+    # is_consolidated: Optional[bool]
 
 
 class GroupingNonFractionList(SQLModel):

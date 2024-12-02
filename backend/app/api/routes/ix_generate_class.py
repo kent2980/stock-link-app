@@ -190,13 +190,13 @@ def get_grouping_non_numeric(
     statement = (
         select(
             IxHeadTitle.report_type,
-            IxHeadTitle.specific_business,
+            # IxHeadTitle.specific_business,
             IxNonNumeric.ixbrl_role,
-            IxHeadTitle.current_period,
+            # IxHeadTitle.current_period,
             IxNonNumeric.name,
-            IxNonNumeric.context,
+            # IxNonNumeric.context,
             IxLabelValue.label,
-            IxHeadTitle.is_consolidated,
+            # IxHeadTitle.is_consolidated,
         )
         .join(IxHeadTitle, IxNonNumeric.head_item_key == IxHeadTitle.item_key)
         .join(ScLinkBaseRef, ScLinkBaseRef.head_item_key == IxNonNumeric.head_item_key)
@@ -228,70 +228,70 @@ def get_grouping_non_numeric(
         )
         .group_by(
             IxHeadTitle.report_type,
-            IxHeadTitle.specific_business,
+            # IxHeadTitle.specific_business,
             IxNonNumeric.ixbrl_role,
-            IxHeadTitle.current_period,
+            # IxHeadTitle.current_period,
             IxNonNumeric.name,
-            IxNonNumeric.context,
+            # IxNonNumeric.context,
             IxLabelValue.label,
-            IxHeadTitle.is_consolidated,
+            # IxHeadTitle.is_consolidated,
         )
         .order_by(
             IxHeadTitle.report_type.asc(),
-            IxHeadTitle.specific_business.asc(),
+            # IxHeadTitle.specific_business.asc(),
             IxNonNumeric.ixbrl_role.asc(),
-            IxHeadTitle.current_period.asc(),
+            # IxHeadTitle.current_period.asc(),
             IxNonNumeric.name.asc(),
-            IxNonNumeric.context.asc(),
+            # IxNonNumeric.context.asc(),
         )
     )
     result = session.exec(statement)
     name_list = result.all()
 
-    # contextを収集
-    contexts = [item.context for item in name_list]
+    # # contextを収集
+    # contexts = [item.context for item in name_list]
 
-    # contextをフラットなリストに変換
-    context_list = [
-        sub_context for context in contexts for sub_context in context.split("_")
-    ]
+    # # contextをフラットなリストに変換
+    # context_list = [
+    #     sub_context for context in contexts for sub_context in context.split("_")
+    # ]
 
-    # 重複を削除
-    context_list = list(set(context_list))
+    # # 重複を削除
+    # context_list = list(set(context_list))
 
-    # context_label_dictを取得
-    context_label_dict = get_summary_context_labels(
-        session=session, contexts=context_list
-    )
+    # # context_label_dictを取得
+    # context_label_dict = get_summary_context_labels(
+    #     session=session, contexts=context_list
+    # )
 
     # name_listを辞書に変換
     name_list = [
         {
             "report_type": item.report_type,
-            "specific_business": item.specific_business,
-            "ixbrl_role": item.ixbrl_role,
-            "current_period": item.current_period,
+            # "specific_business": item.specific_business,
+            # "ixbrl_role": item.ixbrl_role,
+            # "current_period": item.current_period,
             "name": item.name,
-            "context": item.context,
+            # "context": item.context,
             "label": item.label,
-            "is_consolidated": item.is_consolidated,
+            # "is_consolidated": item.is_consolidated,
         }
         for item in name_list
     ]
 
     # name_listにcontext_labelを追加
-    for item in name_list:
-        context = item["context"]
-        context_list = context.split("_")
-        context_label = ""
-        count = 0
-        for context_item in context_list:
-            if count == 0:
-                context_label += context_label_dict[context_item]
-            elif count > 0:
-                context_label += f"_{context_label_dict[context_item]}"
-            count += 1
-        item["context_label"] = context_label
+    # for item in name_list:
+    #     context = item["context"]
+    #     context_list = context.split("_")
+    #     context_label = ""
+    #     count = 0
+    #     for context_item in context_list:
+    #         if count == 0:
+    #             context_label += context_label_dict[context_item]
+    #         elif count > 0:
+    #             context_label += f"_{context_label_dict[context_item]}"
+    #         count += 1
+    #     item["context_label"] = context_label
 
     return sc.ix_generate_class.GroupingNonFractionList(
         item=name_list, count=len(name_list)

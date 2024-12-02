@@ -10,13 +10,13 @@ def get_grouping_dict(items):
 
     grouped_data = defaultdict(list)
     for item in items:
-        key = summary.generate_key(item)
+        key = summary.generate_non_numeric_key(item)
         grouped_data[key].append(
             {
                 "name": item["name"],
-                "context": item["context"],
+                # "context": item["context"],
                 "label": item["label"],
-                "context_label": item["context_label"],
+                # "context_label": item["context_label"],
             }
         )
 

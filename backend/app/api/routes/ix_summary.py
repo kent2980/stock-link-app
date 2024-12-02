@@ -97,27 +97,35 @@ def get_summary_key(
     return {"head_item_key": head_item.item_key, "key": key}
 
 
-@router.get("/non_fraction/items/", response_model=Any)
-def get_summary_non_fraction_items(
+@router.get(
+    "/non_fraction/items/head_item_key",
+    response_model=scnf.get_response_schema_FinancialReportSummary_class(),
+)
+def get_summary_non_fraction_items_head_item_key(
     *,
     session: SessionDep,
-    code: str = Query(...),
-    year: int = Query(...),
-    period: int = Query(...),
-) -> Any:
+    head_item_key: str,
+):
     """
-    指定されたコード、年度、期間のサマリーを取得する
+    指定されたヘッダーアイテムキーのサマリーを取得する
 
     Args:
         session (SessionDep): 接続セッション
-        code (str): 銘柄コード
-        year (int): 年度
-        period (int): 期間
+        head_item_key (int): ヘッダーアイテムキー
     """
 
-    head_item = get_summary_head(session=session, code=code, year=year, period=period)
-    head_item_key = head_item.item_key
-    key = summary.generate_key(head_item.model_dump(), "FinancialReportSummary")
+    statement = select(IxHeadTitle).where(IxHeadTitle.item_key == head_item_key)
+    result = session.exec(statement)
+    try:
+        head_item = result.one()
+    except NoResultFound:
+        raise HTTPException(
+            status_code=404, detail="指定したデータが見つかりませんでした。"
+        )
+
+    key = summary.generate_non_fraction_key(
+        head_item.model_dump(), "FinancialReportSummary"
+    )
 
     # 絶対パスを使用
     base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -171,14 +179,17 @@ def get_summary_non_fraction_items(
     return schema
 
 
-@router.get("/non_numeric/items/", response_model=Any)
-def get_summary_non_numeric_items(
+@router.get(
+    "/non_fraction/items/",
+    response_model=scnf.get_response_schema_FinancialReportSummary_class(),
+)
+def get_summary_non_fraction_items(
     *,
     session: SessionDep,
     code: str = Query(...),
     year: int = Query(...),
     period: int = Query(...),
-) -> Any:
+):
     """
     指定されたコード、年度、期間のサマリーを取得する
 
@@ -191,7 +202,39 @@ def get_summary_non_numeric_items(
 
     head_item = get_summary_head(session=session, code=code, year=year, period=period)
     head_item_key = head_item.item_key
-    key = summary.generate_key(head_item.model_dump(), "FinancialReportSummary")
+
+    return get_summary_non_fraction_items_head_item_key(
+        session=session, head_item_key=head_item_key
+    )
+
+
+@router.get(
+    "/non_numeric/items/head_item_key",
+    response_model=scnn.get_response_schema_FinancialReportSummary_class(),
+)
+def get_summary_non_numeric_items_head_item_key(
+    *,
+    session: SessionDep,
+    head_item_key: str,
+):
+    """
+    指定されたヘッダーアイテムキーのサマリーを取得する
+
+    Args:
+        session (SessionDep): 接続セッション
+        head_item_key (int): ヘッダーアイテムキー
+    """
+
+    statement = select(IxHeadTitle).where(IxHeadTitle.item_key == head_item_key)
+    result = session.exec(statement)
+    try:
+        head_item = result.one()
+    except NoResultFound:
+        raise HTTPException(
+            status_code=404, detail="指定したデータが見つかりませんでした。"
+        )
+
+    key = summary.generate_non_numeric_key(head_item.model_dump())
 
     # 絶対パスを使用
     base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -205,36 +248,34 @@ def get_summary_non_numeric_items(
     non_numeric_list = []
 
     # すべての必要なキーを収集
-    item_keys = [(item.get("name"), item.get("context")) for item in items]
+    item_keys = [(item.get("name")) for item in items]
 
     # バッチクエリを実行
     statement = select(IxNonNumeric).where(
         IxNonNumeric.head_item_key == head_item_key,
-        tuple_(IxNonNumeric.name, IxNonNumeric.context).in_(item_keys),
+        col(IxNonNumeric.name).in_(item_keys),
     )
     result = session.exec(statement)
     non_numerics = result.all()
 
     # クエリ結果を辞書に変換
-    non_numeric_dict = {(nn.name, nn.context): nn for nn in non_numerics}
+    non_numeric_dict = {(nn.name): nn for nn in non_numerics}
 
     summary_data = {}
     for item in items:
-        non_numeric = non_numeric_dict.get((item.get("name"), item.get("context")))
+        non_numeric = non_numeric_dict.get((item.get("name")))
         if non_numeric:
             non_numeric_list.append(
                 {
                     "name": item.get("name"),
-                    "context": item.get("context"),
                     "label": item.get("label"),
                     "item": non_numeric,
                 }
             )
             name = humps.decamelize(item.get("name").split("_")[-1]).replace("__", "_")
-            context = humps.decamelize(item.get("context")).replace("__", "_")
             if name not in summary_data:
                 summary_data[name] = {}
-            summary_data[name][context] = non_numeric.model_dump()
+            summary_data[name] = non_numeric.model_dump()
 
     schema = scnn.get_schema_class(key)(**summary_data)
     if schema is None:
@@ -243,3 +284,32 @@ def get_summary_non_numeric_items(
         )
 
     return schema
+
+
+@router.get(
+    "/non_numeric/items/",
+    response_model=scnn.get_response_schema_FinancialReportSummary_class(),
+)
+def get_summary_non_numeric_items(
+    *,
+    session: SessionDep,
+    code: str = Query(...),
+    year: int = Query(...),
+    period: int = Query(...),
+):
+    """
+    指定されたコード、年度、期間のサマリーを取得する
+
+    Args:
+        session (SessionDep): 接続セッション
+        code (str): 銘柄コード
+        year (int): 年度
+        period (int): 期間
+    """
+
+    head_item = get_summary_head(session=session, code=code, year=year, period=period)
+    head_item_key = head_item.item_key
+
+    return get_summary_non_numeric_items_head_item_key(
+        session=session, head_item_key=head_item_key
+    )

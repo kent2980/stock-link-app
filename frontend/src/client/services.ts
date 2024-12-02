@@ -2,7 +2,7 @@ import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
 
-import type { GroupingNonFractionList,edjp_FinancialReportSummary,edjp_FinancialReportSummary_FY,edjp_FinancialReportSummary_HY_specific_business,edjp_FinancialReportSummary_Q1,edjp_FinancialReportSummary_Q2,edjp_FinancialReportSummary_Q3,IxHeadTitleCreate,IxHeadTitleCreateList,IxHeadTitlePublic,IxHeadTitlesPublic,IxReportTypeCountList,IxNonFractionCreate_Input,IxNonFractionCreate_Output,IxNonFractionCreateList,IxNonNumericCreate,IxNonNumericCreateList,IxLabelArcCreate,IxLabelArcCreateList,IxLabelLocCreate,IxLabelLocCreateList,IxLabelValueCreate,IxLabelValueCreateList,IxCalculationArcCreate_Input,IxCalculationArcCreate_Output,IxCalculationArcCreateList,IxCalculationLocCreate,IxCalculationLocCreateList,IxDefinitionArcCreate_Input,IxDefinitionArcCreate_Output,IxDefinitionArcCreateList,IxDefinitionLocCreate,IxDefinitionLocCreateList,IxPresentationArcCreate_Input,IxPresentationArcCreate_Output,IxPresentationArcCreateList,IxPresentationLocCreate,IxPresentationLocCreateList,IxSourceFileCreate,IxSourceFileCreateList,IxSchemaLinkBaseCreate,IxSchemaLinkBaseCreateList,IxFilePathCreate,IxFilePathPublic,IxQualitativeCreate,IxQualitativeCreates,IxQualitativePublic,IxQualitativePublics,QualitativeInfoHeader,Body_login_login_access_token,Message,NewPassword,Token,UserPublic,UpdatePassword,UserCreate,UserRegister,UsersPublic,UserUpdate,UserUpdateMe,ItemCreate,ItemPublic,ItemsPublic,ItemUpdate } from './models';
+import type { GroupingNonFractionList,edif,edif_FinancialReportSummary_Con_Q2,edif_FinancialReportSummary_Con_Q3,edjp,edjp_FinancialReportSummary,edjp_FinancialReportSummary_Con_FY,edjp_FinancialReportSummary_Con_HY_spec,edjp_FinancialReportSummary_Con_Q1,edjp_FinancialReportSummary_Con_Q2,edjp_FinancialReportSummary_Con_Q3,edjp_FinancialReportSummary_NonCon_FY,edjp_FinancialReportSummary_NonCon_Q1,edjp_FinancialReportSummary_NonCon_Q2,rvfc,rvfc_FinancialReportSummary,rvfc_FinancialReportSummary_spec,IxHeadTitleCreate,IxHeadTitleCreateList,IxHeadTitlePublic,IxHeadTitlesPublic,IxReportTypeCountList,IxNonFractionCreate_Input,IxNonFractionCreate_Output,IxNonFractionCreateList,IxNonNumericCreate,IxNonNumericCreateList,IxLabelArcCreate,IxLabelArcCreateList,IxLabelLocCreate,IxLabelLocCreateList,IxLabelValueCreate,IxLabelValueCreateList,IxCalculationArcCreate_Input,IxCalculationArcCreate_Output,IxCalculationArcCreateList,IxCalculationLocCreate,IxCalculationLocCreateList,IxDefinitionArcCreate_Input,IxDefinitionArcCreate_Output,IxDefinitionArcCreateList,IxDefinitionLocCreate,IxDefinitionLocCreateList,IxPresentationArcCreate_Input,IxPresentationArcCreate_Output,IxPresentationArcCreateList,IxPresentationLocCreate,IxPresentationLocCreateList,IxSourceFileCreate,IxSourceFileCreateList,IxSchemaLinkBaseCreate,IxSchemaLinkBaseCreateList,IxFilePathCreate,IxFilePathPublic,IxQualitativeCreate,IxQualitativeCreates,IxQualitativePublic,IxQualitativePublics,QualitativeInfoHeader,Body_login_login_access_token,Message,NewPassword,Token,UserPublic,UpdatePassword,UserCreate,UserRegister,UsersPublic,UserUpdate,UserUpdateMe,ItemCreate,ItemPublic,ItemsPublic,ItemUpdate } from './models';
 
 export type TDataGetSummaryContextLabels = {
                 contexts: Array<string>
@@ -46,6 +46,19 @@ contexts,
 		});
 	}
 
+	/**
+	 * Get Grouping Non Numeric
+	 * 非数値グルーピングされた項目名とコンテキストを取得する
+	 * @returns GroupingNonFractionList Successful Response
+	 * @throws ApiError
+	 */
+	public static getGroupingNonNumeric(): CancelablePromise<GroupingNonFractionList> {
+				return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/generate/grouping/non_numeric/',
+		});
+	}
+
 }
 
 export type TDataGetSummaryHead = {
@@ -60,7 +73,21 @@ period: number
 year: number
                 
             }
-export type TDataGetSummaryItems = {
+export type TDataGetSummaryNonFractionItemsHeadItemKey = {
+                headItemKey: string
+                
+            }
+export type TDataGetSummaryNonFractionItems = {
+                code: string
+period: number
+year: number
+                
+            }
+export type TDataGetSummaryNonNumericItemsHeadItemKey = {
+                headItemKey: string
+                
+            }
+export type TDataGetSummaryNonNumericItems = {
                 code: string
 period: number
 year: number
@@ -71,7 +98,13 @@ export class SummaryService {
 
 	/**
 	 * Get Summary Head
-	 * Get summary of all items.
+	 * 指定されたコード、年度、期間のサマリーのヘッダーを取得する
+ * 
+ * Args:
+ * session (SessionDep): 接続セッション
+ * code (str): 銘柄コード
+ * year (int): 年度
+ * period (int): 期間
 	 * @returns unknown Successful Response
 	 * @throws ApiError
 	 */
@@ -95,7 +128,13 @@ year,
 
 	/**
 	 * Get Summary Key
-	 * Get summary of all items.
+	 * 指定されたコード、年度、期間のサマリーのキーを取得する
+ * 
+ * Args:
+ * session (SessionDep): 接続セッション
+ * code (str): 銘柄コード
+ * year (int): 年度
+ * period (int): 期間
 	 * @returns string Successful Response
 	 * @throws ApiError
 	 */
@@ -118,12 +157,44 @@ year,
 	}
 
 	/**
-	 * Get Summary Items
-	 * Get summary of all items.
+	 * Get Summary Non Fraction Items Head Item Key
+	 * 指定されたヘッダーアイテムキーのサマリーを取得する
+ * 
+ * Args:
+ * session (SessionDep): 接続セッション
+ * head_item_key (int): ヘッダーアイテムキー
 	 * @returns unknown Successful Response
 	 * @throws ApiError
 	 */
-	public static getSummaryItems(data: TDataGetSummaryItems): CancelablePromise<edjp_FinancialReportSummary_HY_specific_business | edjp_FinancialReportSummary_Q1 | edjp_FinancialReportSummary_Q2 | edjp_FinancialReportSummary_Q3 | edjp_FinancialReportSummary_FY | edjp_FinancialReportSummary> {
+	public static getSummaryNonFractionItemsHeadItemKey(data: TDataGetSummaryNonFractionItemsHeadItemKey): CancelablePromise<edif_FinancialReportSummary_Con_Q2 | edif_FinancialReportSummary_Con_Q3 | edjp_FinancialReportSummary_NonCon_FY | edjp_FinancialReportSummary_Con_FY | edjp_FinancialReportSummary_NonCon_Q1 | edjp_FinancialReportSummary_Con_Q1 | edjp_FinancialReportSummary_NonCon_Q2 | edjp_FinancialReportSummary_Con_Q2 | edjp_FinancialReportSummary_Con_Q3 | edjp_FinancialReportSummary | edjp_FinancialReportSummary_Con_HY_spec | rvfc_FinancialReportSummary | rvfc_FinancialReportSummary_spec> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/ix/summary/non_fraction/items/head_item_key',
+			query: {
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Get Summary Non Fraction Items
+	 * 指定されたコード、年度、期間のサマリーを取得する
+ * 
+ * Args:
+ * session (SessionDep): 接続セッション
+ * code (str): 銘柄コード
+ * year (int): 年度
+ * period (int): 期間
+	 * @returns unknown Successful Response
+	 * @throws ApiError
+	 */
+	public static getSummaryNonFractionItems(data: TDataGetSummaryNonFractionItems): CancelablePromise<edif_FinancialReportSummary_Con_Q2 | edif_FinancialReportSummary_Con_Q3 | edjp_FinancialReportSummary_NonCon_FY | edjp_FinancialReportSummary_Con_FY | edjp_FinancialReportSummary_NonCon_Q1 | edjp_FinancialReportSummary_Con_Q1 | edjp_FinancialReportSummary_NonCon_Q2 | edjp_FinancialReportSummary_Con_Q2 | edjp_FinancialReportSummary_Con_Q3 | edjp_FinancialReportSummary | edjp_FinancialReportSummary_Con_HY_spec | rvfc_FinancialReportSummary | rvfc_FinancialReportSummary_spec> {
 		const {
 code,
 period,
@@ -131,7 +202,63 @@ year,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/api/v1/ix/summary/items/',
+			url: '/api/v1/ix/summary/non_fraction/items/',
+			query: {
+				code, year, period
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Get Summary Non Numeric Items Head Item Key
+	 * 指定されたヘッダーアイテムキーのサマリーを取得する
+ * 
+ * Args:
+ * session (SessionDep): 接続セッション
+ * head_item_key (int): ヘッダーアイテムキー
+	 * @returns unknown Successful Response
+	 * @throws ApiError
+	 */
+	public static getSummaryNonNumericItemsHeadItemKey(data: TDataGetSummaryNonNumericItemsHeadItemKey): CancelablePromise<edif | edjp | rvfc> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/ix/summary/non_numeric/items/head_item_key',
+			query: {
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Get Summary Non Numeric Items
+	 * 指定されたコード、年度、期間のサマリーを取得する
+ * 
+ * Args:
+ * session (SessionDep): 接続セッション
+ * code (str): 銘柄コード
+ * year (int): 年度
+ * period (int): 期間
+	 * @returns unknown Successful Response
+	 * @throws ApiError
+	 */
+	public static getSummaryNonNumericItems(data: TDataGetSummaryNonNumericItems): CancelablePromise<edif | edjp | rvfc> {
+		const {
+code,
+period,
+year,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/ix/summary/non_numeric/items/',
 			query: {
 				code, year, period
 			},
@@ -415,6 +542,19 @@ headItemKey,
 			errors: {
 				422: `Validation Error`,
 			},
+		});
+	}
+
+	/**
+	 * Upgrade Is Consolidated
+	 * Upgrade is_consolidated.
+	 * @returns string Successful Response
+	 * @throws ApiError
+	 */
+	public static upgradeIsConsolidated(): CancelablePromise<string> {
+				return __request(OpenAPI, {
+			method: 'POST',
+			url: '/api/v1/xbrl/upgrade/is_consolidated/',
 		});
 	}
 

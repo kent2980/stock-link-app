@@ -1,5 +1,5 @@
 {
-    "edif_CondensedQuarterlyConsolidatedStatementOfCashFlowsIFRS_consolidated_Q2": [
+    "edif_CondensedQuarterlyConsolidatedStatementOfCashFlowsIFRS_Con_Q2": [
         {
             "name": "jpigp_cor_CapitalContributionFromNonControllingInterestsFinCFIFRS",
             "context": "CurrentYTDDuration",
@@ -1081,7 +1081,7 @@
             "context_label": "前々年度期初から当日まで"
         }
     ],
-    "edif_CondensedQuarterlyConsolidatedStatementOfCashFlowsIFRS_consolidated_Q3": [
+    "edif_CondensedQuarterlyConsolidatedStatementOfCashFlowsIFRS_Con_Q3": [
         {
             "name": "jpigp_cor_CashAndCashEquivalentsIFRS",
             "context": "CurrentQuarterInstant",
@@ -1515,7 +1515,7 @@
             "context_label": "前々年度期初から当日まで"
         }
     ],
-    "edif_CondensedQuarterlyConsolidatedStatementOfChangesInEquityIFRS_consolidated_Q2": [
+    "edif_CondensedQuarterlyConsolidatedStatementOfChangesInEquityIFRS_Con_Q2": [
         {
             "name": "jpigp_cor_CancellationOfTreasurySharesSSIFRS",
             "context": "Prior1YTDDuration",
@@ -5087,7 +5087,7 @@
             "context_label": "前々年度期初から当日まで_自己株式"
         }
     ],
-    "edif_CondensedQuarterlyConsolidatedStatementOfChangesInEquityIFRS_consolidated_Q3": [
+    "edif_CondensedQuarterlyConsolidatedStatementOfChangesInEquityIFRS_Con_Q3": [
         {
             "name": "jpigp_cor_CancellationOfTreasurySharesSSIFRS",
             "context": "CurrentYTDDuration",
@@ -6961,7 +6961,7 @@
             "context_label": "前々年度期初から当日まで_自己株式"
         }
     ],
-    "edif_CondensedQuarterlyConsolidatedStatementOfFinancialPositionIFRS_consolidated_Q2": [
+    "edif_CondensedQuarterlyConsolidatedStatementOfFinancialPositionIFRS_Con_Q2": [
         {
             "name": "jpdei_cor_NumberOfSubmissionDEI",
             "context": "FilingDateInstant",
@@ -7833,7 +7833,7 @@
             "context_label": "前々年度時点"
         }
     ],
-    "edif_CondensedQuarterlyConsolidatedStatementOfFinancialPositionIFRS_consolidated_Q3": [
+    "edif_CondensedQuarterlyConsolidatedStatementOfFinancialPositionIFRS_Con_Q3": [
         {
             "name": "jpdei_cor_NumberOfSubmissionDEI",
             "context": "FilingDateInstant",
@@ -8297,7 +8297,7 @@
             "context_label": "前々年度時点"
         }
     ],
-    "edif_CondensedQuarterPeriodConsolidatedStatementOfComprehensiveIncomeIFRS_consolidated_Q3": [
+    "edif_CondensedQuarterPeriodConsolidatedStatementOfComprehensiveIncomeIFRS_Con_Q3": [
         {
             "name": "jpigp_cor_ComprehensiveIncomeAttributableToNonControllingInterestsIFRS",
             "context": "CurrentQuarterDuration",
@@ -8431,7 +8431,7 @@
             "context_label": "前々四半期会計期間"
         }
     ],
-    "edif_CondensedQuarterPeriodConsolidatedStatementOfProfitOrLossIFRS_consolidated_Q3": [
+    "edif_CondensedQuarterPeriodConsolidatedStatementOfProfitOrLossIFRS_Con_Q3": [
         {
             "name": "jpigp_cor_BasicEarningsLossPerShareIFRS",
             "context": "CurrentQuarterDuration",
@@ -8637,7 +8637,7 @@
             "context_label": "前々四半期会計期間"
         }
     ],
-    "edif_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeIFRS_consolidated_Q2": [
+    "edif_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeIFRS_Con_Q2": [
         {
             "name": "jpigp_cor_ComprehensiveIncomeAttributableToNonControllingInterestsIFRS",
             "context": "CurrentYTDDuration",
@@ -8795,7 +8795,7 @@
             "context_label": "前々年度期初から当日まで"
         }
     ],
-    "edif_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeIFRS_consolidated_Q3": [
+    "edif_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeIFRS_Con_Q3": [
         {
             "name": "jpigp_cor_ComprehensiveIncomeAttributableToNonControllingInterestsIFRS",
             "context": "CurrentYTDDuration",
@@ -8953,7 +8953,7 @@
             "context_label": "前々年度期初から当日まで"
         }
     ],
-    "edif_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeSingleStatementIFRS_consolidated_Q2": [
+    "edif_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeSingleStatementIFRS_Con_Q2": [
         {
             "name": "jpigp_cor_BasicEarningsLossPerShareIFRS",
             "context": "CurrentYTDDuration",
@@ -9327,7 +9327,7 @@
             "context_label": "前々年度期初から当日まで"
         }
     ],
-    "edif_CondensedYearToQuarterEndConsolidatedStatementOfProfitOrLossIFRS_consolidated_Q2": [
+    "edif_CondensedYearToQuarterEndConsolidatedStatementOfProfitOrLossIFRS_Con_Q2": [
         {
             "name": "jpdei_cor_NumberOfSubmissionDEI",
             "context": "FilingDateInstant",
@@ -9755,7 +9755,7 @@
             "context_label": "前々年度期初から当日まで"
         }
     ],
-    "edif_CondensedYearToQuarterEndConsolidatedStatementOfProfitOrLossIFRS_consolidated_Q3": [
+    "edif_CondensedYearToQuarterEndConsolidatedStatementOfProfitOrLossIFRS_Con_Q3": [
         {
             "name": "jpigp_cor_BasicEarningsLossPerShareIFRS",
             "context": "CurrentYTDDuration",
@@ -9961,7 +9961,7 @@
             "context_label": "前々年度期初から当日まで"
         }
     ],
-    "edif_FinancialReportSummary_consolidated_Q2": [
+    "edif_FinancialReportSummary_Con_Q2": [
         {
             "name": "tse-ed-t_AverageNumberOfShares",
             "context": "CurrentAccumulatedQ2Duration_NonConsolidatedMember_ResultMember",
@@ -10623,7 +10623,7 @@
             "context_label": "前年度時点_連結_実績"
         }
     ],
-    "edif_FinancialReportSummary_consolidated_Q3": [
+    "edif_FinancialReportSummary_Con_Q3": [
         {
             "name": "tse-ed-t_AverageNumberOfShares",
             "context": "CurrentAccumulatedQ3Duration_NonConsolidatedMember_ResultMember",
@@ -11057,7 +11057,7 @@
             "context_label": "前年度時点_連結_実績"
         }
     ],
-    "edif_NotesSegmentInformationCondensedQuarterlyConsolidatedFinancialStatementsIFRS_consolidated_Q2": [
+    "edif_NotesSegmentInformationCondensedQuarterlyConsolidatedFinancialStatementsIFRS_Con_Q2": [
         {
             "name": "jpigp_cor_CapitalExpendituresIFRS",
             "context": "CurrentYTDDuration",
@@ -12319,7 +12319,7 @@
             "context_label": "前々年度期初から当日まで_事業セグメント合計"
         }
     ],
-    "edif_NotesSegmentInformationCondensedQuarterlyConsolidatedFinancialStatementsIFRS_consolidated_Q3": [
+    "edif_NotesSegmentInformationCondensedQuarterlyConsolidatedFinancialStatementsIFRS_Con_Q3": [
         {
             "name": "jpigp_cor_FinanceCostsIFRS",
             "context": "CurrentYTDDuration",
@@ -12465,7 +12465,7 @@
             "context_label": "前々年度期初から当日まで_全社及び消去"
         }
     ],
-    "edjp_BalanceSheet_Nonconsolidated_FY": [
+    "edjp_BalanceSheet_NonCon_FY": [
         {
             "name": "jpdei_cor_NumberOfSubmissionDEI",
             "context": "FilingDateInstant",
@@ -13037,7 +13037,7 @@
             "context_label": "前々年度時点_非連結又は個別"
         }
     ],
-    "edjp_BalanceSheet_consolidated_FY": [
+    "edjp_BalanceSheet_Con_FY": [
         {
             "name": "jppfs_cor_AccountsPayableOther",
             "context": "CurrentYearInstant_NonConsolidatedMember",
@@ -13783,7 +13783,7 @@
             "context_label": "前々年度時点_非連結又は個別"
         }
     ],
-    "edjp_ConsolidatedBalanceSheet_consolidated_FY": [
+    "edjp_ConsolidatedBalanceSheet_Con_FY": [
         {
             "name": "jpdei_cor_NumberOfSubmissionDEI",
             "context": "FilingDateInstant",
@@ -14835,7 +14835,7 @@
             "context_label": "前々年度時点"
         }
     ],
-    "edjp_ConsolidatedStatementOfCashFlows_consolidated_FY": [
+    "edjp_ConsolidatedStatementOfCashFlows_Con_FY": [
         {
             "name": "jppfs_cor_AmortizationOfGoodwillOpeCF",
             "context": "CurrentYearDuration",
@@ -15743,7 +15743,7 @@
             "context_label": "前々年度会計期間"
         }
     ],
-    "edjp_ConsolidatedStatementOfChangesInEquity_consolidated_FY": [
+    "edjp_ConsolidatedStatementOfChangesInEquity_Con_FY": [
         {
             "name": "jppfs_cor_ChangeInTreasurySharesOfParentArisingFromTransactionsWithNonControllingShareholders",
             "context": "CurrentYearDuration",
@@ -16645,7 +16645,7 @@
             "context_label": "前々年度会計期間_株主資本"
         }
     ],
-    "edjp_ConsolidatedStatementOfComprehensiveIncome_consolidated_FY": [
+    "edjp_ConsolidatedStatementOfComprehensiveIncome_Con_FY": [
         {
             "name": "jppfs_cor_ComprehensiveIncome",
             "context": "CurrentYearDuration",
@@ -16767,7 +16767,7 @@
             "context_label": "前々年度会計期間"
         }
     ],
-    "edjp_ConsolidatedStatementOfIncome_consolidated_FY": [
+    "edjp_ConsolidatedStatementOfIncome_Con_FY": [
         {
             "name": "jppfs_cor_CommissionFeeNOE",
             "context": "CurrentYearDuration",
@@ -17297,7 +17297,7 @@
             "context_label": "前々年度会計期間"
         }
     ],
-    "edjp_FinancialReportSummary_Nonconsolidated_FY": [
+    "edjp_FinancialReportSummary_NonCon_FY": [
         {
             "name": "tse-ed-t_AverageNumberOfShares",
             "context": "CurrentYearDuration_NonConsolidatedMember_ResultMember",
@@ -18127,7 +18127,7 @@
             "context_label": "前年度会計期間_年間_非連結又は個別_実績"
         }
     ],
-    "edjp_FinancialReportSummary_consolidated_FY": [
+    "edjp_FinancialReportSummary_Con_FY": [
         {
             "name": "tse-ed-t_AverageNumberOfShares",
             "context": "CurrentYearDuration_NonConsolidatedMember_ResultMember",
@@ -19011,7 +19011,7 @@
             "context_label": "前年度会計期間_年間_非連結又は個別_実績"
         }
     ],
-    "edjp_FinancialReportSummary_Nonconsolidated_Q1": [
+    "edjp_FinancialReportSummary_NonCon_Q1": [
         {
             "name": "tse-ed-t_AverageNumberOfShares",
             "context": "CurrentAccumulatedQ1Duration_NonConsolidatedMember_ResultMember",
@@ -19667,7 +19667,7 @@
             "context_label": "前年度時点_非連結又は個別_実績"
         }
     ],
-    "edjp_FinancialReportSummary_consolidated_Q1": [
+    "edjp_FinancialReportSummary_Con_Q1": [
         {
             "name": "tse-ed-t_AverageNumberOfShares",
             "context": "CurrentAccumulatedQ1Duration_NonConsolidatedMember_ResultMember",
@@ -20197,7 +20197,7 @@
             "context_label": "前年度時点_連結_実績"
         }
     ],
-    "edjp_FinancialReportSummary_Nonconsolidated_Q2": [
+    "edjp_FinancialReportSummary_NonCon_Q2": [
         {
             "name": "tse-ed-t_AverageNumberOfShares",
             "context": "CurrentAccumulatedQ2Duration_NonConsolidatedMember_ResultMember",
@@ -20727,7 +20727,7 @@
             "context_label": "前年度時点_非連結又は個別_実績"
         }
     ],
-    "edjp_FinancialReportSummary_consolidated_Q2": [
+    "edjp_FinancialReportSummary_Con_Q2": [
         {
             "name": "tse-ed-t_AverageNumberOfShares",
             "context": "CurrentAccumulatedQ2Duration_NonConsolidatedMember_ResultMember",
@@ -21365,7 +21365,7 @@
             "context_label": "前年度時点_連結_実績"
         }
     ],
-    "edjp_FinancialReportSummary_consolidated_Q3": [
+    "edjp_FinancialReportSummary_Con_Q3": [
         {
             "name": "tse-ed-t_AverageNumberOfShares",
             "context": "CurrentAccumulatedQ3Duration_NonConsolidatedMember_ResultMember",
@@ -22377,7 +22377,7 @@
             "context_label": "前年度時点_連結_実績"
         }
     ],
-    "edjp_NotesSegmentInformationEtcConsolidatedFinancialStatements_consolidated_FY": [
+    "edjp_NotesSegmentInformationEtcConsolidatedFinancialStatements_Con_FY": [
         {
             "name": "jpcrp_cor_DepreciationSegmentInformation",
             "context": "CurrentYearDuration",
@@ -23075,7 +23075,7 @@
             "context_label": "前々年度会計期間_事業セグメント合計"
         }
     ],
-    "edjp_NotesSegmentInformationEtcQuarterlyConsolidatedFinancialStatements_consolidated_Q1": [
+    "edjp_NotesSegmentInformationEtcQuarterlyConsolidatedFinancialStatements_Con_Q1": [
         {
             "name": "jpcrp_cor_RevenuesFromExternalCustomers",
             "context": "CurrentYTDDuration",
@@ -23317,7 +23317,7 @@
             "context_label": "前々年度期初から当日まで_事業セグメント合計"
         }
     ],
-    "edjp_NotesSegmentInformationEtcQuarterlyConsolidatedFinancialStatements_consolidated_Q2": [
+    "edjp_NotesSegmentInformationEtcQuarterlyConsolidatedFinancialStatements_Con_Q2": [
         {
             "name": "jpcrp_cor_RevenuesFromExternalCustomers",
             "context": "CurrentYTDDuration",
@@ -23799,7 +23799,7 @@
             "context_label": "前々年度期初から当日まで_事業セグメント合計"
         }
     ],
-    "edjp_NotesSegmentInformationEtcQuarterlyConsolidatedFinancialStatements_consolidated_Q3": [
+    "edjp_NotesSegmentInformationEtcQuarterlyConsolidatedFinancialStatements_Con_Q3": [
         {
             "name": "jpcrp_cor_RevenuesFromExternalCustomers",
             "context": "CurrentYTDDuration",
@@ -24077,7 +24077,7 @@
             "context_label": "前々年度期初から当日まで_事業セグメント合計"
         }
     ],
-    "edjp_NotesSegmentInformationEtcQuarterlyFinancialStatements_Nonconsolidated_Q2": [
+    "edjp_NotesSegmentInformationEtcQuarterlyFinancialStatements_NonCon_Q2": [
         {
             "name": "jpcrp_cor_RevenuesFromExternalCustomers",
             "context": "CurrentYTDDuration_NonConsolidatedMember",
@@ -24295,7 +24295,7 @@
             "context_label": "前々年度期初から当日まで_非連結又は個別_小計"
         }
     ],
-    "edjp_QuarterlyBalanceSheet_Nonconsolidated_Q1": [
+    "edjp_QuarterlyBalanceSheet_NonCon_Q1": [
         {
             "name": "jpdei_cor_NumberOfSubmissionDEI",
             "context": "FilingDateInstant",
@@ -24915,7 +24915,7 @@
             "context_label": "前々年度時点_非連結又は個別"
         }
     ],
-    "edjp_QuarterlyBalanceSheet_Nonconsolidated_Q2": [
+    "edjp_QuarterlyBalanceSheet_NonCon_Q2": [
         {
             "name": "jpdei_cor_NumberOfSubmissionDEI",
             "context": "FilingDateInstant",
@@ -25919,7 +25919,7 @@
             "context_label": "前々年度時点_非連結又は個別"
         }
     ],
-    "edjp_QuarterlyConsolidatedBalanceSheet_consolidated_Q1": [
+    "edjp_QuarterlyConsolidatedBalanceSheet_Con_Q1": [
         {
             "name": "jpdei_cor_NumberOfSubmissionDEI",
             "context": "FilingDateInstant",
@@ -26863,7 +26863,7 @@
             "context_label": "前々年度時点"
         }
     ],
-    "edjp_QuarterlyConsolidatedBalanceSheet_consolidated_Q2": [
+    "edjp_QuarterlyConsolidatedBalanceSheet_Con_Q2": [
         {
             "name": "jpdei_cor_NumberOfSubmissionDEI",
             "context": "FilingDateInstant",
@@ -30063,7 +30063,7 @@
             "context_label": "前々年度時点"
         }
     ],
-    "edjp_QuarterlyConsolidatedBalanceSheet_consolidated_Q3": [
+    "edjp_QuarterlyConsolidatedBalanceSheet_Con_Q3": [
         {
             "name": "jpdei_cor_NumberOfSubmissionDEI",
             "context": "FilingDateInstant",
@@ -31499,7 +31499,7 @@
             "context_label": "前々年度時点"
         }
     ],
-    "edjp_QuarterlyConsolidatedStatementOfCashFlows_consolidated_Q2": [
+    "edjp_QuarterlyConsolidatedStatementOfCashFlows_Con_Q2": [
         {
             "name": "jppfs_cor_AmortizationOfGoodwillOpeCF",
             "context": "CurrentYTDDuration",
@@ -34201,7 +34201,7 @@
             "context_label": "前々年度期初から当日まで"
         }
     ],
-    "edjp_QuarterlyConsolidatedStatementOfCashFlows_consolidated_Q3": [
+    "edjp_QuarterlyConsolidatedStatementOfCashFlows_Con_Q3": [
         {
             "name": "jppfs_cor_AmortizationOfGoodwillOpeCF",
             "context": "CurrentYTDDuration",
@@ -34755,7 +34755,7 @@
             "context_label": "前々年度期初から当日まで"
         }
     ],
-    "edjp_QuarterlyStatementOfCashFlows_Nonconsolidated_Q2": [
+    "edjp_QuarterlyStatementOfCashFlows_NonCon_Q2": [
         {
             "name": "jppfs_cor_CashAndCashEquivalents",
             "context": "CurrentQuarterInstant_NonConsolidatedMember",
@@ -35621,7 +35621,7 @@
             "context_label": "前々年度期初から当日まで_非連結又は個別"
         }
     ],
-    "edjp_StatementOfCashFlows_Nonconsolidated_FY": [
+    "edjp_StatementOfCashFlows_NonCon_FY": [
         {
             "name": "jppfs_cor_CashAndCashEquivalents",
             "context": "CurrentYearInstant_NonConsolidatedMember",
@@ -36001,7 +36001,7 @@
             "context_label": "前々年度会計期間_非連結又は個別"
         }
     ],
-    "edjp_StatementOfChangesInEquity_Nonconsolidated_FY": [
+    "edjp_StatementOfChangesInEquity_NonCon_FY": [
         {
             "name": "jppfs_cor_DisposalOfTreasuryStock",
             "context": "CurrentYearDuration_NonConsolidatedMember",
@@ -36633,7 +36633,7 @@
             "context_label": "前々年度会計期間_非連結又は個別_株主資本"
         }
     ],
-    "edjp_StatementOfChangesInEquity_consolidated_FY": [
+    "edjp_StatementOfChangesInEquity_Con_FY": [
         {
             "name": "jppfs_cor_DisposalOfTreasuryStock",
             "context": "CurrentYearDuration_NonConsolidatedMember",
@@ -37241,7 +37241,7 @@
             "context_label": "前々年度会計期間_非連結又は個別_その他有価証券評価差額金"
         }
     ],
-    "edjp_StatementOfIncome_consolidated_FY": [
+    "edjp_StatementOfIncome_Con_FY": [
         {
             "name": "jppfs_cor_BusinessConsignmentExpensesSGA",
             "context": "CurrentYearDuration_NonConsolidatedMember",
@@ -37663,7 +37663,7 @@
             "context_label": "前々年度会計期間_非連結又は個別"
         }
     ],
-    "edjp_StatementOfIncome_Nonconsolidated_FY": [
+    "edjp_StatementOfIncome_NonCon_FY": [
         {
             "name": "jppfs_cor_CostOfSales",
             "context": "CurrentYearDuration_NonConsolidatedMember",
@@ -37941,7 +37941,7 @@
             "context_label": "前々年度会計期間_非連結又は個別"
         }
     ],
-    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncome_consolidated_Q1": [
+    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncome_Con_Q1": [
         {
             "name": "jppfs_cor_ComprehensiveIncome",
             "context": "CurrentYTDDuration",
@@ -38039,7 +38039,7 @@
             "context_label": "前々年度期初から当日まで"
         }
     ],
-    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncome_consolidated_Q2": [
+    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncome_Con_Q2": [
         {
             "name": "jppfs_cor_ComprehensiveIncome",
             "context": "CurrentYTDDuration",
@@ -38185,7 +38185,7 @@
             "context_label": "前々年度期初から当日まで"
         }
     ],
-    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncome_consolidated_Q3": [
+    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncome_Con_Q3": [
         {
             "name": "jppfs_cor_ComprehensiveIncome",
             "context": "CurrentYTDDuration",
@@ -38307,7 +38307,7 @@
             "context_label": "前々年度期初から当日まで"
         }
     ],
-    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncomeSingleStatement_consolidated_Q2": [
+    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncomeSingleStatement_Con_Q2": [
         {
             "name": "jppfs_cor_CommissionFeeNOE",
             "context": "CurrentYTDDuration",
@@ -39185,7 +39185,7 @@
             "context_label": "前々年度期初から当日まで"
         }
     ],
-    "edjp_YearToQuarterEndConsolidatedStatementOfIncome_consolidated_Q1": [
+    "edjp_YearToQuarterEndConsolidatedStatementOfIncome_Con_Q1": [
         {
             "name": "jppfs_cor_AmortizationOfGoodwillSGA",
             "context": "CurrentYTDDuration",
@@ -39715,7 +39715,7 @@
             "context_label": "前々年度期初から当日まで"
         }
     ],
-    "edjp_YearToQuarterEndConsolidatedStatementOfIncome_consolidated_Q2": [
+    "edjp_YearToQuarterEndConsolidatedStatementOfIncome_Con_Q2": [
         {
             "name": "jppfs_cor_AdvertisingAndPromotionExpensesSGA",
             "context": "CurrentYTDDuration",
@@ -42261,7 +42261,7 @@
             "context_label": "前々年度期初から当日まで"
         }
     ],
-    "edjp_YearToQuarterEndConsolidatedStatementOfIncome_consolidated_Q3": [
+    "edjp_YearToQuarterEndConsolidatedStatementOfIncome_Con_Q3": [
         {
             "name": "jppfs_cor_AdvertisingExpensesSGA",
             "context": "CurrentYTDDuration",
@@ -43271,7 +43271,7 @@
             "context_label": "前々年度期初から当日まで"
         }
     ],
-    "edjp_YearToQuarterEndStatementOfIncome_Nonconsolidated_Q1": [
+    "edjp_YearToQuarterEndStatementOfIncome_NonCon_Q1": [
         {
             "name": "jppfs_cor_CostOfSales",
             "context": "CurrentYTDDuration_NonConsolidatedMember",
@@ -43597,7 +43597,7 @@
             "context_label": "前々年度期初から当日まで_非連結又は個別"
         }
     ],
-    "edjp_YearToQuarterEndStatementOfIncome_Nonconsolidated_Q2": [
+    "edjp_YearToQuarterEndStatementOfIncome_NonCon_Q2": [
         {
             "name": "jppfs_cor_CommissionForUnderwritingSecondaryDistributionAndSolicitationForSellingAndOthersForProfessionalInvestorsORSEC",
             "context": "CurrentYTDDuration_NonConsolidatedMember",
@@ -44259,7 +44259,7 @@
             "context_label": "前々年度期初から当日まで_非連結又は個別"
         }
     ],
-    "edjp_FinancialReportSummary_consolidated_HY_specific_business": [
+    "edjp_FinancialReportSummary_Con_HY_spec": [
         {
             "name": "tse-ed-t_AverageNumberOfShares",
             "context": "CurrentAccumulatedQ2Duration_NonConsolidatedMember_ResultMember",
@@ -44903,7 +44903,7 @@
             "context_label": "前年度時点_非連結又は個別_実績"
         }
     ],
-    "edjp_NotesSegmentInformationEtcSemiAnnualConsolidatedFinancialStatements_consolidated_HY_specific_business": [
+    "edjp_NotesSegmentInformationEtcSemiAnnualConsolidatedFinancialStatements_Con_HY_spec": [
         {
             "name": "jpcrp_cor_DepreciationSegmentInformation",
             "context": "InterimDuration",
@@ -45301,7 +45301,7 @@
             "context_label": "前々中間期間_小計"
         }
     ],
-    "edjp_SemiAnnualBalanceSheet_consolidated_HY_specific_business": [
+    "edjp_SemiAnnualBalanceSheet_Con_HY_spec": [
         {
             "name": "jppfs_cor_AllowanceForLoanLossesAssetsBNK",
             "context": "InterimInstant_NonConsolidatedMember",
@@ -45951,7 +45951,7 @@
             "context_label": "前々年度時点_非連結又は個別"
         }
     ],
-    "edjp_SemiAnnualConsolidatedBalanceSheet_consolidated_HY_specific_business": [
+    "edjp_SemiAnnualConsolidatedBalanceSheet_Con_HY_spec": [
         {
             "name": "jpdei_cor_NumberOfSubmissionDEI",
             "context": "FilingDateInstant",
@@ -46667,7 +46667,7 @@
             "context_label": "前々年度時点"
         }
     ],
-    "edjp_SemiAnnualConsolidatedStatementOfChangesInEquity_consolidated_HY_specific_business": [
+    "edjp_SemiAnnualConsolidatedStatementOfChangesInEquity_Con_HY_spec": [
         {
             "name": "jppfs_cor_ChangeInTreasurySharesOfParentArisingFromTransactionsWithNonControllingShareholders",
             "context": "Prior1InterimDuration",
@@ -47479,7 +47479,7 @@
             "context_label": "前々中間期間_その他有価証券評価差額金"
         }
     ],
-    "edjp_SemiAnnualConsolidatedStatementOfComprehensiveIncome_consolidated_HY_specific_business": [
+    "edjp_SemiAnnualConsolidatedStatementOfComprehensiveIncome_Con_HY_spec": [
         {
             "name": "jppfs_cor_ComprehensiveIncome",
             "context": "InterimDuration",
@@ -47589,7 +47589,7 @@
             "context_label": "前々中間期間"
         }
     ],
-    "edjp_SemiAnnualConsolidatedStatementOfIncome_consolidated_HY_specific_business": [
+    "edjp_SemiAnnualConsolidatedStatementOfIncome_Con_HY_spec": [
         {
             "name": "jppfs_cor_ExtraordinaryIncome",
             "context": "InterimDuration",
@@ -47975,7 +47975,7 @@
             "context_label": "前々中間期間"
         }
     ],
-    "edjp_SemiAnnualStatementOfChangesInEquity_consolidated_HY_specific_business": [
+    "edjp_SemiAnnualStatementOfChangesInEquity_Con_HY_spec": [
         {
             "name": "jppfs_cor_DividendsFromSurplus",
             "context": "InterimDuration_NonConsolidatedMember",
@@ -48421,7 +48421,7 @@
             "context_label": "前々中間期間_非連結又は個別_その他有価証券評価差額金"
         }
     ],
-    "edjp_SemiAnnualStatementOfIncome_consolidated_HY_specific_business": [
+    "edjp_SemiAnnualStatementOfIncome_Con_HY_spec": [
         {
             "name": "jppfs_cor_ExtraordinaryIncome",
             "context": "InterimDuration_NonConsolidatedMember",
@@ -51233,7 +51233,7 @@
             "context_label": "前年度会計期間_連結_今回_実績"
         }
     ],
-    "rvfc_FinancialReportSummary_specific_business": [
+    "rvfc_FinancialReportSummary_spec": [
         {
             "name": "tse-ed-t_AmountChangeNetIncome",
             "context": "CurrentAccumulatedQ2Duration_NonConsolidatedMember_CurrentMember_ForecastMember",

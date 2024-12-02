@@ -1,5 +1,5 @@
 {
-    "edif_CondensedQuarterlyConsolidatedStatementOfCashFlowsIFRS_consolidated_Q2": {
+    "edif_CondensedQuarterlyConsolidatedStatementOfCashFlowsIFRS_Con_Q2": {
         "jpigp_cor_CapitalContributionFromNonControllingInterestsFinCFIFRS": {
             "label": "非支配持分からの払込による収入、財務活動によるキャッシュ・フロー（IFRS）",
             "item": [
@@ -1166,7 +1166,7 @@
             ]
         }
     },
-    "edif_CondensedQuarterlyConsolidatedStatementOfCashFlowsIFRS_consolidated_Q3": {
+    "edif_CondensedQuarterlyConsolidatedStatementOfCashFlowsIFRS_Con_Q3": {
         "jpigp_cor_CashAndCashEquivalentsIFRS": {
             "label": "現金及び現金同等物（IFRS）",
             "item": [
@@ -1631,7 +1631,7 @@
             ]
         }
     },
-    "edif_CondensedQuarterlyConsolidatedStatementOfChangesInEquityIFRS_consolidated_Q2": {
+    "edif_CondensedQuarterlyConsolidatedStatementOfChangesInEquityIFRS_Con_Q2": {
         "jpigp_cor_CancellationOfTreasurySharesSSIFRS": {
             "label": "自己株式の消却、持分変動計算書（IFRS）",
             "item": [
@@ -4263,7 +4263,7 @@
             ]
         }
     },
-    "edif_CondensedQuarterlyConsolidatedStatementOfChangesInEquityIFRS_consolidated_Q3": {
+    "edif_CondensedQuarterlyConsolidatedStatementOfChangesInEquityIFRS_Con_Q3": {
         "jpigp_cor_CancellationOfTreasurySharesSSIFRS": {
             "label": "自己株式の消却、持分変動計算書（IFRS）",
             "item": [
@@ -5583,7 +5583,7 @@
             ]
         }
     },
-    "edif_CondensedQuarterlyConsolidatedStatementOfFinancialPositionIFRS_consolidated_Q2": {
+    "edif_CondensedQuarterlyConsolidatedStatementOfFinancialPositionIFRS_Con_Q2": {
         "jpdei_cor_NumberOfSubmissionDEI": {
             "label": "提出回数、DEI",
             "item": [
@@ -6530,7 +6530,7 @@
             ]
         }
     },
-    "edif_CondensedQuarterlyConsolidatedStatementOfFinancialPositionIFRS_consolidated_Q3": {
+    "edif_CondensedQuarterlyConsolidatedStatementOfFinancialPositionIFRS_Con_Q3": {
         "jpdei_cor_NumberOfSubmissionDEI": {
             "label": "提出回数、DEI",
             "item": [
@@ -7035,7 +7035,7 @@
             ]
         }
     },
-    "edif_CondensedQuarterPeriodConsolidatedStatementOfComprehensiveIncomeIFRS_consolidated_Q3": {
+    "edif_CondensedQuarterPeriodConsolidatedStatementOfComprehensiveIncomeIFRS_Con_Q3": {
         "jpigp_cor_ComprehensiveIncomeAttributableToNonControllingInterestsIFRS": {
             "label": "非支配持分、当期包括利益（IFRS）",
             "item": [
@@ -7180,7 +7180,7 @@
             ]
         }
     },
-    "edif_CondensedQuarterPeriodConsolidatedStatementOfProfitOrLossIFRS_consolidated_Q3": {
+    "edif_CondensedQuarterPeriodConsolidatedStatementOfProfitOrLossIFRS_Con_Q3": {
         "jpigp_cor_BasicEarningsLossPerShareIFRS": {
             "label": "基本的１株当たり当期利益（△損失）（IFRS）",
             "item": [
@@ -7403,7 +7403,7 @@
             ]
         }
     },
-    "edif_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeIFRS_consolidated_Q2": {
+    "edif_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeIFRS_Con_Q2": {
         "jpigp_cor_ComprehensiveIncomeAttributableToNonControllingInterestsIFRS": {
             "label": "非支配持分、当期包括利益（IFRS）",
             "item": [
@@ -7574,7 +7574,7 @@
             ]
         }
     },
-    "edif_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeIFRS_consolidated_Q3": {
+    "edif_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeIFRS_Con_Q3": {
         "jpigp_cor_ComprehensiveIncomeAttributableToNonControllingInterestsIFRS": {
             "label": "非支配持分、当期包括利益（IFRS）",
             "item": [
@@ -7745,7 +7745,7 @@
             ]
         }
     },
-    "edif_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeSingleStatementIFRS_consolidated_Q2": {
+    "edif_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeSingleStatementIFRS_Con_Q2": {
         "jpigp_cor_BasicEarningsLossPerShareIFRS": {
             "label": "基本的１株当たり当期利益（△損失）（IFRS）",
             "item": [
@@ -8150,7 +8150,7 @@
             ]
         }
     },
-    "edif_CondensedYearToQuarterEndConsolidatedStatementOfProfitOrLossIFRS_consolidated_Q2": {
+    "edif_CondensedYearToQuarterEndConsolidatedStatementOfProfitOrLossIFRS_Con_Q2": {
         "jpdei_cor_NumberOfSubmissionDEI": {
             "label": "提出回数、DEI",
             "item": [
@@ -8616,7 +8616,7 @@
             ]
         }
     },
-    "edif_CondensedYearToQuarterEndConsolidatedStatementOfProfitOrLossIFRS_consolidated_Q3": {
+    "edif_CondensedYearToQuarterEndConsolidatedStatementOfProfitOrLossIFRS_Con_Q3": {
         "jpigp_cor_BasicEarningsLossPerShareIFRS": {
             "label": "基本的１株当たり当期利益（△損失）（IFRS）",
             "item": [
@@ -8839,7 +8839,7 @@
             ]
         }
     },
-    "edif_FinancialReportSummary_consolidated_Q2": {
+    "edif_FinancialReportSummary_Con_Q2": {
         "tse-ed-t_AverageNumberOfShares": {
             "label": "期中平均株式数",
             "item": [
@@ -9431,7 +9431,7 @@
             ]
         }
     },
-    "edif_FinancialReportSummary_consolidated_Q3": {
+    "edif_FinancialReportSummary_Con_Q3": {
         "tse-ed-t_AverageNumberOfShares": {
             "label": "期中平均株式数",
             "item": [
@@ -9826,7 +9826,7 @@
             ]
         }
     },
-    "edif_NotesSegmentInformationCondensedQuarterlyConsolidatedFinancialStatementsIFRS_consolidated_Q2": {
+    "edif_NotesSegmentInformationCondensedQuarterlyConsolidatedFinancialStatementsIFRS_Con_Q2": {
         "jpigp_cor_CapitalExpendituresIFRS": {
             "label": "資本的支出（IFRS）",
             "item": [
@@ -10798,7 +10798,7 @@
             ]
         }
     },
-    "edif_NotesSegmentInformationCondensedQuarterlyConsolidatedFinancialStatementsIFRS_consolidated_Q3": {
+    "edif_NotesSegmentInformationCondensedQuarterlyConsolidatedFinancialStatementsIFRS_Con_Q3": {
         "jpigp_cor_FinanceCostsIFRS": {
             "label": "金融費用（IFRS）",
             "item": [
@@ -10941,7 +10941,7 @@
             ]
         }
     },
-    "edjp_BalanceSheet_Nonconsolidated_FY": {
+    "edjp_BalanceSheet_NonCon_FY": {
         "jpdei_cor_NumberOfSubmissionDEI": {
             "label": "提出回数、DEI",
             "item": [
@@ -11563,7 +11563,7 @@
             ]
         }
     },
-    "edjp_BalanceSheet_consolidated_FY": {
+    "edjp_BalanceSheet_Con_FY": {
         "jppfs_cor_AccountsPayableOther": {
             "label": "未払金",
             "item": [
@@ -12371,7 +12371,7 @@
             ]
         }
     },
-    "edjp_ConsolidatedBalanceSheet_consolidated_FY": {
+    "edjp_ConsolidatedBalanceSheet_Con_FY": {
         "jpdei_cor_NumberOfSubmissionDEI": {
             "label": "提出回数、DEI",
             "item": [
@@ -13513,7 +13513,7 @@
             ]
         }
     },
-    "edjp_ConsolidatedStatementOfCashFlows_consolidated_FY": {
+    "edjp_ConsolidatedStatementOfCashFlows_Con_FY": {
         "jppfs_cor_AmortizationOfGoodwillOpeCF": {
             "label": "のれん償却額、営業活動によるキャッシュ・フロー",
             "item": [
@@ -14494,7 +14494,7 @@
             ]
         }
     },
-    "edjp_ConsolidatedStatementOfChangesInEquity_consolidated_FY": {
+    "edjp_ConsolidatedStatementOfChangesInEquity_Con_FY": {
         "jppfs_cor_ChangeInTreasurySharesOfParentArisingFromTransactionsWithNonControllingShareholders": {
             "label": "非支配株主との取引に係る親会社の持分変動",
             "item": [
@@ -15161,7 +15161,7 @@
             ]
         }
     },
-    "edjp_ConsolidatedStatementOfComprehensiveIncome_consolidated_FY": {
+    "edjp_ConsolidatedStatementOfComprehensiveIncome_Con_FY": {
         "jppfs_cor_ComprehensiveIncome": {
             "label": "包括利益",
             "item": [
@@ -15293,7 +15293,7 @@
             ]
         }
     },
-    "edjp_ConsolidatedStatementOfIncome_consolidated_FY": {
+    "edjp_ConsolidatedStatementOfIncome_Con_FY": {
         "jppfs_cor_CommissionFeeNOE": {
             "label": "支払手数料、営業外費用",
             "item": [
@@ -15867,7 +15867,7 @@
             ]
         }
     },
-    "edjp_FinancialReportSummary_Nonconsolidated_FY": {
+    "edjp_FinancialReportSummary_NonCon_FY": {
         "tse-ed-t_AverageNumberOfShares": {
             "label": "期中平均株式数",
             "item": [
@@ -16571,7 +16571,7 @@
             ]
         }
     },
-    "edjp_FinancialReportSummary_consolidated_FY": {
+    "edjp_FinancialReportSummary_Con_FY": {
         "tse-ed-t_AverageNumberOfShares": {
             "label": "期中平均株式数",
             "item": [
@@ -17341,7 +17341,7 @@
             ]
         }
     },
-    "edjp_FinancialReportSummary_Nonconsolidated_Q1": {
+    "edjp_FinancialReportSummary_NonCon_Q1": {
         "tse-ed-t_AverageNumberOfShares": {
             "label": "期中平均株式数",
             "item": [
@@ -17879,7 +17879,7 @@
             ]
         }
     },
-    "edjp_FinancialReportSummary_consolidated_Q1": {
+    "edjp_FinancialReportSummary_Con_Q1": {
         "tse-ed-t_AverageNumberOfShares": {
             "label": "期中平均株式数",
             "item": [
@@ -18353,7 +18353,7 @@
             ]
         }
     },
-    "edjp_FinancialReportSummary_Nonconsolidated_Q2": {
+    "edjp_FinancialReportSummary_NonCon_Q2": {
         "tse-ed-t_AverageNumberOfShares": {
             "label": "期中平均株式数",
             "item": [
@@ -18827,7 +18827,7 @@
             ]
         }
     },
-    "edjp_FinancialReportSummary_consolidated_Q2": {
+    "edjp_FinancialReportSummary_Con_Q2": {
         "tse-ed-t_AverageNumberOfShares": {
             "label": "期中平均株式数",
             "item": [
@@ -19413,7 +19413,7 @@
             ]
         }
     },
-    "edjp_FinancialReportSummary_consolidated_Q3": {
+    "edjp_FinancialReportSummary_Con_Q3": {
         "tse-ed-t_AverageNumberOfShares": {
             "label": "期中平均株式数",
             "item": [
@@ -20319,7 +20319,7 @@
             ]
         }
     },
-    "edjp_NotesSegmentInformationEtcConsolidatedFinancialStatements_consolidated_FY": {
+    "edjp_NotesSegmentInformationEtcConsolidatedFinancialStatements_Con_FY": {
         "jpcrp_cor_DepreciationSegmentInformation": {
             "label": "減価償却費、セグメント情報",
             "item": [
@@ -20860,7 +20860,7 @@
             ]
         }
     },
-    "edjp_NotesSegmentInformationEtcQuarterlyConsolidatedFinancialStatements_consolidated_Q1": {
+    "edjp_NotesSegmentInformationEtcQuarterlyConsolidatedFinancialStatements_Con_Q1": {
         "jpcrp_cor_RevenuesFromExternalCustomers": {
             "label": "外部顧客への売上高",
             "item": [
@@ -21042,7 +21042,7 @@
             ]
         }
     },
-    "edjp_NotesSegmentInformationEtcQuarterlyConsolidatedFinancialStatements_consolidated_Q2": {
+    "edjp_NotesSegmentInformationEtcQuarterlyConsolidatedFinancialStatements_Con_Q2": {
         "jpcrp_cor_RevenuesFromExternalCustomers": {
             "label": "外部顧客への売上高",
             "item": [
@@ -21399,7 +21399,7 @@
             ]
         }
     },
-    "edjp_NotesSegmentInformationEtcQuarterlyConsolidatedFinancialStatements_consolidated_Q3": {
+    "edjp_NotesSegmentInformationEtcQuarterlyConsolidatedFinancialStatements_Con_Q3": {
         "jpcrp_cor_RevenuesFromExternalCustomers": {
             "label": "外部顧客への売上高",
             "item": [
@@ -21610,7 +21610,7 @@
             ]
         }
     },
-    "edjp_NotesSegmentInformationEtcQuarterlyFinancialStatements_Nonconsolidated_Q2": {
+    "edjp_NotesSegmentInformationEtcQuarterlyFinancialStatements_NonCon_Q2": {
         "jpcrp_cor_RevenuesFromExternalCustomers": {
             "label": "外部顧客への売上高",
             "item": [
@@ -21781,7 +21781,7 @@
             ]
         }
     },
-    "edjp_QuarterlyBalanceSheet_Nonconsolidated_Q1": {
+    "edjp_QuarterlyBalanceSheet_NonCon_Q1": {
         "jpdei_cor_NumberOfSubmissionDEI": {
             "label": "提出回数、DEI",
             "item": [
@@ -22455,7 +22455,7 @@
             ]
         }
     },
-    "edjp_QuarterlyBalanceSheet_Nonconsolidated_Q2": {
+    "edjp_QuarterlyBalanceSheet_NonCon_Q2": {
         "jpdei_cor_NumberOfSubmissionDEI": {
             "label": "提出回数、DEI",
             "item": [
@@ -23545,7 +23545,7 @@
             ]
         }
     },
-    "edjp_QuarterlyConsolidatedBalanceSheet_consolidated_Q1": {
+    "edjp_QuarterlyConsolidatedBalanceSheet_Con_Q1": {
         "jpdei_cor_NumberOfSubmissionDEI": {
             "label": "提出回数、DEI",
             "item": [
@@ -24570,7 +24570,7 @@
             ]
         }
     },
-    "edjp_QuarterlyConsolidatedBalanceSheet_consolidated_Q2": {
+    "edjp_QuarterlyConsolidatedBalanceSheet_Con_Q2": {
         "jpdei_cor_NumberOfSubmissionDEI": {
             "label": "提出回数、DEI",
             "item": [
@@ -28044,7 +28044,7 @@
             ]
         }
     },
-    "edjp_QuarterlyConsolidatedBalanceSheet_consolidated_Q3": {
+    "edjp_QuarterlyConsolidatedBalanceSheet_Con_Q3": {
         "jpdei_cor_NumberOfSubmissionDEI": {
             "label": "提出回数、DEI",
             "item": [
@@ -29602,7 +29602,7 @@
             ]
         }
     },
-    "edjp_QuarterlyConsolidatedStatementOfCashFlows_consolidated_Q2": {
+    "edjp_QuarterlyConsolidatedStatementOfCashFlows_Con_Q2": {
         "jppfs_cor_AmortizationOfGoodwillOpeCF": {
             "label": "のれん償却額、営業活動によるキャッシュ・フロー",
             "item": [
@@ -32524,7 +32524,7 @@
             ]
         }
     },
-    "edjp_QuarterlyConsolidatedStatementOfCashFlows_consolidated_Q3": {
+    "edjp_QuarterlyConsolidatedStatementOfCashFlows_Con_Q3": {
         "jppfs_cor_AmortizationOfGoodwillOpeCF": {
             "label": "のれん償却額、営業活動によるキャッシュ・フロー",
             "item": [
@@ -33119,7 +33119,7 @@
             ]
         }
     },
-    "edjp_QuarterlyStatementOfCashFlows_Nonconsolidated_Q2": {
+    "edjp_QuarterlyStatementOfCashFlows_NonCon_Q2": {
         "jppfs_cor_CashAndCashEquivalents": {
             "label": "現金及び現金同等物の残高",
             "item": [
@@ -34052,7 +34052,7 @@
             ]
         }
     },
-    "edjp_StatementOfCashFlows_Nonconsolidated_FY": {
+    "edjp_StatementOfCashFlows_NonCon_FY": {
         "jppfs_cor_CashAndCashEquivalents": {
             "label": "現金及び現金同等物の残高",
             "item": [
@@ -34461,7 +34461,7 @@
             ]
         }
     },
-    "edjp_StatementOfChangesInEquity_Nonconsolidated_FY": {
+    "edjp_StatementOfChangesInEquity_NonCon_FY": {
         "jppfs_cor_DisposalOfTreasuryStock": {
             "label": "自己株式の処分",
             "item": [
@@ -34923,7 +34923,7 @@
             ]
         }
     },
-    "edjp_StatementOfChangesInEquity_consolidated_FY": {
+    "edjp_StatementOfChangesInEquity_Con_FY": {
         "jppfs_cor_DisposalOfTreasuryStock": {
             "label": "自己株式の処分",
             "item": [
@@ -35364,7 +35364,7 @@
             ]
         }
     },
-    "edjp_StatementOfIncome_consolidated_FY": {
+    "edjp_StatementOfIncome_Con_FY": {
         "jppfs_cor_BusinessConsignmentExpensesSGA": {
             "label": "業務委託費、販売費及び一般管理費",
             "item": [
@@ -35821,7 +35821,7 @@
             ]
         }
     },
-    "edjp_StatementOfIncome_Nonconsolidated_FY": {
+    "edjp_StatementOfIncome_NonCon_FY": {
         "jppfs_cor_CostOfSales": {
             "label": "売上原価",
             "item": [
@@ -36122,7 +36122,7 @@
             ]
         }
     },
-    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncome_consolidated_Q1": {
+    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncome_Con_Q1": {
         "jppfs_cor_ComprehensiveIncome": {
             "label": "包括利益",
             "item": [
@@ -36228,7 +36228,7 @@
             ]
         }
     },
-    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncome_consolidated_Q2": {
+    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncome_Con_Q2": {
         "jppfs_cor_ComprehensiveIncome": {
             "label": "包括利益",
             "item": [
@@ -36386,7 +36386,7 @@
             ]
         }
     },
-    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncome_consolidated_Q3": {
+    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncome_Con_Q3": {
         "jppfs_cor_ComprehensiveIncome": {
             "label": "包括利益",
             "item": [
@@ -36518,7 +36518,7 @@
             ]
         }
     },
-    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncomeSingleStatement_consolidated_Q2": {
+    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncomeSingleStatement_Con_Q2": {
         "jppfs_cor_CommissionFeeNOE": {
             "label": "支払手数料、営業外費用",
             "item": [
@@ -37469,7 +37469,7 @@
             ]
         }
     },
-    "edjp_YearToQuarterEndConsolidatedStatementOfIncome_consolidated_Q1": {
+    "edjp_YearToQuarterEndConsolidatedStatementOfIncome_Con_Q1": {
         "jppfs_cor_AmortizationOfGoodwillSGA": {
             "label": "のれん償却額、販売費及び一般管理費",
             "item": [
@@ -38043,7 +38043,7 @@
             ]
         }
     },
-    "edjp_YearToQuarterEndConsolidatedStatementOfIncome_consolidated_Q2": {
+    "edjp_YearToQuarterEndConsolidatedStatementOfIncome_Con_Q2": {
         "jppfs_cor_AdvertisingAndPromotionExpensesSGA": {
             "label": "広告宣伝費及び販売促進費、販売費及び一般管理費",
             "item": [
@@ -40801,7 +40801,7 @@
             ]
         }
     },
-    "edjp_YearToQuarterEndConsolidatedStatementOfIncome_consolidated_Q3": {
+    "edjp_YearToQuarterEndConsolidatedStatementOfIncome_Con_Q3": {
         "jppfs_cor_AdvertisingExpensesSGA": {
             "label": "広告宣伝費、販売費及び一般管理費",
             "item": [
@@ -41895,7 +41895,7 @@
             ]
         }
     },
-    "edjp_YearToQuarterEndStatementOfIncome_Nonconsolidated_Q1": {
+    "edjp_YearToQuarterEndStatementOfIncome_NonCon_Q1": {
         "jppfs_cor_CostOfSales": {
             "label": "売上原価",
             "item": [
@@ -42248,7 +42248,7 @@
             ]
         }
     },
-    "edjp_YearToQuarterEndStatementOfIncome_Nonconsolidated_Q2": {
+    "edjp_YearToQuarterEndStatementOfIncome_NonCon_Q2": {
         "jppfs_cor_CommissionForUnderwritingSecondaryDistributionAndSolicitationForSellingAndOthersForProfessionalInvestorsORSEC": {
             "label": "引受け・売出し・特定投資家向け売付け勧誘等の手数料、営業収益、第一種金融商品取引業",
             "item": [
@@ -42965,7 +42965,7 @@
             ]
         }
     },
-    "edjp_FinancialReportSummary_consolidated_HY_specific_business": {
+    "edjp_FinancialReportSummary_Con_HY_spec": {
         "tse-ed-t_AverageNumberOfShares": {
             "label": "期中平均株式数",
             "item": [
@@ -43505,7 +43505,7 @@
             ]
         }
     },
-    "edjp_NotesSegmentInformationEtcSemiAnnualConsolidatedFinancialStatements_consolidated_HY_specific_business": {
+    "edjp_NotesSegmentInformationEtcSemiAnnualConsolidatedFinancialStatements_Con_HY_spec": {
         "jpcrp_cor_DepreciationSegmentInformation": {
             "label": "減価償却費、セグメント情報",
             "item": [
@@ -43836,7 +43836,7 @@
             ]
         }
     },
-    "edjp_SemiAnnualBalanceSheet_consolidated_HY_specific_business": {
+    "edjp_SemiAnnualBalanceSheet_Con_HY_spec": {
         "jppfs_cor_AllowanceForLoanLossesAssetsBNK": {
             "label": "貸倒引当金、資産の部、銀行業",
             "item": [
@@ -44540,7 +44540,7 @@
             ]
         }
     },
-    "edjp_SemiAnnualConsolidatedBalanceSheet_consolidated_HY_specific_business": {
+    "edjp_SemiAnnualConsolidatedBalanceSheet_Con_HY_spec": {
         "jpdei_cor_NumberOfSubmissionDEI": {
             "label": "提出回数、DEI",
             "item": [
@@ -45318,7 +45318,7 @@
             ]
         }
     },
-    "edjp_SemiAnnualConsolidatedStatementOfChangesInEquity_consolidated_HY_specific_business": {
+    "edjp_SemiAnnualConsolidatedStatementOfChangesInEquity_Con_HY_spec": {
         "jppfs_cor_ChangeInTreasurySharesOfParentArisingFromTransactionsWithNonControllingShareholders": {
             "label": "非支配株主との取引に係る親会社の持分変動",
             "item": [
@@ -45910,7 +45910,7 @@
             ]
         }
     },
-    "edjp_SemiAnnualConsolidatedStatementOfComprehensiveIncome_consolidated_HY_specific_business": {
+    "edjp_SemiAnnualConsolidatedStatementOfComprehensiveIncome_Con_HY_spec": {
         "jppfs_cor_ComprehensiveIncome": {
             "label": "包括利益",
             "item": [
@@ -46029,7 +46029,7 @@
             ]
         }
     },
-    "edjp_SemiAnnualConsolidatedStatementOfIncome_consolidated_HY_specific_business": {
+    "edjp_SemiAnnualConsolidatedStatementOfIncome_Con_HY_spec": {
         "jppfs_cor_ExtraordinaryIncome": {
             "label": "特別利益",
             "item": [
@@ -46447,7 +46447,7 @@
             ]
         }
     },
-    "edjp_SemiAnnualStatementOfChangesInEquity_consolidated_HY_specific_business": {
+    "edjp_SemiAnnualStatementOfChangesInEquity_Con_HY_spec": {
         "jppfs_cor_DividendsFromSurplus": {
             "label": "剰余金の配当",
             "item": [
@@ -46780,7 +46780,7 @@
             ]
         }
     },
-    "edjp_SemiAnnualStatementOfIncome_consolidated_HY_specific_business": {
+    "edjp_SemiAnnualStatementOfIncome_Con_HY_spec": {
         "jppfs_cor_ExtraordinaryIncome": {
             "label": "特別利益",
             "item": [
@@ -48946,7 +48946,7 @@
             ]
         }
     },
-    "rvfc_FinancialReportSummary_specific_business": {
+    "rvfc_FinancialReportSummary_spec": {
         "tse-ed-t_AmountChangeNetIncome": {
             "label": "増減額、当期純利益",
             "item": [

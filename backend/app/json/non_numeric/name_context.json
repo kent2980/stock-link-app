@@ -1,5 +1,5 @@
 {
-    "edif_CondensedQuarterlyConsolidatedStatementOfCashFlowsIFRS_consolidated_Q2": {
+    "edif_CondensedQuarterlyConsolidatedStatementOfCashFlowsIFRS_Con_Q2": {
         "jpigp_cor_CondensedQuarterlyConsolidatedStatementOfCashFlowsIFRSTextBlock": {
             "label": "要約四半期連結キャッシュ・フロー計算書（IFRS） [テキストブロック]",
             "item": [
@@ -10,7 +10,7 @@
             ]
         }
     },
-    "edif_CondensedQuarterlyConsolidatedStatementOfCashFlowsIFRS_consolidated_Q3": {
+    "edif_CondensedQuarterlyConsolidatedStatementOfCashFlowsIFRS_Con_Q3": {
         "jpigp_cor_CondensedQuarterlyConsolidatedStatementOfCashFlowsIFRSTextBlock": {
             "label": "要約四半期連結キャッシュ・フロー計算書（IFRS） [テキストブロック]",
             "item": [
@@ -21,7 +21,7 @@
             ]
         }
     },
-    "edif_CondensedQuarterlyConsolidatedStatementOfChangesInEquityIFRS_consolidated_Q2": {
+    "edif_CondensedQuarterlyConsolidatedStatementOfChangesInEquityIFRS_Con_Q2": {
         "jpigp_cor_CondensedQuarterlyConsolidatedStatementOfCashFlowsIFRSTextBlock": {
             "label": "要約四半期連結キャッシュ・フロー計算書（IFRS） [テキストブロック]",
             "item": [
@@ -41,7 +41,7 @@
             ]
         }
     },
-    "edif_CondensedQuarterlyConsolidatedStatementOfChangesInEquityIFRS_consolidated_Q3": {
+    "edif_CondensedQuarterlyConsolidatedStatementOfChangesInEquityIFRS_Con_Q3": {
         "jpigp_cor_CondensedQuarterlyConsolidatedStatementOfChangesInEquityIFRSTextBlock": {
             "label": "要約四半期連結持分変動計算書（IFRS） [テキストブロック]",
             "item": [
@@ -52,7 +52,7 @@
             ]
         }
     },
-    "edif_CondensedQuarterlyConsolidatedStatementOfFinancialPositionIFRS_consolidated_Q2": {
+    "edif_CondensedQuarterlyConsolidatedStatementOfFinancialPositionIFRS_Con_Q2": {
         "jpdei_cor_AccountingStandardsDEI": {
             "label": "会計基準、DEI",
             "item": [
@@ -297,7 +297,7 @@
             ]
         }
     },
-    "edif_CondensedQuarterlyConsolidatedStatementOfFinancialPositionIFRS_consolidated_Q3": {
+    "edif_CondensedQuarterlyConsolidatedStatementOfFinancialPositionIFRS_Con_Q3": {
         "jpdei_cor_AccountingStandardsDEI": {
             "label": "会計基準、DEI",
             "item": [
@@ -542,7 +542,7 @@
             ]
         }
     },
-    "edif_CondensedQuarterPeriodConsolidatedStatementOfComprehensiveIncomeIFRS_consolidated_Q3": {
+    "edif_CondensedQuarterPeriodConsolidatedStatementOfComprehensiveIncomeIFRS_Con_Q3": {
         "jpigp_cor_CondensedQuarterPeriodConsolidatedStatementOfComprehensiveIncomeIFRSTextBlock": {
             "label": "四半期連結会計期間、要約四半期連結包括利益計算書（IFRS） [テキストブロック]",
             "item": [
@@ -553,7 +553,7 @@
             ]
         }
     },
-    "edif_CondensedQuarterPeriodConsolidatedStatementOfProfitOrLossIFRS_consolidated_Q3": {
+    "edif_CondensedQuarterPeriodConsolidatedStatementOfProfitOrLossIFRS_Con_Q3": {
         "jpigp_cor_CondensedQuarterPeriodConsolidatedStatementOfProfitOrLossIFRSTextBlock": {
             "label": "四半期連結会計期間、要約四半期連結損益計算書（IFRS） [テキストブロック]",
             "item": [
@@ -564,7 +564,7 @@
             ]
         }
     },
-    "edif_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeIFRS_consolidated_Q2": {
+    "edif_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeIFRS_Con_Q2": {
         "jpigp_cor_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeIFRSTextBlock": {
             "label": "四半期連結累計期間、要約四半期連結包括利益計算書（IFRS） [テキストブロック]",
             "item": [
@@ -575,7 +575,7 @@
             ]
         }
     },
-    "edif_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeIFRS_consolidated_Q3": {
+    "edif_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeIFRS_Con_Q3": {
         "jpigp_cor_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeIFRSTextBlock": {
             "label": "四半期連結累計期間、要約四半期連結包括利益計算書（IFRS） [テキストブロック]",
             "item": [
@@ -586,7 +586,7 @@
             ]
         }
     },
-    "edif_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeSingleStatementIFRS_consolidated_Q2": {
+    "edif_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeSingleStatementIFRS_Con_Q2": {
         "jpigp_cor_CondensedYearToQuarterEndConsolidatedStatementOfComprehensiveIncomeSingleStatementIFRSTextBlock": {
             "label": "四半期連結累計期間、要約四半期連結包括利益計算書（１計算書）（IFRS） [テキストブロック]",
             "item": [
@@ -597,7 +597,7 @@
             ]
         }
     },
-    "edif_CondensedYearToQuarterEndConsolidatedStatementOfProfitOrLossIFRS_consolidated_Q2": {
+    "edif_CondensedYearToQuarterEndConsolidatedStatementOfProfitOrLossIFRS_Con_Q2": {
         "jpdei_cor_AccountingStandardsDEI": {
             "label": "会計基準、DEI",
             "item": [
@@ -842,7 +842,7 @@
             ]
         }
     },
-    "edif_CondensedYearToQuarterEndConsolidatedStatementOfProfitOrLossIFRS_consolidated_Q3": {
+    "edif_CondensedYearToQuarterEndConsolidatedStatementOfProfitOrLossIFRS_Con_Q3": {
         "jpigp_cor_CondensedYearToQuarterEndConsolidatedStatementOfProfitOrLossIFRSTextBlock": {
             "label": "四半期連結累計期間、要約四半期連結損益計算書（IFRS） [テキストブロック]",
             "item": [
@@ -853,7 +853,7 @@
             ]
         }
     },
-    "edif_FinancialReportSummary_consolidated_Q2": {
+    "edif_FinancialReportSummary_Con_Q2": {
         "tse-ed-t_ChangesInAccountingEstimatesIFRS": {
             "label": "会計上の見積りの変更、IFRS",
             "item": [
@@ -1404,7 +1404,7 @@
             ]
         }
     },
-    "edif_FinancialReportSummary_consolidated_Q3": {
+    "edif_FinancialReportSummary_Con_Q3": {
         "tse-ed-t_ChangesInAccountingEstimatesIFRS": {
             "label": "会計上の見積りの変更、IFRS",
             "item": [
@@ -1955,7 +1955,7 @@
             ]
         }
     },
-    "edif_NotesSegmentInformationCondensedQuarterlyConsolidatedFinancialStatementsIFRS_consolidated_Q2": {
+    "edif_NotesSegmentInformationCondensedQuarterlyConsolidatedFinancialStatementsIFRS_Con_Q2": {
         "jpigp_cor_DescriptionOfFactThatCompanysBusinessComprisesSingleSegmentIFRS": {
             "label": "単一セグメントである旨（IFRS）",
             "item": [
@@ -2002,7 +2002,7 @@
             ]
         }
     },
-    "edif_NotesSegmentInformationCondensedQuarterlyConsolidatedFinancialStatementsIFRS_consolidated_Q3": {
+    "edif_NotesSegmentInformationCondensedQuarterlyConsolidatedFinancialStatementsIFRS_Con_Q3": {
         "jpigp_cor_DisclosureOfChangesInReportableSegmentsIFRSTextBlock": {
             "label": "報告セグメントの変更に関する事項（IFRS） [テキストブロック]",
             "item": [
@@ -2022,7 +2022,7 @@
             ]
         }
     },
-    "edjp_BalanceSheet_Nonconsolidated_FY": {
+    "edjp_BalanceSheet_NonCon_FY": {
         "jpcrp_cor_BalanceSheetTextBlock": {
             "label": "貸借対照表 [テキストブロック]",
             "item": [
@@ -2267,7 +2267,7 @@
             ]
         }
     },
-    "edjp_BalanceSheet_consolidated_FY": {
+    "edjp_BalanceSheet_Con_FY": {
         "jpcrp_cor_BalanceSheetTextBlock": {
             "label": "貸借対照表 [テキストブロック]",
             "item": [
@@ -2278,7 +2278,7 @@
             ]
         }
     },
-    "edjp_ConsolidatedBalanceSheet_consolidated_FY": {
+    "edjp_ConsolidatedBalanceSheet_Con_FY": {
         "jpcrp_cor_ConsolidatedBalanceSheetTextBlock": {
             "label": "連結貸借対照表 [テキストブロック]",
             "item": [
@@ -2523,7 +2523,7 @@
             ]
         }
     },
-    "edjp_ConsolidatedStatementOfCashFlows_consolidated_FY": {
+    "edjp_ConsolidatedStatementOfCashFlows_Con_FY": {
         "jpcrp_cor_ConsolidatedStatementOfCashFlowsTextBlock": {
             "label": "連結キャッシュ・フロー計算書 [テキストブロック]",
             "item": [
@@ -2534,7 +2534,7 @@
             ]
         }
     },
-    "edjp_ConsolidatedStatementOfChangesInEquity_consolidated_FY": {
+    "edjp_ConsolidatedStatementOfChangesInEquity_Con_FY": {
         "jpcrp_cor_ConsolidatedStatementOfChangesInEquityTextBlock": {
             "label": "連結株主資本等変動計算書 [テキストブロック]",
             "item": [
@@ -2545,7 +2545,7 @@
             ]
         }
     },
-    "edjp_ConsolidatedStatementOfComprehensiveIncome_consolidated_FY": {
+    "edjp_ConsolidatedStatementOfComprehensiveIncome_Con_FY": {
         "jpcrp_cor_ConsolidatedStatementOfComprehensiveIncomeTextBlock": {
             "label": "連結包括利益計算書 [テキストブロック]",
             "item": [
@@ -2556,7 +2556,7 @@
             ]
         }
     },
-    "edjp_ConsolidatedStatementOfIncome_consolidated_FY": {
+    "edjp_ConsolidatedStatementOfIncome_Con_FY": {
         "jpcrp_cor_ConsolidatedStatementOfIncomeTextBlock": {
             "label": "連結損益計算書 [テキストブロック]",
             "item": [
@@ -2567,7 +2567,7 @@
             ]
         }
     },
-    "edjp_FinancialReportSummary_Nonconsolidated_FY": {
+    "edjp_FinancialReportSummary_NonCon_FY": {
         "tse-ed-t_AnnualSecuritiesReportFilingDateAsPlanned": {
             "label": "有価証券報告書提出予定日",
             "item": [
@@ -3100,7 +3100,7 @@
             ]
         }
     },
-    "edjp_FinancialReportSummary_consolidated_FY": {
+    "edjp_FinancialReportSummary_Con_FY": {
         "tse-ed-t_AnnualSecuritiesReportFilingDateAsPlanned": {
             "label": "有価証券報告書提出予定日",
             "item": [
@@ -3721,7 +3721,7 @@
             ]
         }
     },
-    "edjp_FinancialReportSummary_consolidated_Q1": {
+    "edjp_FinancialReportSummary_Con_Q1": {
         "tse-ed-t_ApplyingOfSpecificAccountingOfTheConsolidatedQuarterlyFinancialStatements": {
             "label": "四半期連結財務諸表の作成に特有の会計処理の適用",
             "item": [
@@ -4281,7 +4281,7 @@
             ]
         }
     },
-    "edjp_FinancialReportSummary_Nonconsolidated_Q1": {
+    "edjp_FinancialReportSummary_NonCon_Q1": {
         "tse-ed-t_ApplyingOfSpecificAccountingOfTheQuarterlyFinancialStatements": {
             "label": "四半期財務諸表の作成に特有の会計処理の適用",
             "item": [
@@ -4814,7 +4814,7 @@
             ]
         }
     },
-    "edjp_FinancialReportSummary_consolidated_Q2": {
+    "edjp_FinancialReportSummary_Con_Q2": {
         "tse-ed-t_ApplyingOfSpecificAccountingOfTheConsolidatedSemiAnnualFinancialStatements": {
             "label": "中間連結財務諸表の作成に特有の会計処理の適用",
             "item": [
@@ -5400,7 +5400,7 @@
             ]
         }
     },
-    "edjp_FinancialReportSummary_Nonconsolidated_Q2": {
+    "edjp_FinancialReportSummary_NonCon_Q2": {
         "tse-ed-t_ApplyingOfSpecificAccountingOfTheSemiAnnualFinancialStatements": {
             "label": "中間財務諸表の作成に特有の会計処理の適用",
             "item": [
@@ -5942,7 +5942,7 @@
             ]
         }
     },
-    "edjp_FinancialReportSummary_consolidated_Q3": {
+    "edjp_FinancialReportSummary_Con_Q3": {
         "tse-ed-t_ApplyingOfSpecificAccountingOfTheConsolidatedQuarterlyFinancialStatements": {
             "label": "四半期連結財務諸表の作成に特有の会計処理の適用",
             "item": [
@@ -7080,7 +7080,7 @@
             ]
         }
     },
-    "edjp_MajorComponentsOfSellingGeneralAndAdministrativeExpenses_consolidated_Q2": {
+    "edjp_MajorComponentsOfSellingGeneralAndAdministrativeExpenses_Con_Q2": {
         "jpcrp_cor_MajorComponentsOfSellingGeneralAndAdministrativeExpensesTextBlock": {
             "label": "主要な販売費及び一般管理費 [テキストブロック]",
             "item": [
@@ -7091,7 +7091,7 @@
             ]
         }
     },
-    "edjp_NotesRegardingGuaranteeObligations_consolidated_Q2": {
+    "edjp_NotesRegardingGuaranteeObligations_Con_Q2": {
         "jpcrp_cor_NotesRegardingGuaranteeObligationsTextBlock": {
             "label": "保証債務の注記 [テキストブロック]",
             "item": [
@@ -7102,7 +7102,7 @@
             ]
         }
     },
-    "edjp_NotesRegardingImpairmentLoss_consolidated_Q2": {
+    "edjp_NotesRegardingImpairmentLoss_Con_Q2": {
         "jpcrp_cor_NotesRegardingImpairmentLossTextBlock": {
             "label": "減損損失に関する注記 [テキストブロック]",
             "item": [
@@ -7113,7 +7113,7 @@
             ]
         }
     },
-    "edjp_NotesRegardingPromissoryNotesDueOnBalanceSheetDate_consolidated_Q2": {
+    "edjp_NotesRegardingPromissoryNotesDueOnBalanceSheetDate_Con_Q2": {
         "jpcrp_cor_NotesRegardingPromissoryNotesDueOnBalanceSheetDateTextBlock": {
             "label": "期末日満期手形の会計処理 [テキストブロック]",
             "item": [
@@ -7124,7 +7124,7 @@
             ]
         }
     },
-    "edjp_NotesRegardingProvisionOfReservesIncludedInCostOfSales_consolidated_Q2": {
+    "edjp_NotesRegardingProvisionOfReservesIncludedInCostOfSales_Con_Q2": {
         "jpcrp_cor_NotesRegardingImpairmentLossTextBlock": {
             "label": "減損損失に関する注記 [テキストブロック]",
             "item": [
@@ -7135,7 +7135,7 @@
             ]
         }
     },
-    "edjp_NotesSegmentInformationEtcConsolidatedFinancialStatements_consolidated_FY": {
+    "edjp_NotesSegmentInformationEtcConsolidatedFinancialStatements_Con_FY": {
         "jpcrp_cor_DescriptionOfFactorsWhichLedToRecognitionOfGainOnBargainPurchaseTextBlock": {
             "label": "報告セグメントごとの負ののれん発生益を認識する要因となった事象の概要 [テキストブロック]",
             "item": [
@@ -7238,7 +7238,7 @@
             ]
         }
     },
-    "edjp_NotesSegmentInformationEtcFinancialStatements_Nonconsolidated_FY": {
+    "edjp_NotesSegmentInformationEtcFinancialStatements_NonCon_FY": {
         "jpcrp_cor_DescriptionOfFactThatCompanysBusinessComprisesSingleSegment": {
             "label": "単一セグメントである旨",
             "item": [
@@ -7258,7 +7258,7 @@
             ]
         }
     },
-    "edjp_NotesSegmentInformationEtcQuarterlyConsolidatedFinancialStatements_consolidated_Q1": {
+    "edjp_NotesSegmentInformationEtcQuarterlyConsolidatedFinancialStatements_Con_Q1": {
         "jpcrp_cor_DescriptionOfFactThatCompanysBusinessComprisesSingleSegment": {
             "label": "単一セグメントである旨",
             "item": [
@@ -7300,7 +7300,7 @@
             ]
         }
     },
-    "edjp_NotesSegmentInformationEtcQuarterlyConsolidatedFinancialStatements_consolidated_Q2": {
+    "edjp_NotesSegmentInformationEtcQuarterlyConsolidatedFinancialStatements_Con_Q2": {
         "jpcrp_cor_DescriptionOfFactThatCompanysBusinessComprisesSingleSegment": {
             "label": "単一セグメントである旨",
             "item": [
@@ -7402,7 +7402,7 @@
             ]
         }
     },
-    "edjp_NotesSegmentInformationEtcQuarterlyConsolidatedFinancialStatements_consolidated_Q3": {
+    "edjp_NotesSegmentInformationEtcQuarterlyConsolidatedFinancialStatements_Con_Q3": {
         "jpcrp_cor_DescriptionOfFactThatCompanysBusinessComprisesSingleSegment": {
             "label": "単一セグメントである旨",
             "item": [
@@ -7470,7 +7470,7 @@
             ]
         }
     },
-    "edjp_NotesSegmentInformationEtcQuarterlyFinancialStatements_Nonconsolidated_Q1": {
+    "edjp_NotesSegmentInformationEtcQuarterlyFinancialStatements_NonCon_Q1": {
         "jpcrp_cor_DescriptionOfFactThatCompanysBusinessComprisesSingleSegment": {
             "label": "単一セグメントである旨",
             "item": [
@@ -7494,7 +7494,7 @@
             ]
         }
     },
-    "edjp_NotesSegmentInformationEtcQuarterlyFinancialStatements_Nonconsolidated_Q2": {
+    "edjp_NotesSegmentInformationEtcQuarterlyFinancialStatements_NonCon_Q2": {
         "jpcrp_cor_FootnotesRegardingSegmentInformationTableTextBlock": {
             "label": "セグメント表の脚注 [テキストブロック]",
             "item": [
@@ -7531,7 +7531,7 @@
             ]
         }
     },
-    "edjp_QuarterlyBalanceSheet_Nonconsolidated_Q1": {
+    "edjp_QuarterlyBalanceSheet_NonCon_Q1": {
         "jpcrp_cor_QuarterlyBalanceSheetTextBlock": {
             "label": "四半期貸借対照表 [テキストブロック]",
             "item": [
@@ -7776,7 +7776,7 @@
             ]
         }
     },
-    "edjp_QuarterlyBalanceSheet_Nonconsolidated_Q2": {
+    "edjp_QuarterlyBalanceSheet_NonCon_Q2": {
         "jpcrp_cor_QuarterlyBalanceSheetTextBlock": {
             "label": "四半期貸借対照表 [テキストブロック]",
             "item": [
@@ -8021,7 +8021,7 @@
             ]
         }
     },
-    "edjp_QuarterlyConsolidatedBalanceSheet_consolidated_Q1": {
+    "edjp_QuarterlyConsolidatedBalanceSheet_Con_Q1": {
         "jpcrp_cor_QuarterlyConsolidatedBalanceSheetTextBlock": {
             "label": "四半期連結貸借対照表 [テキストブロック]",
             "item": [
@@ -8266,7 +8266,7 @@
             ]
         }
     },
-    "edjp_QuarterlyConsolidatedBalanceSheet_consolidated_Q2": {
+    "edjp_QuarterlyConsolidatedBalanceSheet_Con_Q2": {
         "jpcrp_cor_QuarterlyConsolidatedBalanceSheetTextBlock": {
             "label": "四半期連結貸借対照表 [テキストブロック]",
             "item": [
@@ -8511,7 +8511,7 @@
             ]
         }
     },
-    "edjp_QuarterlyConsolidatedBalanceSheet_consolidated_Q3": {
+    "edjp_QuarterlyConsolidatedBalanceSheet_Con_Q3": {
         "jpcrp_cor_QuarterlyConsolidatedBalanceSheetTextBlock": {
             "label": "四半期連結貸借対照表 [テキストブロック]",
             "item": [
@@ -8756,7 +8756,7 @@
             ]
         }
     },
-    "edjp_QuarterlyConsolidatedStatementOfCashFlows_consolidated_Q2": {
+    "edjp_QuarterlyConsolidatedStatementOfCashFlows_Con_Q2": {
         "jpcrp_cor_QuarterlyConsolidatedStatementOfCashFlowsTextBlock": {
             "label": "四半期連結キャッシュ・フロー計算書 [テキストブロック]",
             "item": [
@@ -8767,7 +8767,7 @@
             ]
         }
     },
-    "edjp_QuarterlyConsolidatedStatementOfCashFlows_consolidated_Q3": {
+    "edjp_QuarterlyConsolidatedStatementOfCashFlows_Con_Q3": {
         "jpcrp_cor_QuarterlyConsolidatedStatementOfCashFlowsTextBlock": {
             "label": "四半期連結キャッシュ・フロー計算書 [テキストブロック]",
             "item": [
@@ -8778,7 +8778,7 @@
             ]
         }
     },
-    "edjp_QuarterlyStatementOfCashFlows_Nonconsolidated_Q2": {
+    "edjp_QuarterlyStatementOfCashFlows_NonCon_Q2": {
         "jpcrp_cor_QuarterlyStatementOfCashFlowsTextBlock": {
             "label": "四半期キャッシュ・フロー計算書 [テキストブロック]",
             "item": [
@@ -8789,7 +8789,7 @@
             ]
         }
     },
-    "edjp_StatementOfCashFlows_Nonconsolidated_FY": {
+    "edjp_StatementOfCashFlows_NonCon_FY": {
         "jpcrp_cor_StatementOfCashFlowsTextBlock": {
             "label": "キャッシュ・フロー計算書 [テキストブロック]",
             "item": [
@@ -8800,7 +8800,7 @@
             ]
         }
     },
-    "edjp_StatementOfChangesInEquity_Nonconsolidated_FY": {
+    "edjp_StatementOfChangesInEquity_NonCon_FY": {
         "jpcrp_cor_StatementOfChangesInEquityTextBlock": {
             "label": "株主資本等変動計算書 [テキストブロック]",
             "item": [
@@ -8811,7 +8811,7 @@
             ]
         }
     },
-    "edjp_StatementOfChangesInEquity_consolidated_FY": {
+    "edjp_StatementOfChangesInEquity_Con_FY": {
         "jpcrp_cor_StatementOfChangesInEquityTextBlock": {
             "label": "株主資本等変動計算書 [テキストブロック]",
             "item": [
@@ -8822,7 +8822,7 @@
             ]
         }
     },
-    "edjp_StatementOfIncome_Nonconsolidated_FY": {
+    "edjp_StatementOfIncome_NonCon_FY": {
         "jpcrp_cor_StatementOfIncomeTextBlock": {
             "label": "損益計算書 [テキストブロック]",
             "item": [
@@ -8833,7 +8833,7 @@
             ]
         }
     },
-    "edjp_StatementOfIncome_consolidated_FY": {
+    "edjp_StatementOfIncome_Con_FY": {
         "jpcrp_cor_StatementOfIncomeTextBlock": {
             "label": "損益計算書 [テキストブロック]",
             "item": [
@@ -8844,7 +8844,7 @@
             ]
         }
     },
-    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncome_consolidated_Q1": {
+    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncome_Con_Q1": {
         "jpcrp_cor_YearToQuarterEndConsolidatedStatementOfComprehensiveIncomeTextBlock": {
             "label": "四半期連結累計期間、四半期連結包括利益計算書 [テキストブロック]",
             "item": [
@@ -8855,7 +8855,7 @@
             ]
         }
     },
-    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncome_consolidated_Q2": {
+    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncome_Con_Q2": {
         "jpcrp_cor_DescriptionOfFactThatCompanysBusinessComprisesSingleSegment": {
             "label": "単一セグメントである旨",
             "item": [
@@ -8915,7 +8915,7 @@
             ]
         }
     },
-    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncome_consolidated_Q3": {
+    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncome_Con_Q3": {
         "jpcrp_cor_YearToQuarterEndConsolidatedStatementOfComprehensiveIncomeTextBlock": {
             "label": "四半期連結累計期間、四半期連結包括利益計算書 [テキストブロック]",
             "item": [
@@ -8926,7 +8926,7 @@
             ]
         }
     },
-    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncomeSingleStatement_consolidated_Q2": {
+    "edjp_YearToQuarterEndConsolidatedStatementOfComprehensiveIncomeSingleStatement_Con_Q2": {
         "jpcrp_cor_YearToQuarterEndConsolidatedStatementOfComprehensiveIncomeSingleStatementTextBlock": {
             "label": "四半期連結累計期間、四半期連結損益及び包括利益計算書 [テキストブロック]",
             "item": [
@@ -8937,7 +8937,7 @@
             ]
         }
     },
-    "edjp_YearToQuarterEndConsolidatedStatementOfIncome_consolidated_Q1": {
+    "edjp_YearToQuarterEndConsolidatedStatementOfIncome_Con_Q1": {
         "jpcrp_cor_YearToQuarterEndConsolidatedStatementOfIncomeTextBlock": {
             "label": "四半期連結累計期間、四半期連結損益計算書 [テキストブロック]",
             "item": [
@@ -8948,7 +8948,7 @@
             ]
         }
     },
-    "edjp_YearToQuarterEndConsolidatedStatementOfIncome_consolidated_Q2": {
+    "edjp_YearToQuarterEndConsolidatedStatementOfIncome_Con_Q2": {
         "jpcrp_cor_YearToQuarterEndConsolidatedStatementOfIncomeTextBlock": {
             "label": "四半期連結累計期間、四半期連結損益計算書 [テキストブロック]",
             "item": [
@@ -8959,7 +8959,7 @@
             ]
         }
     },
-    "edjp_YearToQuarterEndConsolidatedStatementOfIncome_consolidated_Q3": {
+    "edjp_YearToQuarterEndConsolidatedStatementOfIncome_Con_Q3": {
         "jpcrp_cor_YearToQuarterEndConsolidatedStatementOfIncomeTextBlock": {
             "label": "四半期連結累計期間、四半期連結損益計算書 [テキストブロック]",
             "item": [
@@ -8970,7 +8970,7 @@
             ]
         }
     },
-    "edjp_YearToQuarterEndStatementOfIncome_Nonconsolidated_Q1": {
+    "edjp_YearToQuarterEndStatementOfIncome_NonCon_Q1": {
         "jpcrp_cor_YearToQuarterEndStatementOfIncomeTextBlock": {
             "label": "四半期累計期間、四半期損益計算書 [テキストブロック]",
             "item": [
@@ -8981,7 +8981,7 @@
             ]
         }
     },
-    "edjp_YearToQuarterEndStatementOfIncome_Nonconsolidated_Q2": {
+    "edjp_YearToQuarterEndStatementOfIncome_NonCon_Q2": {
         "jpcrp_cor_YearToQuarterEndStatementOfIncomeTextBlock": {
             "label": "四半期累計期間、四半期損益計算書 [テキストブロック]",
             "item": [
@@ -8992,7 +8992,7 @@
             ]
         }
     },
-    "edjp_FinancialReportSummary_consolidated_HY_specific_business": {
+    "edjp_FinancialReportSummary_Con_HY_spec": {
         "tse-ed-t_ChangesBasedOnRevisionsOfAccountingStandard": {
             "label": "会計基準等の改正に伴う会計方針の変更",
             "item": [
@@ -9572,7 +9572,7 @@
             ]
         }
     },
-    "edjp_NotesSegmentInformationEtcSemiAnnualConsolidatedFinancialStatements_consolidated_HY_specific_business": {
+    "edjp_NotesSegmentInformationEtcSemiAnnualConsolidatedFinancialStatements_Con_HY_spec": {
         "jpcrp_cor_DescriptionOfReportableSegmentsTextBlock": {
             "label": "報告セグメントの概要 [テキストブロック]",
             "item": [
@@ -9666,7 +9666,7 @@
             ]
         }
     },
-    "edjp_SemiAnnualBalanceSheet_consolidated_HY_specific_business": {
+    "edjp_SemiAnnualBalanceSheet_Con_HY_spec": {
         "jpcrp_cor_SemiAnnualBalanceSheetTextBlock": {
             "label": "中間貸借対照表 [テキストブロック]",
             "item": [
@@ -9677,7 +9677,7 @@
             ]
         }
     },
-    "edjp_SemiAnnualConsolidatedBalanceSheet_consolidated_HY_specific_business": {
+    "edjp_SemiAnnualConsolidatedBalanceSheet_Con_HY_spec": {
         "jpcrp_cor_SemiAnnualConsolidatedBalanceSheetTextBlock": {
             "label": "中間連結貸借対照表 [テキストブロック]",
             "item": [
@@ -9922,7 +9922,7 @@
             ]
         }
     },
-    "edjp_SemiAnnualConsolidatedStatementOfChangesInEquity_consolidated_HY_specific_business": {
+    "edjp_SemiAnnualConsolidatedStatementOfChangesInEquity_Con_HY_spec": {
         "jpcrp_cor_SemiAnnualConsolidatedStatementOfChangesInEquityTextBlock": {
             "label": "中間連結株主資本等変動計算書 [テキストブロック]",
             "item": [
@@ -9933,7 +9933,7 @@
             ]
         }
     },
-    "edjp_SemiAnnualConsolidatedStatementOfComprehensiveIncome_consolidated_HY_specific_business": {
+    "edjp_SemiAnnualConsolidatedStatementOfComprehensiveIncome_Con_HY_spec": {
         "jpcrp_cor_SemiAnnualConsolidatedStatementOfComprehensiveIncomeTextBlock": {
             "label": "中間連結包括利益計算書 [テキストブロック]",
             "item": [
@@ -9944,7 +9944,7 @@
             ]
         }
     },
-    "edjp_SemiAnnualConsolidatedStatementOfIncome_consolidated_HY_specific_business": {
+    "edjp_SemiAnnualConsolidatedStatementOfIncome_Con_HY_spec": {
         "jpcrp_cor_SemiAnnualConsolidatedStatementOfIncomeTextBlock": {
             "label": "中間連結損益計算書 [テキストブロック]",
             "item": [
@@ -9955,7 +9955,7 @@
             ]
         }
     },
-    "edjp_SemiAnnualStatementOfChangesInEquity_consolidated_HY_specific_business": {
+    "edjp_SemiAnnualStatementOfChangesInEquity_Con_HY_spec": {
         "jpcrp_cor_SemiAnnualStatementOfChangesInEquityTextBlock": {
             "label": "中間株主資本等変動計算書 [テキストブロック]",
             "item": [
@@ -9966,7 +9966,7 @@
             ]
         }
     },
-    "edjp_SemiAnnualStatementOfIncome_consolidated_HY_specific_business": {
+    "edjp_SemiAnnualStatementOfIncome_Con_HY_spec": {
         "jpcrp_cor_SemiAnnualStatementOfIncomeTextBlock": {
             "label": "中間損益計算書 [テキストブロック]",
             "item": [
@@ -10360,7 +10360,7 @@
             ]
         }
     },
-    "rvfc_FinancialReportSummary_specific_business": {
+    "rvfc_FinancialReportSummary_spec": {
         "tse-ed-t_CompanyName": {
             "label": "上場会社名",
             "item": [

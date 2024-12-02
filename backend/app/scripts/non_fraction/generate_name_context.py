@@ -10,7 +10,7 @@ def get_grouping_dict(items):
 
     grouped_data = defaultdict(list)
     for item in items:
-        key = summary.generate_key(item)
+        key = summary.generate_non_fraction_key(item)
         grouped_data[key].append(
             {
                 "name": item["name"],
