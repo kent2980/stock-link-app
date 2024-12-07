@@ -9,15 +9,15 @@ const disabledStyles = {
 const theme = extendTheme({
   colors: {
     ui: {
-      main: "#009688",
-      secondary: "#EDF2F7",
+      main: "#064160",
+      secondary: "#B43F3F",
       success: "#48BB78",
       danger: "#E53E3E",
-      light: "#FAFAFA",
+      light: "#fefefe",
       dark: "#1A202C",
       darkSlate: "#252D3D",
-      dim: "#A0AEC0",
-      pink: "#f447c9",
+      dim: "#ecf1f6",
+      text: "#1c244a",
     },
   },
   components: {

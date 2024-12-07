@@ -3,6 +3,8 @@ import os
 
 import humps
 
+import app.utils.summary as summary
+
 
 def create_class_module(file_path: str):
     """クラスモジュールを生成します。
@@ -49,7 +51,7 @@ def write_name_schema(file_path: str, data: dict):
                     f.write(f'    """ {v["label"]} """\n\n')
                     for item in v["item"]:
                         f.write(
-                            f"    {humps.depascalize(item['context']).replace('__','_')}: IxNonFractionPublic = Field(default=None, description=\"{item['context_label']}\")\n"
+                            f"    {summary.get_short_context(item['context'])}: IxNonFractionPublic = Field(default=None, description=\"{item['context_label']}\")\n"
                         )
                         f.write(f'    """ {item["context_label"]} """\n')
                     add_list.append(f"{k.split('_')[-1]}_{key}")

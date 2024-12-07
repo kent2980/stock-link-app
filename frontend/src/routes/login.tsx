@@ -1,4 +1,4 @@
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons"
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import {
   Button,
   Container,
@@ -9,21 +9,19 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Link,
   Text,
   useBoolean,
-} from "@chakra-ui/react"
+} from "@chakra-ui/react";
 import {
   Link as RouterLink,
   createFileRoute,
   redirect,
-} from "@tanstack/react-router"
-import { type SubmitHandler, useForm } from "react-hook-form"
+} from "@tanstack/react-router";
+import { type SubmitHandler, useForm } from "react-hook-form";
 
-import Logo from "/assets/images/fastapi-logo.svg"
-import type { Body_login_login_access_token as AccessToken } from "../client"
-import useAuth, { isLoggedIn } from "../hooks/useAuth"
-import { emailPattern } from "../utils"
+import type { Body_login_login_access_token as AccessToken } from "../client";
+import useAuth, { isLoggedIn } from "../hooks/useAuth";
+import { emailPattern } from "../utils";
 
 export const Route = createFileRoute("/login")({
   component: Login,
@@ -31,14 +29,14 @@ export const Route = createFileRoute("/login")({
     if (isLoggedIn()) {
       throw redirect({
         to: "/",
-      })
+      });
     }
   },
-})
+});
 
 function Login() {
-  const [show, setShow] = useBoolean()
-  const { loginMutation, error, resetError } = useAuth()
+  const [show, setShow] = useBoolean();
+  const { loginMutation, error, resetError } = useAuth();
   const {
     register,
     handleSubmit,
@@ -50,19 +48,19 @@ function Login() {
       username: "",
       password: "",
     },
-  })
+  });
 
   const onSubmit: SubmitHandler<AccessToken> = async (data) => {
-    if (isSubmitting) return
+    if (isSubmitting) return;
 
-    resetError()
+    resetError();
 
     try {
-      await loginMutation.mutateAsync(data)
+      await loginMutation.mutateAsync(data);
     } catch {
       // error is handled by useAuth hook
     }
-  }
+  };
 
   return (
     <>
@@ -76,14 +74,7 @@ function Login() {
         gap={4}
         centerContent
       >
-        <Image
-          src={Logo}
-          alt="FastAPI logo"
-          height="auto"
-          maxW="2xs"
-          alignSelf="center"
-          mb={4}
-        />
+        <Image src="/assets/images/app-logo.png" alt="App Logo" />
         <FormControl id="username" isInvalid={!!errors.username || !!error}>
           <Input
             id="username"
@@ -126,19 +117,19 @@ function Login() {
           </InputGroup>
           {error && <FormErrorMessage>{error}</FormErrorMessage>}
         </FormControl>
-        <Link as={RouterLink} to="/recover-password" color="blue.500">
+        <RouterLink to="/recover-password" color="blue.500">
           Forgot password?
-        </Link>
+        </RouterLink>
         <Button variant="primary" type="submit" isLoading={isSubmitting}>
           Log In
         </Button>
         <Text>
           Don't have an account?{" "}
-          <Link as={RouterLink} to="/signup" color="blue.500">
+          <RouterLink to="/signup" color="blue.500">
             Sign up
-          </Link>
+          </RouterLink>
         </Text>
       </Container>
     </>
-  )
+  );
 }

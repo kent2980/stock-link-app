@@ -3,12 +3,13 @@ import re
 from decimal import Decimal
 from typing import Any, List, Optional
 
-import app.schema as sc
-from app.api.deps import SessionDep
-from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import func, select, update
+
+import app.schema as sc
+from app.api.deps import SessionDep
+from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric
 
 router = APIRouter()
 
@@ -214,14 +215,14 @@ def get_count_report_type(
 
 
 @router.get(
-    "/head/select/",
+    "/head/select/date/",
     response_model=sc.ix_head.IxHeadTitlesPublic,
 )
 def select_ix_head_title_items(
     *, session: SessionDep, date_str: str
 ) -> sc.ix_head.IxHeadTitlesPublic:
     """
-    指定した日付の報告書タイプごとの件数を取得する。
+    指定した日付の報告書を取得します。
     """
 
     # date_strが"YYYY-MM-DD"の形式であることを確認
@@ -335,3 +336,17 @@ def upgrade_is_consolidated(*, session: SessionDep) -> str:
         return "No items to update."
     else:
         return f"{len(items)} items updated."
+
+
+@router.get("/select/head_item_key/", response_model=sc.ix_head.IxHeadTitlePublic)
+def select_ix_head_title_item(
+    *, session: SessionDep, head_item_key: str
+) -> sc.ix_head.IxHeadTitlePublic:
+    """
+    Select item.
+    """
+    statement = select(IxHeadTitle).where(IxHeadTitle.item_key == head_item_key)
+    result = session.exec(statement)
+    item = result.first()
+
+    return item

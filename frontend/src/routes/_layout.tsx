@@ -20,13 +20,15 @@ function Layout() {
 
   return (
     <Box>
-      <Header />
+      <Header h="60px" zIndex={1000} />
       {isLoading ? (
         <Flex justify="center" align="center" height="100vh" width="full">
           <Spinner size="xl" color="ui.main" />
         </Flex>
       ) : (
-        <Outlet />
+        <Box mt="60px">
+          <Outlet />
+        </Box>
       )}
     </Box>
   );

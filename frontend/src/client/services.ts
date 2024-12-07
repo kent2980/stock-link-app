@@ -172,7 +172,7 @@ headItemKey,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/api/v1/ix/summary/non_fraction/items/head_item_key',
+			url: '/api/v1/ix/summary/non_fraction/item/',
 			query: {
 				head_item_key: headItemKey
 			},
@@ -228,7 +228,7 @@ headItemKey,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/api/v1/ix/summary/non_numeric/items/head_item_key',
+			url: '/api/v1/ix/summary/non_numeric/item/',
 			query: {
 				head_item_key: headItemKey
 			},
@@ -347,6 +347,10 @@ export type TDataIsIxHeadTitleItemActive = {
                 headItemKey: string
                 
             }
+export type TDataSelectIxHeadTitleItem = {
+                headItemKey: string
+                
+            }
 
 export class XbrlIxHeadService {
 
@@ -459,7 +463,7 @@ dateStr,
 
 	/**
 	 * Select Ix Head Title Items
-	 * 指定した日付の報告書タイプごとの件数を取得する。
+	 * 指定した日付の報告書を取得します。
 	 * @returns IxHeadTitlesPublic Successful Response
 	 * @throws ApiError
 	 */
@@ -469,7 +473,7 @@ dateStr,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/api/v1/xbrl/head/select/',
+			url: '/api/v1/xbrl/head/select/date/',
 			query: {
 				date_str: dateStr
 			},
@@ -555,6 +559,28 @@ headItemKey,
 				return __request(OpenAPI, {
 			method: 'POST',
 			url: '/api/v1/xbrl/upgrade/is_consolidated/',
+		});
+	}
+
+	/**
+	 * Select Ix Head Title Item
+	 * Select item.
+	 * @returns IxHeadTitlePublic Successful Response
+	 * @throws ApiError
+	 */
+	public static selectIxHeadTitleItem(data: TDataSelectIxHeadTitleItem): CancelablePromise<IxHeadTitlePublic> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/xbrl/select/head_item_key/',
+			query: {
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
 		});
 	}
 

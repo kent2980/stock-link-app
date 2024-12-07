@@ -7,6 +7,8 @@ from app.models import Field, SQLModel
 class IxHeadTitlePublic(SQLModel):
     """iXBRLのヘッダー情報を表すクラス"""
 
+    insert_date: datetime.datetime
+    update_date: datetime.datetime
     item_key: str
     company_name: Optional[str]
     securities_code: Optional[str]
@@ -31,6 +33,7 @@ class IxHeadTitlePublic(SQLModel):
     fcst_oi_gr_rt: Optional[str]
     oi_prog_rt: Optional[float]
     specific_business: Optional[bool]
+    is_consolidated: Optional[bool]
 
 
 class IxHeadTitleCreate(SQLModel):
@@ -55,6 +58,7 @@ class IxHeadTitleCreate(SQLModel):
     fy_year_end: Optional[str] = Field(default=None)
     tel: Optional[str] = Field(default=None)
     specific_business: Optional[bool] = Field(default=None)
+    is_consolidated: Optional[bool] = Field(default=None)
 
 
 class IxHeadTitlesPublic(SQLModel):

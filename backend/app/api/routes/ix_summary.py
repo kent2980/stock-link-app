@@ -2,16 +2,16 @@ import json
 import os
 from typing import Any, Dict, List
 
-import app.schema as sc
-import app.utils.schema_class_non_fraction as scnf
-import app.utils.schema_class_non_numeric as scnn
-import app.utils.summary as summary
 import humps
-from app.api.deps import SessionDep
-from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import NoResultFound
 from sqlmodel import col, select, tuple_
+
+import app.utils.schema_class_non_fraction as scnf
+import app.utils.schema_class_non_numeric as scnn
+import app.utils.summary as summary
+from app.api.deps import SessionDep
+from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric
 
 router = APIRouter()
 
@@ -98,13 +98,13 @@ def get_summary_key(
 
 
 @router.get(
-    "/non_fraction/items/head_item_key",
+    "/non_fraction/item/",
     response_model=scnf.get_response_schema_FinancialReportSummary_class(),
 )
 def get_summary_non_fraction_items_head_item_key(
     *,
     session: SessionDep,
-    head_item_key: str,
+    head_item_key: str = Query(...),
 ):
     """
     指定されたヘッダーアイテムキーのサマリーを取得する
@@ -165,7 +165,7 @@ def get_summary_non_fraction_items_head_item_key(
                 }
             )
             name = humps.decamelize(item.get("name").split("_")[-1]).replace("__", "_")
-            context = humps.decamelize(item.get("context")).replace("__", "_")
+            context = summary.get_short_context(item.get("context"))
             if name not in summary_data:
                 summary_data[name] = {}
             summary_data[name][context] = non_fraction.model_dump()
@@ -209,13 +209,13 @@ def get_summary_non_fraction_items(
 
 
 @router.get(
-    "/non_numeric/items/head_item_key",
+    "/non_numeric/item/",
     response_model=scnn.get_response_schema_FinancialReportSummary_class(),
 )
 def get_summary_non_numeric_items_head_item_key(
     *,
     session: SessionDep,
-    head_item_key: str,
+    head_item_key: str = Query(...),
 ):
     """
     指定されたヘッダーアイテムキーのサマリーを取得する

@@ -1,8 +1,7 @@
-import { Box, Table, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { edif, edjp, SummaryService } from "../../client";
-import { SummaryStore } from "../../Store/Store";
+import { SummaryService } from "../../client";
 
 interface HeaderProps {
   head_item_key: string;
@@ -10,59 +9,62 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ head_item_key }) => {
   const { data, isPending, isError } = useQuery({
-    queryKey: ["NonNumericItem", head_item_key],
-    queryFn: () =>
-      SummaryService.getSummaryNonNumericItemsHeadItemKey({
+    queryKey: ["SummaryNonNumeric", head_item_key],
+    queryFn: () => {
+      return SummaryService.getSummaryNonNumericItemsHeadItemKey({
         headItemKey: head_item_key,
-      }),
-    staleTime: 1000 * 60 * 60 * 24,
+      });
+    },
     gcTime: 1000 * 60 * 60 * 24,
+    staleTime: 1000 * 60 * 60 * 24,
   });
+
+  if (isPending) {
+    return <Box>Loading...</Box>;
+  }
 
   if (isError) {
-    return <div>Error</div>;
+    return <Box>Error</Box>;
   }
-
-  function isEd(data: any): data is edjp | edif {
-    return data?.type === "edjp" || data?.type === "edif";
-  }
-
-  const summaryData = isEd(data) ? data : null;
-
-  SummaryStore.setState((state) => {
-    return {
-      ...state,
-      [head_item_key]: {
-        year: summaryData?.fiscal_year_end?.value ?? "",
-        prevYear: summaryData?.previous_fiscal_year_end_date_dei?.value ?? "",
-        period: summaryData?.type_of_current_period_dei?.value ?? "",
-      },
-    };
-  });
 
   return (
-    <Box fontSize="14px">
-      <Table size="xs" variant="unstyled">
-        <Thead>
-          <Tr fontSize="10px">
-            <Th>証券コード</Th>
-            <Th>企業名</Th>
-            <Th>提出書類名</Th>
-            <Th>決算期</Th>
-            <Th>電話番号</Th>
-            <Th>URL</Th>
-          </Tr>
-        </Thead>
-        <Tr fontSize="14px">
-          <Td>{summaryData?.securities_code?.value}</Td>
-          <Td>{summaryData?.company_name?.value}</Td>
-          <Td>{summaryData?.document_name?.value}</Td>
-          <Td>{summaryData?.fiscal_year_end?.value}</Td>
-          <Td>{summaryData?.tel?.value}</Td>
-          <Td>{summaryData?.URL?.value}</Td>
-        </Tr>
-      </Table>
-    </Box>
+    <Grid
+      bg="ui.main"
+      color="ui.light"
+      templateColumns="repeat(3, 1fr)"
+      templateRows="repeat(2, auto)"
+      gap={4}
+      py={6}
+      px={4}
+    >
+      <GridItem colSpan={3}>
+        <Flex gap={4}>
+          <Box
+            bg="ui.light"
+            color="ui.main"
+            borderRadius="md"
+            w={14}
+            h={8}
+            textAlign="center"
+            alignContent="center"
+            fontSize={18}
+            fontWeight={600}
+          >
+            {data.securities_code?.value}
+          </Box>
+          <Box alignContent="center" fontSize={15} fontWeight={800}>
+            {data.company_name?.value}
+          </Box>
+        </Flex>
+      </GridItem>
+      <GridItem colSpan={3}>
+        <Flex gap={4}>
+          <Box alignContent="center" fontSize={12} fontWeight={600}>
+            {data.document_name?.value}
+          </Box>
+        </Flex>
+      </GridItem>
+    </Grid>
   );
 };
 

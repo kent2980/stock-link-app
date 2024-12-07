@@ -7,20 +7,19 @@ import {
   FormLabel,
   Image,
   Input,
-  Link,
   Text,
-} from "@chakra-ui/react"
+} from "@chakra-ui/react";
 import {
   Link as RouterLink,
   createFileRoute,
   redirect,
-} from "@tanstack/react-router"
-import { type SubmitHandler, useForm } from "react-hook-form"
+} from "@tanstack/react-router";
+import { type SubmitHandler, useForm } from "react-hook-form";
 
-import Logo from "/assets/images/fastapi-logo.svg"
-import type { UserRegister } from "../client"
-import useAuth, { isLoggedIn } from "../hooks/useAuth"
-import { confirmPasswordRules, emailPattern, passwordRules } from "../utils"
+import type { UserRegister } from "../client";
+import useAuth, { isLoggedIn } from "../hooks/useAuth";
+import { confirmPasswordRules, emailPattern, passwordRules } from "../utils";
+import Logo from "/assets/images/fastapi-logo.svg";
 
 export const Route = createFileRoute("/signup")({
   component: SignUp,
@@ -28,17 +27,17 @@ export const Route = createFileRoute("/signup")({
     if (isLoggedIn()) {
       throw redirect({
         to: "/",
-      })
+      });
     }
   },
-})
+});
 
 interface UserRegisterForm extends UserRegister {
-  confirm_password: string
+  confirm_password: string;
 }
 
 function SignUp() {
-  const { signUpMutation } = useAuth()
+  const { signUpMutation } = useAuth();
   const {
     register,
     handleSubmit,
@@ -53,11 +52,11 @@ function SignUp() {
       password: "",
       confirm_password: "",
     },
-  })
+  });
 
   const onSubmit: SubmitHandler<UserRegisterForm> = (data) => {
-    signUpMutation.mutate(data)
-  }
+    signUpMutation.mutate(data);
+  };
 
   return (
     <>
@@ -151,14 +150,14 @@ function SignUp() {
           </Button>
           <Text>
             Already have an account?{" "}
-            <Link as={RouterLink} to="/login" color="blue.500">
+            <RouterLink to="/login" color="blue.500">
               Log In
-            </Link>
+            </RouterLink>
           </Text>
         </Container>
       </Flex>
     </>
-  )
+  );
 }
 
-export default SignUp
+export default SignUp;

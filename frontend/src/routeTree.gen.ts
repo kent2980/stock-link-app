@@ -20,8 +20,20 @@ import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutSettingsImport } from './routes/_layout/settings'
 import { Route as LayoutItemsImport } from './routes/_layout/items'
 import { Route as LayoutAdminImport } from './routes/_layout/admin'
-import { Route as LayoutSummaryHeaditemkeyImport } from './routes/_layout/summary.$head_item_key'
+import { Route as LayoutSummaryIndexImport } from './routes/_layout/summary/index'
+import { Route as LayoutSummaryHeaditemkeyImport } from './routes/_layout/summary/$head_item_key'
 import { Route as LayoutMenuSelectedDateImport } from './routes/_layout/menu.$selectedDate'
+import { Route as LayoutSummaryHeaditemkeyIndexImport } from './routes/_layout/summary/$head_item_key/index'
+import { Route as LayoutSummaryHeaditemkeyRvfcImport } from './routes/_layout/summary/$head_item_key/rvfc'
+import { Route as LayoutSummaryHeaditemkeyRvdfImport } from './routes/_layout/summary/$head_item_key/rvdf'
+import { Route as LayoutSummaryHeaditemkeyRrfcImport } from './routes/_layout/summary/$head_item_key/rrfc'
+import { Route as LayoutSummaryHeaditemkeyRrdfImport } from './routes/_layout/summary/$head_item_key/rrdf'
+import { Route as LayoutSummaryHeaditemkeyRejpImport } from './routes/_layout/summary/$head_item_key/rejp'
+import { Route as LayoutSummaryHeaditemkeyEfjpImport } from './routes/_layout/summary/$head_item_key/efjp'
+import { Route as LayoutSummaryHeaditemkeyEdusImport } from './routes/_layout/summary/$head_item_key/edus'
+import { Route as LayoutSummaryHeaditemkeyEdjpImport } from './routes/_layout/summary/$head_item_key/edjp'
+import { Route as LayoutSummaryHeaditemkeyEditImport } from './routes/_layout/summary/$head_item_key/edit'
+import { Route as LayoutSummaryHeaditemkeyEdifImport } from './routes/_layout/summary/$head_item_key/edif'
 
 // Create/Update Routes
 
@@ -70,6 +82,11 @@ const LayoutAdminRoute = LayoutAdminImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutSummaryIndexRoute = LayoutSummaryIndexImport.update({
+  path: '/summary/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 const LayoutSummaryHeaditemkeyRoute = LayoutSummaryHeaditemkeyImport.update({
   path: '/summary/$head_item_key',
   getParentRoute: () => LayoutRoute,
@@ -79,6 +96,72 @@ const LayoutMenuSelectedDateRoute = LayoutMenuSelectedDateImport.update({
   path: '/menu/$selectedDate',
   getParentRoute: () => LayoutRoute,
 } as any)
+
+const LayoutSummaryHeaditemkeyIndexRoute =
+  LayoutSummaryHeaditemkeyIndexImport.update({
+    path: '/',
+    getParentRoute: () => LayoutSummaryHeaditemkeyRoute,
+  } as any)
+
+const LayoutSummaryHeaditemkeyRvfcRoute =
+  LayoutSummaryHeaditemkeyRvfcImport.update({
+    path: '/rvfc',
+    getParentRoute: () => LayoutSummaryHeaditemkeyRoute,
+  } as any)
+
+const LayoutSummaryHeaditemkeyRvdfRoute =
+  LayoutSummaryHeaditemkeyRvdfImport.update({
+    path: '/rvdf',
+    getParentRoute: () => LayoutSummaryHeaditemkeyRoute,
+  } as any)
+
+const LayoutSummaryHeaditemkeyRrfcRoute =
+  LayoutSummaryHeaditemkeyRrfcImport.update({
+    path: '/rrfc',
+    getParentRoute: () => LayoutSummaryHeaditemkeyRoute,
+  } as any)
+
+const LayoutSummaryHeaditemkeyRrdfRoute =
+  LayoutSummaryHeaditemkeyRrdfImport.update({
+    path: '/rrdf',
+    getParentRoute: () => LayoutSummaryHeaditemkeyRoute,
+  } as any)
+
+const LayoutSummaryHeaditemkeyRejpRoute =
+  LayoutSummaryHeaditemkeyRejpImport.update({
+    path: '/rejp',
+    getParentRoute: () => LayoutSummaryHeaditemkeyRoute,
+  } as any)
+
+const LayoutSummaryHeaditemkeyEfjpRoute =
+  LayoutSummaryHeaditemkeyEfjpImport.update({
+    path: '/efjp',
+    getParentRoute: () => LayoutSummaryHeaditemkeyRoute,
+  } as any)
+
+const LayoutSummaryHeaditemkeyEdusRoute =
+  LayoutSummaryHeaditemkeyEdusImport.update({
+    path: '/edus',
+    getParentRoute: () => LayoutSummaryHeaditemkeyRoute,
+  } as any)
+
+const LayoutSummaryHeaditemkeyEdjpRoute =
+  LayoutSummaryHeaditemkeyEdjpImport.update({
+    path: '/edjp',
+    getParentRoute: () => LayoutSummaryHeaditemkeyRoute,
+  } as any)
+
+const LayoutSummaryHeaditemkeyEditRoute =
+  LayoutSummaryHeaditemkeyEditImport.update({
+    path: '/edit',
+    getParentRoute: () => LayoutSummaryHeaditemkeyRoute,
+  } as any)
+
+const LayoutSummaryHeaditemkeyEdifRoute =
+  LayoutSummaryHeaditemkeyEdifImport.update({
+    path: '/edif',
+    getParentRoute: () => LayoutSummaryHeaditemkeyRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -128,6 +211,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutSummaryHeaditemkeyImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/summary/': {
+      preLoaderRoute: typeof LayoutSummaryIndexImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/summary/$head_item_key/edif': {
+      preLoaderRoute: typeof LayoutSummaryHeaditemkeyEdifImport
+      parentRoute: typeof LayoutSummaryHeaditemkeyImport
+    }
+    '/_layout/summary/$head_item_key/edit': {
+      preLoaderRoute: typeof LayoutSummaryHeaditemkeyEditImport
+      parentRoute: typeof LayoutSummaryHeaditemkeyImport
+    }
+    '/_layout/summary/$head_item_key/edjp': {
+      preLoaderRoute: typeof LayoutSummaryHeaditemkeyEdjpImport
+      parentRoute: typeof LayoutSummaryHeaditemkeyImport
+    }
+    '/_layout/summary/$head_item_key/edus': {
+      preLoaderRoute: typeof LayoutSummaryHeaditemkeyEdusImport
+      parentRoute: typeof LayoutSummaryHeaditemkeyImport
+    }
+    '/_layout/summary/$head_item_key/efjp': {
+      preLoaderRoute: typeof LayoutSummaryHeaditemkeyEfjpImport
+      parentRoute: typeof LayoutSummaryHeaditemkeyImport
+    }
+    '/_layout/summary/$head_item_key/rejp': {
+      preLoaderRoute: typeof LayoutSummaryHeaditemkeyRejpImport
+      parentRoute: typeof LayoutSummaryHeaditemkeyImport
+    }
+    '/_layout/summary/$head_item_key/rrdf': {
+      preLoaderRoute: typeof LayoutSummaryHeaditemkeyRrdfImport
+      parentRoute: typeof LayoutSummaryHeaditemkeyImport
+    }
+    '/_layout/summary/$head_item_key/rrfc': {
+      preLoaderRoute: typeof LayoutSummaryHeaditemkeyRrfcImport
+      parentRoute: typeof LayoutSummaryHeaditemkeyImport
+    }
+    '/_layout/summary/$head_item_key/rvdf': {
+      preLoaderRoute: typeof LayoutSummaryHeaditemkeyRvdfImport
+      parentRoute: typeof LayoutSummaryHeaditemkeyImport
+    }
+    '/_layout/summary/$head_item_key/rvfc': {
+      preLoaderRoute: typeof LayoutSummaryHeaditemkeyRvfcImport
+      parentRoute: typeof LayoutSummaryHeaditemkeyImport
+    }
+    '/_layout/summary/$head_item_key/': {
+      preLoaderRoute: typeof LayoutSummaryHeaditemkeyIndexImport
+      parentRoute: typeof LayoutSummaryHeaditemkeyImport
+    }
   }
 }
 
@@ -140,7 +271,20 @@ export const routeTree = rootRoute.addChildren([
     LayoutSettingsRoute,
     LayoutIndexRoute,
     LayoutMenuSelectedDateRoute,
-    LayoutSummaryHeaditemkeyRoute,
+    LayoutSummaryHeaditemkeyRoute.addChildren([
+      LayoutSummaryHeaditemkeyEdifRoute,
+      LayoutSummaryHeaditemkeyEditRoute,
+      LayoutSummaryHeaditemkeyEdjpRoute,
+      LayoutSummaryHeaditemkeyEdusRoute,
+      LayoutSummaryHeaditemkeyEfjpRoute,
+      LayoutSummaryHeaditemkeyRejpRoute,
+      LayoutSummaryHeaditemkeyRrdfRoute,
+      LayoutSummaryHeaditemkeyRrfcRoute,
+      LayoutSummaryHeaditemkeyRvdfRoute,
+      LayoutSummaryHeaditemkeyRvfcRoute,
+      LayoutSummaryHeaditemkeyIndexRoute,
+    ]),
+    LayoutSummaryIndexRoute,
   ]),
   LoginRoute,
   RecoverPasswordRoute,

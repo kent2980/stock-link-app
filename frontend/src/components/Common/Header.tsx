@@ -1,7 +1,9 @@
 import {
   Box,
   Flex,
+  FlexProps,
   HStack,
+  Image,
   Link,
   Popover,
   PopoverArrow,
@@ -13,28 +15,41 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
+import useAuth from "../../hooks/useAuth";
 
-interface HeaderProps {}
+const Header: React.FC<FlexProps> = (props) => {
+  const { logout } = useAuth();
 
-const Header: React.FC<HeaderProps> = () => {
+  function handleLogout() {
+    logout();
+  }
+
   return (
-    <Box>
-      <Flex
-        bg={"gray.50"}
-        color={"gray.700"}
-        minH={"60px"}
-        py={2}
-        px={4}
-        borderBottom={"1px"}
-        borderStyle={"solid"}
-        borderColor={"gray.200"}
-        align={"center"}
-      >
-        <Flex flex={1} align={"center"}>
-          <HeaderMenu />
-        </Flex>
+    <Flex
+      {...props}
+      position="fixed"
+      top="0"
+      left="0"
+      right="0"
+      bg={"gray.50"}
+      color={"gray.700"}
+      py={2}
+      pr={4}
+      borderBottom={"1px"}
+      borderStyle={"solid"}
+      borderColor={"gray.200"}
+      align={"center"}
+    >
+      <Flex flex={1} align={"center"}>
+        <Link href="/">
+          <Image src="/assets/images/app-logo.png" alt="logo" boxSize="80px" />
+        </Link>
+        <HeaderMenu />
       </Flex>
-    </Box>
+      <Flex>
+        <Text onClick={handleLogout}>LogOut</Text>
+      </Flex>
+    </Flex>
   );
 };
 
