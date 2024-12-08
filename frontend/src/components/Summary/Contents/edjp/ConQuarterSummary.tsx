@@ -1,4 +1,4 @@
-import { Grid, Heading, SimpleGrid } from "@chakra-ui/react";
+import { Heading, SimpleGrid } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import React from "react";
 import {
@@ -7,7 +7,8 @@ import {
   edjp_FinancialReportSummary_Con_Q2,
   edjp_FinancialReportSummary_Con_Q3,
 } from "../../../../client";
-import SummaryGridItem from "../../Table/SummaryGridItem";
+import DividendTable, { DividendPerShare } from "../../Table/DividendTable";
+import SummaryGrid, { SummaryGridItemProps } from "../../Table/SummaryGrid";
 
 const ConQuarterSummary: React.FC<{
   data:
@@ -16,6 +17,33 @@ const ConQuarterSummary: React.FC<{
     | edjp_FinancialReportSummary_Con_Q3;
   fracData: edjp;
 }> = ({ data, fracData }) => {
+  function isFirstQuarter(
+    data:
+      | edjp_FinancialReportSummary_Con_Q1
+      | edjp_FinancialReportSummary_Con_Q2
+      | edjp_FinancialReportSummary_Con_Q3
+  ): data is edjp_FinancialReportSummary_Con_Q1 {
+    return data.type === "edjp_FinancialReportSummary_Con_Q1";
+  }
+
+  function isSecondQuarter(
+    data:
+      | edjp_FinancialReportSummary_Con_Q1
+      | edjp_FinancialReportSummary_Con_Q2
+      | edjp_FinancialReportSummary_Con_Q3
+  ): data is edjp_FinancialReportSummary_Con_Q2 {
+    return data.type === "edjp_FinancialReportSummary_Con_Q2";
+  }
+
+  function isThirdQuarter(
+    data:
+      | edjp_FinancialReportSummary_Con_Q1
+      | edjp_FinancialReportSummary_Con_Q2
+      | edjp_FinancialReportSummary_Con_Q3
+  ): data is edjp_FinancialReportSummary_Con_Q3 {
+    return data.type === "edjp_FinancialReportSummary_Con_Q3";
+  }
+
   function getQuarterTitle(data: edjp) {
     const fiscal = data.fiscal_year_end?.value;
     const fiscal_jp_str = dayjs(fiscal).format("YYYY年M月期");
@@ -33,7 +61,7 @@ const ConQuarterSummary: React.FC<{
     }
   }
 
-  const summaries = [
+  const OpeSummaries: SummaryGridItemProps[] = [
     {
       title: "売上高",
       itemTitle: getQuarterTitle(fracData),
@@ -43,6 +71,7 @@ const ConQuarterSummary: React.FC<{
       priValue: data.net_sales?.pri_dur_cons_res?.display_numeric ?? "",
       priChangeValue:
         data.change_in_net_sales?.pri_dur_cons_res?.display_numeric ?? "",
+      isChange: true,
     },
     {
       title: "営業利益",
@@ -55,6 +84,7 @@ const ConQuarterSummary: React.FC<{
       priChangeValue:
         data.change_in_operating_income?.pri_dur_cons_res?.display_numeric ??
         "",
+      isChange: true,
     },
     {
       title: "経常利益",
@@ -65,6 +95,7 @@ const ConQuarterSummary: React.FC<{
       priValue: data.ordinary_income?.pri_dur_cons_res?.display_numeric ?? "",
       priChangeValue:
         data.change_in_ordinary_income?.pri_dur_cons_res?.display_numeric ?? "",
+      isChange: true,
     },
     {
       title: "当期純利益",
@@ -81,6 +112,7 @@ const ConQuarterSummary: React.FC<{
       priChangeValue:
         data.change_in_profit_attributable_to_owners_of_parent?.pri_dur_cons_res
           ?.display_numeric ?? "",
+      isChange: true,
     },
     {
       title: "包括利益",
@@ -94,32 +126,154 @@ const ConQuarterSummary: React.FC<{
       priChangeValue:
         data.change_in_comprehensive_income?.pri_dur_cons_res
           ?.display_numeric ?? "",
+      isChange: true,
+    },
+    {
+      title: "１株当たり純利益",
+      itemTitle: getQuarterTitle(fracData),
+      value: data.net_income_per_share?.cur_dur_cons_res?.display_numeric ?? "",
+      changeValue: "",
+      priValue:
+        data.net_income_per_share?.pri_dur_cons_res?.display_numeric ?? "",
+      priChangeValue: "",
+      isChange: false,
+    },
+    {
+      title: "潜在株式調整後１株当たり純利益",
+      itemTitle: getQuarterTitle(fracData),
+      value:
+        data.diluted_net_income_per_share?.cur_dur_cons_res?.display_numeric ??
+        "",
+      changeValue: "",
+      priValue:
+        data.diluted_net_income_per_share?.pri_dur_cons_res?.display_numeric ??
+        "",
+      priChangeValue: "",
+      isChange: false,
     },
   ];
+
+  const finStatus: SummaryGridItemProps[] = [
+    {
+      title: "総資産",
+      itemTitle: getQuarterTitle(fracData),
+      value: data.total_assets?.cur_instant_cons_res?.display_numeric ?? "",
+      changeValue: "",
+      priValue: data.total_assets?.pri_instant_cons_res?.display_numeric ?? "",
+      priChangeValue: "",
+      isChange: false,
+    },
+    {
+      title: "純資産",
+      itemTitle: getQuarterTitle(fracData),
+      value: data.net_assets?.cur_instant_cons_res?.display_numeric ?? "",
+      changeValue: "",
+      priValue: data.net_assets?.pri_instant_cons_res?.display_numeric ?? "",
+      priChangeValue: "",
+      isChange: false,
+    },
+    {
+      title: "自己資本比率",
+      itemTitle: getQuarterTitle(fracData),
+      value: "",
+      changeValue:
+        data.capital_adequacy_ratio?.cur_instant_cons_res?.display_numeric ??
+        "",
+      priValue: "",
+      priChangeValue:
+        data.capital_adequacy_ratio?.pri_instant_cons_res?.display_numeric ??
+        "",
+      isChange: true,
+    },
+  ];
+
+  let dividends: DividendPerShare[] = [];
+  if (isFirstQuarter(data)) {
+    dividends = [
+      {
+        label: "第一四半期末",
+        resultValue:
+          data.dividend_per_share?.cur_dur_first_quarter_non_cons_res
+            ?.display_numeric ?? "",
+        priResultValue:
+          data.dividend_per_share?.pri_dur_first_quarter_non_cons_res
+            ?.display_numeric ?? "",
+        forValue: "",
+      },
+    ];
+  } else if (isSecondQuarter(data)) {
+    dividends = [
+      {
+        label: "1Q期末",
+        resultValue:
+          data.dividend_per_share?.cur_dur_first_quarter_non_cons_res
+            ?.display_numeric ?? "",
+        priResultValue:
+          data.dividend_per_share?.pri_dur_first_quarter_non_cons_res
+            ?.display_numeric ?? "",
+        forValue: "",
+      },
+      {
+        label: "2Q期末",
+        resultValue:
+          data.dividend_per_share?.cur_dur_second_quarter_non_cons_res
+            ?.display_numeric ?? "",
+        priResultValue:
+          data.dividend_per_share?.pri_dur_second_quarter_non_cons_res
+            ?.display_numeric ?? "",
+        forValue: "",
+      },
+      {
+        label: "3Q期末",
+        resultValue: "",
+        priResultValue:
+          data.dividend_per_share?.pri_dur_third_quarter_non_cons_res
+            ?.display_numeric ?? "",
+        forValue:
+          data.dividend_per_share?.cur_dur_third_quarter_non_cons_fore
+            ?.display_numeric ?? "",
+      },
+      {
+        label: "4Q期末",
+        resultValue: "",
+        priResultValue:
+          data.dividend_per_share?.pri_dur_end_non_cons_res?.display_numeric ??
+          "",
+        forValue:
+          data.dividend_per_share?.cur_dur_end_non_cons_fore?.display_numeric ??
+          "",
+      },
+      {
+        label: "通期",
+        resultValue: "",
+        priResultValue:
+          data.dividend_per_share?.pri_dur_annual_non_cons_res
+            ?.display_numeric ?? "",
+        forValue:
+          data.dividend_per_share?.cur_dur_annual_non_cons_fore
+            ?.display_numeric ?? "",
+      },
+    ];
+  }
+
   return (
     <SimpleGrid gap={3} px={2} py={4}>
-      <Heading as="h2" size="sm" alignSelf="flex-start">
+      <Heading as="h2" size="sm" alignSelf="flex-start" p={2}>
         1. 経営成績
       </Heading>
-      <Grid
-        templateColumns="repeat(2,1fr)"
-        templateRows="auto"
-        fontWeight={1000}
-        bg="ui.dim"
-        gap={4}
-      >
-        {summaries.map((summary, index) => (
-          <SummaryGridItem
-            key={index}
-            title={summary.title}
-            itemTitle={summary.itemTitle}
-            value={summary.value}
-            changeValue={summary.changeValue}
-            priValue={summary.priValue}
-            priChangeValue={summary.priChangeValue}
-          />
-        ))}
-      </Grid>
+      <SummaryGrid summaries={OpeSummaries} />
+      <Heading as="h2" size="sm" alignSelf="flex-start" p={2}>
+        2. 財政状態
+      </Heading>
+      <SummaryGrid summaries={finStatus} />
+      {dividends.length > 0 && (
+        <>
+          <Heading as="h2" size="sm" alignSelf="flex-start" p={2}>
+            3. 配当の状況
+          </Heading>
+          <DividendTable dividends={dividends} />
+        </>
+      )}
     </SimpleGrid>
   );
 };
