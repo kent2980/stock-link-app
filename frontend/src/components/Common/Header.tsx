@@ -1,116 +1,34 @@
-import {
-  Box,
-  Flex,
-  FlexProps,
-  HStack,
-  Image,
-  Link,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
-  Text,
-} from "@chakra-ui/react";
-import React from "react";
-import useAuth from "../../hooks/useAuth";
+import { Flex, FlexProps, useColorModeValue } from "@chakra-ui/react";
+import dayjs from "dayjs";
+import { forwardRef } from "react";
 
-const Header: React.FC<FlexProps> = (props) => {
-  const { logout } = useAuth();
+const Header = forwardRef<HTMLDivElement, FlexProps>((props, ref) => {
+  const bgColor = useColorModeValue("ui.light", "ui.dark");
+  const textColor = useColorModeValue("ui.dark", "ui.light");
+  const boxShadow = useColorModeValue(
+    "1px 1px 4px #c0bcbc",
+    "1px 1px 4px #000000"
+  );
 
-  function handleLogout() {
-    logout();
-  }
-
+  const today = dayjs().format("YYYY.MM.DD(dd)");
   return (
     <Flex
+      ref={ref}
       {...props}
+      bg={bgColor}
+      color={textColor}
       position="fixed"
-      top="0"
-      left="0"
-      right="0"
-      bg={"gray.50"}
-      color={"gray.700"}
-      py={2}
-      pr={4}
-      borderBottom={"1px"}
-      borderStyle={"solid"}
-      borderColor={"gray.200"}
-      align={"center"}
+      top={0}
+      right={0}
+      zIndex={3000}
+      w={"100%"}
+      p={3}
+      boxShadow={boxShadow}
+      fontSize={13}
     >
-      <Flex flex={1} align={"center"}>
-        <Link href="/">
-          <Image src="/assets/images/app-logo.png" alt="logo" boxSize="80px" />
-        </Link>
-        <HeaderMenu />
-      </Flex>
-      <Flex>
-        <Text onClick={handleLogout}>LogOut</Text>
-      </Flex>
+      {today}
     </Flex>
   );
-};
+});
 
 export default Header;
-
-const HeaderMenu: React.FC = () => {
-  return (
-    <HStack spacing={4}>
-      {HEADER_ITEMS.map((item) => (
-        <Box key={item.label}>
-          <Popover trigger="hover" placement="bottom-start">
-            <PopoverTrigger>
-              <Box>
-                <Link href={item.href}>
-                  <Text>{item.label}</Text>
-                </Link>
-              </Box>
-            </PopoverTrigger>
-            <PopoverContent>
-              <PopoverArrow />
-              <PopoverCloseButton />
-              <PopoverHeader>{item.label}</PopoverHeader>
-              <PopoverBody>
-                {item.children.map((child) => (
-                  <Link key={child.label} href={child.href}>
-                    <Text>{child.label}</Text>
-                  </Link>
-                ))}
-              </PopoverBody>
-            </PopoverContent>
-          </Popover>
-        </Box>
-      ))}
-    </HStack>
-  );
-};
-
-interface HeaderItem {
-  label: string;
-  subLabel: string;
-  children: Array<HeaderItem>;
-  href: string;
-}
-
-const HEADER_ITEMS: Array<HeaderItem> = [
-  {
-    label: "Home",
-    subLabel: "Dashboard",
-    children: [],
-    href: "/",
-  },
-  {
-    label: "User",
-    subLabel: "settings",
-    children: [],
-    href: "/user",
-  },
-  {
-    label: "Settings",
-    subLabel: "Settings",
-    children: [],
-    href: "/settings",
-  },
-];

@@ -8,6 +8,7 @@ const NonConFYSummary: React.FC<{
   return (
     <Box>
       <h1>NonConFYSummary</h1>
+      <p>data: {JSON.stringify(data)}</p>
     </Box>
   );
 };

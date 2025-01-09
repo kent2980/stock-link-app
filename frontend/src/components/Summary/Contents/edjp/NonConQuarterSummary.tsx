@@ -13,6 +13,7 @@ const NonConQuarterSummary: React.FC<{
   return (
     <Box>
       <h1>NonConQuarterSummary</h1>
+      <p>data: {JSON.stringify(data)}</p>
     </Box>
   );
 };

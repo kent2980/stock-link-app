@@ -11,9 +11,21 @@ import {
 import React from "react";
 
 export interface DividendPerShare {
+  /**
+   * ラベル
+   */
   label: string;
+  /**
+   * 今期実績
+   */
   resultValue: string;
+  /**
+   * 昨年実績
+   */
   priResultValue: string;
+  /**
+   * 今期予想
+   */
   forValue: string;
 }
 
@@ -23,27 +35,21 @@ interface DividendTableProps {
 
 const DividendTable: React.FC<DividendTableProps> = ({ dividends }) => {
   return (
-    <TableContainer
-      bg="ui.light"
-      borderRadius="md"
-      m={1}
-      p={2}
-      border="0.5px solid black"
-    >
-      <Table size="sm" variant="simple">
+    <TableContainer border="1px solid #e2e8f0" padding="16px" bg="ui.light">
+      <Table size="sm" variant="dividend" p={2}>
         <TableCaption>配当の状況</TableCaption>
         <Thead>
           <Tr>
             <Th>会計期間</Th>
-            <Th isNumeric>今期実績</Th>
-            <Th isNumeric>今期予想</Th>
-            <Th isNumeric>昨年実績</Th>
+            <Th>今期実績</Th>
+            <Th>今期予想</Th>
+            <Th>昨年実績</Th>
           </Tr>
         </Thead>
         <Tbody>
           {dividends.map((dividend) => (
             <Tr key={dividend.label}>
-              <Td>{dividend.label}</Td>
+              <Th>{dividend.label}</Th>
               <Td isNumeric>{dividend.resultValue}</Td>
               <Td isNumeric>{dividend.forValue}</Td>
               <Td isNumeric>{dividend.priResultValue}</Td>

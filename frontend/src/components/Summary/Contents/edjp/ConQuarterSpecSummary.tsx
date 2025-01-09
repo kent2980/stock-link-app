@@ -8,6 +8,7 @@ const ConQuarterSpecSummary: React.FC<{
   return (
     <Box>
       <h1>ConQuarterSpecSummary</h1>
+      <p>data: {JSON.stringify(data)}</p>
     </Box>
   );
 };

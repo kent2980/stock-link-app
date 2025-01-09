@@ -4895,6 +4895,54 @@ export const $IxHeadTitleCreate = {
 	type: 'null',
 }],
 },
+		change_in_net_sales: {
+	type: 'any-of',
+	contains: [{
+	type: 'number',
+}, {
+	type: 'null',
+}],
+},
+		change_in_ordinary_income: {
+	type: 'any-of',
+	contains: [{
+	type: 'number',
+}, {
+	type: 'null',
+}],
+},
+		change_in_net_income: {
+	type: 'any-of',
+	contains: [{
+	type: 'number',
+}, {
+	type: 'null',
+}],
+},
+		change_in_fore_net_sales: {
+	type: 'any-of',
+	contains: [{
+	type: 'number',
+}, {
+	type: 'null',
+}],
+},
+		change_in_fore_ordinary_income: {
+	type: 'any-of',
+	contains: [{
+	type: 'number',
+}, {
+	type: 'null',
+}],
+},
+		change_in_fore_net_income: {
+	type: 'any-of',
+	contains: [{
+	type: 'number',
+}, {
+	type: 'null',
+}],
+},
 	},
 } as const;
 
@@ -4916,20 +4964,24 @@ export const $IxHeadTitlePublic = {
 	properties: {
 		insert_date: {
 	type: 'string',
+	description: `作成日時`,
 	isRequired: true,
 	format: 'date-time',
 },
 		update_date: {
 	type: 'string',
+	description: `更新日時`,
 	isRequired: true,
 	format: 'date-time',
 },
 		item_key: {
 	type: 'string',
+	description: `アイテムキー`,
 	isRequired: true,
 },
 		company_name: {
 	type: 'any-of',
+	description: `会社名`,
 	contains: [{
 	type: 'string',
 }, {
@@ -4939,6 +4991,7 @@ export const $IxHeadTitlePublic = {
 },
 		securities_code: {
 	type: 'any-of',
+	description: `証券コード`,
 	contains: [{
 	type: 'string',
 }, {
@@ -4948,6 +5001,7 @@ export const $IxHeadTitlePublic = {
 },
 		document_name: {
 	type: 'any-of',
+	description: `書類名`,
 	contains: [{
 	type: 'string',
 }, {
@@ -4957,6 +5011,7 @@ export const $IxHeadTitlePublic = {
 },
 		reporting_date: {
 	type: 'any-of',
+	description: `報告日`,
 	contains: [{
 	type: 'string',
 	format: 'date',
@@ -4967,6 +5022,7 @@ export const $IxHeadTitlePublic = {
 },
 		current_period: {
 	type: 'any-of',
+	description: `現在の期間`,
 	contains: [{
 	type: 'string',
 }, {
@@ -4976,6 +5032,7 @@ export const $IxHeadTitlePublic = {
 },
 		report_type: {
 	type: 'any-of',
+	description: `報告書タイプ`,
 	contains: [{
 	type: 'string',
 }, {
@@ -4985,6 +5042,7 @@ export const $IxHeadTitlePublic = {
 },
 		listed_market: {
 	type: 'any-of',
+	description: `上場市場`,
 	contains: [{
 	type: 'string',
 }, {
@@ -4994,6 +5052,7 @@ export const $IxHeadTitlePublic = {
 },
 		market_section: {
 	type: 'any-of',
+	description: `市場区分`,
 	contains: [{
 	type: 'string',
 }, {
@@ -5003,6 +5062,7 @@ export const $IxHeadTitlePublic = {
 },
 		url: {
 	type: 'any-of',
+	description: `URL`,
 	contains: [{
 	type: 'string',
 }, {
@@ -5012,6 +5072,7 @@ export const $IxHeadTitlePublic = {
 },
 		is_bs: {
 	type: 'any-of',
+	description: `貸借対照表フラグ`,
 	contains: [{
 	type: 'boolean',
 }, {
@@ -5021,6 +5082,7 @@ export const $IxHeadTitlePublic = {
 },
 		is_pl: {
 	type: 'any-of',
+	description: `損益計算書フラグ`,
 	contains: [{
 	type: 'boolean',
 }, {
@@ -5030,6 +5092,7 @@ export const $IxHeadTitlePublic = {
 },
 		is_cf: {
 	type: 'any-of',
+	description: `キャッシュフロー計算書フラグ`,
 	contains: [{
 	type: 'boolean',
 }, {
@@ -5039,6 +5102,7 @@ export const $IxHeadTitlePublic = {
 },
 		is_ci: {
 	type: 'any-of',
+	description: `包括利益計算書フラグ`,
 	contains: [{
 	type: 'boolean',
 }, {
@@ -5048,6 +5112,7 @@ export const $IxHeadTitlePublic = {
 },
 		is_sce: {
 	type: 'any-of',
+	description: `株主資本等変動計算書フラグ`,
 	contains: [{
 	type: 'boolean',
 }, {
@@ -5057,6 +5122,7 @@ export const $IxHeadTitlePublic = {
 },
 		is_sfp: {
 	type: 'any-of',
+	description: `財政状態計算書フラグ`,
 	contains: [{
 	type: 'boolean',
 }, {
@@ -5066,6 +5132,7 @@ export const $IxHeadTitlePublic = {
 },
 		fy_year_end: {
 	type: 'any-of',
+	description: `会計年度末`,
 	contains: [{
 	type: 'string',
 }, {
@@ -5075,6 +5142,7 @@ export const $IxHeadTitlePublic = {
 },
 		tel: {
 	type: 'any-of',
+	description: `電話番号`,
 	contains: [{
 	type: 'string',
 }, {
@@ -5084,6 +5152,7 @@ export const $IxHeadTitlePublic = {
 },
 		is_div_rev: {
 	type: 'any-of',
+	description: `配当修正フラグ`,
 	contains: [{
 	type: 'boolean',
 }, {
@@ -5093,6 +5162,7 @@ export const $IxHeadTitlePublic = {
 },
 		div_inc_rt: {
 	type: 'any-of',
+	description: `配当収益率`,
 	contains: [{
 	type: 'string',
 }, {
@@ -5102,6 +5172,7 @@ export const $IxHeadTitlePublic = {
 },
 		is_fcst_rev: {
 	type: 'any-of',
+	description: `業績予測修正フラグ`,
 	contains: [{
 	type: 'boolean',
 }, {
@@ -5111,6 +5182,7 @@ export const $IxHeadTitlePublic = {
 },
 		fcst_oi_gr_rt: {
 	type: 'any-of',
+	description: `予測営業利益成長率`,
 	contains: [{
 	type: 'string',
 }, {
@@ -5120,6 +5192,7 @@ export const $IxHeadTitlePublic = {
 },
 		oi_prog_rt: {
 	type: 'any-of',
+	description: `営業利益進捗率`,
 	contains: [{
 	type: 'number',
 }, {
@@ -5129,6 +5202,7 @@ export const $IxHeadTitlePublic = {
 },
 		specific_business: {
 	type: 'any-of',
+	description: `特定事業フラグ`,
 	contains: [{
 	type: 'boolean',
 }, {
@@ -5138,8 +5212,69 @@ export const $IxHeadTitlePublic = {
 },
 		is_consolidated: {
 	type: 'any-of',
+	description: `連結決算フラグ`,
 	contains: [{
 	type: 'boolean',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		change_in_net_sales: {
+	type: 'any-of',
+	description: `売上高増減率`,
+	contains: [{
+	type: 'number',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		change_in_ordinary_income: {
+	type: 'any-of',
+	description: `経常利益増減率`,
+	contains: [{
+	type: 'number',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		change_in_net_income: {
+	type: 'any-of',
+	description: `当期純利益増減率`,
+	contains: [{
+	type: 'number',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		change_in_fore_net_sales: {
+	type: 'any-of',
+	description: `予想売上高増減率`,
+	contains: [{
+	type: 'number',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		change_in_fore_ordinary_income: {
+	type: 'any-of',
+	description: `予想経常利益増減率`,
+	contains: [{
+	type: 'number',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		change_in_fore_net_income: {
+	type: 'any-of',
+	description: `予想純利益増減率`,
+	contains: [{
+	type: 'number',
 }, {
 	type: 'null',
 }],
@@ -5662,7 +5797,7 @@ export const $IxNonFractionPublic = {
 		decimals: {
 	type: 'any-of',
 	contains: [{
-	type: 'string',
+	type: 'number',
 }, {
 	type: 'null',
 }],
@@ -5684,7 +5819,7 @@ export const $IxNonFractionPublic = {
 		scale: {
 	type: 'any-of',
 	contains: [{
-	type: 'string',
+	type: 'number',
 }, {
 	type: 'null',
 }],
@@ -5720,7 +5855,7 @@ export const $IxNonFractionPublic = {
 		numeric: {
 	type: 'any-of',
 	contains: [{
-	type: 'string',
+	type: 'number',
 }, {
 	type: 'null',
 }],

@@ -14,6 +14,7 @@ import {
   PopoverTrigger,
   Skeleton,
   SkeletonCircle,
+  Tag,
   Text,
   useColorModeValue,
   VStack,
@@ -22,26 +23,30 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import React, { Suspense } from "react";
 import { IxHeadTitlePublic, XbrlIxHeadService } from "../../client";
 
+interface ReportContentsProps extends BoxProps {
+  selectDate: string;
+}
 /**
  * コンテンツ表示用のコンポーネント
  * @param props  BoxProps
  */
-const ReportContents: React.FC<BoxProps> = (props) => {
+const ReportContents: React.FC<ReportContentsProps> = (props) => {
+  const { selectDate } = props;
   const textColor = useColorModeValue("ui.dark", "ui.light");
   const borderColor = useColorModeValue("#d1d9e0", "#ffffff29");
   // IxHeadTitlePublicのデータを取得
   const { data } = useSuspenseQuery({
-    queryKey: ["xbrlIxHead"],
+    queryKey: ["xbrlIxHead", selectDate],
     queryFn: () =>
       XbrlIxHeadService.selectIxHeadTitleItems({
-        dateStr: "2024-10-30",
+        dateStr: selectDate,
       }),
     staleTime: 1000 * 60 * 60 * 24,
     gcTime: 1000 * 60 * 60 * 24,
   });
 
   return (
-    <Box color={textColor} {...props} p={{ base: 2, md: 4 }}>
+    <Box color={textColor} {...props}>
       <Box
         display={{ base: "block", md: "block" }}
         border="1px solid"
@@ -201,29 +206,13 @@ const ReportItem: React.FC<ReportItemProps> = ({ item, key }) => {
           >
             {item ? (
               item.current_period && (
-                <Text
-                  bg="gray.200"
-                  w={16}
-                  textAlign="center"
-                  border="0.8px solid"
-                  borderColor={borderColor}
-                >
-                  {getPeriodLabel(item.current_period)}
-                </Text>
+                <Tag size="sm">{getPeriodLabel(item.current_period)}</Tag>
               )
             ) : (
               <Skeleton height="20px" width="50px" />
             )}
             {item ? (
-              <Text
-                bg="gray.200"
-                w={16}
-                textAlign="center"
-                border="0.8px solid"
-                borderColor={borderColor}
-              >
-                {getReportTypeLabel(item.report_type)}
-              </Text>
+              <Tag size="sm">{getReportTypeLabel(item.report_type)}</Tag>
             ) : (
               <Skeleton height="20px" width="50px" />
             )}
@@ -247,7 +236,13 @@ const ReportItem: React.FC<ReportItemProps> = ({ item, key }) => {
   );
 };
 
-const ReportList: React.FC<BoxProps> = (props) => {
+interface ReportListProps extends BoxProps {
+  selectDate?: string;
+}
+
+const ReportList: React.FC<ReportListProps> = (props) => {
+  const { selectDate } = props;
+  const today = new Date().toISOString().split("T")[0];
   return (
     <Box {...props}>
       <Suspense
@@ -259,7 +254,7 @@ const ReportList: React.FC<BoxProps> = (props) => {
           </List>
         }
       >
-        <ReportContents />
+        <ReportContents selectDate={selectDate ? selectDate : today} />
       </Suspense>
     </Box>
   );

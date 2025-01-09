@@ -13,14 +13,24 @@ const theme = extendTheme({
       secondary: "#B43F3F",
       success: "#48BB78",
       danger: "#E53E3E",
-      light: "#fefefe",
-      dark: "#1A202C",
+      light: "#ffffff",
+      dark: "#141313",
       darkSlate: "#252D3D",
-      dim: "#ecf1f6",
+      dim: "#f5f5f9",
       text: "#1c244a",
+      headerText: "#30303b",
     },
   },
   components: {
+    TableContainer: {
+      primary: {
+        bg: "ui.light",
+        borderRadius: "md",
+        m: 1,
+        p: 2,
+        border: "0.5px solid black",
+      },
+    },
     Button: {
       variants: {
         primary: {
@@ -58,7 +68,7 @@ const theme = extendTheme({
     },
     Table: {
       variants: {
-        dividend: {
+        main: {
           table: {
             size: "sm",
           },
@@ -66,20 +76,27 @@ const theme = extendTheme({
             borderColor: "ui.dim",
             borderBottomWidth: "0.5px",
             borderBottomStyle: "solid",
-            height: "30px",
           },
           th: {
             textAlign: "center",
-            fontSize: "12px",
-            whiteSpace: "normal", // テキストを折り返す
-            wordWrap: "break-word", // テキストを折り返す
+            fontSize: "10px",
           },
           td: {
             textAlign: "center",
             fontSize: "12px",
             whiteSpace: "normal", // テキストを折り返す
             wordWrap: "break-word", // テキストを折り返す
+            fontWeight: "500",
           },
+        },
+      },
+    },
+    Card: {
+      variants: {
+        main: {
+          borderRadius: "60px",
+          BsBorderWidth: "1px",
+          boxShadow: "lg",
         },
       },
     },

@@ -145,10 +145,21 @@ class XbrlBase(SQLModel):
         update_date datetime: 更新日時です。
     """
 
-    id: Optional[int] = Field(default=None, primary_key=True)
-    item_key: Optional[str] = Field(max_length=36, min_length=36, unique=True)
-    insert_date: datetime = Field(default_factory=datetime.now)
-    update_date: datetime = Field(default_factory=datetime.now)
+    id: Optional[int] = Field(
+        default=None, primary_key=True, sa_column_kwargs={"comment": "ID"}
+    )
+    item_key: Optional[str] = Field(
+        max_length=36,
+        min_length=36,
+        unique=True,
+        sa_column_kwargs={"comment": "ItemKey"},
+    )
+    insert_date: datetime = Field(
+        default_factory=datetime.now, sa_column_kwargs={"comment": "作成日時"}
+    )
+    update_date: datetime = Field(
+        default_factory=datetime.now, sa_column_kwargs={"comment": "更新日時"}
+    )
 
 
 class IxLocsBase(XbrlBase):
@@ -190,8 +201,10 @@ class IxFilePath(XbrlBase, table=True):
 
     __tablename__ = "ix_file_path"
 
-    head_item_key: str = Field(max_length=36, unique=True)
-    path: str = Field(default=None)
+    head_item_key: str = Field(
+        max_length=36, unique=True, sa_column_kwargs={"comment": "HeadItemKey"}
+    )
+    path: str = Field(default=None, sa_column_kwargs={"comment": "パス"})
 
 
 class IxHeadTitle(XbrlBase, table=True):
@@ -200,60 +213,168 @@ class IxHeadTitle(XbrlBase, table=True):
     __tablename__ = "ix_head_title"
 
     item_key: str = Field(
-        max_length=36, unique=True, foreign_key="ix_file_path.head_item_key"
+        max_length=36,
+        unique=True,
+        foreign_key="ix_file_path.head_item_key",
+        sa_column_kwargs={"comment": "ItemKey"},
     )
     company_name: Optional[str] = Field(
-        default=None, max_length=255, description="企業名"
+        default=None,
+        max_length=255,
+        description="企業名",
+        sa_column_kwargs={"comment": "企業名"},
     )
     securities_code: Optional[str] = Field(
-        default=None, max_length=4, description="証券コード"
+        default=None,
+        max_length=4,
+        description="証券コード",
+        sa_column_kwargs={"comment": "証券コード"},
     )
     document_name: Optional[str] = Field(
-        default=None, max_length=255, description="書類名"
+        default=None,
+        max_length=255,
+        description="書類名",
+        sa_column_kwargs={"comment": "書類名"},
     )
-    reporting_date: Optional[date] = Field(default=None, description="報告日")
+    reporting_date: Optional[date] = Field(
+        default=None, description="報告日", sa_column_kwargs={"comment": "報告日"}
+    )
     current_period: Optional[str] = Field(
-        default=None, max_length=255, description="決算期"
+        default=None,
+        max_length=255,
+        description="決算期",
+        sa_column_kwargs={"comment": "決算期"},
     )
     report_type: Optional[str] = Field(
-        default=None, max_length=4, description="報告書種別"
+        default=None,
+        max_length=4,
+        description="報告書種別",
+        sa_column_kwargs={"comment": "報告書種別"},
     )
-    listed_market: Optional[str] = Field(default=None, description="上場市場")
-    market_section: Optional[str] = Field(default=None, description="市場区分")
-    url: Optional[str] = Field(default=None, description="URL")
+    listed_market: Optional[str] = Field(
+        default=None, description="上場市場", sa_column_kwargs={"comment": "上場市場"}
+    )
+    market_section: Optional[str] = Field(
+        default=None, description="市場区分", sa_column_kwargs={"comment": "市場区分"}
+    )
+    url: Optional[str] = Field(
+        default=None, description="URL", sa_column_kwargs={"comment": "URL"}
+    )
     is_bs: Optional[bool] = Field(
-        default=False, nullable=True, description="貸借対照表"
+        default=False,
+        nullable=True,
+        description="貸借対照表",
+        sa_column_kwargs={"comment": "貸借対照表"},
     )
     is_pl: Optional[bool] = Field(
-        default=False, nullable=True, description="損益計算書"
+        default=False,
+        nullable=True,
+        description="損益計算書",
+        sa_column_kwargs={"comment": "損益計算書"},
     )
     is_cf: Optional[bool] = Field(
-        default=False, nullable=True, description="キャッシュフロー計算書"
+        default=False,
+        nullable=True,
+        description="キャッシュフロー計算書",
+        sa_column_kwargs={"comment": "キャッシュフロー計算書"},
     )
     is_ci: Optional[bool] = Field(
-        default=False, nullable=True, description="包括利益計算書"
+        default=False,
+        nullable=True,
+        description="包括利益計算書",
+        sa_column_kwargs={"comment": "包括利益計算書"},
     )
     is_sce: Optional[bool] = Field(
-        default=False, nullable=True, description="株主資本等変動計算書"
+        default=False,
+        nullable=True,
+        description="株主資本等変動計算書",
+        sa_column_kwargs={"comment": "株主資本等変動計算書"},
     )
     is_sfp: Optional[bool] = Field(
-        default=False, nullable=True, description="株主資本等変動計算書"
+        default=False,
+        nullable=True,
+        description="株主資本等変動計算書",
+        sa_column_kwargs={"comment": "株主資本等変動計算書"},
     )
-    fy_year_end: Optional[str] = Field(default=None, description="決算期")
-    tel: Optional[str] = Field(default=None, description="電話番号")
+    fy_year_end: Optional[str] = Field(
+        default=None, description="決算期", sa_column_kwargs={"comment": "決算期"}
+    )
+    tel: Optional[str] = Field(
+        default=None, description="電話番号", sa_column_kwargs={"comment": "電話番号"}
+    )
     is_div_rev: Optional[bool] = Field(
-        default=None, nullable=True, description="配当修正"
+        default=None,
+        nullable=True,
+        description="配当修正",
+        sa_column_kwargs={"comment": "配当修正"},
     )
-    div_inc_rt: Optional[str] = Field(default=None, description="増配率")
+    div_inc_rt: Optional[str] = Field(
+        default=None, description="増配率", sa_column_kwargs={"comment": "増配率"}
+    )
     is_fcst_rev: Optional[bool] = Field(
-        default=None, nullable=True, description="業績予想の修正"
+        default=None,
+        nullable=True,
+        description="業績予想の修正",
+        sa_column_kwargs={"comment": "業績予想の修正"},
     )
-    fcst_oi_gr_rt: Optional[str] = Field(default=None, description="予想経常利益増益率")
-    oi_prog_rt: Optional[float] = Field(default=None, description="経常利益進捗率")
-    is_active: bool = Field(default=False, nullable=False, description="有効フラグ")
-    is_generated: bool = Field(default=False, nullable=False, description="生成フラグ")
-    specific_business: Optional[bool] = Field(default=None, description="特定事業")
-    is_consolidated: Optional[bool] = Field(default=None, description="連結")
+    fcst_oi_gr_rt: Optional[str] = Field(
+        default=None,
+        description="予想経常利益増益率",
+        sa_column_kwargs={"comment": "予想経常利益増益率"},
+    )
+    oi_prog_rt: Optional[float] = Field(
+        default=None,
+        description="経常利益進捗率",
+        sa_column_kwargs={"comment": "経常利益進捗率"},
+    )
+    is_active: bool = Field(
+        default=False,
+        nullable=False,
+        description="有効フラグ",
+        sa_column_kwargs={"comment": "有効フラグ"},
+    )
+    is_generated: bool = Field(
+        default=False,
+        nullable=False,
+        description="生成フラグ",
+        sa_column_kwargs={"comment": "生成フラグ"},
+    )
+    specific_business: Optional[bool] = Field(
+        default=None, description="特定事業", sa_column_kwargs={"comment": "特定事業"}
+    )
+    is_consolidated: Optional[bool] = Field(
+        default=None, description="連結", sa_column_kwargs={"comment": "連結"}
+    )
+    change_in_net_sales: Optional[float] = Field(
+        default=None,
+        description="売上高増減率",
+        sa_column_kwargs={"comment": "売上高増減率"},
+    )
+    change_in_ordinary_income: Optional[float] = Field(
+        default=None,
+        description="経常利益増減率",
+        sa_column_kwargs={"comment": "経常利益増減率"},
+    )
+    change_in_net_income: Optional[float] = Field(
+        default=None,
+        description="当期純利益増減率",
+        sa_column_kwargs={"comment": "当期純利益増減率"},
+    )
+    change_in_fore_net_sales: Optional[float] = Field(
+        default=None,
+        description="予想売上高増減率",
+        sa_column_kwargs={"comment": "予想売上高増減率"},
+    )
+    change_in_fore_ordinary_income: Optional[float] = Field(
+        default=None,
+        description="予想経常利益増減率",
+        sa_column_kwargs={"comment": "予想経常利益増減率"},
+    )
+    change_in_fore_net_income: Optional[float] = Field(
+        default=None,
+        description="予想純利益増減率",
+        sa_column_kwargs={"comment": "予想純利益増減率"},
+    )
 
     __table_args__ = (
         Index("idx_ix_head_title_item_key", "item_key"),

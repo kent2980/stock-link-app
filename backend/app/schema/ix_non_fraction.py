@@ -36,14 +36,14 @@ class IxNonFractionPublic(SQLModel):
     update_date: datetime
     head_item_key: Optional[str]
     context: str
-    decimals: Optional[Decimal]
+    decimals: Optional[float]
     format: Optional[str]
     name: str
-    scale: Optional[Decimal]
+    scale: Optional[float]
     sign: Optional[str]
     unit_ref: Optional[str]
     xsi_nil: Optional[bool]
-    numeric: Optional[Decimal]
+    numeric: Optional[float]
     report_type: Optional[str]
     ixbrl_role: Optional[str]
     source_file_id: Optional[str]

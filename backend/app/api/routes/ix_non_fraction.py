@@ -2,7 +2,7 @@ from typing import Any
 
 import app.schema as sc
 from app.api.deps import SessionDep
-from app.models import IxNonFraction
+from app.models import IxHeadTitle, IxNonFraction
 from fastapi import APIRouter, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select

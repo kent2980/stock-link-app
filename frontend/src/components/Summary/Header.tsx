@@ -1,7 +1,16 @@
-import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  HStack,
+  Link,
+  Text,
+} from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
+import dayjs from "dayjs";
 import React from "react";
-import { SummaryService } from "../../client";
+import { edif, edjp, SummaryService } from "../../client";
 
 interface HeaderProps {
   head_item_key: string;
@@ -27,22 +36,31 @@ const Header: React.FC<HeaderProps> = ({ head_item_key }) => {
     return <Box>Error</Box>;
   }
 
+  function isEdData(data: any): data is edjp | edif {
+    return data.type === "edjp" || data.type === "edif";
+  }
+
   return (
     <Grid
-      bg="ui.main"
-      color="ui.light"
-      templateColumns="repeat(3, 1fr)"
-      templateRows="repeat(2, auto)"
-      gap={4}
-      py={6}
-      px={4}
+      color="ui.main"
+      bg="ui.light"
+      templateColumns="repeat(10, 1fr)"
+      templateRows="repeat(4, auto)"
+      gap={2}
+      py={3}
+      px={3}
+      m={2}
+      mt="70px"
+      border="1px solid #e2e8f0"
     >
-      <GridItem colSpan={3}>
-        <Flex gap={4}>
+      <GridItem colSpan={10}>
+        <Flex gap={6}>
           <Box
             bg="ui.light"
             color="ui.main"
             borderRadius="md"
+            border="1px solid #e2e8f0"
+            boxShadow="1px 1px 0.8px #959ba4"
             w={14}
             h={8}
             textAlign="center"
@@ -57,11 +75,43 @@ const Header: React.FC<HeaderProps> = ({ head_item_key }) => {
           </Box>
         </Flex>
       </GridItem>
-      <GridItem colSpan={3}>
+      <GridItem colSpan={10}>
         <Flex gap={4}>
           <Box alignContent="center" fontSize={12} fontWeight={600}>
             {data.document_name?.value}
           </Box>
+        </Flex>
+      </GridItem>
+      <GridItem colSpan={10}>
+        <Flex gap={4}>
+          <Text
+            bg="ui.light"
+            color="ui.main"
+            fontSize={12}
+            fontWeight={600}
+            px={2}
+          >
+            {dayjs(data.fiscal_year_end?.value).format("YYYY年M月期")}
+          </Text>
+          {isEdData(data) && (
+            <HStack bg="ui.light" color="ui.main" px={2}>
+              <Text alignContent="center" fontSize={12} fontWeight={600}>
+                会計期間:
+              </Text>
+              <Text alignContent="center" fontSize={12} fontWeight={600}>
+                {data?.type_of_current_period_dei?.value}
+              </Text>
+            </HStack>
+          )}
+        </Flex>
+      </GridItem>
+      <GridItem colSpan={10}>
+        <Flex>
+          {isEdData(data) && (
+            <Text>
+              <Link href={data.URL?.value ?? ""}>{data.URL?.value}</Link>
+            </Text>
+          )}
         </Flex>
       </GridItem>
     </Grid>

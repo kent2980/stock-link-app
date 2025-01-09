@@ -339,7 +339,11 @@ export type TDataDeleteIxHeadTitleItem = {
                 headItemKey: string
                 
             }
-export type TDataActiveIxHeadTitleItem = {
+export type TDataUpdateIsActiveIxHeadTitleItem = {
+                headItemKey: string
+                
+            }
+export type TDataActiveIsGenerate = {
                 headItemKey: string
                 
             }
@@ -349,6 +353,11 @@ export type TDataIsIxHeadTitleItemActive = {
             }
 export type TDataSelectIxHeadTitleItem = {
                 headItemKey: string
+                
+            }
+export type TDataUpdateIxHeadTitleItem = {
+                dateStr?: string | null
+headItemKey?: string | null
                 
             }
 
@@ -506,18 +515,40 @@ headItemKey,
 	}
 
 	/**
-	 * Active Ix Head Title Item
+	 * Update Is Active Ix Head Title Item
 	 * Active item.
 	 * @returns boolean Successful Response
 	 * @throws ApiError
 	 */
-	public static activeIxHeadTitleItem(data: TDataActiveIxHeadTitleItem): CancelablePromise<boolean> {
+	public static updateIsActiveIxHeadTitleItem(data: TDataUpdateIsActiveIxHeadTitleItem): CancelablePromise<boolean> {
 		const {
 headItemKey,
 } = data;
 		return __request(OpenAPI, {
-			method: 'PUT',
+			method: 'PATCH',
 			url: '/api/v1/xbrl/ix/head/active/',
+			query: {
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Active Is Generate
+	 * Generate item.
+	 * @returns boolean Successful Response
+	 * @throws ApiError
+	 */
+	public static activeIsGenerate(data: TDataActiveIsGenerate): CancelablePromise<boolean> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'PATCH',
+			url: '/api/v1/xbrl/ix/head/generate/',
 			query: {
 				head_item_key: headItemKey
 			},
@@ -550,14 +581,14 @@ headItemKey,
 	}
 
 	/**
-	 * Upgrade Is Consolidated
+	 * Update Is Consolidated
 	 * Upgrade is_consolidated.
 	 * @returns string Successful Response
 	 * @throws ApiError
 	 */
-	public static upgradeIsConsolidated(): CancelablePromise<string> {
+	public static updateIsConsolidated(): CancelablePromise<string> {
 				return __request(OpenAPI, {
-			method: 'POST',
+			method: 'PATCH',
 			url: '/api/v1/xbrl/upgrade/is_consolidated/',
 		});
 	}
@@ -577,6 +608,29 @@ headItemKey,
 			url: '/api/v1/xbrl/select/head_item_key/',
 			query: {
 				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Update Ix Head Title Item
+	 * Update item.
+	 * @returns string Successful Response
+	 * @throws ApiError
+	 */
+	public static updateIxHeadTitleItem(data: TDataUpdateIxHeadTitleItem = {}): CancelablePromise<string> {
+		const {
+dateStr,
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'PATCH',
+			url: '/api/v1/xbrl/ix/head/update/',
+			query: {
+				head_item_key: headItemKey, date_str: dateStr
 			},
 			errors: {
 				422: `Validation Error`,

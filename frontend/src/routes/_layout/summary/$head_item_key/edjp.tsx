@@ -2,7 +2,6 @@ import { Box } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  edjp,
   edjp_FinancialReportSummary_Con_FY,
   edjp_FinancialReportSummary_Con_HY_spec,
   edjp_FinancialReportSummary_Con_Q1,
@@ -34,26 +33,12 @@ function Summary() {
     gcTime: 1000 * 60 * 60 * 24,
     staleTime: 1000 * 60 * 60 * 24,
   });
-  const {
-    data: fracData,
-    isPending: fracIsPending,
-    isError: fracIsError,
-  } = useQuery({
-    queryKey: ["SummaryNonNumeric", head_item_key],
-    queryFn: async () => {
-      return SummaryService.getSummaryNonNumericItemsHeadItemKey({
-        headItemKey: head_item_key,
-      });
-    },
-    gcTime: 1000 * 60 * 60 * 24,
-    staleTime: 1000 * 60 * 60 * 24,
-  });
 
-  if (isPending || fracIsPending) {
+  if (isPending) {
     return <Box>Loading...</Box>;
   }
 
-  if (isError || fracIsError) {
+  if (isError) {
     return <Box>Error</Box>;
   }
 
@@ -124,12 +109,8 @@ function Summary() {
     return data.type === "edjp_FinancialReportSummary_NonCon_FY";
   }
 
-  function isEdjoFraction(data: any): data is edjp {
-    return data.type === "edjp";
-  }
-
   if (isConQuarterSummary(data)) {
-    return <ConQuarterSummary data={data} fracData={fracData} />;
+    return <ConQuarterSummary data={data} />;
   }
 
   if (isNonConQuarterSummary(data)) {

@@ -10,7 +10,7 @@ function Summary() {
   const { head_item_key } = Route.useParams();
 
   return (
-    <Box bg="ui.dim" color="ui.main">
+    <Box color="ui.main">
       <Header head_item_key={head_item_key} />
       <Outlet />
     </Box>

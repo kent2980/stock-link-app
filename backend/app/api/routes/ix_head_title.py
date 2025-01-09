@@ -3,13 +3,12 @@ import re
 from decimal import Decimal
 from typing import Any, List, Optional
 
-from fastapi import APIRouter, HTTPException, Query
-from sqlalchemy.exc import IntegrityError
-from sqlmodel import func, select, update
-
 import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric
+from fastapi import APIRouter, HTTPException, Query
+from sqlalchemy.exc import IntegrityError
+from sqlmodel import func, select, update
 
 router = APIRouter()
 
@@ -270,8 +269,8 @@ def delete_ix_head_title_item(
     return True
 
 
-@router.put("/ix/head/active/", response_model=bool)
-def active_ix_head_title_item(
+@router.patch("/ix/head/active/", response_model=bool)
+def update_is_active_ix_head_title_item(
     *, session: SessionDep, head_item_key: str = Query(...)
 ) -> Any:
     """
@@ -281,10 +280,35 @@ def active_ix_head_title_item(
     result = session.exec(statement)
     item = result.first()
 
+    is_active = True
+
+    if item is None:
+        is_active = False
+
+    if item.report_type.startswith("ed"):
+        if item.current_period is None:
+            is_active = False
+
+    item.is_active = is_active
+    session.add(item)
+    session.commit()
+
+    return is_active
+
+
+@router.patch("/ix/head/generate/", response_model=bool)
+def active_is_generate(*, session: SessionDep, head_item_key: str = Query(...)) -> Any:
+    """
+    Generate item.
+    """
+    statement = select(IxHeadTitle).where(IxHeadTitle.item_key == head_item_key)
+    result = session.exec(statement)
+    item = result.first()
+
     if item is None:
         return False
 
-    item.is_active = True
+    item.is_generate = True
     session.add(item)
     session.commit()
 
@@ -307,8 +331,8 @@ def is_ix_head_title_item_active(*, session: SessionDep, head_item_key: str) -> 
     return False
 
 
-@router.post("/upgrade/is_consolidated/", response_model=str)
-def upgrade_is_consolidated(*, session: SessionDep) -> str:
+@router.patch("/upgrade/is_consolidated/", response_model=str)
+def update_is_consolidated(*, session: SessionDep) -> str:
     """
     Upgrade is_consolidated.
     """
@@ -350,3 +374,234 @@ def select_ix_head_title_item(
     item = result.first()
 
     return item
+
+
+@router.patch("/ix/head/update/", response_model=str)
+def update_ix_head_title_item(
+    *,
+    session: SessionDep,
+    head_item_key: Optional[str] = None,
+    date_str: Optional[str] = None,
+) -> Any:
+    """
+    Update item.
+    """
+
+    def update_change_in_items(
+        session: SessionDep,
+        head_item_key: Optional[str] = None,
+        date_str: Optional[str] = None,
+    ) -> Any:
+        """
+        経営実績の増減率を更新する。
+        """
+        statement = select(IxNonFraction).where(
+            IxNonFraction.name.like("tse-ed-t_ChangeIn%"),
+        )
+        if head_item_key:
+            statement = statement.where(IxNonFraction.head_item_key == head_item_key)
+        if date_str:
+            date_value = datetime.datetime.strptime(date_str, "%Y%m%d")
+            statement = statement.join(IxHeadTitle).where(
+                IxHeadTitle.reporting_date == date_value.date()
+            )
+        result = session.exec(statement)
+        items = result.all()
+
+        head_item_keys = [item.head_item_key for item in items]
+        head_item_keys = list(set(head_item_keys))
+        for item in items:
+            head_item_key = item.head_item_key
+            name = item.name
+            context = item.context
+            numeric = item.numeric
+
+            if numeric is None:
+                continue
+
+            statement = select(IxHeadTitle).where(IxHeadTitle.item_key == head_item_key)
+            result = session.exec(statement)
+            head_item = result.first()
+
+            if numeric:
+                value = float(numeric)
+            if head_item.is_consolidated:
+                if re.search(r"NonConsolidated", item.context):
+                    continue
+
+            update_fields = {
+                "tse-ed-t_ChangeInNetSales": {
+                    "result": "change_in_net_sales",
+                    "forecast": "change_in_fore_net_sales",
+                },  # 売上高増減率
+                "tse-ed-t_ChangeInOrdinaryRevenue": {
+                    "result": "change_in_net_sales",
+                    "forecast": "change_in_fore_net_sales",
+                },  # 経常収益増減率
+                "tse-ed-t_ChangeInSales": {
+                    "result": "change_in_net_sales",
+                    "forecast": "change_in_fore_net_sales",
+                },  # 売上収益増減率
+                "tse-ed-t_ChangeInRevenue": {
+                    "result": "change_in_net_sales",
+                    "forecast": "change_in_fore_net_sales",
+                },  # 収益増減率
+                "tse-ed-t_ChangeInOperatingRevenues": {
+                    "result": "change_in_net_sales",
+                    "forecast": "change_in_fore_net_sales",
+                },  # 営業収益増減率
+                "tse-ed-t_ChangeInOrdinaryIncome": {
+                    "result": "change_in_ordinary_income",
+                    "forecast": "change_in_fore_ordinary_income",
+                },  # 経常利益増減率
+                "tse-ed-t_ChangeInProfitBeforeTax": {
+                    "result": "change_in_net_income",
+                    "forecast": "change_in_fore_net_income",
+                },  # 税引前利益増減率
+                "tse-ed-t_ChangeInProfitAttributableToOwnersOfParent": {
+                    "result": "change_in_net_income",
+                    "forecast": "change_in_fore_net_income",
+                },  # 当期純利益増減率
+            }
+
+            for prefix, fields in update_fields.items():
+                if name.startswith(prefix):
+                    if re.search(r"(?=.*Current)(?=.*Result)", context):
+                        statement = (
+                            update(IxHeadTitle)
+                            .where(IxHeadTitle.item_key == head_item_key)
+                            .values({fields["result"]: value})
+                        )
+                    elif re.search(r"(?=.*Forecast)(?=.*Year)", context):
+                        statement = (
+                            update(IxHeadTitle)
+                            .where(IxHeadTitle.item_key == head_item_key)
+                            .values({fields["forecast"]: value})
+                        )
+                    session.exec(statement)
+                    session.commit()
+                    break
+
+        return f"{len(head_item_keys)} items updated."
+
+    def update_non_numeric_items(
+        session: SessionDep,
+        head_item_key: Optional[str] = None,
+        date_str: Optional[str] = None,
+    ) -> Any:
+        """
+        非数値情報を更新する。
+        """
+        statement = select(IxNonNumeric)
+        if head_item_key:
+            statement = statement.where(
+                IxNonNumeric.head_item_key == head_item_key,
+                IxNonNumeric.name.like("tse-ed-t_CorrectionOf%"),
+            )
+        if date_str:
+            date_value = datetime.datetime.strptime(date_str, "%Y%m%d")
+            statement = statement.join(IxHeadTitle).where(
+                IxHeadTitle.reporting_date == date_value.date()
+            )
+        result = session.exec(statement)
+        items = result.all()
+
+        for item in items:
+            head_item_key = item.head_item_key
+            value = True if item.value == "true" else False
+
+            update_items = {
+                r"tse-ed-t_CorrectionOf.*FinancialForecast.*": "is_fcst_rev",
+                r"tse-ed-t_CorrectionOfDividendForecast.*": "is_div_rev",
+            }
+
+            for prefix, field in update_items.items():
+                if re.match(prefix, item.name):
+                    statement = (
+                        update(IxHeadTitle)
+                        .where(IxHeadTitle.item_key == head_item_key)
+                        .values({field: value})
+                    )
+                    session.exec(statement)
+                    session.commit()
+                    break
+
+        return f"{len(items)} items updated."
+
+    def update_ordinary_income_progress_rate(
+        session: SessionDep,
+        head_item_key: Optional[str] = None,
+        date_str: Optional[str] = None,
+    ) -> Any:
+        """
+        経常利益進捗率を更新する。
+        """
+        resultStatement = (
+            select(IxNonFraction.head_item_key, IxNonFraction.numeric)
+            .where(
+                IxNonFraction.name == "tse-ed-t_OrdinaryIncome",
+                IxNonFraction.context.like("%ResultMember"),
+                ~IxNonFraction.context.like("Prior%"),
+            )
+            .group_by(IxNonFraction.head_item_key, IxNonFraction.numeric)
+            .subquery()
+        )
+        forecastStatement = (
+            select(IxNonFraction.head_item_key, IxNonFraction.numeric)
+            .where(
+                IxNonFraction.name == "tse-ed-t_OrdinaryIncome",
+                IxNonFraction.context.like("%ForecastMember"),
+                ~IxNonFraction.context.like("Prior%"),
+            )
+            .group_by(IxNonFraction.head_item_key, IxNonFraction.numeric)
+            .subquery()
+        )
+
+        statement = (
+            select(
+                resultStatement.c.head_item_key,
+                (
+                    func.round(
+                        resultStatement.c.numeric / forecastStatement.c.numeric * 100, 1
+                    )
+                ).label("progress_rate"),
+            )
+            .select_from(resultStatement)
+            .join(
+                forecastStatement,
+                resultStatement.c.head_item_key == forecastStatement.c.head_item_key,
+            )
+        )
+
+        if head_item_key:
+            statement = statement.where(result.c.head_item_key == head_item_key)
+        if date_str:
+            date_value = datetime.datetime.strptime(date_str, "%Y%m%d")
+            statement = statement.join(IxHeadTitle).where(
+                IxHeadTitle.reporting_date == date_value.date()
+            )
+        result = session.exec(statement)
+        items = result.all()
+
+        for item in items:
+            head_item_key = item.head_item_key
+            progress_rate = item.progress_rate
+
+            statement = (
+                update(IxHeadTitle)
+                .where(IxHeadTitle.item_key == head_item_key)
+                .values({"oi_prog_rt": progress_rate})
+            )
+            session.exec(statement)
+            session.commit()
+
+        return f"{len(items)} items updated."
+
+    # 経営実績の増減率を更新
+    result = update_change_in_items(session, head_item_key, date_str)
+    # 非数値情報を更新
+    result = update_non_numeric_items(session, head_item_key, date_str)
+    # 経常利益進捗率を更新
+    result = update_ordinary_income_progress_rate(session, head_item_key, date_str)
+
+    return result
