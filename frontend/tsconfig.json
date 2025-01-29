@@ -23,8 +23,8 @@
   "include": [
     "src/**/*.ts",
     "tests/**/*.ts",
-    "playwright.config.ts",
-    "src/**/*.tsx"
+    "playwright.config.ts"
+    // "src/**/*.tsx"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

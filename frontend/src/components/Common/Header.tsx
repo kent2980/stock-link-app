@@ -1,6 +1,7 @@
 import { Flex, FlexProps, useColorModeValue } from "@chakra-ui/react";
-import dayjs from "dayjs";
+import { useStore } from "@tanstack/react-store";
 import { forwardRef } from "react";
+import { HeaderStore } from "../../Store/HeaderStore";
 
 const Header = forwardRef<HTMLDivElement, FlexProps>((props, ref) => {
   const bgColor = useColorModeValue("ui.light", "ui.dark");
@@ -9,8 +10,8 @@ const Header = forwardRef<HTMLDivElement, FlexProps>((props, ref) => {
     "1px 1px 4px #c0bcbc",
     "1px 1px 4px #000000"
   );
+  const title = useStore(HeaderStore, (state) => state.title);
 
-  const today = dayjs().format("YYYY.MM.DD(dd)");
   return (
     <Flex
       ref={ref}
@@ -26,7 +27,7 @@ const Header = forwardRef<HTMLDivElement, FlexProps>((props, ref) => {
       boxShadow={boxShadow}
       fontSize={13}
     >
-      {today}
+      {title}
     </Flex>
   );
 });

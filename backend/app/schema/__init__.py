@@ -14,6 +14,7 @@ from . import (
     ix_source,
     ix_summary_non_fraction,
     ix_summary_non_numeric,
+    jpx_stock_info,
     settings,
 )
 
@@ -34,4 +35,5 @@ __all__ = [
     "ix_generate_class",
     "ix_summary_non_fraction",
     "ix_summary_non_numeric",
+    "jpx_stock_info",
 ]

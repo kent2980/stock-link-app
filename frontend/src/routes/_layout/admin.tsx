@@ -23,6 +23,7 @@ import AddUser from "../../components/Admin/AddUser.tsx";
 import ActionsMenu from "../../components/Common/ActionsMenu.tsx";
 import Navbar from "../../components/Common/Navbar.tsx";
 import { PaginationFooter } from "../../components/Common/PaginationFooter.tsx";
+import { HeaderStore } from "../../Store/HeaderStore.tsx";
 
 const usersSearchSchema = z.object({
   page: z.number().catch(1),
@@ -44,6 +45,14 @@ function getUsersQueryOptions({ page }: { page: number }) {
 }
 
 function UsersTable() {
+  useEffect(() => {
+    HeaderStore.setState((state) => {
+      return {
+        ...state,
+        title: "ユーザー管理",
+      };
+    });
+  }, []);
   const queryClient = useQueryClient();
   const currentUser = queryClient.getQueryData<UserPublic>(["currentUser"]);
   const { page } = Route.useSearch();

@@ -745,21 +745,47 @@ class IxQualitative(XbrlBase, table=True):
     )
 
 
-class IxStockInfos(XbrlBase, table=True):
-    """期末に公表される決算情報を表すクラス"""
+# endregion
 
-    __tablename__ = "ix_stock_infos"
 
-    code: str = Field(max_length=4, description="証券コード")
+# region StockInfo
+
+
+class JpxStockInfoBase(SQLModel, table=False):
+    """StockInfoの基底クラスです。
+
+    Properties:
+        id int: インスタンスのIDです。
+        insert_date datetime: 挿入日時です。
+        update_date datetime: 更新日時です。
+    """
+
+    id: Optional[int] = Field(
+        default=None, primary_key=True, sa_column_kwargs={"comment": "ID"}
+    )
+    insert_date: datetime = Field(
+        default_factory=datetime.now, sa_column_kwargs={"comment": "作成日時"}
+    )
+    update_date: datetime = Field(
+        default_factory=datetime.now, sa_column_kwargs={"comment": "更新日時"}
+    )
+
+
+class JpxStockInfo(JpxStockInfoBase, table=True):
+    """StockInfoの作成時のプロパティです。"""
+
+    __tablename__ = "jpx_stock_info"
+
+    input_date: str = Field(max_length=8, description="入力日")
+    code: str = Field(max_length=5, description="証券コード", unique=True)
     name: str = Field(max_length=255, description="企業名")
-    payout_ratio: Optional[str] = Field(max_length=255, description="配当性向")
-    roe: Optional[str] = Field(max_length=255, description="自己資本当期純利益率")
-    roa: Optional[str] = Field(max_length=255, description="総資産経常利益率")
-    op_margin: Optional[str] = Field(max_length=255, description="売上高営業利益率")
-    cf_operating: Optional[str] = Field(max_length=255, description="営業CF")
-    cf_investing: Optional[str] = Field(max_length=255, description="投資CF")
-    cf_financing: Optional[str] = Field(max_length=255, description="財務CF")
-    cash_end: Optional[str] = Field(max_length=255, description="期末現金残高")
+    market_or_type: str = Field(max_length=255, description="市場・商品区分")
+    industry_33_code: Optional[int] = Field(description="33業種コード")
+    industry_33_name: Optional[str] = Field(max_length=255, description="33業種区分")
+    industry_17_code: Optional[int] = Field(description="17業種コード")
+    industry_17_name: Optional[str] = Field(max_length=255, description="17業種区分")
+    scale_code: Optional[int] = Field(description="規模コード")
+    scale_name: Optional[str] = Field(max_length=255, description="規模区分")
 
 
 # endregion

@@ -1,3 +1,5 @@
+from fastapi import APIRouter
+
 from app.api.routes import (
     items,
     ix_calculation,
@@ -14,13 +16,14 @@ from app.api.routes import (
     ix_schema,
     ix_source,
     ix_summary,
+    jpx_stock_info,
     login,
     users,
     utils,
 )
-from fastapi import APIRouter
 
 api_router = APIRouter()
+api_router.include_router(jpx_stock_info.router, prefix="/jpx/stock_info", tags=["jpx"])
 api_router.include_router(ix_generate_class.router, prefix="/generate", tags=["xbrl"])
 api_router.include_router(ix_summary.router, prefix="/ix/summary", tags=["summary"])
 api_router.include_router(ix_check.router, prefix="/xbrl/check", tags=["xbrl_check"])
