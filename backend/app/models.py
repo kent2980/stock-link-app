@@ -787,5 +787,12 @@ class JpxStockInfo(JpxStockInfoBase, table=True):
     scale_code: Optional[int] = Field(description="規模コード")
     scale_name: Optional[str] = Field(max_length=255, description="規模区分")
 
+    __table_args__ = (
+        Index("jpx_stock_info_market_or_type", "market_or_type"),
+        Index("jpx_stock_info_industry_33_code", "industry_33_code"),
+        Index("jpx_stock_info_industry_17_code", "industry_17_code"),
+        Index("jpx_stock_info_scale_code", "scale_code"),
+    )
+
 
 # endregion

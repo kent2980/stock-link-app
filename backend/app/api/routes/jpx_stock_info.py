@@ -1,6 +1,7 @@
+import re
 from typing import Any
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Path
 from sqlmodel import select
 
 import app.schema as sc
@@ -55,7 +56,7 @@ def create_jpx_stock_info_items_exists(
     return new_items
 
 
-@router.get("/{code}", response_model=sc.jpx_stock_info.JpxStockInfoPublic)
+@router.get("/code/{code}", response_model=sc.jpx_stock_info.JpxStockInfoPublic)
 def read_jpx_stock_info_item(*, code: str, session: SessionDep) -> Any:
     """
     Get item by code.
@@ -79,3 +80,45 @@ def read_jpx_stock_info_items(
     result = session.exec(statement)
     items = result.all()
     return sc.jpx_stock_info.JpxStockInfosPublicList(data=items, count=len(items))
+
+
+@router.get("/tcs", response_model=sc.jpx_stock_info.JpxStockInfosPublicList)
+def read_jpx_stock_info_items_tcs(
+    *, session: SessionDep
+) -> sc.jpx_stock_info.JpxStockInfosPublicList:
+    """
+    Get all items.
+    """
+    print("tcs")
+    statement = (
+        select(JpxStockInfo)
+        .where(JpxStockInfo.market_or_type.like("%内国株式%"))
+        .order_by(JpxStockInfo.code)
+    )
+    result = session.exec(statement)
+    items = result.all()
+    return sc.jpx_stock_info.JpxStockInfosPublicList(data=items, count=len(items))
+
+
+@router.get("/tcs/{market}", response_model=sc.jpx_stock_info.JpxStockInfosPublicList)
+def read_jpx_stock_info_item_tcs(
+    *, market: str, session: SessionDep
+) -> sc.jpx_stock_info.JpxStockInfosPublicList:
+    """
+    Get item by market.
+    """
+    if market not in ["pr", "gh", "st"]:
+        raise HTTPException(
+            status_code=404, detail="market is valid, select [pr, gh, st]"
+        )
+    market_dict = {"pr": "プライム", "gh": "グロース", "st": "スタンダード"}
+    statement = (
+        select(JpxStockInfo)
+        .where(JpxStockInfo.market_or_type.like(f"%{market_dict[market]}%"))
+        .order_by(JpxStockInfo.code)
+    )
+    result = session.exec(statement)
+    item = result.all()
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return sc.jpx_stock_info.JpxStockInfosPublicList(data=item, count=len(item))
