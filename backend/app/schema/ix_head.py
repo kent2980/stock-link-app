@@ -108,7 +108,7 @@ class IxHeadDocumentInfo(SQLModel):
     item_key: str
     document_name: str
     reporting_date: datetime.date
-    current_period: str
+    current_period: Optional[str]
 
 
 class IxHeadDocumentInfoList(SQLModel):

@@ -20,11 +20,16 @@ const DocumentList: React.FC<DocumentInfoProps> = ({ code }) => {
     gcTime: 1000 * 60 * 60 * 24 * 30, // 30 days
   });
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(e.target.value);
     StockIndexStore.setState((state) => ({
       ...state,
-      documentKey: e.target.value,
+      head_item_key: e.target.value,
     }));
   };
+  StockIndexStore.setState((state) => ({
+    ...state,
+    head_item_key: data?.data[0].item_key,
+  }));
   return (
     <Box>
       <VStack spacing={4}>
@@ -33,11 +38,7 @@ const DocumentList: React.FC<DocumentInfoProps> = ({ code }) => {
         </Text>
         <Select onChange={handleChange}>
           {data?.data.map((item) => {
-            const optionText = `${item.reporting_date}    ${item.current_period}    ${item.document_name}`;
-            StockIndexStore.setState((state) => ({
-              ...state,
-              head_item_key: item.item_key,
-            }));
+            const optionText = `${item.reporting_date}    ${item.current_period ?? ""}    ${item.document_name}`;
             return (
               <option value={item.item_key} key={item.item_key}>
                 {optionText}

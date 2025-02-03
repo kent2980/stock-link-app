@@ -4490,7 +4490,7 @@ export type IxHeadDocumentInfo = {
 	item_key: string;
 	document_name: string;
 	reporting_date: string;
-	current_period: string;
+	current_period: string | null;
 };
 
 

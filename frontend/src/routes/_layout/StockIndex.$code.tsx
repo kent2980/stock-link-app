@@ -62,7 +62,7 @@ function StockIndex() {
             onClick={handleSummaryClick}
             cursor="pointer"
           >
-            決算サマリ
+            決算短信
           </Box>
         </Flex>
         <Suspense fallback={<Spinner />}>

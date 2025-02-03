@@ -2,6 +2,7 @@ from typing import Any
 
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.sql import func
 from sqlmodel import select
 
 import app.schema as sc
@@ -209,12 +210,14 @@ def read_menu_labels(
         )
         .join(
             IxLabelValue,
-            IxLabelValue.xlink_label.startswith("label_" + IxDefinitionArc.xlink_from),
+            IxLabelValue.xlink_label.startswith(
+                "label_" + func.replace(IxDefinitionArc.xlink_from, "tse-ed-t_", "")
+            ),
         )
         .where(
             IxDefinitionArc.xlink_arcrole == "http://xbrl.org/int/dim/arcrole/all",
             IxLabelValue.xlink_role == "http://www.xbrl.org/2003/role/label",
-            IxDefinitionArc.xlink_from != "DocumentEntityInformationHeading",
+            IxDefinitionArc.xlink_from.not_like("%DocumentEntityInformationHeading%"),
         )
         .order_by(IxDefinitionArc.id)
     )
