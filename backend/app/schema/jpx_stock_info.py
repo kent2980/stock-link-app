@@ -43,3 +43,14 @@ class JpxStockInfosPublicList(SQLModel):
 
     count: int
     data: List[JpxStockInfoPublic]
+
+
+class Industry(SQLModel):
+
+    code: int
+    name: str
+
+
+class IndustriesList(SQLModel):
+
+    data: List[Industry]

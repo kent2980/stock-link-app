@@ -1,7 +1,6 @@
-import re
-from typing import Any
+from typing import Any, List, Optional
 
-from fastapi import APIRouter, HTTPException, Path
+from fastapi import APIRouter, HTTPException, Path, Query
 from sqlmodel import select
 
 import app.schema as sc
@@ -84,17 +83,31 @@ def read_jpx_stock_info_items(
 
 @router.get("/tcs", response_model=sc.jpx_stock_info.JpxStockInfosPublicList)
 def read_jpx_stock_info_items_tcs(
-    *, session: SessionDep
+    *,
+    industry_17_code: Optional[int] = Query(None),
+    industry_33_code: Optional[List[int]] = Query(None),
+    isItems: bool = Query(True),
+    session: SessionDep,
+    limit: int = Query(100),
 ) -> sc.jpx_stock_info.JpxStockInfosPublicList:
     """
     Get all items.
     """
-    print("tcs")
+    if isItems is False:
+        return sc.jpx_stock_info.JpxStockInfosPublicList(data=[], count=0)
     statement = (
         select(JpxStockInfo)
-        .where(JpxStockInfo.market_or_type.like("%内国株式%"))
+        .where(
+            JpxStockInfo.market_or_type.like("%内国株式%"),
+        )
         .order_by(JpxStockInfo.code)
     )
+    if industry_17_code:
+        statement = statement.where(JpxStockInfo.industry_17_code == industry_17_code)
+    if industry_33_code:
+        statement = statement.where(JpxStockInfo.industry_33_code.in_(industry_33_code))
+    if limit:
+        statement = statement.limit(limit)
     result = session.exec(statement)
     items = result.all()
     return sc.jpx_stock_info.JpxStockInfosPublicList(data=items, count=len(items))
@@ -122,3 +135,77 @@ def read_jpx_stock_info_item_tcs(
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
     return sc.jpx_stock_info.JpxStockInfosPublicList(data=item, count=len(item))
+
+
+@router.get("/industries/{type}", response_model=sc.jpx_stock_info.IndustriesList)
+def read_jpx_stock_info_industry_names(*, type: int, session: SessionDep) -> Any:
+    """
+    Get all industries.
+    """
+    if type not in [17, 33]:
+        raise HTTPException(
+            status_code=404, detail="industry type is valid, select [17, 33]"
+        )
+    if type == 17:
+        statement = (
+            select(
+                JpxStockInfo.industry_17_name.label("name"),
+                JpxStockInfo.industry_17_code.label("code"),
+            )
+            .where(
+                JpxStockInfo.industry_17_name.is_not(None),
+                JpxStockInfo.industry_17_code.is_not(None),
+            )
+            .order_by(JpxStockInfo.industry_17_code)
+            .distinct()
+        )
+    elif type == 33:
+        statement = (
+            select(
+                JpxStockInfo.industry_33_name.label("name"),
+                JpxStockInfo.industry_33_code.label("code"),
+            )
+            .where(
+                JpxStockInfo.industry_33_name.is_not(None),
+                JpxStockInfo.industry_33_code.is_not(None),
+            )
+            .order_by(JpxStockInfo.industry_33_code)
+            .distinct()
+        )
+    result = session.exec(statement)
+    items = result.all()
+    # itemsの要素からNoneを除外
+    items = [item for item in items if item[0] is not None]
+    items = [item for item in items if item[1] is not None]
+    return sc.jpx_stock_info.IndustriesList(data=items)
+
+
+@router.get(
+    "/industries",
+    response_model=sc.jpx_stock_info.IndustriesList,
+)
+def read_select_industries(
+    *, industry_17_code: Optional[int] = Query(None), session: SessionDep
+) -> Any:
+    """
+    Get all industries.
+    """
+    statement = (
+        select(
+            JpxStockInfo.industry_33_name.label("name"),
+            JpxStockInfo.industry_33_code.label("code"),
+        )
+        .order_by(JpxStockInfo.industry_33_code)
+        .distinct()
+    )
+    if industry_17_code:
+        statement = statement.where(
+            JpxStockInfo.industry_17_code == industry_17_code,
+            JpxStockInfo.industry_33_code.is_not(None),
+        )
+    result = session.exec(statement)
+    items = result.all()
+    # itemsの要素からNoneを除外
+    items = [item for item in items if item[0] is not None]
+    items = [item for item in items if item[1] is not None]
+    return sc.jpx_stock_info.IndustriesList(data=items)

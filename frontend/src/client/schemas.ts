@@ -4004,6 +4004,31 @@ export const $HTTPValidationError = {
 	},
 } as const;
 
+export const $IndustriesList = {
+	properties: {
+		data: {
+	type: 'array',
+	contains: {
+		type: 'Industry',
+	},
+	isRequired: true,
+},
+	},
+} as const;
+
+export const $Industry = {
+	properties: {
+		code: {
+	type: 'number',
+	isRequired: true,
+},
+		name: {
+	type: 'string',
+	isRequired: true,
+},
+	},
+} as const;
+
 export const $InvestmentProfitLossOnEquityMethod_edjp_FinancialReportSummary_Con_FY = {
 	description: `持分法投資損益 `,
 	properties: {
@@ -4728,6 +4753,44 @@ export const $IxFilePathPublic = {
 },
 		head_item_key: {
 	type: 'string',
+	isRequired: true,
+},
+	},
+} as const;
+
+export const $IxHeadDocumentInfo = {
+	properties: {
+		item_key: {
+	type: 'string',
+	isRequired: true,
+},
+		document_name: {
+	type: 'string',
+	isRequired: true,
+},
+		reporting_date: {
+	type: 'string',
+	isRequired: true,
+	format: 'date',
+},
+		current_period: {
+	type: 'string',
+	isRequired: true,
+},
+	},
+} as const;
+
+export const $IxHeadDocumentInfoList = {
+	properties: {
+		data: {
+	type: 'array',
+	contains: {
+		type: 'IxHeadDocumentInfo',
+	},
+	isRequired: true,
+},
+		count: {
+	type: 'number',
 	isRequired: true,
 },
 	},
@@ -6805,6 +6868,222 @@ export const $IxSourceFileCreateList = {
 	contains: {
 		type: 'IxSourceFileCreate',
 	},
+	isRequired: true,
+},
+	},
+} as const;
+
+export const $JpxStockInfoCreate = {
+	properties: {
+		input_date: {
+	type: 'string',
+	isRequired: true,
+	maxLength: 8,
+},
+		code: {
+	type: 'string',
+	isRequired: true,
+	maxLength: 5,
+},
+		name: {
+	type: 'string',
+	isRequired: true,
+	maxLength: 255,
+},
+		market_or_type: {
+	type: 'string',
+	isRequired: true,
+	maxLength: 255,
+},
+		industry_33_code: {
+	type: 'any-of',
+	contains: [{
+	type: 'number',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		industry_33_name: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 255,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		industry_17_code: {
+	type: 'any-of',
+	contains: [{
+	type: 'number',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		industry_17_name: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 255,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		scale_code: {
+	type: 'any-of',
+	contains: [{
+	type: 'number',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		scale_name: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+	maxLength: 255,
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+	},
+} as const;
+
+export const $JpxStockInfoPublic = {
+	properties: {
+		input_date: {
+	type: 'string',
+	isRequired: true,
+},
+		code: {
+	type: 'string',
+	isRequired: true,
+},
+		name: {
+	type: 'string',
+	isRequired: true,
+},
+		market_or_type: {
+	type: 'string',
+	isRequired: true,
+},
+		industry_33_code: {
+	type: 'any-of',
+	contains: [{
+	type: 'number',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		industry_33_name: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		industry_17_code: {
+	type: 'any-of',
+	contains: [{
+	type: 'number',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		industry_17_name: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		scale_code: {
+	type: 'any-of',
+	contains: [{
+	type: 'number',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+		scale_name: {
+	type: 'any-of',
+	contains: [{
+	type: 'string',
+}, {
+	type: 'null',
+}],
+	isRequired: true,
+},
+	},
+} as const;
+
+export const $JpxStockInfosCreateList = {
+	properties: {
+		data: {
+	type: 'array',
+	contains: {
+		type: 'JpxStockInfoCreate',
+	},
+	isRequired: true,
+},
+	},
+} as const;
+
+export const $JpxStockInfosPublicList = {
+	properties: {
+		count: {
+	type: 'number',
+	isRequired: true,
+},
+		data: {
+	type: 'array',
+	contains: {
+		type: 'JpxStockInfoPublic',
+	},
+	isRequired: true,
+},
+	},
+} as const;
+
+export const $MenuLabel = {
+	description: `メニューラベルを表すクラス`,
+	properties: {
+		xlink_from: {
+	type: 'string',
+	isRequired: true,
+},
+		label: {
+	type: 'string',
+	isRequired: true,
+},
+	},
+} as const;
+
+export const $MenuLabelList = {
+	description: `メニューラベルのリストを表すクラス`,
+	properties: {
+		data: {
+	type: 'array',
+	contains: {
+		type: 'MenuLabel',
+	},
+	isRequired: true,
+},
+		count: {
+	type: 'number',
 	isRequired: true,
 },
 	},

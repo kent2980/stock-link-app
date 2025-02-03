@@ -1,11 +1,13 @@
 from typing import Any
 
-import app.schema as sc
-from app.api.deps import SessionDep
-from app.models import IxDefinitionArc, IxDefinitionLoc
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
+
+import app.schema as sc
+from app.api.deps import SessionDep
+from app.models import IxDefinitionArc, IxDefinitionLoc, IxLabelValue, ScLinkBaseRef
+from app.schema.ix_schema import IxSchemaLinkBasePublic
 
 router = APIRouter()
 
@@ -179,3 +181,48 @@ def delete_ix_def_arc_item(
     session.commit()
 
     return True
+
+
+@router.get("/menu_labels/{head_item_key}", response_model=sc.ix_def.MenuLabelList)
+def read_menu_labels(
+    *, head_item_key: str, session: SessionDep
+) -> sc.ix_def.MenuLabelList:
+    """
+    Get all items.
+    """
+
+    statement1 = (
+        select(ScLinkBaseRef.href_source_file_id)
+        .where(
+            ScLinkBaseRef.head_item_key == head_item_key,
+            ScLinkBaseRef.xbrl_type == "sm",
+            ScLinkBaseRef.xlink_role
+            == "http://www.xbrl.org/2003/role/definitionLinkbaseRef",
+        )
+        .subquery()
+    )
+    statement = (
+        select(IxDefinitionArc.xlink_from, IxLabelValue.label)
+        .join(
+            statement1,
+            IxDefinitionArc.source_file_id == statement1.c.href_source_file_id,
+        )
+        .join(
+            IxLabelValue,
+            IxLabelValue.xlink_label.startswith("label_" + IxDefinitionArc.xlink_from),
+        )
+        .where(
+            IxDefinitionArc.xlink_arcrole == "http://xbrl.org/int/dim/arcrole/all",
+            IxLabelValue.xlink_role == "http://www.xbrl.org/2003/role/label",
+            IxDefinitionArc.xlink_from != "DocumentEntityInformationHeading",
+        )
+        .order_by(IxDefinitionArc.id)
+    )
+
+    result = session.exec(statement)
+    items = result.all()
+
+    if items is None:
+        return sc.ix_def.MenuLabelList(data=[])
+
+    return sc.ix_def.MenuLabelList(data=items, count=len(items))

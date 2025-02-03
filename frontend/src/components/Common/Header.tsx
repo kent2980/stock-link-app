@@ -1,20 +1,35 @@
-import { Flex, FlexProps, useColorModeValue } from "@chakra-ui/react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Flex,
+  FlexProps,
+  HStack,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { useStore } from "@tanstack/react-store";
-import { forwardRef } from "react";
+import { useEffect } from "react";
 import { HeaderStore } from "../../Store/HeaderStore";
 
-const Header = forwardRef<HTMLDivElement, FlexProps>((props, ref) => {
+function Header(props: FlexProps) {
+  const { HeaderAddressItems } = useStore(HeaderStore, (state) => state);
   const bgColor = useColorModeValue("ui.light", "ui.dark");
   const textColor = useColorModeValue("ui.dark", "ui.light");
   const boxShadow = useColorModeValue(
     "1px 1px 4px #c0bcbc",
     "1px 1px 4px #000000"
   );
-  const title = useStore(HeaderStore, (state) => state.title);
+  const headerHeight = 59;
+  useEffect(() => {
+    HeaderStore.setState((state) => ({
+      ...state,
+      height: headerHeight,
+    }));
+  }, [headerHeight]);
 
   return (
     <Flex
-      ref={ref}
+      h={headerHeight}
       {...props}
       bg={bgColor}
       color={textColor}
@@ -25,11 +40,18 @@ const Header = forwardRef<HTMLDivElement, FlexProps>((props, ref) => {
       w={"100%"}
       p={3}
       boxShadow={boxShadow}
-      fontSize={13}
     >
-      {title}
+      <HStack spacing={3} ml={3}>
+        <Breadcrumb separator=">" fontSize="md" color="gray.800" spacing="16px">
+          {HeaderAddressItems.map((item, index) => (
+            <BreadcrumbItem key={index}>
+              <BreadcrumbLink href={item.href}>{item.label}</BreadcrumbLink>
+            </BreadcrumbItem>
+          ))}
+        </Breadcrumb>
+      </HStack>
     </Flex>
   );
-});
+}
 
 export default Header;

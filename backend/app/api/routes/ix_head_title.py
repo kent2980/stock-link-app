@@ -3,12 +3,13 @@ import re
 from decimal import Decimal
 from typing import Any, List, Optional
 
-import app.schema as sc
-from app.api.deps import SessionDep
-from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import func, select, update
+
+import app.schema as sc
+from app.api.deps import SessionDep
+from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric
 
 router = APIRouter()
 
@@ -605,3 +606,17 @@ def update_ix_head_title_item(
     result = update_ordinary_income_progress_rate(session, head_item_key, date_str)
 
     return result
+
+
+@router.get("/document_info/{code}", response_model=sc.ix_head.IxHeadDocumentInfoList)
+def get_document_info(
+    *, session: SessionDep, code: str
+) -> sc.ix_head.IxHeadDocumentInfoList:
+    """
+    Select item.
+    """
+    statement = select(IxHeadTitle).where(IxHeadTitle.securities_code == code)
+    result = session.exec(statement)
+    items = result.all()
+
+    return sc.ix_head.IxHeadDocumentInfoList(data=items, count=len(items))

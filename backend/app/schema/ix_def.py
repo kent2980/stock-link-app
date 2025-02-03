@@ -2,8 +2,9 @@ from datetime import datetime
 from decimal import Decimal
 from typing import List, Optional
 
-from app.models import Field, IxDefinitionArc, SQLModel
 from sqlalchemy import DECIMAL, Column
+
+from app.models import Field, IxDefinitionArc, SQLModel
 
 
 class IxDefinitionLocCreate(SQLModel):
@@ -105,3 +106,17 @@ class ReadElementArc(SQLModel):
     arc_xlink_to: str
     xlink_to: str
     xlink_from: str
+
+
+class MenuLabel(SQLModel):
+    """メニューラベルを表すクラス"""
+
+    xlink_from: str
+    label: str
+
+
+class MenuLabelList(SQLModel):
+    """メニューラベルのリストを表すクラス"""
+
+    data: List[MenuLabel]
+    count: int

@@ -4250,6 +4250,19 @@ export type HTTPValidationError = {
 
 
 
+export type IndustriesList = {
+	data: Array<Industry>;
+};
+
+
+
+export type Industry = {
+	code: number;
+	name: string;
+};
+
+
+
 /**
  * 持分法投資損益 
  */
@@ -4469,6 +4482,22 @@ export type IxFilePathCreate = {
 export type IxFilePathPublic = {
 	path: string;
 	head_item_key: string;
+};
+
+
+
+export type IxHeadDocumentInfo = {
+	item_key: string;
+	document_name: string;
+	reporting_date: string;
+	current_period: string;
+};
+
+
+
+export type IxHeadDocumentInfoList = {
+	data: Array<IxHeadDocumentInfo>;
+	count: number;
 };
 
 
@@ -5084,6 +5113,69 @@ export type IxSourceFileCreate = {
  */
 export type IxSourceFileCreateList = {
 	data: Array<IxSourceFileCreate>;
+};
+
+
+
+export type JpxStockInfoCreate = {
+	input_date: string;
+	code: string;
+	name: string;
+	market_or_type: string;
+	industry_33_code: number | null;
+	industry_33_name: string | null;
+	industry_17_code: number | null;
+	industry_17_name: string | null;
+	scale_code: number | null;
+	scale_name: string | null;
+};
+
+
+
+export type JpxStockInfoPublic = {
+	input_date: string;
+	code: string;
+	name: string;
+	market_or_type: string;
+	industry_33_code: number | null;
+	industry_33_name: string | null;
+	industry_17_code: number | null;
+	industry_17_name: string | null;
+	scale_code: number | null;
+	scale_name: string | null;
+};
+
+
+
+export type JpxStockInfosCreateList = {
+	data: Array<JpxStockInfoCreate>;
+};
+
+
+
+export type JpxStockInfosPublicList = {
+	count: number;
+	data: Array<JpxStockInfoPublic>;
+};
+
+
+
+/**
+ * メニューラベルを表すクラス
+ */
+export type MenuLabel = {
+	xlink_from: string;
+	label: string;
+};
+
+
+
+/**
+ * メニューラベルのリストを表すクラス
+ */
+export type MenuLabelList = {
+	data: Array<MenuLabel>;
+	count: number;
 };
 
 

@@ -2,7 +2,211 @@ import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
 
-import type { GroupingNonFractionList,edif,edif_FinancialReportSummary_Con_Q2,edif_FinancialReportSummary_Con_Q3,edjp,edjp_FinancialReportSummary,edjp_FinancialReportSummary_Con_FY,edjp_FinancialReportSummary_Con_HY_spec,edjp_FinancialReportSummary_Con_Q1,edjp_FinancialReportSummary_Con_Q2,edjp_FinancialReportSummary_Con_Q3,edjp_FinancialReportSummary_NonCon_FY,edjp_FinancialReportSummary_NonCon_Q1,edjp_FinancialReportSummary_NonCon_Q2,rvfc,rvfc_FinancialReportSummary,rvfc_FinancialReportSummary_spec,IxHeadTitleCreate,IxHeadTitleCreateList,IxHeadTitlePublic,IxHeadTitlesPublic,IxReportTypeCountList,IxNonFractionCreate_Input,IxNonFractionCreate_Output,IxNonFractionCreateList,IxNonNumericCreate,IxNonNumericCreateList,IxLabelArcCreate,IxLabelArcCreateList,IxLabelLocCreate,IxLabelLocCreateList,IxLabelValueCreate,IxLabelValueCreateList,IxCalculationArcCreate_Input,IxCalculationArcCreate_Output,IxCalculationArcCreateList,IxCalculationLocCreate,IxCalculationLocCreateList,IxDefinitionArcCreate_Input,IxDefinitionArcCreate_Output,IxDefinitionArcCreateList,IxDefinitionLocCreate,IxDefinitionLocCreateList,IxPresentationArcCreate_Input,IxPresentationArcCreate_Output,IxPresentationArcCreateList,IxPresentationLocCreate,IxPresentationLocCreateList,IxSourceFileCreate,IxSourceFileCreateList,IxSchemaLinkBaseCreate,IxSchemaLinkBaseCreateList,IxFilePathCreate,IxFilePathPublic,IxQualitativeCreate,IxQualitativeCreates,IxQualitativePublic,IxQualitativePublics,QualitativeInfoHeader,Body_login_login_access_token,Message,NewPassword,Token,UserPublic,UpdatePassword,UserCreate,UserRegister,UsersPublic,UserUpdate,UserUpdateMe,ItemCreate,ItemPublic,ItemsPublic,ItemUpdate } from './models';
+import type { IndustriesList,JpxStockInfoCreate,JpxStockInfoPublic,JpxStockInfosCreateList,JpxStockInfosPublicList,GroupingNonFractionList,edif,edif_FinancialReportSummary_Con_Q2,edif_FinancialReportSummary_Con_Q3,edjp,edjp_FinancialReportSummary,edjp_FinancialReportSummary_Con_FY,edjp_FinancialReportSummary_Con_HY_spec,edjp_FinancialReportSummary_Con_Q1,edjp_FinancialReportSummary_Con_Q2,edjp_FinancialReportSummary_Con_Q3,edjp_FinancialReportSummary_NonCon_FY,edjp_FinancialReportSummary_NonCon_Q1,edjp_FinancialReportSummary_NonCon_Q2,rvfc,rvfc_FinancialReportSummary,rvfc_FinancialReportSummary_spec,IxHeadDocumentInfoList,IxHeadTitleCreate,IxHeadTitleCreateList,IxHeadTitlePublic,IxHeadTitlesPublic,IxReportTypeCountList,IxNonFractionCreate_Input,IxNonFractionCreate_Output,IxNonFractionCreateList,IxNonNumericCreate,IxNonNumericCreateList,IxLabelArcCreate,IxLabelArcCreateList,IxLabelLocCreate,IxLabelLocCreateList,IxLabelValueCreate,IxLabelValueCreateList,IxCalculationArcCreate_Input,IxCalculationArcCreate_Output,IxCalculationArcCreateList,IxCalculationLocCreate,IxCalculationLocCreateList,IxDefinitionArcCreate_Input,IxDefinitionArcCreate_Output,IxDefinitionArcCreateList,IxDefinitionLocCreate,IxDefinitionLocCreateList,MenuLabelList,IxPresentationArcCreate_Input,IxPresentationArcCreate_Output,IxPresentationArcCreateList,IxPresentationLocCreate,IxPresentationLocCreateList,IxSourceFileCreate,IxSourceFileCreateList,IxSchemaLinkBaseCreate,IxSchemaLinkBaseCreateList,IxFilePathCreate,IxFilePathPublic,IxQualitativeCreate,IxQualitativeCreates,IxQualitativePublic,IxQualitativePublics,QualitativeInfoHeader,Body_login_login_access_token,Message,NewPassword,Token,UserPublic,UpdatePassword,UserCreate,UserRegister,UsersPublic,UserUpdate,UserUpdateMe,ItemCreate,ItemPublic,ItemsPublic,ItemUpdate } from './models';
+
+export type TDataCreateJpxStockInfoItem = {
+                requestBody: JpxStockInfoCreate
+                
+            }
+export type TDataCreateJpxStockInfoItemsExists = {
+                requestBody: JpxStockInfosCreateList
+                
+            }
+export type TDataReadJpxStockInfoItem = {
+                code: string
+                
+            }
+export type TDataReadJpxStockInfoItemsTcs = {
+                industry17Code?: number | null
+industry33Code?: Array<number> | null
+isItems?: boolean
+limit?: number
+                
+            }
+export type TDataReadJpxStockInfoItemTcs = {
+                market: string
+                
+            }
+export type TDataReadJpxStockInfoIndustryNames = {
+                type: number
+                
+            }
+export type TDataReadSelectIndustries = {
+                industry17Code?: number | null
+                
+            }
+
+export class JpxService {
+
+	/**
+	 * Read Jpx Stock Info Items
+	 * Get all items.
+	 * @returns JpxStockInfosPublicList Successful Response
+	 * @throws ApiError
+	 */
+	public static readJpxStockInfoItems(): CancelablePromise<JpxStockInfosPublicList> {
+				return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/jpx/stock_info/',
+		});
+	}
+
+	/**
+	 * Create Jpx Stock Info Item
+	 * Create new item.
+	 * @returns JpxStockInfoCreate Successful Response
+	 * @throws ApiError
+	 */
+	public static createJpxStockInfoItem(data: TDataCreateJpxStockInfoItem): CancelablePromise<JpxStockInfoCreate> {
+		const {
+requestBody,
+} = data;
+		return __request(OpenAPI, {
+			method: 'POST',
+			url: '/api/v1/jpx/stock_info/',
+			body: requestBody,
+			mediaType: 'application/json',
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Create Jpx Stock Info Items Exists
+	 * Create new items.(Insert Select ... Not Exists)
+	 * @returns JpxStockInfosCreateList Successful Response
+	 * @throws ApiError
+	 */
+	public static createJpxStockInfoItemsExists(data: TDataCreateJpxStockInfoItemsExists): CancelablePromise<JpxStockInfosCreateList> {
+		const {
+requestBody,
+} = data;
+		return __request(OpenAPI, {
+			method: 'POST',
+			url: '/api/v1/jpx/stock_info/list/',
+			body: requestBody,
+			mediaType: 'application/json',
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Read Jpx Stock Info Item
+	 * Get item by code.
+	 * @returns JpxStockInfoPublic Successful Response
+	 * @throws ApiError
+	 */
+	public static readJpxStockInfoItem(data: TDataReadJpxStockInfoItem): CancelablePromise<JpxStockInfoPublic> {
+		const {
+code,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/jpx/stock_info/code/{code}',
+			path: {
+				code
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Read Jpx Stock Info Items Tcs
+	 * Get all items.
+	 * @returns JpxStockInfosPublicList Successful Response
+	 * @throws ApiError
+	 */
+	public static readJpxStockInfoItemsTcs(data: TDataReadJpxStockInfoItemsTcs = {}): CancelablePromise<JpxStockInfosPublicList> {
+		const {
+industry17Code,
+industry33Code,
+isItems = true,
+limit = 100,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/jpx/stock_info/tcs',
+			query: {
+				industry_17_code: industry17Code, industry_33_code: industry33Code, isItems, limit
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Read Jpx Stock Info Item Tcs
+	 * Get item by market.
+	 * @returns JpxStockInfosPublicList Successful Response
+	 * @throws ApiError
+	 */
+	public static readJpxStockInfoItemTcs(data: TDataReadJpxStockInfoItemTcs): CancelablePromise<JpxStockInfosPublicList> {
+		const {
+market,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/jpx/stock_info/tcs/{market}',
+			path: {
+				market
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Read Jpx Stock Info Industry Names
+	 * Get all industries.
+	 * @returns IndustriesList Successful Response
+	 * @throws ApiError
+	 */
+	public static readJpxStockInfoIndustryNames(data: TDataReadJpxStockInfoIndustryNames): CancelablePromise<IndustriesList> {
+		const {
+type,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/jpx/stock_info/industries/{type}',
+			path: {
+				type
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Read Select Industries
+	 * Get all industries.
+	 * @returns IndustriesList Successful Response
+	 * @throws ApiError
+	 */
+	public static readSelectIndustries(data: TDataReadSelectIndustries = {}): CancelablePromise<IndustriesList> {
+		const {
+industry17Code,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/jpx/stock_info/industries',
+			query: {
+				industry_17_code: industry17Code
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+}
 
 export type TDataGetSummaryContextLabels = {
                 contexts: Array<string>
@@ -360,6 +564,10 @@ export type TDataUpdateIxHeadTitleItem = {
 headItemKey?: string | null
                 
             }
+export type TDataGetDocumentInfo = {
+                code: string
+                
+            }
 
 export class XbrlIxHeadService {
 
@@ -631,6 +839,28 @@ headItemKey,
 			url: '/api/v1/xbrl/ix/head/update/',
 			query: {
 				head_item_key: headItemKey, date_str: dateStr
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Get Document Info
+	 * Select item.
+	 * @returns IxHeadDocumentInfoList Successful Response
+	 * @throws ApiError
+	 */
+	public static getDocumentInfo(data: TDataGetDocumentInfo): CancelablePromise<IxHeadDocumentInfoList> {
+		const {
+code,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/xbrl/document_info/{code}',
+			path: {
+				code
 			},
 			errors: {
 				422: `Validation Error`,
@@ -1450,6 +1680,10 @@ export type TDataDeleteIxDefArcItem = {
                 headItemKey: string
                 
             }
+export type TDataReadMenuLabels = {
+                headItemKey: string
+                
+            }
 
 export class XbrlDefService {
 
@@ -1617,6 +1851,28 @@ headItemKey,
 			method: 'DELETE',
 			url: '/api/v1/xbrl/link/def/arc/delete/',
 			query: {
+				head_item_key: headItemKey
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * Read Menu Labels
+	 * Get all items.
+	 * @returns MenuLabelList Successful Response
+	 * @throws ApiError
+	 */
+	public static readMenuLabels(data: TDataReadMenuLabels): CancelablePromise<MenuLabelList> {
+		const {
+headItemKey,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/xbrl/menu_labels/{head_item_key}',
+			path: {
 				head_item_key: headItemKey
 			},
 			errors: {
