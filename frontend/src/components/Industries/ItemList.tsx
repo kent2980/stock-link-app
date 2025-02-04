@@ -70,7 +70,7 @@ const CustomTbody: React.FC<ItemListProps> = ({ industry33Code, isItems }) => {
     queryFn: async () => {
       return await JpxService.readJpxStockInfoItemsTcs({
         industry33Code: industry33Code,
-        limit: 500,
+        limit: 1500,
         isItems: isItems,
       });
     },

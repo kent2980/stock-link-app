@@ -120,3 +120,25 @@ class MenuLabelList(SQLModel):
 
     data: List[MenuLabel]
     count: int
+
+
+class ContextItem(SQLModel):
+    """コンテキストアイテムを表すクラス"""
+
+    axis: str
+    contexts: List[str]
+
+
+class RecordFilterItems(SQLModel):
+    """レコードフィルターアイテムを表すクラス"""
+
+    attr_value: str
+    contextItems: List[ContextItem]
+    names: List[str]
+
+
+class RecordFilterItemsList(SQLModel):
+    """レコードフィルターアイテムのリストを表すクラス"""
+
+    data: List[RecordFilterItems]
+    count: int

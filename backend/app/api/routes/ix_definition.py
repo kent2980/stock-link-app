@@ -1,5 +1,6 @@
 from typing import Any
 
+import alembic
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.sql import func
@@ -229,3 +230,75 @@ def read_menu_labels(
         return sc.ix_def.MenuLabelList(data=[])
 
     return sc.ix_def.MenuLabelList(data=items, count=len(items))
+
+
+@router.get(
+    "/record_filter_items/{head_item_key}",
+    response_model=sc.ix_def.RecordFilterItemsList,
+)
+def read_record_filter_items(
+    *, head_item_key: str, session: SessionDep
+) -> sc.ix_def.RecordFilterItemsList:
+    """
+    Get all items.
+    """
+
+    statement = (
+        select(IxDefinitionArc)
+        .join(
+            ScLinkBaseRef,
+            IxDefinitionArc.source_file_id == ScLinkBaseRef.href_source_file_id,
+        )
+        .where(
+            IxDefinitionArc.head_item_key == head_item_key,
+            ScLinkBaseRef.xbrl_type == "sm",
+            ~IxDefinitionArc.xlink_arcrole.in_(
+                [
+                    "http://xbrl.org/int/dim/arcrole/all",
+                    "http://xbrl.org/int/dim/arcrole/hypercube-dimension",
+                ]
+            ),
+        )
+    )
+    result = session.exec(statement)
+    items = result.all()
+
+    if items is None:
+        raise HTTPException(status_code=404, detail="Items not found")
+
+    records = []
+    contexts = {}
+    names = {}
+    attr_values = set()
+    for item in items:
+        attr_value = item.attr_value
+        xlink_from = item.xlink_from
+        arcrole = item.xlink_arcrole
+        attr_values.add(attr_value)
+        if contexts.get(attr_value) is None:
+            contexts[attr_value] = {}
+        if names.get(attr_value) is None:
+            names[attr_value] = []
+        arcrole = item.xlink_arcrole
+        if arcrole == "http://xbrl.org/int/dim/arcrole/dimension-domain":
+            if contexts[attr_value].get(xlink_from) is None:
+                contexts[attr_value][xlink_from] = []
+            contexts[attr_value][xlink_from].append(item.xlink_to)
+        elif arcrole == "http://xbrl.org/int/dim/arcrole/domain-member":
+            names[attr_value].append(item.xlink_to)
+
+    # ContextItemのリストに変換
+    context_items_list = [
+        {"axis": k, "contexts": v} for k, v in contexts[attr_value].items()
+    ]
+
+    for attr_value in attr_values:
+        records.append(
+            {
+                "attr_value": attr_value,
+                "contextItems": context_items_list,
+                "names": names[attr_value],
+            }
+        )
+
+    return sc.ix_def.RecordFilterItemsList(data=records, count=len(records))
