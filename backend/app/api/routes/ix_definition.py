@@ -1,10 +1,12 @@
 from typing import Any
 
-import alembic
+import sqlalchemy
+import sqlalchemy.orm
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import aliased
 from sqlalchemy.sql import func
-from sqlmodel import select
+from sqlmodel import and_, select
 
 import app.schema as sc
 from app.api.deps import SessionDep
@@ -237,20 +239,36 @@ def read_menu_labels(
     response_model=sc.ix_def.RecordFilterItemsList,
 )
 def read_record_filter_items(
-    *, head_item_key: str, session: SessionDep
+    *, head_item_key: str, attr_value: str = Query(None), session: SessionDep
 ) -> sc.ix_def.RecordFilterItemsList:
     """
     Get all items.
     """
-
+    loc2 = aliased(IxDefinitionLoc)
     statement = (
-        select(IxDefinitionArc)
+        select(IxDefinitionArc, IxDefinitionLoc, loc2)
         .join(
             ScLinkBaseRef,
             IxDefinitionArc.source_file_id == ScLinkBaseRef.href_source_file_id,
         )
+        .join(
+            IxDefinitionLoc,
+            and_(
+                IxDefinitionArc.source_file_id == IxDefinitionLoc.source_file_id,
+                IxDefinitionArc.xlink_to == IxDefinitionLoc.xlink_label,
+                IxDefinitionArc.attr_value == IxDefinitionLoc.attr_value,
+            ),
+        )
+        .join(
+            loc2,
+            and_(
+                IxDefinitionArc.source_file_id == loc2.source_file_id,
+                IxDefinitionArc.xlink_from == loc2.xlink_label,
+                IxDefinitionArc.attr_value == loc2.attr_value,
+            ),
+        )
         .where(
-            IxDefinitionArc.head_item_key == head_item_key,
+            ScLinkBaseRef.head_item_key == head_item_key,
             ScLinkBaseRef.xbrl_type == "sm",
             ~IxDefinitionArc.xlink_arcrole.in_(
                 [
@@ -260,6 +278,8 @@ def read_record_filter_items(
             ),
         )
     )
+    if attr_value:
+        statement = statement.where(IxDefinitionArc.attr_value == attr_value)
     result = session.exec(statement)
     items = result.all()
 
@@ -271,28 +291,28 @@ def read_record_filter_items(
     names = {}
     attr_values = set()
     for item in items:
-        attr_value = item.attr_value
-        xlink_from = item.xlink_from
-        arcrole = item.xlink_arcrole
+        attr_value = item[0].attr_value
+        xlink_to = item[1].xlink_href
+        xlink_from = item[2].xlink_href.split("_")[-1]
+        arcrole = item[0].xlink_arcrole
         attr_values.add(attr_value)
         if contexts.get(attr_value) is None:
             contexts[attr_value] = {}
         if names.get(attr_value) is None:
             names[attr_value] = []
-        arcrole = item.xlink_arcrole
+        arcrole = item[0].xlink_arcrole
         if arcrole == "http://xbrl.org/int/dim/arcrole/dimension-domain":
             if contexts[attr_value].get(xlink_from) is None:
                 contexts[attr_value][xlink_from] = []
-            contexts[attr_value][xlink_from].append(item.xlink_to)
+            contexts[attr_value][xlink_from].append(xlink_to.split("_")[-1])
         elif arcrole == "http://xbrl.org/int/dim/arcrole/domain-member":
-            names[attr_value].append(item.xlink_to)
-
-    # ContextItemのリストに変換
-    context_items_list = [
-        {"axis": k, "contexts": v} for k, v in contexts[attr_value].items()
-    ]
+            names[attr_value].append(xlink_to)
 
     for attr_value in attr_values:
+        # ContextItemのリストに変換
+        context_items_list = [
+            {"axis": k, "contexts": v} for k, v in contexts[attr_value].items()
+        ]
         records.append(
             {
                 "attr_value": attr_value,
