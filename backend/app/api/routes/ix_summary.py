@@ -1,315 +1,345 @@
-import json
-import os
-from typing import Any, Dict, List
+from collections import defaultdict
+from typing import Dict, List
 
-import humps
+import alembic
 from fastapi import APIRouter, HTTPException, Query
-from sqlalchemy.exc import NoResultFound
-from sqlmodel import col, select, tuple_
+from sqlalchemy.orm import aliased
+from sqlmodel import and_, case, exists, func, literal, select
 
-import app.utils.schema_class_non_fraction as scnf
-import app.utils.schema_class_non_numeric as scnn
-import app.utils.summary as summary
+import app.schema as sc
 from app.api.deps import SessionDep
-from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric
+from app.models import IxDefinitionArc, IxDefinitionLoc, IxLabelValue, ScLinkBaseRef
 
 router = APIRouter()
 
 
-@router.get("/head/")
-def get_summary_head(
-    *,
-    session: SessionDep,
-    code: str = Query(...),
-    year: int = Query(...),
-    period: int = Query(...),
-):
+@router.get(
+    "/menu_labels/{head_item_key}",
+    response_model=sc.ix_summary.MenuLabelList,
+    summary="メニューラベルを取得",
+)
+def read_menu_labels(
+    *, head_item_key: str, session: SessionDep
+) -> sc.ix_summary.MenuLabelList:
     """
-    指定されたコード、年度、期間のサマリーのヘッダーを取得する
-
-    Args:
-        session (SessionDep): 接続セッション
-        code (str): 銘柄コード
-        year (int): 年度
-        period (int): 期間
+    ## メニューラベルを取得するエンドポイント
+    - **機能**: HeadItemKeyからメニューラベル一覧を取得します。
+    - **認証不要**
+    - **レスポンス形式**: JSON
+    - **param1**: head_item_key: str 必須項目
     """
 
-    period_dict = {1: ["Q1"], 2: ["Q2", "FY"], 3: ["Q3"], 4: ["FY"]}
-    if period not in period_dict:
-        raise HTTPException(status_code=400, detail="Invalid period value.")
-    select_period = period_dict[period]
-
-    statement = select(IxHeadTitle).where(
-        IxHeadTitle.securities_code == code,
-        IxHeadTitle.fy_year_end.like(f"{year}%"),
-        col(IxHeadTitle.current_period).in_(select_period),
+    statement1 = (
+        select(ScLinkBaseRef.href_source_file_id)
+        .where(
+            ScLinkBaseRef.head_item_key == head_item_key,
+            ScLinkBaseRef.xbrl_type == "sm",
+            ScLinkBaseRef.xlink_role
+            == "http://www.xbrl.org/2003/role/definitionLinkbaseRef",
+        )
+        .subquery()
+    )
+    statement = (
+        select(IxDefinitionArc.xlink_from, IxLabelValue.label)
+        .join(
+            statement1,
+            IxDefinitionArc.source_file_id == statement1.c.href_source_file_id,
+        )
+        .join(
+            IxLabelValue,
+            IxLabelValue.xlink_label.startswith(
+                "label_" + func.replace(IxDefinitionArc.xlink_from, "tse-ed-t_", "")
+            ),
+        )
+        .where(
+            IxDefinitionArc.xlink_arcrole == "http://xbrl.org/int/dim/arcrole/all",
+            IxLabelValue.xlink_role == "http://www.xbrl.org/2003/role/label",
+            IxDefinitionArc.xlink_from.not_like("%DocumentEntityInformationHeading%"),
+        )
+        .order_by(IxDefinitionArc.id)
     )
 
     result = session.exec(statement)
-    try:
-        item = result.one()
-    except NoResultFound:
-        raise HTTPException(
-            status_code=404, detail="指定したデータが見つかりませんでした。"
-        )
+    items = result.all()
 
-    return item
+    if items is None:
+        return sc.ix_summary.MenuLabelList(data=[])
 
-
-@router.get("/key/", response_model=Dict[str, str])
-def get_summary_key(
-    *,
-    session: SessionDep,
-    code: str = Query(...),
-    year: int = Query(...),
-    period: int = Query(...),
-) -> Dict[str, str]:
-    """
-    指定されたコード、年度、期間のサマリーのキーを取得する
-
-    Args:
-        session (SessionDep): 接続セッション
-        code (str): 銘柄コード
-        year (int): 年度
-        period (int): 期間
-    """
-
-    head_item = get_summary_head(session=session, code=code, year=year, period=period)
-
-    if head_item.is_consolidated:
-        is_consolidated = "_consolidated"
-    elif not head_item.is_consolidated:
-        is_consolidated = "_Nonconsolidated"
-    else:
-        is_consolidated = ""
-    specific_business = head_item.specific_business
-    if head_item.current_period:
-        if specific_business:
-            key = f"{head_item.report_type}_FinancialReportSummary{is_consolidated}_{head_item.current_period}_specific_business"
-        else:
-            key = f"{head_item.report_type}_FinancialReportSummary{is_consolidated}_{head_item.current_period}"
-    else:
-        if specific_business:
-            key = f"{head_item.report_type}_FinancialReportSummary{is_consolidated}_specific_business"
-        else:
-            key = f"{head_item.report_type}_FinancialReportSummary{is_consolidated}"
-
-    return {"head_item_key": head_item.item_key, "key": key}
+    return sc.ix_summary.MenuLabelList(data=items, count=len(items))
 
 
 @router.get(
-    "/non_fraction/item/",
-    response_model=scnf.get_response_schema_FinancialReportSummary_class(),
+    "/tree_items/{head_item_key}",
+    response_model=sc.ix_summary.TreeItemsList,
+    summary="表示リンクアイテムを取得",
 )
-def get_summary_non_fraction_items_head_item_key(
+def read_tree_items(
     *,
+    head_item_key: str,
+    attr_value: str = Query(None),
+    has_children: bool = Query(None),
+    xlink_arcrole: str = Query(None),
+    xbrl_type: str = Query("sm"),
     session: SessionDep,
-    head_item_key: str = Query(...),
-):
+) -> sc.ix_summary.TreeItemsList:
     """
-    指定されたヘッダーアイテムキーのサマリーを取得する
-
-    Args:
-        session (SessionDep): 接続セッション
-        head_item_key (int): ヘッダーアイテムキー
+    ## 表示リンクアイテムを取得するエンドポイント
+    - **機能**: HeadItemKeyから表示リンクのツリーアイテム一覧を取得します。
+    - **認証不要**
+    - **レスポンス形式**: JSON
+    - **param1**: head_item_key: str 必須項目
+    - **param2**: attr_value: str 任意項目
+    - **param3**: has_children: bool 任意項目
+    - **param4**: xlink_arcrole: str 任意項目
+    - **param5**: xbrl_type: str 任意項目
     """
 
-    statement = select(IxHeadTitle).where(IxHeadTitle.item_key == head_item_key)
-    result = session.exec(statement)
-    try:
-        head_item = result.one()
-    except NoResultFound:
-        raise HTTPException(
-            status_code=404, detail="指定したデータが見つかりませんでした。"
+    scl1 = aliased(ScLinkBaseRef)
+    scl2 = aliased(ScLinkBaseRef)
+    ida1 = aliased(IxDefinitionArc)
+    ida2 = aliased(IxDefinitionArc)
+    ida3 = aliased(IxDefinitionArc)
+    idl1 = aliased(IxDefinitionLoc)
+    idl2 = aliased(IxDefinitionLoc)
+    idl3 = aliased(IxDefinitionLoc)
+    idl4 = aliased(IxDefinitionLoc)
+
+    # 再帰的CTEの定義
+    tree_h = (
+        select(
+            ida1.id,
+            ida1.xlink_from,
+            ida1.xlink_to,
+            ida1.head_item_key,
+            ida1.attr_value,
+            ida1.xlink_arcrole,
+            ida1.source_file_id,
+            ida1.xlink_order,
+            idl1.xlink_href.label("from_href"),
+            idl2.xlink_href.label("to_href"),
+            literal(1).label("level"),  # ツリー深さの初期値
         )
-
-    key = summary.generate_non_fraction_key(
-        head_item.model_dump(), "FinancialReportSummary"
+        .join(
+            idl1,
+            and_(
+                ida1.head_item_key == idl1.head_item_key,
+                ida1.source_file_id == idl1.source_file_id,
+                ida1.xlink_from == idl1.xlink_label,
+                ida1.attr_value == idl1.attr_value,
+            ),
+        )
+        .join(
+            idl2,
+            and_(
+                ida1.head_item_key == idl2.head_item_key,
+                ida1.source_file_id == idl2.source_file_id,
+                ida1.xlink_to == idl2.xlink_label,
+                ida1.attr_value == idl2.attr_value,
+            ),
+        )
+        .join(
+            scl1,
+            and_(
+                ida1.head_item_key == scl1.head_item_key,
+                ida1.source_file_id == scl1.href_source_file_id,
+            ),
+        )
+        .where(
+            ida1.head_item_key == head_item_key,
+            ida1.xlink_from
+            == (
+                select(ida2.xlink_from).where(
+                    and_(
+                        ida2.head_item_key == head_item_key,
+                        ida2.xlink_arcrole == "http://xbrl.org/int/dim/arcrole/all",
+                        ida1.source_file_id == ida2.source_file_id,
+                        ida1.attr_value == ida2.attr_value,
+                    )
+                )
+            ),
+        )
     )
 
-    # 絶対パスを使用
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    json_path = os.path.join(base_dir, "../../json/non_fraction/grouped_data.json")
+    if attr_value:
+        tree_h = tree_h.where(ida1.attr_value == attr_value)
+    if xbrl_type:
+        tree_h = tree_h.where(scl1.xbrl_type == xbrl_type)
 
-    with open(json_path, "r") as f:
-        data = json.load(f)
+    tree_h = tree_h.cte(name="tree_h", recursive=True)  # 再帰CTEの定義
 
-    items: List[Dict[str, str]] = data[key]
+    tree_h_alias = aliased(tree_h)
 
-    non_fraction_list = []
-
-    # すべての必要なキーを収集
-    item_keys = [(item.get("name"), item.get("context")) for item in items]
-
-    # バッチクエリを実行
-    statement = select(IxNonFraction).where(
-        IxNonFraction.head_item_key == head_item_key,
-        tuple_(IxNonFraction.name, IxNonFraction.context).in_(item_keys),
-    )
-    result = session.exec(statement)
-    non_fractions = result.all()
-
-    # クエリ結果を辞書に変換
-    non_fraction_dict = {(nf.name, nf.context): nf for nf in non_fractions}
-
-    summary_data = {}
-    for item in items:
-        non_fraction = non_fraction_dict.get((item.get("name"), item.get("context")))
-        if non_fraction:
-            non_fraction_list.append(
-                {
-                    "name": item.get("name"),
-                    "context": item.get("context"),
-                    "label": item.get("label"),
-                    "item": non_fraction,
-                }
-            )
-            name = humps.decamelize(item.get("name").split("_")[-1]).replace("__", "_")
-            context = summary.get_short_context(item.get("context"))
-            if name not in summary_data:
-                summary_data[name] = {}
-            summary_data[name][context] = non_fraction.model_dump()
-
-    schema = scnf.get_schema_class(key)(**summary_data)
-    if schema is None:
-        raise HTTPException(
-            status_code=404, detail="指定したデータが見つかりませんでした。"
+    recursive = (
+        select(
+            ida3.id,
+            ida3.xlink_from,
+            ida3.xlink_to,
+            ida3.head_item_key,
+            ida3.attr_value,
+            ida3.xlink_arcrole,
+            ida3.source_file_id,
+            ida3.xlink_order,
+            idl3.xlink_href.label("from_href"),  # リンク先の更新
+            idl4.xlink_href.label("to_href"),  # リンク元の更新
+            (tree_h_alias.c.level + 1).label("level"),  # ツリー深さの更新
         )
+        .join(
+            idl3,
+            and_(
+                ida3.head_item_key == idl3.head_item_key,
+                ida3.source_file_id == idl3.source_file_id,
+                ida3.xlink_from == idl3.xlink_label,
+                ida3.attr_value == idl3.attr_value,
+            ),
+        )
+        .join(
+            idl4,
+            and_(
+                ida3.head_item_key == idl4.head_item_key,
+                ida3.source_file_id == idl4.source_file_id,
+                ida3.xlink_to == idl4.xlink_label,
+                ida3.attr_value == idl4.attr_value,
+            ),
+        )
+        .join(
+            tree_h_alias,
+            and_(
+                idl3.head_item_key == tree_h_alias.c.head_item_key,
+                idl3.xlink_href == tree_h_alias.c.to_href,
+                idl3.attr_value == tree_h_alias.c.attr_value,
+            ),
+        )
+        .join(
+            scl2,
+            and_(
+                ida3.head_item_key == scl2.head_item_key,
+                ida3.source_file_id == scl2.href_source_file_id,
+            ),
+        )
+        .where(
+            ida3.head_item_key == head_item_key,
+        )
+    )
 
-    return schema
+    if attr_value:
+        recursive = recursive.where(ida3.attr_value == attr_value)
+    if xbrl_type:
+        recursive = recursive.where(scl2.xbrl_type == xbrl_type)
+
+    tree_h = tree_h.union_all(recursive)  # 再帰CTEの結合
+
+    # 最終的なクエリの構築
+    final_query = (
+        select(
+            tree_h.c.id,
+            tree_h.c.from_href.label("xlink_from"),  # リンク元の更新
+            tree_h.c.to_href.label("xlink_to"),  # リンク先の更新
+            tree_h.c.attr_value,
+            func.split_part(tree_h.c.xlink_arcrole, "/", 7).label(
+                "xlink_arcrole"
+            ),  # リンクアークロールの取得
+            tree_h.c.xlink_order,
+            tree_h.c.level,
+            case(  # 子要素の有無を判定
+                (
+                    exists().where(tree_h_alias.c.from_href == tree_h.c.to_href),
+                    True,
+                ),
+                else_=False,
+            ).label("has_children"),
+        )
+        .select_from(tree_h)
+        .order_by(tree_h.c.id)
+    )
+    print(has_children)
+    if has_children is not None:  # 子要素の有無でフィルタリング
+        final_query = final_query.where(
+            case(
+                (
+                    exists().where(tree_h_alias.c.from_href == tree_h.c.to_href),
+                    True,  # 子要素がある場合
+                ),
+                else_=False,  # 子要素がない場合
+            ).label("has_children")
+            == has_children
+        )
+    if xlink_arcrole:
+        xlink_arcrole_str = f"http://xbrl.org/int/dim/arcrole/{xlink_arcrole}"
+        final_query = final_query.where(tree_h.c.xlink_arcrole == xlink_arcrole_str)
+
+    # クエリの実行
+    results = session.exec(final_query)
+    items = results.all()
+
+    if items is None:
+        raise HTTPException(status_code=404, detail="Items not found")
+
+    return sc.ix_summary.TreeItemsList(data=items, count=len(items))
 
 
 @router.get(
-    "/non_fraction/items/",
-    response_model=scnf.get_response_schema_FinancialReportSummary_class(),
+    "/tree_items/context_list/{head_item_key}",
+    response_model=Dict,
+    summary="コンテキストリストを取得",
 )
-def get_summary_non_fraction_items(
-    *,
-    session: SessionDep,
-    code: str = Query(...),
-    year: int = Query(...),
-    period: int = Query(...),
-):
+def read_context_list(
+    *, head_item_key: str, attr_value: str = Query(None), session: SessionDep
+) -> Dict:
     """
-    指定されたコード、年度、期間のサマリーを取得する
-
-    Args:
-        session (SessionDep): 接続セッション
-        code (str): 銘柄コード
-        year (int): 年度
-        period (int): 期間
+    ## コンテキストリストを取得するエンドポイント
+    - **機能**: HeadItemKeyからコンテキストリストを取得します。
+    - **認証不要**
+    - **レスポンス形式**: JSON
+    - **param1**: head_item_key: str 必須項目
     """
 
-    head_item = get_summary_head(session=session, code=code, year=year, period=period)
-    head_item_key = head_item.item_key
+    arcrole = "dimension-domain"
 
-    return get_summary_non_fraction_items_head_item_key(
-        session=session, head_item_key=head_item_key
-    )
+    data = read_tree_items(
+        head_item_key=head_item_key,
+        xlink_arcrole=arcrole,
+        session=session,
+        attr_value=attr_value,
+        has_children=False,
+        xbrl_type="sm",
+    ).data
+
+    dict_data = defaultdict(lambda: defaultdict(list))
+
+    for item in data:
+        dict_data[item.attr_value][item.xlink_from].append(item.xlink_to.split("_")[-1])
+
+    return dict_data
 
 
 @router.get(
-    "/non_numeric/item/",
-    response_model=scnn.get_response_schema_FinancialReportSummary_class(),
+    "/tree_items/names/{head_item_key}", response_model=Dict, summary="名前リストを取得"
 )
-def get_summary_non_numeric_items_head_item_key(
-    *,
-    session: SessionDep,
-    head_item_key: str = Query(...),
-):
+def read_names(
+    *, head_item_key: str, attr_value: str = Query(None), session: SessionDep
+) -> Dict:
     """
-    指定されたヘッダーアイテムキーのサマリーを取得する
-
-    Args:
-        session (SessionDep): 接続セッション
-        head_item_key (int): ヘッダーアイテムキー
+    ## 名前リストを取得するエンドポイント
+    - **機能**: HeadItemKeyから名前リストを取得します。
+    - **認証不要**
+    - **レスポンス形式**: JSON
+    - **param1**: head_item_key: str 必須項目
     """
 
-    statement = select(IxHeadTitle).where(IxHeadTitle.item_key == head_item_key)
-    result = session.exec(statement)
-    try:
-        head_item = result.one()
-    except NoResultFound:
-        raise HTTPException(
-            status_code=404, detail="指定したデータが見つかりませんでした。"
-        )
+    arcrole = "domain-member"
 
-    key = summary.generate_non_numeric_key(head_item.model_dump())
+    data = read_tree_items(
+        head_item_key=head_item_key,
+        xlink_arcrole=arcrole,
+        session=session,
+        has_children=False,
+        xbrl_type="sm",
+        attr_value=attr_value,
+    ).data
 
-    # 絶対パスを使用
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    json_path = os.path.join(base_dir, "../../json/non_numeric/grouped_data.json")
+    dict_data = defaultdict(list)
 
-    with open(json_path, "r") as f:
-        data = json.load(f)
+    for item in data:
+        dict_data[item.attr_value].append(item.xlink_to)
 
-    items: List[Dict[str, str]] = data[key]
-
-    non_numeric_list = []
-
-    # すべての必要なキーを収集
-    item_keys = [(item.get("name")) for item in items]
-
-    # バッチクエリを実行
-    statement = select(IxNonNumeric).where(
-        IxNonNumeric.head_item_key == head_item_key,
-        col(IxNonNumeric.name).in_(item_keys),
-    )
-    result = session.exec(statement)
-    non_numerics = result.all()
-
-    # クエリ結果を辞書に変換
-    non_numeric_dict = {(nn.name): nn for nn in non_numerics}
-
-    summary_data = {}
-    for item in items:
-        non_numeric = non_numeric_dict.get((item.get("name")))
-        if non_numeric:
-            non_numeric_list.append(
-                {
-                    "name": item.get("name"),
-                    "label": item.get("label"),
-                    "item": non_numeric,
-                }
-            )
-            name = humps.decamelize(item.get("name").split("_")[-1]).replace("__", "_")
-            if name not in summary_data:
-                summary_data[name] = {}
-            summary_data[name] = non_numeric.model_dump()
-
-    schema = scnn.get_schema_class(key)(**summary_data)
-    if schema is None:
-        raise HTTPException(
-            status_code=404, detail="指定したデータが見つかりませんでした。"
-        )
-
-    return schema
-
-
-@router.get(
-    "/non_numeric/items/",
-    response_model=scnn.get_response_schema_FinancialReportSummary_class(),
-)
-def get_summary_non_numeric_items(
-    *,
-    session: SessionDep,
-    code: str = Query(...),
-    year: int = Query(...),
-    period: int = Query(...),
-):
-    """
-    指定されたコード、年度、期間のサマリーを取得する
-
-    Args:
-        session (SessionDep): 接続セッション
-        code (str): 銘柄コード
-        year (int): 年度
-        period (int): 期間
-    """
-
-    head_item = get_summary_head(session=session, code=code, year=year, period=period)
-    head_item_key = head_item.item_key
-
-    return get_summary_non_numeric_items_head_item_key(
-        session=session, head_item_key=head_item_key
-    )
+    return dict_data

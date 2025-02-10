@@ -1,6 +1,9 @@
 import uuid
 from typing import Any
 
+from fastapi import APIRouter, Depends, HTTPException
+from sqlmodel import col, delete, func, select
+
 from app import crud
 from app.api.deps import CurrentUser, SessionDep, get_current_active_superuser
 from app.core.config import settings
@@ -18,8 +21,6 @@ from app.models import (
     UserUpdateMe,
 )
 from app.utils.utils import generate_new_account_email, send_email
-from fastapi import APIRouter, Depends, HTTPException
-from sqlmodel import col, delete, func, select
 
 router = APIRouter()
 
@@ -28,6 +29,7 @@ router = APIRouter()
     "/",
     dependencies=[Depends(get_current_active_superuser)],
     response_model=UsersPublic,
+    include_in_schema=False,
 )
 def read_users(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:
     """
@@ -44,7 +46,10 @@ def read_users(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:
 
 
 @router.post(
-    "/", dependencies=[Depends(get_current_active_superuser)], response_model=UserPublic
+    "/",
+    dependencies=[Depends(get_current_active_superuser)],
+    response_model=UserPublic,
+    include_in_schema=False,
 )
 def create_user(*, session: SessionDep, user_in: UserCreate) -> Any:
     """
@@ -70,7 +75,7 @@ def create_user(*, session: SessionDep, user_in: UserCreate) -> Any:
     return user
 
 
-@router.patch("/me", response_model=UserPublic)
+@router.patch("/me", response_model=UserPublic, include_in_schema=False)
 def update_user_me(
     *, session: SessionDep, user_in: UserUpdateMe, current_user: CurrentUser
 ) -> Any:
@@ -92,7 +97,7 @@ def update_user_me(
     return current_user
 
 
-@router.patch("/me/password", response_model=Message)
+@router.patch("/me/password", response_model=Message, include_in_schema=False)
 def update_password_me(
     *, session: SessionDep, body: UpdatePassword, current_user: CurrentUser
 ) -> Any:
@@ -112,7 +117,7 @@ def update_password_me(
     return Message(message="Password updated successfully")
 
 
-@router.get("/me", response_model=UserPublic)
+@router.get("/me", response_model=UserPublic, include_in_schema=False)
 def read_user_me(current_user: CurrentUser) -> Any:
     """
     Get current user.
@@ -120,7 +125,7 @@ def read_user_me(current_user: CurrentUser) -> Any:
     return current_user
 
 
-@router.delete("/me", response_model=Message)
+@router.delete("/me", response_model=Message, include_in_schema=False)
 def delete_user_me(session: SessionDep, current_user: CurrentUser) -> Any:
     """
     Delete own user.
@@ -136,7 +141,7 @@ def delete_user_me(session: SessionDep, current_user: CurrentUser) -> Any:
     return Message(message="User deleted successfully")
 
 
-@router.post("/signup", response_model=UserPublic)
+@router.post("/signup", response_model=UserPublic, include_in_schema=False)
 def register_user(session: SessionDep, user_in: UserRegister) -> Any:
     """
     Create new user without the need to be logged in.
@@ -152,7 +157,7 @@ def register_user(session: SessionDep, user_in: UserRegister) -> Any:
     return user
 
 
-@router.get("/{user_id}", response_model=UserPublic)
+@router.get("/{user_id}", response_model=UserPublic, include_in_schema=False)
 def read_user_by_id(
     user_id: uuid.UUID, session: SessionDep, current_user: CurrentUser
 ) -> Any:
@@ -174,6 +179,7 @@ def read_user_by_id(
     "/{user_id}",
     dependencies=[Depends(get_current_active_superuser)],
     response_model=UserPublic,
+    include_in_schema=False,
 )
 def update_user(
     *,
@@ -202,7 +208,11 @@ def update_user(
     return db_user
 
 
-@router.delete("/{user_id}", dependencies=[Depends(get_current_active_superuser)])
+@router.delete(
+    "/{user_id}",
+    dependencies=[Depends(get_current_active_superuser)],
+    include_in_schema=False,
+)
 def delete_user(
     session: SessionDep, current_user: CurrentUser, user_id: uuid.UUID
 ) -> Message:

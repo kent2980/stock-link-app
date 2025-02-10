@@ -1,16 +1,21 @@
 from typing import Any, List
 
-import app.schema as sc
-from app.api.deps import SessionDep
-from app.models import IxLabelArc, IxLabelLoc, IxLabelValue
 from fastapi import APIRouter, HTTPException
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
+import app.schema as sc
+from app.api.deps import SessionDep
+from app.models import IxLabelArc, IxLabelLoc, IxLabelValue
+
 router = APIRouter()
 
 
-@router.post("/link/lab/loc/", response_model=sc.ix_label.IxLabelLocCreate)
+@router.post(
+    "/link/lab/loc/",
+    response_model=sc.ix_label.IxLabelLocCreate,
+    include_in_schema=False,
+)
 def create_ix_label_loc_item(
     *, session: SessionDep, item_in: sc.ix_label.IxLabelLocCreate
 ) -> Any:
@@ -35,7 +40,11 @@ def create_ix_label_loc_item(
     return item
 
 
-@router.post("/link/lab/arc/", response_model=sc.ix_label.IxLabelArcCreate)
+@router.post(
+    "/link/lab/arc/",
+    response_model=sc.ix_label.IxLabelArcCreate,
+    include_in_schema=False,
+)
 def create_ix_label_arc_item(
     *, session: SessionDep, item_in: sc.ix_label.IxLabelArcCreate
 ) -> Any:
@@ -60,7 +69,11 @@ def create_ix_label_arc_item(
     return item
 
 
-@router.post("/link/lab/value/", response_model=sc.ix_label.IxLabelValueCreate)
+@router.post(
+    "/link/lab/value/",
+    response_model=sc.ix_label.IxLabelValueCreate,
+    include_in_schema=False,
+)
 def create_ix_label_value_item(
     *, session: SessionDep, item_in: sc.ix_label.IxLabelValueCreate
 ) -> Any:
@@ -87,7 +100,7 @@ def create_ix_label_value_item(
     return item
 
 
-@router.post("/link/lab/loc/list/", response_model=str)
+@router.post("/link/lab/loc/list/", response_model=str, include_in_schema=False)
 def create_ix_label_loc_items_exists(
     *, session: SessionDep, items_in: sc.ix_label.IxLabelLocCreateList
 ) -> Any:
@@ -115,7 +128,7 @@ def create_ix_label_loc_items_exists(
     return f"{len(new_items)} items created."
 
 
-@router.post("/link/lab/arc/list/", response_model=str)
+@router.post("/link/lab/arc/list/", response_model=str, include_in_schema=False)
 def create_ix_label_arc_items_exists(
     *, session: SessionDep, items_in: sc.ix_label.IxLabelArcCreateList
 ) -> Any:
@@ -143,7 +156,7 @@ def create_ix_label_arc_items_exists(
     return f"{len(new_items)} items created."
 
 
-@router.post("/link/lab/value/list/", response_model=str)
+@router.post("/link/lab/value/list/", response_model=str, include_in_schema=False)
 def create_ix_label_value_items_exists(
     *, session: SessionDep, items_in: sc.ix_label.IxLabelValueCreateList
 ) -> Any:
@@ -218,7 +231,7 @@ def get_ix_label_value_item(*, session: SessionDep, source_file_id: str) -> Any:
     return False
 
 
-@router.delete("/link/lab/loc/delete/", response_model=bool)
+@router.delete("/link/lab/loc/delete/", response_model=bool, include_in_schema=False)
 def delete_ix_label_loc_item(
     *, session: SessionDep, source_file_id_list: List[str]
 ) -> bool:
@@ -240,7 +253,7 @@ def delete_ix_label_loc_item(
     return True
 
 
-@router.delete("/link/lab/arc/delete/", response_model=bool)
+@router.delete("/link/lab/arc/delete/", response_model=bool, include_in_schema=False)
 def delete_ix_label_arc_item(
     *, session: SessionDep, source_file_id_list: List[str]
 ) -> bool:
@@ -262,7 +275,7 @@ def delete_ix_label_arc_item(
     return True
 
 
-@router.delete("/link/lab/value/delete/", response_model=bool)
+@router.delete("/link/lab/value/delete/", response_model=bool, include_in_schema=False)
 def delete_ix_label_value_item(
     *, session: SessionDep, source_file_id_list: List[str]
 ) -> bool:

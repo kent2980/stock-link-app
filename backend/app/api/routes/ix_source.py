@@ -1,16 +1,17 @@
 from typing import Any, List
 
-import app.schema as sc
-from app.api.deps import SessionDep
-from app.models import IxSourceFile
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
+import app.schema as sc
+from app.api.deps import SessionDep
+from app.models import IxSourceFile
+
 router = APIRouter()
 
 
-@router.post("/source/", response_model=str)
+@router.post("/source/", response_model=str, include_in_schema=False)
 def create_ix_source_file_item(
     *, session: SessionDep, item_in: sc.ix_source.IxSourceFileCreate
 ) -> Any:
@@ -25,7 +26,7 @@ def create_ix_source_file_item(
     return f"Item {item.name} created"
 
 
-@router.post("/source/exist/", response_model=bool)
+@router.post("/source/exist/", response_model=bool, include_in_schema=False)
 def create_ix_source_file_item_exists(
     *, session: SessionDep, item_in: sc.ix_source.IxSourceFileCreate
 ) -> Any:
@@ -46,7 +47,7 @@ def create_ix_source_file_item_exists(
     return False
 
 
-@router.post("/source/list/", response_model=str)
+@router.post("/source/list/", response_model=str, include_in_schema=False)
 def create_ix_source_file_items_exists(
     *, session: SessionDep, items_in: sc.ix_source.IxSourceFileCreateList
 ) -> Any:
@@ -91,7 +92,7 @@ def get_ix_source_file_item(
         raise HTTPException(status_code=404, detail="Item not found")
 
 
-@router.delete("/source/delete/", response_model=bool)
+@router.delete("/source/delete/", response_model=bool, include_in_schema=False)
 def delete_ix_source_file_item(
     *, session: SessionDep, head_item_key: str = Query(...)
 ) -> Any:

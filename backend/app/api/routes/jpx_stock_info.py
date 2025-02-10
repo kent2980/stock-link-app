@@ -10,7 +10,9 @@ from app.models import JpxStockInfo
 router = APIRouter()
 
 
-@router.post("/", response_model=sc.jpx_stock_info.JpxStockInfoCreate)
+@router.post(
+    "/", response_model=sc.jpx_stock_info.JpxStockInfoCreate, include_in_schema=False
+)
 def create_jpx_stock_info_item(
     *, item_in: sc.jpx_stock_info.JpxStockInfoCreate, session: SessionDep
 ) -> Any:
@@ -25,7 +27,11 @@ def create_jpx_stock_info_item(
     return item
 
 
-@router.post("/list/", response_model=sc.jpx_stock_info.JpxStockInfosCreateList)
+@router.post(
+    "/list/",
+    response_model=sc.jpx_stock_info.JpxStockInfosCreateList,
+    include_in_schema=False,
+)
 def create_jpx_stock_info_items_exists(
     *, items_in: sc.jpx_stock_info.JpxStockInfosCreateList, session: SessionDep
 ) -> Any:

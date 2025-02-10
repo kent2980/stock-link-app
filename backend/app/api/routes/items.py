@@ -10,7 +10,7 @@ from app.models import Item, ItemCreate, ItemPublic, ItemsPublic, ItemUpdate, Me
 router = APIRouter()
 
 
-@router.get("/", response_model=ItemsPublic)
+@router.get("/", response_model=ItemsPublic, include_in_schema=False)
 def read_items(
     session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
 ) -> Any:
@@ -41,7 +41,7 @@ def read_items(
     return ItemsPublic(data=items, count=count)
 
 
-@router.get("/{id}", response_model=ItemPublic)
+@router.get("/{id}", response_model=ItemPublic, include_in_schema=False)
 def read_item(session: SessionDep, current_user: CurrentUser, id: uuid.UUID) -> Any:
     """
     Get item by ID.
@@ -54,7 +54,7 @@ def read_item(session: SessionDep, current_user: CurrentUser, id: uuid.UUID) -> 
     return item
 
 
-@router.post("/", response_model=ItemPublic)
+@router.post("/", response_model=ItemPublic, include_in_schema=False)
 def create_item(
     *, session: SessionDep, current_user: CurrentUser, item_in: ItemCreate
 ) -> Any:
@@ -68,7 +68,7 @@ def create_item(
     return item
 
 
-@router.put("/{id}", response_model=ItemPublic)
+@router.put("/{id}", response_model=ItemPublic, include_in_schema=False)
 def update_item(
     *,
     session: SessionDep,
@@ -92,7 +92,7 @@ def update_item(
     return item
 
 
-@router.delete("/{id}")
+@router.delete("/{id}", include_in_schema=False)
 def delete_item(
     session: SessionDep, current_user: CurrentUser, id: uuid.UUID
 ) -> Message:

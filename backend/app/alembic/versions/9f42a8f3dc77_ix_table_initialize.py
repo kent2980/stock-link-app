@@ -1,8 +1,8 @@
-"""ix init
+"""ix table initialize
 
-Revision ID: 92d6a24acc5a
+Revision ID: 9f42a8f3dc77
 Revises: 1a31ce608336
-Create Date: 2024-12-31 04:17:49.908462
+Create Date: 2025-02-10 22:59:10.419629
 
 """
 from alembic import op
@@ -11,7 +11,7 @@ import sqlmodel.sql.sqltypes
 
 
 # revision identifiers, used by Alembic.
-revision = '92d6a24acc5a'
+revision = '9f42a8f3dc77'
 down_revision = '1a31ce608336'
 branch_labels = None
 depends_on = None
@@ -30,24 +30,27 @@ def upgrade():
     sa.UniqueConstraint('head_item_key'),
     sa.UniqueConstraint('item_key')
     )
-    op.create_table('ix_stock_infos',
+    op.create_table('jpx_stock_info',
     sa.Column('id', sa.Integer(), nullable=False, comment='ID'),
-    sa.Column('item_key', sqlmodel.sql.sqltypes.AutoString(length=36), nullable=True, comment='ItemKey'),
     sa.Column('insert_date', sa.DateTime(), nullable=False, comment='作成日時'),
     sa.Column('update_date', sa.DateTime(), nullable=False, comment='更新日時'),
-    sa.Column('code', sqlmodel.sql.sqltypes.AutoString(length=4), nullable=False),
+    sa.Column('input_date', sqlmodel.sql.sqltypes.AutoString(length=8), nullable=False),
+    sa.Column('code', sqlmodel.sql.sqltypes.AutoString(length=5), nullable=False),
     sa.Column('name', sqlmodel.sql.sqltypes.AutoString(length=255), nullable=False),
-    sa.Column('payout_ratio', sqlmodel.sql.sqltypes.AutoString(length=255), nullable=True),
-    sa.Column('roe', sqlmodel.sql.sqltypes.AutoString(length=255), nullable=True),
-    sa.Column('roa', sqlmodel.sql.sqltypes.AutoString(length=255), nullable=True),
-    sa.Column('op_margin', sqlmodel.sql.sqltypes.AutoString(length=255), nullable=True),
-    sa.Column('cf_operating', sqlmodel.sql.sqltypes.AutoString(length=255), nullable=True),
-    sa.Column('cf_investing', sqlmodel.sql.sqltypes.AutoString(length=255), nullable=True),
-    sa.Column('cf_financing', sqlmodel.sql.sqltypes.AutoString(length=255), nullable=True),
-    sa.Column('cash_end', sqlmodel.sql.sqltypes.AutoString(length=255), nullable=True),
+    sa.Column('market_or_type', sqlmodel.sql.sqltypes.AutoString(length=255), nullable=False),
+    sa.Column('industry_33_code', sa.Integer(), nullable=True),
+    sa.Column('industry_33_name', sqlmodel.sql.sqltypes.AutoString(length=255), nullable=True),
+    sa.Column('industry_17_code', sa.Integer(), nullable=True),
+    sa.Column('industry_17_name', sqlmodel.sql.sqltypes.AutoString(length=255), nullable=True),
+    sa.Column('scale_code', sa.Integer(), nullable=True),
+    sa.Column('scale_name', sqlmodel.sql.sqltypes.AutoString(length=255), nullable=True),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('item_key')
+    sa.UniqueConstraint('code')
     )
+    op.create_index('jpx_stock_info_industry_17_code', 'jpx_stock_info', ['industry_17_code'], unique=False)
+    op.create_index('jpx_stock_info_industry_33_code', 'jpx_stock_info', ['industry_33_code'], unique=False)
+    op.create_index('jpx_stock_info_market_or_type', 'jpx_stock_info', ['market_or_type'], unique=False)
+    op.create_index('jpx_stock_info_scale_code', 'jpx_stock_info', ['scale_code'], unique=False)
     op.create_table('ix_head_title',
     sa.Column('id', sa.Integer(), nullable=False, comment='ID'),
     sa.Column('item_key', sqlmodel.sql.sqltypes.AutoString(length=36), nullable=False, comment='ItemKey'),
@@ -192,7 +195,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['head_item_key'], ['ix_head_title.item_key'], ),
     sa.ForeignKeyConstraint(['source_file_id'], ['ix_source_file.id'], ),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('head_item_key', 'source_file_id', 'xlink_label', 'xlink_href', 'attr_value', name='ix_definition_loc_uc'),
     sa.UniqueConstraint('item_key')
     )
     op.create_index('idx_ix_definition_loc_attr_value', 'ix_definition_loc', ['attr_value'], unique=False)
@@ -467,6 +469,10 @@ def downgrade():
     op.drop_index('idx_ix_head_title_current_period', table_name='ix_head_title')
     op.drop_index('idx_ix_head_specific_business', table_name='ix_head_title')
     op.drop_table('ix_head_title')
-    op.drop_table('ix_stock_infos')
+    op.drop_index('jpx_stock_info_scale_code', table_name='jpx_stock_info')
+    op.drop_index('jpx_stock_info_market_or_type', table_name='jpx_stock_info')
+    op.drop_index('jpx_stock_info_industry_33_code', table_name='jpx_stock_info')
+    op.drop_index('jpx_stock_info_industry_17_code', table_name='jpx_stock_info')
+    op.drop_table('jpx_stock_info')
     op.drop_table('ix_file_path')
     # ### end Alembic commands ###

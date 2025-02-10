@@ -1,15 +1,20 @@
 from typing import Any, Optional
 
+from fastapi import APIRouter, HTTPException, Query
+from sqlmodel import select
+
 import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxFilePath
-from fastapi import APIRouter, HTTPException, Query
-from sqlmodel import select
 
 router = APIRouter()
 
 
-@router.post("/ix/file_path/", response_model=sc.ix_file_path.IxFilePathPublic)
+@router.post(
+    "/ix/file_path/",
+    response_model=sc.ix_file_path.IxFilePathPublic,
+    include_in_schema=False,
+)
 def create_ix_file_path_item(
     *, session: SessionDep, item_in: sc.ix_file_path.IxFilePathCreate
 ) -> Any:
@@ -60,7 +65,7 @@ def is_ix_file_path_item_exists(
     return False
 
 
-@router.delete("/ix/file_path/delete/", response_model=bool)
+@router.delete("/ix/file_path/delete/", response_model=bool, include_in_schema=False)
 def delete_ix_file_path_item(
     *, session: SessionDep, file_path: str = Query(...)
 ) -> Any:

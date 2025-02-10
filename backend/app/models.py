@@ -461,14 +461,13 @@ class IxDefinitionLoc(IxLocsBase, table=True):
         Index(
             "idx_ix_definition_loc_attr_value_xlink_label", "attr_value", "xlink_label"
         ),
-        UniqueConstraint(
-            "head_item_key",
-            "source_file_id",
-            "xlink_label",
-            "xlink_href",
-            "attr_value",
-            name="ix_definition_loc_uc",
-        ),
+        # UniqueConstraint(
+        #     "head_item_key",
+        #     "source_file_id",
+        #     "xlink_label",
+        #     "attr_value",
+        #     name="ix_definition_loc_uc",
+        # ),
         ForeignKeyConstraint(["head_item_key"], ["ix_head_title.item_key"]),
         ForeignKeyConstraint(["source_file_id"], ["ix_source_file.id"]),
     )
@@ -517,6 +516,24 @@ class IxDefinitionArc(IxArcsBase, table=True):
         ),
         ForeignKeyConstraint(["head_item_key"], ["ix_head_title.item_key"]),
         ForeignKeyConstraint(["source_file_id"], ["ix_source_file.id"]),
+        # ForeignKeyConstraint(
+        #     ["head_item_key", "source_file_id", "attr_value", "xlink_to"],
+        #     [
+        #         "ix_definition_loc.head_item_key",
+        #         "ix_definition_loc.source_file_id",
+        #         "ix_definition_loc.attr_value",
+        #         "ix_definition_loc.xlink_label",
+        #     ],
+        # ),
+        # ForeignKeyConstraint(
+        #     ["head_item_key", "source_file_id", "attr_value", "xlink_from"],
+        #     [
+        #         "ix_definition_loc.head_item_key",
+        #         "ix_definition_loc.source_file_id",
+        #         "ix_definition_loc.attr_value",
+        #         "ix_definition_loc.xlink_label",
+        #     ],
+        # ),
     )
 
 

@@ -1,16 +1,21 @@
 from typing import Any
 
-import app.schema as sc
-from app.api.deps import SessionDep
-from app.models import ScLinkBaseRef
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
+import app.schema as sc
+from app.api.deps import SessionDep
+from app.models import ScLinkBaseRef
+
 router = APIRouter()
 
 
-@router.post("/schema/linkbase/", response_model=sc.ix_schema.IxSchemaLinkBaseCreate)
+@router.post(
+    "/schema/linkbase/",
+    response_model=sc.ix_schema.IxSchemaLinkBaseCreate,
+    include_in_schema=False,
+)
 def create_ix_schema_linkbase_item(
     *, session: SessionDep, item_in: sc.ix_schema.IxSchemaLinkBaseCreate
 ) -> Any:
@@ -25,7 +30,7 @@ def create_ix_schema_linkbase_item(
     return item
 
 
-@router.post("/schema/linkbase/list/", response_model=str)
+@router.post("/schema/linkbase/list/", response_model=str, include_in_schema=False)
 def create_ix_schema_linkbase_items_exists(
     *, session: SessionDep, items_in: sc.ix_schema.IxSchemaLinkBaseCreateList
 ) -> Any:
@@ -70,7 +75,7 @@ def is_ix_schema_item_exists(*, session: SessionDep, head_item_key: str) -> Any:
     return False
 
 
-@router.delete("/schema/linkbase/delete/", response_model=bool)
+@router.delete("/schema/linkbase/delete/", response_model=bool, include_in_schema=False)
 def delete_ix_schema_item(
     *, session: SessionDep, head_item_key: str = Query(...)
 ) -> Any:

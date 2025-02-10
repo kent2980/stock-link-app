@@ -1,16 +1,21 @@
 from typing import Any, Optional
 
-import app.schema as sc
-from app.api.deps import SessionDep
-from app.models import IxCalculationArc, IxCalculationLoc
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
+import app.schema as sc
+from app.api.deps import SessionDep
+from app.models import IxCalculationArc, IxCalculationLoc
+
 router = APIRouter()
 
 
-@router.post("/link/cal/loc/", response_model=sc.ix_cal.IxCalculationLocCreate)
+@router.post(
+    "/link/cal/loc/",
+    response_model=sc.ix_cal.IxCalculationLocCreate,
+    include_in_schema=False,
+)
 def create_ix_cal_loc_item(
     *, session: SessionDep, item_in: sc.ix_cal.IxCalculationLocCreate
 ) -> Any:
@@ -25,7 +30,11 @@ def create_ix_cal_loc_item(
     return item
 
 
-@router.post("/link/cal/arc/", response_model=sc.ix_cal.IxCalculationArcCreate)
+@router.post(
+    "/link/cal/arc/",
+    response_model=sc.ix_cal.IxCalculationArcCreate,
+    include_in_schema=False,
+)
 def create_ix_cal_arc_item(
     *, session: SessionDep, item_in: sc.ix_cal.IxCalculationArcCreate
 ) -> Any:
@@ -40,7 +49,7 @@ def create_ix_cal_arc_item(
     return item
 
 
-@router.post("/link/cal/loc/list/", response_model=str)
+@router.post("/link/cal/loc/list/", response_model=str, include_in_schema=False)
 def create_ix_cal_loc_items_exists(
     *, session: SessionDep, items_in: sc.ix_cal.IxCalculationLocCreateList
 ) -> Any:
@@ -69,7 +78,7 @@ def create_ix_cal_loc_items_exists(
     return f"{len(new_items)} items created."
 
 
-@router.post("/link/cal/arc/list/", response_model=str)
+@router.post("/link/cal/arc/list/", response_model=str, include_in_schema=False)
 def create_ix_cal_arc_items_exists(
     *, session: SessionDep, items_in: sc.ix_cal.IxCalculationArcCreateList
 ) -> Any:
@@ -132,7 +141,7 @@ def get_ix_cal_arc_item(*, session: SessionDep, source_file_id: str) -> Any:
     return False
 
 
-@router.delete("/link/cal/loc/delete/", response_model=bool)
+@router.delete("/link/cal/loc/delete/", response_model=bool, include_in_schema=False)
 def delete_ix_cal_loc_item(
     *, session: SessionDep, head_item_key: Optional[str] = Query(...)
 ) -> Any:
@@ -155,7 +164,7 @@ def delete_ix_cal_loc_item(
     return True
 
 
-@router.delete("/link/cal/arc/delete/", response_model=bool)
+@router.delete("/link/cal/arc/delete/", response_model=bool, include_in_schema=False)
 def delete_ix_cal_arc_item(
     *, session: SessionDep, head_item_key: Optional[str] = Query(...)
 ) -> Any:

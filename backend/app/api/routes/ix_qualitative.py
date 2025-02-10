@@ -2,18 +2,23 @@ import re
 from collections import namedtuple
 from typing import List
 
-import app.schema as sc
-from app.api.deps import SessionDep
-from app.models import IxHeadTitle, IxQualitative
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 from treelib import Node, Tree
 
+import app.schema as sc
+from app.api.deps import SessionDep
+from app.models import IxHeadTitle, IxQualitative
+
 router = APIRouter()
 
 
-@router.post("/qualitative/", response_model=sc.ix_qualitative.IxQualitativePublic)
+@router.post(
+    "/qualitative/",
+    response_model=sc.ix_qualitative.IxQualitativePublic,
+    include_in_schema=False,
+)
 def create_ix_qualitative_item(
     *, session: SessionDep, item_in: sc.ix_qualitative.IxQualitativeCreate
 ) -> sc.ix_qualitative.IxQualitativePublic:
@@ -42,7 +47,9 @@ def create_ix_qualitative_item(
 
 
 @router.post(
-    "/qualitative/list/", response_model=sc.ix_qualitative.IxQualitativePublics
+    "/qualitative/list/",
+    response_model=sc.ix_qualitative.IxQualitativePublics,
+    include_in_schema=False,
 )
 def create_ix_qualitative_items_exists(
     *, session: SessionDep, items_in: sc.ix_qualitative.IxQualitativeCreates
@@ -79,7 +86,9 @@ def create_ix_qualitative_items_exists(
 
 
 @router.post(
-    "/qualitative/list/update/", response_model=sc.ix_qualitative.IxQualitativePublics
+    "/qualitative/list/update/",
+    response_model=sc.ix_qualitative.IxQualitativePublics,
+    include_in_schema=False,
 )
 def update_ix_qualitative_items(
     *, session: SessionDep, items_in: sc.ix_qualitative.IxQualitativeCreates
@@ -263,7 +272,7 @@ def extract_tree_content(tree: Tree):
     )
 
 
-@router.delete("/qualitative/delete/", response_model=bool)
+@router.delete("/qualitative/delete/", response_model=bool, include_in_schema=False)
 def delete_ix_qualitative_item(
     *, session: SessionDep, head_item_key: str = Query(...)
 ) -> bool:

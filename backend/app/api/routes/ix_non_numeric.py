@@ -1,16 +1,21 @@
 from typing import Any
 
-import app.schema as sc
-from app.api.deps import SessionDep
-from app.models import IxNonNumeric
 from fastapi import APIRouter, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
+import app.schema as sc
+from app.api.deps import SessionDep
+from app.models import IxNonNumeric
+
 router = APIRouter()
 
 
-@router.post("/ix/non_numeric/", response_model=sc.ix_non_numeric.IxNonNumericCreate)
+@router.post(
+    "/ix/non_numeric/",
+    response_model=sc.ix_non_numeric.IxNonNumericCreate,
+    include_in_schema=False,
+)
 def create_ix_non_numeric_item(
     *, session: SessionDep, item_in: sc.ix_non_numeric.IxNonNumericCreate
 ) -> Any:
@@ -25,7 +30,7 @@ def create_ix_non_numeric_item(
     return item
 
 
-@router.post("/ix/non_numeric/list/", response_model=str)
+@router.post("/ix/non_numeric/list/", response_model=str, include_in_schema=False)
 def create_ix_non_numeric_items_exists(
     *, session: SessionDep, items_in: sc.ix_non_numeric.IxNonNumericCreateList
 ) -> Any:
@@ -70,7 +75,7 @@ def is_ix_non_numeric_item_exists(*, session: SessionDep, source_file_id: str) -
     return False
 
 
-@router.delete("/ix/non_numeric/delete/", response_model=bool)
+@router.delete("/ix/non_numeric/delete/", response_model=bool, include_in_schema=False)
 def delete_ix_non_numeric_item(
     *, session: SessionDep, head_item_key: str = Query(...)
 ) -> Any:

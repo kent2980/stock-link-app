@@ -2,7 +2,6 @@ from . import (
     ix_cal,
     ix_def,
     ix_file_path,
-    ix_generate_class,
     ix_global,
     ix_head,
     ix_label,
@@ -12,8 +11,7 @@ from . import (
     ix_qualitative,
     ix_schema,
     ix_source,
-    ix_summary_non_fraction,
-    ix_summary_non_numeric,
+    ix_summary,
     jpx_stock_info,
     settings,
 )
@@ -32,8 +30,6 @@ __all__ = [
     "ix_file_path",
     "ix_global",
     "ix_qualitative",
-    "ix_generate_class",
-    "ix_summary_non_fraction",
-    "ix_summary_non_numeric",
     "jpx_stock_info",
+    "ix_summary",
 ]

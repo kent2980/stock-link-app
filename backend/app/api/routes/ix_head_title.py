@@ -14,7 +14,9 @@ from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric
 router = APIRouter()
 
 
-@router.post("/ix/head/", response_model=sc.ix_head.IxHeadTitlePublic)
+@router.post(
+    "/ix/head/", response_model=sc.ix_head.IxHeadTitlePublic, include_in_schema=False
+)
 def create_ix_head_title_item(
     *, session: SessionDep, item_in: sc.ix_head.IxHeadTitleCreate
 ) -> Any:
@@ -29,7 +31,7 @@ def create_ix_head_title_item(
     return item
 
 
-@router.post("/ix/head/exist/", response_model=str)
+@router.post("/ix/head/exist/", response_model=str, include_in_schema=False)
 def create_ix_head_title_item_exists(
     *, session: SessionDep, item_in: sc.ix_head.IxHeadTitleCreate
 ) -> Any:
@@ -50,7 +52,7 @@ def create_ix_head_title_item_exists(
     return f"Item {item_in.name} already exists for head_item_key {item_in.item_key}"
 
 
-@router.post("/ix/head/list/", response_model=str)
+@router.post("/ix/head/list/", response_model=str, include_in_schema=False)
 def create_ix_head_title_items_exists(
     *, session: SessionDep, items_in: sc.ix_head.IxHeadTitleCreateList
 ) -> Any:
@@ -247,7 +249,7 @@ def select_ix_head_title_items(
     return sc.ix_head.IxHeadTitlesPublic(data=items, count=len(items))
 
 
-@router.delete("/ix/head/delete/", response_model=bool)
+@router.delete("/ix/head/delete/", response_model=bool, include_in_schema=False)
 def delete_ix_head_title_item(
     *, session: SessionDep, head_item_key: str = Query(...)
 ) -> Any:
@@ -270,7 +272,7 @@ def delete_ix_head_title_item(
     return True
 
 
-@router.patch("/ix/head/active/", response_model=bool)
+@router.patch("/ix/head/active/", response_model=bool, include_in_schema=False)
 def update_is_active_ix_head_title_item(
     *, session: SessionDep, head_item_key: str = Query(...)
 ) -> Any:
@@ -297,7 +299,7 @@ def update_is_active_ix_head_title_item(
     return is_active
 
 
-@router.patch("/ix/head/generate/", response_model=bool)
+@router.patch("/ix/head/generate/", response_model=bool, include_in_schema=False)
 def active_is_generate(*, session: SessionDep, head_item_key: str = Query(...)) -> Any:
     """
     Generate item.
@@ -332,7 +334,7 @@ def is_ix_head_title_item_active(*, session: SessionDep, head_item_key: str) -> 
     return False
 
 
-@router.patch("/upgrade/is_consolidated/", response_model=str)
+@router.patch("/upgrade/is_consolidated/", response_model=str, include_in_schema=False)
 def update_is_consolidated(*, session: SessionDep) -> str:
     """
     Upgrade is_consolidated.
@@ -377,7 +379,7 @@ def select_ix_head_title_item(
     return item
 
 
-@router.patch("/ix/head/update/", response_model=str)
+@router.patch("/ix/head/update/", response_model=str, include_in_schema=False)
 def update_ix_head_title_item(
     *,
     session: SessionDep,

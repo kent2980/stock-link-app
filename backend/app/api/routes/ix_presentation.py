@@ -1,16 +1,21 @@
 from typing import Any
 
-import app.schema as sc
-from app.api.deps import SessionDep
-from app.models import IxPresentationArc, IxPresentationLoc
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
+import app.schema as sc
+from app.api.deps import SessionDep
+from app.models import IxPresentationArc, IxPresentationLoc
+
 router = APIRouter()
 
 
-@router.post("/link/pre/loc/", response_model=sc.ix_pre.IxPresentationLocCreate)
+@router.post(
+    "/link/pre/loc/",
+    response_model=sc.ix_pre.IxPresentationLocCreate,
+    include_in_schema=False,
+)
 def create_ix_pre_loc_item(
     *, session: SessionDep, item_in: sc.ix_pre.IxPresentationLocCreate
 ) -> Any:
@@ -25,7 +30,11 @@ def create_ix_pre_loc_item(
     return item
 
 
-@router.post("/link/pre/arc/", response_model=sc.ix_pre.IxPresentationArcCreate)
+@router.post(
+    "/link/pre/arc/",
+    response_model=sc.ix_pre.IxPresentationArcCreate,
+    include_in_schema=False,
+)
 def create_ix_pre_arc_item(
     *, session: SessionDep, item_in: sc.ix_pre.IxPresentationArcCreate
 ) -> Any:
@@ -40,7 +49,7 @@ def create_ix_pre_arc_item(
     return item
 
 
-@router.post("/link/pre/loc/list/", response_model=str)
+@router.post("/link/pre/loc/list/", response_model=str, include_in_schema=False)
 def create_ix_pre_loc_items_exists(
     *, session: SessionDep, items_in: sc.ix_pre.IxPresentationLocCreateList
 ) -> Any:
@@ -69,7 +78,7 @@ def create_ix_pre_loc_items_exists(
     return f"{len(new_items)} items created."
 
 
-@router.post("/link/pre/arc/list/", response_model=str)
+@router.post("/link/pre/arc/list/", response_model=str, include_in_schema=False)
 def create_ix_pre_arc_items_exists(
     *, session: SessionDep, items_in: sc.ix_pre.IxPresentationArcCreateList
 ) -> Any:
@@ -126,7 +135,7 @@ def get_ix_pre_arc_item(*, session: SessionDep, source_file_id: str) -> Any:
     return bool(item_exists)
 
 
-@router.delete("/link/pre/loc/delete/", response_model=bool)
+@router.delete("/link/pre/loc/delete/", response_model=bool, include_in_schema=False)
 def delete_ix_pre_loc_item(
     *, session: SessionDep, head_item_key: str = Query(...)
 ) -> Any:
@@ -148,7 +157,7 @@ def delete_ix_pre_loc_item(
     return False
 
 
-@router.delete("/link/pre/arc/delete/", response_model=bool)
+@router.delete("/link/pre/arc/delete/", response_model=bool, include_in_schema=False)
 def delete_ix_pre_arc_item(
     *, session: SessionDep, head_item_key: str = Query(...)
 ) -> Any:

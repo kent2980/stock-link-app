@@ -3,7 +3,6 @@ from . import (
     items,
     ix_calculation,
     ix_file_path,
-    ix_generate_class,
     ix_head_title,
     ix_label,
     ix_non_fraction,
@@ -35,7 +34,6 @@ __all__ = [
     "ix_schema",
     "ix_file_path",
     "ix_qualitative",
-    "ix_generate_class",
     "ix_summary",
     "jpx_stock_info",
 ]
