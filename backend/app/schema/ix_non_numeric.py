@@ -8,7 +8,7 @@ class IxNonNumericCreate(SQLModel):
 
     item_key: Optional[str] = Field(max_length=36, min_length=36)
     head_item_key: str = Field(max_length=255)
-    context: Optional[str] = Field(max_length=255)
+    context: List[str] = Field(max_length=255)
     name: str = Field(default=None)
     xsi_nil: Optional[bool] = Field(default=None)
     escape: bool = Field(default=False)
@@ -24,7 +24,7 @@ class IxNonNumericPublic(SQLModel):
     """iXBRLの非数値情報を表すクラス"""
 
     head_item_key: Optional[str]
-    context: str
+    context: List[str]
     name: str
     xsi_nil: Optional[bool]
     escape: Optional[bool]
@@ -39,8 +39,8 @@ class IxNonNumericPublic(SQLModel):
 class IxNonNumericsPublic(SQLModel):
     """iXBRLの非数値情報を表すクラス"""
 
-    data: List[IxNonNumericPublic]
     count: int
+    data: List[IxNonNumericPublic]
 
 
 class IxNonNumericCreateList(SQLModel):
@@ -57,5 +57,5 @@ class IxNonNumericAddLabelItemPublic(IxNonNumericPublic):
 
 class IxNonNumericAddLabelItemsPublic(SQLModel):
 
-    data: list[IxNonNumericAddLabelItemPublic]
     count: int
+    data: list[IxNonNumericAddLabelItemPublic]

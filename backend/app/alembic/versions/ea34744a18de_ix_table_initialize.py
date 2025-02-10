@@ -1,8 +1,8 @@
 """ix table initialize
 
-Revision ID: 9f42a8f3dc77
+Revision ID: ea34744a18de
 Revises: 1a31ce608336
-Create Date: 2025-02-10 22:59:10.419629
+Create Date: 2025-02-11 01:28:42.366711
 
 """
 from alembic import op
@@ -11,7 +11,7 @@ import sqlmodel.sql.sqltypes
 
 
 # revision identifiers, used by Alembic.
-revision = '9f42a8f3dc77'
+revision = 'ea34744a18de'
 down_revision = '1a31ce608336'
 branch_labels = None
 depends_on = None
@@ -266,7 +266,7 @@ def upgrade():
     sa.Column('insert_date', sa.DateTime(), nullable=False, comment='作成日時'),
     sa.Column('update_date', sa.DateTime(), nullable=False, comment='更新日時'),
     sa.Column('head_item_key', sqlmodel.sql.sqltypes.AutoString(length=36), nullable=False),
-    sa.Column('context', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('context', sa.ARRAY(sa.String()), nullable=True),
     sa.Column('decimals', sa.DECIMAL(precision=5, scale=2), nullable=True),
     sa.Column('format', sqlmodel.sql.sqltypes.AutoString(length=255), nullable=True),
     sa.Column('name', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
@@ -297,7 +297,7 @@ def upgrade():
     sa.Column('insert_date', sa.DateTime(), nullable=False, comment='作成日時'),
     sa.Column('update_date', sa.DateTime(), nullable=False, comment='更新日時'),
     sa.Column('head_item_key', sqlmodel.sql.sqltypes.AutoString(length=36), nullable=False),
-    sa.Column('context', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('context', sa.ARRAY(sa.String()), nullable=True),
     sa.Column('name', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('xsi_nil', sa.Boolean(), nullable=True),
     sa.Column('escape', sa.Boolean(), nullable=True),

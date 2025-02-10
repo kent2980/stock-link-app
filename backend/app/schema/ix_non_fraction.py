@@ -2,8 +2,9 @@ from datetime import datetime
 from decimal import Decimal
 from typing import List, Optional
 
-from app.models import Field, SQLModel
 from sqlalchemy import DECIMAL, Column
+
+from app.models import Field, SQLModel
 
 
 class IxNonFractionCreate(SQLModel):
@@ -11,7 +12,7 @@ class IxNonFractionCreate(SQLModel):
 
     item_key: Optional[str] = Field(max_length=36, min_length=36)
     head_item_key: str = Field(max_length=255)
-    context: str = Field(max_length=255)
+    context: List[str] = Field(max_length=255)
     decimals: Optional[Decimal] = Field(default=None, sa_column=Column(DECIMAL(5, 2)))
     format: Optional[str] = Field(max_length=255)
     name: str = Field(default=None)
@@ -35,7 +36,7 @@ class IxNonFractionPublic(SQLModel):
     insert_date: datetime
     update_date: datetime
     head_item_key: Optional[str]
-    context: str
+    context: List[str]
     decimals: Optional[float]
     format: Optional[str]
     name: str
@@ -55,8 +56,8 @@ class IxNonFractionPublic(SQLModel):
 class IxNonFractionsPublic(SQLModel):
     """iXBRLの非分数情報を表すクラス"""
 
-    data: List[IxNonFractionPublic]
     count: int
+    data: List[IxNonFractionPublic]
 
 
 class IxNonFractionCreateList(SQLModel):
@@ -73,5 +74,5 @@ class IxNonFractionAddLabelItemPublic(IxNonFractionPublic):
 
 class IxNonFractionAddLabelItemsPublic(SQLModel):
 
-    data: list[IxNonFractionAddLabelItemPublic]
     count: int
+    data: list[IxNonFractionAddLabelItemPublic]

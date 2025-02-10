@@ -1,10 +1,11 @@
 import uuid
 from datetime import date, datetime
 from decimal import Decimal
-from typing import Optional
+from typing import List, Optional
 
 from pydantic import EmailStr
 from sqlmodel import (
+    ARRAY,
     DECIMAL,
     Column,
     Field,
@@ -12,6 +13,7 @@ from sqlmodel import (
     Index,
     Relationship,
     SQLModel,
+    String,
     UniqueConstraint,
 )
 
@@ -614,7 +616,7 @@ class IxNonFraction(XbrlBase, table=True):
     __tablename__ = "ix_non_fraction"
 
     head_item_key: str = Field(default=None, max_length=36)
-    context: str = Field(default=None)
+    context: List[str] = Field(default=None, sa_column=Column(ARRAY(String)))
     decimals: Optional[Decimal] = Field(default=None, sa_column=Column(DECIMAL(5, 2)))
     format: Optional[str] = Field(max_length=255)
     name: str = Field(default=None)
@@ -649,7 +651,7 @@ class IxNonNumeric(XbrlBase, table=True):
     __tablename__ = "ix_non_numeric"
 
     head_item_key: str = Field(default=None, max_length=36)
-    context: str = Field(default=None)
+    context: List[str] = Field(default=None, sa_column=Column(ARRAY(String)))
     name: str = Field(default=None)
     xsi_nil: Optional[bool] = Field(default=None)
     escape: Optional[bool] = Field(default=False)

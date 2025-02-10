@@ -1,14 +1,20 @@
 from collections import defaultdict
 from typing import Dict, List
 
-import alembic
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.orm import aliased
 from sqlmodel import and_, case, exists, func, literal, select
 
 import app.schema as sc
 from app.api.deps import SessionDep
-from app.models import IxDefinitionArc, IxDefinitionLoc, IxLabelValue, ScLinkBaseRef
+from app.models import (
+    IxDefinitionArc,
+    IxDefinitionLoc,
+    IxLabelValue,
+    IxNonFraction,
+    IxNonNumeric,
+    ScLinkBaseRef,
+)
 
 router = APIRouter()
 
@@ -343,3 +349,85 @@ def read_names(
         dict_data[item.attr_value].append(item.xlink_to)
 
     return dict_data
+
+
+@router.get(
+    "/value/non_numeric/",
+    response_model=sc.ix_non_numeric.IxNonNumericsPublic,
+    summary="非数値リストを取得",
+)
+def read_non_numeric_values(
+    *,
+    head_item_key: str,
+    attr_value: str,
+    session: SessionDep,
+) -> sc.ix_non_numeric.IxNonNumericsPublic:
+    """
+    ## 非数値リストを取得するエンドポイント
+    - **機能**: HeadItemKeyから非数値リストを取得します。
+    - **認証不要**
+    - **レスポンス形式**: JSON
+    - **param1**: head_item_key: str 必須項目
+    - **param2**: attr_value: str 必須項目
+    """
+
+    context_list = read_context_list(
+        head_item_key=head_item_key, attr_value=attr_value, session=session
+    )
+    names = read_names(
+        head_item_key=head_item_key, attr_value=attr_value, session=session
+    )
+
+    statement = select(IxNonNumeric).where(
+        IxNonNumeric.head_item_key == head_item_key,
+        IxNonNumeric.name.in_(names[attr_value]),
+    )
+
+    results = session.exec(statement)
+    items = results.all()
+
+    if items is None:
+        return sc.ix_non_numeric.IxNonNumericsPublic(data=[])
+
+    return sc.ix_non_numeric.IxNonNumericsPublic(data=items, count=len(items))
+
+
+@router.get(
+    "/value/non_fraction/",
+    response_model=sc.ix_non_fraction.IxNonFractionsPublic,
+    summary="非分数値リストを取得",
+)
+def read_non_fraction_values(
+    *,
+    head_item_key: str,
+    attr_value: str,
+    session: SessionDep,
+) -> sc.ix_non_fraction.IxNonFractionsPublic:
+    """
+    ## 非分数値リストを取得するエンドポイント
+    - **機能**: HeadItemKeyから非分数値リストを取得します。
+    - **認証不要**
+    - **レスポンス形式**: JSON
+    - **param1**: head_item_key: str 必須項目
+    - **param2**: attr_value: str 必須項目
+    """
+
+    context_list = read_context_list(
+        head_item_key=head_item_key, attr_value=attr_value, session=session
+    )
+    names = read_names(
+        head_item_key=head_item_key, attr_value=attr_value, session=session
+    )
+
+    statement = select(IxNonFraction).where(
+        IxNonFraction.head_item_key == head_item_key,
+        IxNonFraction.name.in_(names[attr_value]),
+    )
+
+    results = session.exec(statement)
+    items = results.all()
+
+    if items is None:
+        return sc.ix_non_fraction.IxNonFractionsPublic(data=[])
+
+    return sc.ix_non_fraction.IxNonFractionsPublic(data=items, count=len(items))
