@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from app.models import SQLModel
 
@@ -35,3 +35,20 @@ class TreeItemsList(SQLModel):
 
     count: int
     data: List[TreeItem]
+
+
+class IxNonFractionPublic(SQLModel):
+    """iXBRLの非分数情報を表すクラス"""
+
+    id: int
+    context: List[str]
+    name: str
+    display_numeric: Optional[str]
+    display_scale: Optional[str]
+
+
+class IxNonFractionsPublicList(SQLModel):
+    """iXBRLの非分数情報のリストを表すクラス"""
+
+    count: int
+    data: List[IxNonFractionPublic]

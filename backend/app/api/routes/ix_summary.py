@@ -1,9 +1,10 @@
 from collections import defaultdict
+from itertools import product
 from typing import Dict, List
 
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.orm import aliased
-from sqlmodel import and_, case, exists, func, literal, select
+from sqlmodel import and_, case, exists, func, literal, or_, select
 
 import app.schema as sc
 from app.api.deps import SessionDep
@@ -394,7 +395,7 @@ def read_non_numeric_values(
 
 @router.get(
     "/value/non_fraction/",
-    response_model=sc.ix_non_fraction.IxNonFractionsPublic,
+    response_model=sc.ix_summary.IxNonFractionsPublicList,
     summary="非分数値リストを取得",
 )
 def read_non_fraction_values(
@@ -402,7 +403,7 @@ def read_non_fraction_values(
     head_item_key: str,
     attr_value: str,
     session: SessionDep,
-) -> sc.ix_non_fraction.IxNonFractionsPublic:
+) -> sc.ix_summary.IxNonFractionsPublicList:
     """
     ## 非分数値リストを取得するエンドポイント
     - **機能**: HeadItemKeyから非分数値リストを取得します。
@@ -419,9 +420,22 @@ def read_non_fraction_values(
         head_item_key=head_item_key, attr_value=attr_value, session=session
     )
 
+    context_list_keys = list(context_list[attr_value].keys())
+
     statement = select(IxNonFraction).where(
         IxNonFraction.head_item_key == head_item_key,
         IxNonFraction.name.in_(names[attr_value]),
+    )
+
+    context_list_all = product(*context_list[attr_value].values())
+
+    statement = statement.where(
+        or_(
+            *[
+                IxNonFraction.context.op("@>")(list(context))
+                for context in context_list_all
+            ]
+        )
     )
 
     results = session.exec(statement)
@@ -430,4 +444,4 @@ def read_non_fraction_values(
     if items is None:
         return sc.ix_non_fraction.IxNonFractionsPublic(data=[])
 
-    return sc.ix_non_fraction.IxNonFractionsPublic(data=items, count=len(items))
+    return sc.ix_summary.IxNonFractionsPublicList(data=items, count=len(items))
