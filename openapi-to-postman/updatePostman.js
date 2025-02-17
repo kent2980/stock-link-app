@@ -49,7 +49,7 @@ var workspaceId = "bedc640a-9748-4cc3-8d5d-38feee02bbd7";
 // OpenAPI JSONファイルのパス
 var openApiFileUrl = "http://localhost:8000/api/v1/openapi.json";
 var openApiFilePath = "/Users/user/Vscode/XBRL_Parse_Project/stock-link-app/openapi-to-postman/doc/openapi.json";
-function updatePostmanCollection() {
+function updatePostman() {
     return __awaiter(this, void 0, void 0, function () {
         var openApiData, conversionResult, reason, collectionData, url, headers, response, error_1;
         return __generator(this, function (_a) {
@@ -109,4 +109,4 @@ function updatePostmanCollection() {
         });
     });
 }
-updatePostmanCollection();
+updatePostman();

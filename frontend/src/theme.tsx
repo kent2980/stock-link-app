@@ -2,11 +2,22 @@ import { extendTheme } from "@chakra-ui/react";
 
 const disabledStyles = {
   _disabled: {
-    backgroundColor: "ui.main",
+    backgroundColor: "ui.dark",
   },
 };
 
 const theme = extendTheme({
+  styles: {
+    global: {
+      body: {
+        bg: "rgb(0,5,13)",
+        color: "#ffffff",
+        fontFamily: "'M PLUS Rounded 1c', sans-serif",
+        fontSize: "14px",
+        fontWeight: "500",
+      },
+    },
+  },
   colors: {
     ui: {
       main: "#064160",

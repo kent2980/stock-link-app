@@ -14,6 +14,7 @@ from sqlmodel import (
     Relationship,
     SQLModel,
     String,
+    Text,
     UniqueConstraint,
 )
 
@@ -815,3 +816,36 @@ class JpxStockInfo(JpxStockInfoBase, table=True):
 
 
 # endregion
+
+
+class StockWikiBase(SQLModel, table=False):
+    """StockWikiの基底クラスです。
+
+    Properties:
+        id int: インスタンスのIDです。
+        insert_date datetime: 挿入日時です。
+        update_date datetime: 更新日時です。
+    """
+
+    id: Optional[int] = Field(
+        default=None, primary_key=True, sa_column_kwargs={"comment": "ID"}
+    )
+    insert_date: datetime = Field(
+        default_factory=datetime.now, sa_column_kwargs={"comment": "作成日時"}
+    )
+    update_date: datetime = Field(
+        default_factory=datetime.now, sa_column_kwargs={"comment": "更新日時"}
+    )
+
+
+class StockWiki(StockWikiBase, table=True, description="企業のWiki情報"):
+    """StockWikiの作成時のプロパティです。"""
+
+    __tablename__ = "stock_wiki"
+
+    code: str = Field(max_length=5, description="証券コード", unique=True)
+    name: str = Field(max_length=255, description="企業名")
+    description: Optional[str] = Field(sa_column=Column(Text), description="企業概要")
+    url: Optional[str] = Field(max_length=255, description="Wiki URL")
+
+    __table_args__ = (Index("stock_wiki_code", "code"),)

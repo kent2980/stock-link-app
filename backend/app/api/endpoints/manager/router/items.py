@@ -68,7 +68,7 @@ def create_item(
     return item
 
 
-@router.put("/{id}", response_model=ItemPublic, include_in_schema=False)
+@router.put("/{id}", response_model=ItemPublic, include_in_schema=True)
 def update_item(
     *,
     session: SessionDep,
@@ -92,7 +92,7 @@ def update_item(
     return item
 
 
-@router.delete("/{id}", include_in_schema=False)
+@router.delete("/{id}", include_in_schema=True)
 def delete_item(
     session: SessionDep, current_user: CurrentUser, id: uuid.UUID
 ) -> Message:

@@ -18,7 +18,7 @@ const openApiFileUrl = "http://localhost:8000/api/v1/openapi.json";
 const openApiFilePath =
   "/Users/user/Vscode/XBRL_Parse_Project/stock-link-app/openapi-to-postman/doc/openapi.json";
 
-async function updatePostmanCollection() {
+async function updatePostman() {
   // OpenAPI JSONファイルをダウンロード
   axios
     .get(openApiFileUrl)
@@ -77,4 +77,4 @@ async function updatePostmanCollection() {
   }
 }
 
-updatePostmanCollection();
+updatePostman();

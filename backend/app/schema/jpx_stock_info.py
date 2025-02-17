@@ -1,8 +1,6 @@
 from datetime import date
 from typing import List, Optional
 
-import sqlmodel
-
 from app.models import Field, SQLModel
 
 

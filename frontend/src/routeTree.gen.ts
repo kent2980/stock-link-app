@@ -21,7 +21,10 @@ import { Route as LayoutSettingsImport } from './routes/_layout/settings'
 import { Route as LayoutItemsImport } from './routes/_layout/items'
 import { Route as LayoutIndustriesImport } from './routes/_layout/industries'
 import { Route as LayoutAdminImport } from './routes/_layout/admin'
-import { Route as LayoutStockIndexCodeImport } from './routes/_layout/StockIndex.$code'
+import { Route as LayoutSummaryIndexImport } from './routes/_layout/summary/index'
+import { Route as LayoutSummaryCodeLayoutImport } from './routes/_layout/summary/$code/_layout'
+import { Route as LayoutSummaryCodeLayoutStockInfoImport } from './routes/_layout/summary/$code/_layout/stockInfo'
+import { Route as LayoutSummaryCodeLayoutHeadKeySummaryImport } from './routes/_layout/summary/$code/_layout/$headKey/summary'
 
 // Create/Update Routes
 
@@ -75,10 +78,27 @@ const LayoutAdminRoute = LayoutAdminImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutStockIndexCodeRoute = LayoutStockIndexCodeImport.update({
-  path: '/StockIndex/$code',
+const LayoutSummaryIndexRoute = LayoutSummaryIndexImport.update({
+  path: '/summary/',
   getParentRoute: () => LayoutRoute,
 } as any)
+
+const LayoutSummaryCodeLayoutRoute = LayoutSummaryCodeLayoutImport.update({
+  path: '/summary/$code/layout',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutSummaryCodeLayoutStockInfoRoute =
+  LayoutSummaryCodeLayoutStockInfoImport.update({
+    path: '/stockInfo',
+    getParentRoute: () => LayoutSummaryCodeLayoutRoute,
+  } as any)
+
+const LayoutSummaryCodeLayoutHeadKeySummaryRoute =
+  LayoutSummaryCodeLayoutHeadKeySummaryImport.update({
+    path: '/$headKey/summary',
+    getParentRoute: () => LayoutSummaryCodeLayoutRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -124,9 +144,21 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIndexImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/StockIndex/$code': {
-      preLoaderRoute: typeof LayoutStockIndexCodeImport
+    '/_layout/summary/': {
+      preLoaderRoute: typeof LayoutSummaryIndexImport
       parentRoute: typeof LayoutImport
+    }
+    '/_layout/summary/$code/_layout': {
+      preLoaderRoute: typeof LayoutSummaryCodeLayoutImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/summary/$code/_layout/stockInfo': {
+      preLoaderRoute: typeof LayoutSummaryCodeLayoutStockInfoImport
+      parentRoute: typeof LayoutSummaryCodeLayoutImport
+    }
+    '/_layout/summary/$code/_layout/$headKey/summary': {
+      preLoaderRoute: typeof LayoutSummaryCodeLayoutHeadKeySummaryImport
+      parentRoute: typeof LayoutSummaryCodeLayoutImport
     }
   }
 }
@@ -140,7 +172,11 @@ export const routeTree = rootRoute.addChildren([
     LayoutItemsRoute,
     LayoutSettingsRoute,
     LayoutIndexRoute,
-    LayoutStockIndexCodeRoute,
+    LayoutSummaryIndexRoute,
+    LayoutSummaryCodeLayoutRoute.addChildren([
+      LayoutSummaryCodeLayoutStockInfoRoute,
+      LayoutSummaryCodeLayoutHeadKeySummaryRoute,
+    ]),
   ]),
   LoginRoute,
   RecoverPasswordRoute,

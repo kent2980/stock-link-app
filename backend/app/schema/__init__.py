@@ -14,6 +14,7 @@ from . import (
     ix_summary,
     jpx_stock_info,
     settings,
+    stock_wiki,
 )
 
 __all__ = [
@@ -32,4 +33,5 @@ __all__ = [
     "ix_qualitative",
     "jpx_stock_info",
     "ix_summary",
+    "stock_wiki",
 ]

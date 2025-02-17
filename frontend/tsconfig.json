@@ -24,7 +24,8 @@
     "src/**/*.ts",
     "tests/**/*.ts",
     "playwright.config.ts",
-    "src/**/*.tsx"
+    "src/**/*.tsx",
+    "src/routes/_layout/summary/$code/_layout/stockInfotsx"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

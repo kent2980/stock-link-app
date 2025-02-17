@@ -22,12 +22,7 @@ const UserMenu = () => {
   return (
     <>
       {/* Desktop */}
-      <Box
-        display={{ base: "none", md: "block" }}
-        position="fixed"
-        top={4}
-        right={4}
-      >
+      <Box>
         <Menu>
           <MenuButton
             as={IconButton}
@@ -38,11 +33,13 @@ const UserMenu = () => {
             data-testid="user-menu"
           />
           <MenuList>
-            <Link to="/settings">
-              <MenuItem icon={<FiUser fontSize="18px" />} as={Link}>
-                My profile
-              </MenuItem>
-            </Link>
+            <MenuItem
+              icon={<FiUser fontSize="18px" />}
+              as={Link}
+              to="/settings"
+            >
+              My profile
+            </MenuItem>
             <MenuItem
               icon={<FiLogOut fontSize="18px" />}
               onClick={handleLogout}

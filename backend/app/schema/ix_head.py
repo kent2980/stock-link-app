@@ -101,17 +101,3 @@ class IxReportTypeCountList(SQLModel):
 
     data: list[IxReportTypeCount]
     count: int
-
-
-class IxHeadDocumentInfo(SQLModel):
-
-    item_key: str
-    document_name: str
-    reporting_date: datetime.date
-    current_period: Optional[str]
-
-
-class IxHeadDocumentInfoList(SQLModel):
-
-    data: list[IxHeadDocumentInfo]
-    count: int
