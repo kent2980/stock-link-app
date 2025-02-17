@@ -4,20 +4,21 @@ from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
-import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxCalculationArc, IxCalculationLoc
+
+from . import schema as sc
 
 router = APIRouter()
 
 
 @router.post(
     "/link/cal/loc/",
-    response_model=sc.ix_cal.IxCalculationLocCreate,
+    response_model=sc.IxCalculationLocCreate,
     include_in_schema=False,
 )
 def create_ix_cal_loc_item(
-    *, session: SessionDep, item_in: sc.ix_cal.IxCalculationLocCreate
+    *, session: SessionDep, item_in: sc.IxCalculationLocCreate
 ) -> Any:
     """
     Create new item.
@@ -32,11 +33,11 @@ def create_ix_cal_loc_item(
 
 @router.post(
     "/link/cal/arc/",
-    response_model=sc.ix_cal.IxCalculationArcCreate,
+    response_model=sc.IxCalculationArcCreate,
     include_in_schema=False,
 )
 def create_ix_cal_arc_item(
-    *, session: SessionDep, item_in: sc.ix_cal.IxCalculationArcCreate
+    *, session: SessionDep, item_in: sc.IxCalculationArcCreate
 ) -> Any:
     """
     Create new item.
@@ -51,7 +52,7 @@ def create_ix_cal_arc_item(
 
 @router.post("/link/cal/loc/list/", response_model=str, include_in_schema=False)
 def create_ix_cal_loc_items_exists(
-    *, session: SessionDep, items_in: sc.ix_cal.IxCalculationLocCreateList
+    *, session: SessionDep, items_in: sc.IxCalculationLocCreateList
 ) -> Any:
     """
     Create new items.(Insert Select ... Not Exists)
@@ -80,7 +81,7 @@ def create_ix_cal_loc_items_exists(
 
 @router.post("/link/cal/arc/list/", response_model=str, include_in_schema=False)
 def create_ix_cal_arc_items_exists(
-    *, session: SessionDep, items_in: sc.ix_cal.IxCalculationArcCreateList
+    *, session: SessionDep, items_in: sc.IxCalculationArcCreateList
 ) -> Any:
     """
     Create new items.(Insert Select ... Not Exists)

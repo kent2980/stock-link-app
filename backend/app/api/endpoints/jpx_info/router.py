@@ -3,18 +3,17 @@ from typing import Any, List, Optional
 from fastapi import APIRouter, HTTPException, Path, Query
 from sqlmodel import select
 
-import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import JpxStockInfo
+
+from . import schema as sc
 
 router = APIRouter()
 
 
-@router.post(
-    "/", response_model=sc.jpx_stock_info.JpxStockInfoCreate, include_in_schema=False
-)
+@router.post("/", response_model=sc.JpxStockInfoCreate, include_in_schema=False)
 def create_jpx_stock_info_item(
-    *, item_in: sc.jpx_stock_info.JpxStockInfoCreate, session: SessionDep
+    *, item_in: sc.JpxStockInfoCreate, session: SessionDep
 ) -> Any:
     """
     Create new item.
@@ -29,11 +28,11 @@ def create_jpx_stock_info_item(
 
 @router.post(
     "/list/",
-    response_model=sc.jpx_stock_info.JpxStockInfosCreateList,
+    response_model=sc.JpxStockInfosCreateList,
     include_in_schema=False,
 )
 def create_jpx_stock_info_items_exists(
-    *, items_in: sc.jpx_stock_info.JpxStockInfosCreateList, session: SessionDep
+    *, items_in: sc.JpxStockInfosCreateList, session: SessionDep
 ) -> Any:
     """
     Create new items.(Insert Select ... Not Exists)
@@ -61,7 +60,7 @@ def create_jpx_stock_info_items_exists(
     return new_items
 
 
-@router.get("/code/{code}", response_model=sc.jpx_stock_info.JpxStockInfoPublic)
+@router.get("/code/{code}", response_model=sc.JpxStockInfoPublic)
 def read_jpx_stock_info_item(*, code: str, session: SessionDep) -> Any:
     """
     Get item by code.
@@ -74,20 +73,18 @@ def read_jpx_stock_info_item(*, code: str, session: SessionDep) -> Any:
     return item
 
 
-@router.get("/", response_model=sc.jpx_stock_info.JpxStockInfosPublicList)
-def read_jpx_stock_info_items(
-    *, session: SessionDep
-) -> sc.jpx_stock_info.JpxStockInfosPublicList:
+@router.get("/", response_model=sc.JpxStockInfosPublicList)
+def read_jpx_stock_info_items(*, session: SessionDep) -> sc.JpxStockInfosPublicList:
     """
     Get all items.
     """
     statement = select(JpxStockInfo)
     result = session.exec(statement)
     items = result.all()
-    return sc.jpx_stock_info.JpxStockInfosPublicList(data=items, count=len(items))
+    return sc.JpxStockInfosPublicList(data=items, count=len(items))
 
 
-@router.get("/tcs", response_model=sc.jpx_stock_info.JpxStockInfosPublicList)
+@router.get("/tcs", response_model=sc.JpxStockInfosPublicList)
 def read_jpx_stock_info_items_tcs(
     *,
     industry_17_code: Optional[int] = Query(None),
@@ -95,12 +92,12 @@ def read_jpx_stock_info_items_tcs(
     isItems: bool = Query(True),
     session: SessionDep,
     limit: int = Query(100),
-) -> sc.jpx_stock_info.JpxStockInfosPublicList:
+) -> sc.JpxStockInfosPublicList:
     """
     Get all items.
     """
     if isItems is False:
-        return sc.jpx_stock_info.JpxStockInfosPublicList(data=[], count=0)
+        return sc.JpxStockInfosPublicList(data=[], count=0)
     statement = (
         select(JpxStockInfo)
         .where(
@@ -116,13 +113,13 @@ def read_jpx_stock_info_items_tcs(
         statement = statement.limit(limit)
     result = session.exec(statement)
     items = result.all()
-    return sc.jpx_stock_info.JpxStockInfosPublicList(data=items, count=len(items))
+    return sc.JpxStockInfosPublicList(data=items, count=len(items))
 
 
-@router.get("/tcs/{market}", response_model=sc.jpx_stock_info.JpxStockInfosPublicList)
+@router.get("/tcs/{market}", response_model=sc.JpxStockInfosPublicList)
 def read_jpx_stock_info_item_tcs(
     *, market: str, session: SessionDep
-) -> sc.jpx_stock_info.JpxStockInfosPublicList:
+) -> sc.JpxStockInfosPublicList:
     """
     Get item by market.
     """
@@ -140,10 +137,10 @@ def read_jpx_stock_info_item_tcs(
     item = result.all()
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
-    return sc.jpx_stock_info.JpxStockInfosPublicList(data=item, count=len(item))
+    return sc.JpxStockInfosPublicList(data=item, count=len(item))
 
 
-@router.get("/industries/{type}", response_model=sc.jpx_stock_info.IndustriesList)
+@router.get("/industries/{type}", response_model=sc.IndustriesList)
 def read_jpx_stock_info_industry_names(*, type: int, session: SessionDep) -> Any:
     """
     Get all industries.
@@ -183,12 +180,12 @@ def read_jpx_stock_info_industry_names(*, type: int, session: SessionDep) -> Any
     # itemsの要素からNoneを除外
     items = [item for item in items if item[0] is not None]
     items = [item for item in items if item[1] is not None]
-    return sc.jpx_stock_info.IndustriesList(data=items)
+    return sc.IndustriesList(data=items)
 
 
 @router.get(
     "/industries",
-    response_model=sc.jpx_stock_info.IndustriesList,
+    response_model=sc.IndustriesList,
 )
 def read_select_industries(
     *, industry_17_code: Optional[int] = Query(None), session: SessionDep
@@ -214,4 +211,4 @@ def read_select_industries(
     # itemsの要素からNoneを除外
     items = [item for item in items if item[0] is not None]
     items = [item for item in items if item[1] is not None]
-    return sc.jpx_stock_info.IndustriesList(data=items)
+    return sc.IndustriesList(data=items)

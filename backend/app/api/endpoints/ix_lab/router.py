@@ -4,20 +4,21 @@ from fastapi import APIRouter, HTTPException
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
-import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxLabelArc, IxLabelLoc, IxLabelValue
+
+from . import schema as sc
 
 router = APIRouter()
 
 
 @router.post(
     "/link/lab/loc/",
-    response_model=sc.ix_label.IxLabelLocCreate,
+    response_model=sc.IxLabelLocCreate,
     include_in_schema=False,
 )
 def create_ix_label_loc_item(
-    *, session: SessionDep, item_in: sc.ix_label.IxLabelLocCreate
+    *, session: SessionDep, item_in: sc.IxLabelLocCreate
 ) -> Any:
     """
     Create new item.
@@ -42,11 +43,11 @@ def create_ix_label_loc_item(
 
 @router.post(
     "/link/lab/arc/",
-    response_model=sc.ix_label.IxLabelArcCreate,
+    response_model=sc.IxLabelArcCreate,
     include_in_schema=False,
 )
 def create_ix_label_arc_item(
-    *, session: SessionDep, item_in: sc.ix_label.IxLabelArcCreate
+    *, session: SessionDep, item_in: sc.IxLabelArcCreate
 ) -> Any:
     """
     Create new item.
@@ -71,11 +72,11 @@ def create_ix_label_arc_item(
 
 @router.post(
     "/link/lab/value/",
-    response_model=sc.ix_label.IxLabelValueCreate,
+    response_model=sc.IxLabelValueCreate,
     include_in_schema=False,
 )
 def create_ix_label_value_item(
-    *, session: SessionDep, item_in: sc.ix_label.IxLabelValueCreate
+    *, session: SessionDep, item_in: sc.IxLabelValueCreate
 ) -> Any:
     """
     Create new item.
@@ -102,7 +103,7 @@ def create_ix_label_value_item(
 
 @router.post("/link/lab/loc/list/", response_model=str, include_in_schema=False)
 def create_ix_label_loc_items_exists(
-    *, session: SessionDep, items_in: sc.ix_label.IxLabelLocCreateList
+    *, session: SessionDep, items_in: sc.IxLabelLocCreateList
 ) -> Any:
     """
     Create new items.(Insert Select ... Not Exists)
@@ -130,7 +131,7 @@ def create_ix_label_loc_items_exists(
 
 @router.post("/link/lab/arc/list/", response_model=str, include_in_schema=False)
 def create_ix_label_arc_items_exists(
-    *, session: SessionDep, items_in: sc.ix_label.IxLabelArcCreateList
+    *, session: SessionDep, items_in: sc.IxLabelArcCreateList
 ) -> Any:
     """
     Create new items.(Insert Select ... Not Exists)
@@ -158,7 +159,7 @@ def create_ix_label_arc_items_exists(
 
 @router.post("/link/lab/value/list/", response_model=str, include_in_schema=False)
 def create_ix_label_value_items_exists(
-    *, session: SessionDep, items_in: sc.ix_label.IxLabelValueCreateList
+    *, session: SessionDep, items_in: sc.IxLabelValueCreateList
 ) -> Any:
     """
     Create new items.(Insert Select ... Not Exists)

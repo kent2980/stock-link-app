@@ -4,20 +4,21 @@ from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
-import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxPresentationArc, IxPresentationLoc
+
+from . import schema as sc
 
 router = APIRouter()
 
 
 @router.post(
     "/link/pre/loc/",
-    response_model=sc.ix_pre.IxPresentationLocCreate,
+    response_model=sc.IxPresentationLocCreate,
     include_in_schema=False,
 )
 def create_ix_pre_loc_item(
-    *, session: SessionDep, item_in: sc.ix_pre.IxPresentationLocCreate
+    *, session: SessionDep, item_in: sc.IxPresentationLocCreate
 ) -> Any:
     """
     Create new item.
@@ -32,11 +33,11 @@ def create_ix_pre_loc_item(
 
 @router.post(
     "/link/pre/arc/",
-    response_model=sc.ix_pre.IxPresentationArcCreate,
+    response_model=sc.IxPresentationArcCreate,
     include_in_schema=False,
 )
 def create_ix_pre_arc_item(
-    *, session: SessionDep, item_in: sc.ix_pre.IxPresentationArcCreate
+    *, session: SessionDep, item_in: sc.IxPresentationArcCreate
 ) -> Any:
     """
     Create new item.
@@ -51,7 +52,7 @@ def create_ix_pre_arc_item(
 
 @router.post("/link/pre/loc/list/", response_model=str, include_in_schema=False)
 def create_ix_pre_loc_items_exists(
-    *, session: SessionDep, items_in: sc.ix_pre.IxPresentationLocCreateList
+    *, session: SessionDep, items_in: sc.IxPresentationLocCreateList
 ) -> Any:
     """
     Create new items.(Insert Select ... Not Exists)
@@ -80,7 +81,7 @@ def create_ix_pre_loc_items_exists(
 
 @router.post("/link/pre/arc/list/", response_model=str, include_in_schema=False)
 def create_ix_pre_arc_items_exists(
-    *, session: SessionDep, items_in: sc.ix_pre.IxPresentationArcCreateList
+    *, session: SessionDep, items_in: sc.IxPresentationArcCreateList
 ) -> Any:
     """
     Create new items.(Insert Select ... Not Exists)

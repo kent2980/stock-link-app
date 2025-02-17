@@ -4,20 +4,21 @@ from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
-import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import ScLinkBaseRef
+
+from . import schema as sc
 
 router = APIRouter()
 
 
 @router.post(
     "/schema/linkbase/",
-    response_model=sc.ix_schema.IxSchemaLinkBaseCreate,
+    response_model=sc.IxSchemaLinkBaseCreate,
     include_in_schema=False,
 )
 def create_ix_schema_linkbase_item(
-    *, session: SessionDep, item_in: sc.ix_schema.IxSchemaLinkBaseCreate
+    *, session: SessionDep, item_in: sc.IxSchemaLinkBaseCreate
 ) -> Any:
     """
     Create new item.
@@ -32,7 +33,7 @@ def create_ix_schema_linkbase_item(
 
 @router.post("/schema/linkbase/list/", response_model=str, include_in_schema=False)
 def create_ix_schema_linkbase_items_exists(
-    *, session: SessionDep, items_in: sc.ix_schema.IxSchemaLinkBaseCreateList
+    *, session: SessionDep, items_in: sc.IxSchemaLinkBaseCreateList
 ) -> Any:
     """
     Create new items.(Insert Select ... Not Exists)

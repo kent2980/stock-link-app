@@ -7,20 +7,21 @@ from sqlalchemy.orm import aliased
 from sqlalchemy.sql import func
 from sqlmodel import and_, select
 
-import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxDefinitionArc, IxDefinitionLoc
+
+from . import schema as sc
 
 router = APIRouter()
 
 
 @router.post(
     "/link/def/loc/",
-    response_model=sc.ix_def.IxDefinitionLocCreate,
+    response_model=sc.IxDefinitionLocCreate,
     include_in_schema=False,
 )
 def create_ix_def_loc_item(
-    *, session: SessionDep, item_in: sc.ix_def.IxDefinitionLocCreate
+    *, session: SessionDep, item_in: sc.IxDefinitionLocCreate
 ) -> Any:
     """
     Create new item.
@@ -36,11 +37,11 @@ def create_ix_def_loc_item(
 
 @router.post(
     "/link/def/arc/",
-    response_model=sc.ix_def.IxDefinitionArcCreate,
+    response_model=sc.IxDefinitionArcCreate,
     include_in_schema=False,
 )
 def create_ix_def_arc_item(
-    *, session: SessionDep, item_in: sc.ix_def.IxDefinitionArcCreate
+    *, session: SessionDep, item_in: sc.IxDefinitionArcCreate
 ) -> Any:
     """
     Create new item.
@@ -55,7 +56,7 @@ def create_ix_def_arc_item(
 
 @router.post("/link/def/loc/list/", response_model=str, include_in_schema=False)
 def create_ix_def_loc_items_exists(
-    *, session: SessionDep, items_in: sc.ix_def.IxDefinitionLocCreateList
+    *, session: SessionDep, items_in: sc.IxDefinitionLocCreateList
 ) -> Any:
     """
     Create new items.(Insert Select ... Not Exists)

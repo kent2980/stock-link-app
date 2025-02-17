@@ -7,18 +7,17 @@ from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import func, select, update
 
-import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric
+
+from . import schema as sc
 
 router = APIRouter()
 
 
-@router.post(
-    "/ix/head/", response_model=sc.ix_head.IxHeadTitlePublic, include_in_schema=False
-)
+@router.post("/ix/head/", response_model=sc.IxHeadTitlePublic, include_in_schema=False)
 def create_ix_head_title_item(
-    *, session: SessionDep, item_in: sc.ix_head.IxHeadTitleCreate
+    *, session: SessionDep, item_in: sc.IxHeadTitleCreate
 ) -> Any:
     """
     Create new item.
@@ -33,7 +32,7 @@ def create_ix_head_title_item(
 
 @router.post("/ix/head/exist/", response_model=str, include_in_schema=False)
 def create_ix_head_title_item_exists(
-    *, session: SessionDep, item_in: sc.ix_head.IxHeadTitleCreate
+    *, session: SessionDep, item_in: sc.IxHeadTitleCreate
 ) -> Any:
     """
     Create new item.
@@ -54,7 +53,7 @@ def create_ix_head_title_item_exists(
 
 @router.post("/ix/head/list/", response_model=str, include_in_schema=False)
 def create_ix_head_title_items_exists(
-    *, session: SessionDep, items_in: sc.ix_head.IxHeadTitleCreateList
+    *, session: SessionDep, items_in: sc.IxHeadTitleCreateList
 ) -> Any:
     """
     Create new items.(Insert Select ... Not Exists)
@@ -100,11 +99,11 @@ def is_ix_head_title_item_exists(*, session: SessionDep, head_item_key: str) -> 
 
 @router.get(
     "/head/count-report-type/",
-    response_model=sc.ix_head.IxReportTypeCountList,
+    response_model=sc.IxReportTypeCountList,
 )
 def get_count_report_type(
     *, session: SessionDep, date_str: str
-) -> sc.ix_head.IxReportTypeCountList:
+) -> sc.IxReportTypeCountList:
     """
     指定した日付の報告書タイプごとの件数を取得する。
     """
@@ -134,7 +133,7 @@ def get_count_report_type(
     for item in items:
         if item.report_type == "edif":
             items_list.append(
-                sc.ix_head.IxReportTypeCount(
+                sc.IxReportTypeCount(
                     report_type=item.report_type,
                     report_type_jp="決算短信[国際会計基準]",
                     count=item.count,
@@ -142,7 +141,7 @@ def get_count_report_type(
             )
         elif item.report_type == "edjp":
             items_list.append(
-                sc.ix_head.IxReportTypeCount(
+                sc.IxReportTypeCount(
                     report_type=item.report_type,
                     report_type_jp="決算短信[日本基準]",
                     count=item.count,
@@ -150,7 +149,7 @@ def get_count_report_type(
             )
         elif item.report_type == "edus":
             items_list.append(
-                sc.ix_head.IxReportTypeCount(
+                sc.IxReportTypeCount(
                     report_type=item.report_type,
                     report_type_jp="決算短信[米国基準]",
                     count=item.count,
@@ -158,7 +157,7 @@ def get_count_report_type(
             )
         elif item.report_type == "edit":
             items_list.append(
-                sc.ix_head.IxReportTypeCount(
+                sc.IxReportTypeCount(
                     report_type=item.report_type,
                     report_type_jp="決算短信[国際会計基準]",
                     count=item.count,
@@ -166,7 +165,7 @@ def get_count_report_type(
             )
         elif item.report_type == "rvfc":
             items_list.append(
-                sc.ix_head.IxReportTypeCount(
+                sc.IxReportTypeCount(
                     report_type=item.report_type,
                     report_type_jp="業績予想修正に関するお知らせ",
                     count=item.count,
@@ -174,7 +173,7 @@ def get_count_report_type(
             )
         elif item.report_type == "rvdf":
             items_list.append(
-                sc.ix_head.IxReportTypeCount(
+                sc.IxReportTypeCount(
                     report_type=item.report_type,
                     report_type_jp="配当予想修正に関するお知らせ",
                     count=item.count,
@@ -182,7 +181,7 @@ def get_count_report_type(
             )
         elif item.report_type == "rejp":
             items_list.append(
-                sc.ix_head.IxReportTypeCount(
+                sc.IxReportTypeCount(
                     report_type=item.report_type,
                     report_type_jp="REIT決算短信（日本基準）",
                     count=item.count,
@@ -190,7 +189,7 @@ def get_count_report_type(
             )
         elif item.report_type == "rrdf":
             items_list.append(
-                sc.ix_head.IxReportTypeCount(
+                sc.IxReportTypeCount(
                     report_type=item.report_type,
                     report_type_jp="分配予想の修正に関するお知らせ",
                     count=item.count,
@@ -198,7 +197,7 @@ def get_count_report_type(
             )
         elif item.report_type == "rrfc":
             items_list.append(
-                sc.ix_head.IxReportTypeCount(
+                sc.IxReportTypeCount(
                     report_type=item.report_type,
                     report_type_jp="運用状況の予想の修正に関するお知らせ",
                     count=item.count,
@@ -206,23 +205,23 @@ def get_count_report_type(
             )
         elif item.report_type == "efjp":
             items_list.append(
-                sc.ix_head.IxReportTypeCount(
+                sc.IxReportTypeCount(
                     report_type=item.report_type,
                     report_type_jp="ETF決算短信（日本基準）",
                     count=item.count,
                 )
             )
 
-    return sc.ix_head.IxReportTypeCountList(data=items_list, count=len(items_list))
+    return sc.IxReportTypeCountList(data=items_list, count=len(items_list))
 
 
 @router.get(
     "/head/select/date/",
-    response_model=sc.ix_head.IxHeadTitlesPublic,
+    response_model=sc.IxHeadTitlesPublic,
 )
 def select_ix_head_title_items(
     *, session: SessionDep, date_str: str
-) -> sc.ix_head.IxHeadTitlesPublic:
+) -> sc.IxHeadTitlesPublic:
     """
     指定した日付の報告書を取得します。
     """
@@ -246,7 +245,7 @@ def select_ix_head_title_items(
     result = session.exec(statement)
     items = result.all()
 
-    return sc.ix_head.IxHeadTitlesPublic(data=items, count=len(items))
+    return sc.IxHeadTitlesPublic(data=items, count=len(items))
 
 
 @router.delete("/ix/head/delete/", response_model=bool, include_in_schema=False)
@@ -365,10 +364,10 @@ def update_is_consolidated(*, session: SessionDep) -> str:
         return f"{len(items)} items updated."
 
 
-@router.get("/select/head_item_key/", response_model=sc.ix_head.IxHeadTitlePublic)
+@router.get("/select/head_item_key/", response_model=sc.IxHeadTitlePublic)
 def select_ix_head_title_item(
     *, session: SessionDep, head_item_key: str
-) -> sc.ix_head.IxHeadTitlePublic:
+) -> sc.IxHeadTitlePublic:
     """
     Select item.
     """

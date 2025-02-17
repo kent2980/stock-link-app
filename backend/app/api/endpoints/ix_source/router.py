@@ -4,16 +4,17 @@ from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
-import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxSourceFile
+
+from . import schema as sc
 
 router = APIRouter()
 
 
 @router.post("/source/", response_model=str, include_in_schema=False)
 def create_ix_source_file_item(
-    *, session: SessionDep, item_in: sc.ix_source.IxSourceFileCreate
+    *, session: SessionDep, item_in: sc.IxSourceFileCreate
 ) -> Any:
     """
     Create new item.
@@ -28,7 +29,7 @@ def create_ix_source_file_item(
 
 @router.post("/source/exist/", response_model=bool, include_in_schema=False)
 def create_ix_source_file_item_exists(
-    *, session: SessionDep, item_in: sc.ix_source.IxSourceFileCreate
+    *, session: SessionDep, item_in: sc.IxSourceFileCreate
 ) -> Any:
     """
     Create new item.
@@ -49,7 +50,7 @@ def create_ix_source_file_item_exists(
 
 @router.post("/source/list/", response_model=str, include_in_schema=False)
 def create_ix_source_file_items_exists(
-    *, session: SessionDep, items_in: sc.ix_source.IxSourceFileCreateList
+    *, session: SessionDep, items_in: sc.IxSourceFileCreateList
 ) -> Any:
     """
     Create new items.(Insert Select ... Not Exists)

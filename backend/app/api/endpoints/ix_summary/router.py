@@ -7,7 +7,6 @@ from sqlalchemy import func
 from sqlalchemy.orm import aliased
 from sqlmodel import and_, case, exists, literal, or_, select
 
-import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import (
     IxDefinitionArc,
@@ -21,17 +20,17 @@ from app.models import (
     ScLinkBaseRef,
 )
 
+from . import schema as sc
+
 router = APIRouter()
 
 
 @router.get(
     "/doc/info/{code}",
-    response_model=sc.ix_summary.IxDocumentInfoList,
+    response_model=sc.IxDocumentInfoList,
     summary="XBRL文書情報を取得",
 )
-def get_document_info(
-    *, session: SessionDep, code: str
-) -> sc.ix_summary.IxDocumentInfoList:
+def get_document_info(*, session: SessionDep, code: str) -> sc.IxDocumentInfoList:
     """
     ## XBRL文書情報を取得するエンドポイント
     - **機能**: 証券コードからXBRL文書情報を取得します。
@@ -44,17 +43,17 @@ def get_document_info(
     result = session.exec(statement)
     items = result.all()
 
-    return sc.ix_summary.IxDocumentInfoList(data=items, count=len(items))
+    return sc.IxDocumentInfoList(data=items, count=len(items))
 
 
 @router.get(
     "/tree/menus/{head_item_key}",
-    response_model=sc.ix_summary.MenuLabelList,
+    response_model=sc.MenuLabelList,
     summary="attr_valueと日本語ラベルを取得",
 )
 def read_menu_labels(
     *, head_item_key: str, xbrl_type: str, session: SessionDep
-) -> sc.ix_summary.MenuLabelList:
+) -> sc.MenuLabelList:
     """
     ## attr_valueと日本語ラベルを取得するエンドポイント
     - **機能**: HeadItemKeyからattr_valueと日本語ラベルを取得します。
@@ -113,12 +112,12 @@ def read_menu_labels(
     if items is None:
         raise HTTPException(status_code=404, detail="Items not found")
 
-    return sc.ix_summary.MenuLabelList(data=items, count=len(items))
+    return sc.MenuLabelList(data=items, count=len(items))
 
 
 @router.get(
     "/tree/items/{head_item_key}",
-    response_model=sc.ix_summary.TreeItemsList,
+    response_model=sc.TreeItemsList,
     summary="表示リンクアイテムを取得",
 )
 def read_tree_items(
@@ -129,7 +128,7 @@ def read_tree_items(
     xlink_arcrole: str = Query(None),
     xbrl_type: str = Query("sm"),
     session: SessionDep,
-) -> sc.ix_summary.TreeItemsList:
+) -> sc.TreeItemsList:
     """
     ## 表示リンクアイテムを取得するエンドポイント
     - **機能**: HeadItemKeyから表示リンクのツリーアイテム一覧を取得します。
@@ -324,7 +323,7 @@ def read_tree_items(
     if items is None:
         raise HTTPException(status_code=404, detail="Items not found")
 
-    return sc.ix_summary.TreeItemsList(data=items, count=len(items))
+    return sc.TreeItemsList(data=items, count=len(items))
 
 
 @router.get(
@@ -405,12 +404,10 @@ def read_names(
 
 @router.get(
     "/Company/{HeadItemKey}",
-    response_model=sc.ix_summary.CompanySchema,
+    response_model=sc.CompanySchema,
     summary="企業情報を取得",
 )
-def get_company(
-    *, HeadItemKey: str, session: SessionDep
-) -> sc.ix_summary.CompanySchema:
+def get_company(*, HeadItemKey: str, session: SessionDep) -> sc.CompanySchema:
     """
     ## 企業情報を取得するエンドポイント
     - **機能**: HeadItemKeyから企業情報を取得します。
@@ -434,7 +431,7 @@ def get_company(
         "fiscalQuarter": item.current_period,
     }
 
-    return sc.ix_summary.CompanySchema(**item_dict)
+    return sc.CompanySchema(**item_dict)
 
 
 def get_label(
@@ -479,7 +476,7 @@ def get_label(
 
 @router.get(
     "/summary/operatingResults/{HeadItemKey}/{attr_type}",
-    response_model=sc.ix_summary.FinancialResponseSchema,
+    response_model=sc.FinancialResponseSchema,
     summary="経営成績を取得",
 )
 def get_operating_results(
@@ -487,7 +484,7 @@ def get_operating_results(
     HeadItemKey: str,
     attr_type: str,
     session: SessionDep,
-) -> sc.ix_summary.FinancialResponseSchema:
+) -> sc.FinancialResponseSchema:
     """
     ## 経営成績を取得するエンドポイント
     - **機能**: HeadItemKeyから経営成績を取得します。
@@ -615,12 +612,12 @@ def get_operating_results(
 
     print(parentList)
 
-    return sc.ix_summary.FinancialResponseSchema(company=company, metrics=parentList)
+    return sc.FinancialResponseSchema(company=company, metrics=parentList)
 
 
 @router.get(
     "/operatingResults/{code}",
-    response_model=sc.ix_summary.FinancialResponseSchema,
+    response_model=sc.FinancialResponseSchema,
     summary="証券コードから経営成績を取得",
 )
 def get_operating_results_by_code(
@@ -630,7 +627,7 @@ def get_operating_results_by_code(
     period: str = Query(None),
     attr_type: str = Query("operatingResults"),
     session: SessionDep,
-) -> sc.ix_summary.FinancialResponseSchema:
+) -> sc.FinancialResponseSchema:
     """
     ## 証券コードから経営成績を取得するエンドポイント
     - **機能**: 証券コードから経営成績を取得します。

@@ -3,20 +3,21 @@ from typing import Any, Optional
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
 
-import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxFilePath
+
+from . import schema as sc
 
 router = APIRouter()
 
 
 @router.post(
     "/ix/file_path/",
-    response_model=sc.ix_file_path.IxFilePathPublic,
+    response_model=sc.IxFilePathPublic,
     include_in_schema=False,
 )
 def create_ix_file_path_item(
-    *, session: SessionDep, item_in: sc.ix_file_path.IxFilePathCreate
+    *, session: SessionDep, item_in: sc.IxFilePathCreate
 ) -> Any:
     """
     Create new item.

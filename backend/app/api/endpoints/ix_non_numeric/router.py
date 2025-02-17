@@ -4,20 +4,21 @@ from fastapi import APIRouter, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
-import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxNonNumeric
+
+from . import schema as sc
 
 router = APIRouter()
 
 
 @router.post(
     "/ix/non_numeric/",
-    response_model=sc.ix_non_numeric.IxNonNumericCreate,
+    response_model=sc.IxNonNumericCreate,
     include_in_schema=False,
 )
 def create_ix_non_numeric_item(
-    *, session: SessionDep, item_in: sc.ix_non_numeric.IxNonNumericCreate
+    *, session: SessionDep, item_in: sc.IxNonNumericCreate
 ) -> Any:
     """
     Create new item.
@@ -32,7 +33,7 @@ def create_ix_non_numeric_item(
 
 @router.post("/ix/non_numeric/list/", response_model=str, include_in_schema=False)
 def create_ix_non_numeric_items_exists(
-    *, session: SessionDep, items_in: sc.ix_non_numeric.IxNonNumericCreateList
+    *, session: SessionDep, items_in: sc.IxNonNumericCreateList
 ) -> Any:
     """
     Create new items.(Insert Select ... Not Exists)

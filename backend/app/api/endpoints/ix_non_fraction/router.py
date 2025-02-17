@@ -4,20 +4,21 @@ from fastapi import APIRouter, Query
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 
-import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxHeadTitle, IxNonFraction
+
+from . import schema as sc
 
 router = APIRouter()
 
 
 @router.post(
     "/ix/non_fraction/",
-    response_model=sc.ix_non_fraction.IxNonFractionCreate,
+    response_model=sc.IxNonFractionCreate,
     include_in_schema=False,
 )
 def create_ix_non_fraction_item(
-    *, session: SessionDep, item_in: sc.ix_non_fraction.IxNonFractionCreate
+    *, session: SessionDep, item_in: sc.IxNonFractionCreate
 ) -> Any:
     """
     Create new item.
@@ -33,7 +34,7 @@ def create_ix_non_fraction_item(
 
 @router.post("/ix/non_fraction/list/", response_model=str, include_in_schema=False)
 def create_ix_non_fraction_items_exists(
-    *, session: SessionDep, items_in: sc.ix_non_fraction.IxNonFractionCreateList
+    *, session: SessionDep, items_in: sc.IxNonFractionCreateList
 ) -> Any:
     """
     Create new items.(Insert Select ... Not Exists)

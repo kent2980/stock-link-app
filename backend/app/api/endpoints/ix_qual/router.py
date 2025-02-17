@@ -7,21 +7,22 @@ from sqlalchemy.exc import IntegrityError
 from sqlmodel import select
 from treelib import Node, Tree
 
-import app.schema as sc
 from app.api.deps import SessionDep
 from app.models import IxHeadTitle, IxQualitative
+
+from . import schema as sc
 
 router = APIRouter()
 
 
 @router.post(
     "/qualitative/",
-    response_model=sc.ix_qualitative.IxQualitativePublic,
+    response_model=sc.IxQualitativePublic,
     include_in_schema=False,
 )
 def create_ix_qualitative_item(
-    *, session: SessionDep, item_in: sc.ix_qualitative.IxQualitativeCreate
-) -> sc.ix_qualitative.IxQualitativePublic:
+    *, session: SessionDep, item_in: sc.IxQualitativeCreate
+) -> sc.IxQualitativePublic:
     """
     提携情報をIxQualitativeテーブルに登録する
 
@@ -29,7 +30,7 @@ def create_ix_qualitative_item(
         HTTPException: アイテムが既に存在する場合
 
     Returns:
-        sc.ix_qualitative.IxQualitativePublic: 登録したアイテム
+        sc.IxQualitativePublic: 登録したアイテム
     """
 
     statement = select(IxQualitative).where(IxQualitative.id == item_in.id)
@@ -48,12 +49,12 @@ def create_ix_qualitative_item(
 
 @router.post(
     "/qualitative/list/",
-    response_model=sc.ix_qualitative.IxQualitativePublics,
+    response_model=sc.IxQualitativePublics,
     include_in_schema=False,
 )
 def create_ix_qualitative_items_exists(
-    *, session: SessionDep, items_in: sc.ix_qualitative.IxQualitativeCreates
-) -> sc.ix_qualitative.IxQualitativePublics:
+    *, session: SessionDep, items_in: sc.IxQualitativeCreates
+) -> sc.IxQualitativePublics:
     """
     提携情報をIxQualitativeテーブルに登録する
 
@@ -61,7 +62,7 @@ def create_ix_qualitative_items_exists(
         HTTPException: アイテムが既に存在する場合
 
     Returns:
-        sc.ix_qualitative.IxQualitativePublics: 登録したアイテム
+        sc.IxQualitativePublics: 登録したアイテム
     """
 
     new_items = [IxQualitative.model_validate(item) for item in items_in.data]
@@ -82,17 +83,17 @@ def create_ix_qualitative_items_exists(
             except IntegrityError:
                 session.rollback()  # コミット失敗時にロールバック
 
-    return sc.ix_qualitative.IxQualitativePublics(count=len(new_items), data=new_items)
+    return sc.IxQualitativePublics(count=len(new_items), data=new_items)
 
 
 @router.post(
     "/qualitative/list/update/",
-    response_model=sc.ix_qualitative.IxQualitativePublics,
+    response_model=sc.IxQualitativePublics,
     include_in_schema=False,
 )
 def update_ix_qualitative_items(
-    *, session: SessionDep, items_in: sc.ix_qualitative.IxQualitativeCreates
-) -> sc.ix_qualitative.IxQualitativePublics:
+    *, session: SessionDep, items_in: sc.IxQualitativeCreates
+) -> sc.IxQualitativePublics:
     """
     提携情報をIxQualitativeテーブルに登録する
 
@@ -100,7 +101,7 @@ def update_ix_qualitative_items(
         HTTPException: アイテムが存在しない場合
 
     Returns:
-        sc.ix_qualitative.IxQualitativePublics: 登録したアイテム
+        sc.IxQualitativePublics: 登録したアイテム
     """
 
     try:
@@ -113,7 +114,7 @@ def update_ix_qualitative_items(
         if result is None:
             raise HTTPException(status_code=404, detail="Item not found")
     except IndexError:
-        return sc.ix_qualitative.IxQualitativePublics(count=0, data=[])
+        return sc.IxQualitativePublics(count=0, data=[])
 
     new_items = []
     for item in items_in.data:
@@ -129,7 +130,7 @@ def update_ix_qualitative_items(
 
     session.commit()
 
-    return sc.ix_qualitative.IxQualitativePublics(count=len(new_items), data=new_items)
+    return sc.IxQualitativePublics(count=len(new_items), data=new_items)
 
 
 @router.get("/qualitative/is/{head_item_key}/", response_model=bool)
@@ -144,12 +145,12 @@ def is_ix_qualitative_item_exists(*, session: SessionDep, head_item_key: str) ->
     return False
 
 
-@router.get("/qualitative/", response_model=sc.ix_qualitative.QualitativeInfoHeader)
+@router.get("/qualitative/", response_model=sc.QualitativeInfoHeader)
 def read_ix_qualitative_item(
     *,
     session: SessionDep,
     head_item_key: str = Query(..., min_length=36, max_length=36),
-) -> sc.ix_qualitative.QualitativeInfoHeader:
+) -> sc.QualitativeInfoHeader:
     """
     提携情報をIxQualitativeテーブルから取得する
 
@@ -157,7 +158,7 @@ def read_ix_qualitative_item(
         HTTPException: アイテムが存在しない場合
 
     Returns:
-        sc.ix_qualitative.IxQualitativePublic: 取得したアイテム
+        sc.IxQualitativePublic: 取得したアイテム
     """
 
     statement = (
@@ -183,7 +184,7 @@ def read_ix_qualitative_item(
 
     result = extract_tree_content(tree)
 
-    header = sc.ix_qualitative.QualitativeInfoHeader()
+    header = sc.QualitativeInfoHeader()
     header.qualitative_info.operating_result_info = result.operating_text
     header.qualitative_info.segment_info_key = result.segment_headers
     header.qualitative_info.segment_info = result.segment_info
