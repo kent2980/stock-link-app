@@ -21,7 +21,7 @@ def create_ix_non_fraction_item(
     return item
 
 
-def create_ix_non_fraction_items_exists(
+def create_ix_non_fraction_items(
     *, session: Session, items_in: sc.IxNonFractionCreateList
 ) -> str:
     """

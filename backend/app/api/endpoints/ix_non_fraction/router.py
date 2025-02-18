@@ -31,10 +31,10 @@ def create_ix_non_fraction_item(
 
 
 @router.post("/ix/non_fraction/list/", response_model=str, include_in_schema=False)
-def create_ix_non_fraction_items_exists(
+def create_ix_non_fraction_items(
     *, session: SessionDep, items_in: sc.IxNonFractionCreateList
 ) -> str:
 
-    msg = crud.create_ix_non_fraction_items_exists(session=session, items_in=items_in)
+    msg = crud.create_ix_non_fraction_items(session=session, items_in=items_in)
 
     return msg
