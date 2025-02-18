@@ -1,9 +1,7 @@
 import datetime
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
-import alembic
-
-from app.models import SQLModel
+from sqlmodel import Field, SQLModel
 
 
 class IxDocumentInfo(SQLModel):
@@ -82,6 +80,25 @@ class CompanySchema(SQLModel):
     fiscalQuarter: str
 
 
+class ContextItems(SQLModel):
+
+    data: Dict[str, Dict[str, List[str]]]
+
+
+class NameItem(SQLModel):
+
+    to_name: str
+    from_name: str
+    order: float
+    level: int
+    has_children: bool
+
+
+class NameItems(SQLModel):
+
+    data: Dict[str, List[NameItem]]
+
+
 class MetricSchema(SQLModel):
     key: str
     name: str
@@ -93,8 +110,8 @@ class MetricParentSchema(SQLModel):
     name: str
     order: float
     label: str
-    value: Optional[MetricSchema]
-    change: Optional[MetricSchema]
+    value: Optional[MetricSchema] = Field(default=None)
+    change: Optional[MetricSchema] = Field(default=None)
 
 
 class FinancialResponseSchema(SQLModel):

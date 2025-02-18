@@ -1,6 +1,6 @@
 from collections import defaultdict
 from itertools import product
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from fastapi import APIRouter, HTTPException, Query
 
@@ -74,12 +74,12 @@ def read_tree_items(
 
 @router.get(
     "/tree/contexts/{head_item_key}",
-    response_model=Dict,
+    response_model=sc.ContextItems,
     summary="コンテキストリストを取得",
 )
-def read_context_list(
+def read_context_dict(
     *, head_item_key: str, attr_value: str = Query(None), session: SessionDep
-) -> Dict:
+) -> sc.ContextItems:
     """
     #### コンテキストリストを取得するエンドポイント
     - **機能**: HeadItemKeyからコンテキストリストを取得します。
@@ -104,15 +104,17 @@ def read_context_list(
     for item in data.data:
         dict_data[item.attr_value][item.xlink_from].append(item.xlink_to.split("_")[-1])
 
-    return dict_data
+    return sc.ContextItems(data=dict_data)
 
 
 @router.get(
-    "/tree/names/{head_item_key}", response_model=Dict, summary="名前リストを取得"
+    "/tree/names/{head_item_key}",
+    response_model=sc.NameItems,
+    summary="名前リストを取得",
 )
 def read_names(
     *, head_item_key: str, attr_value: str = Query(None), session: SessionDep
-) -> Dict:
+) -> sc.NameItems:
     """
     #### 名前リストを取得するエンドポイント
     - **機能**: HeadItemKeyから名前リストを取得します。
@@ -137,15 +139,15 @@ def read_names(
     for item in data.data:
         dict_data[item.attr_value].append(
             {
-                "to": item.xlink_to,
-                "from": item.xlink_from,
+                "to_name": item.xlink_to,
+                "from_name": item.xlink_from,
                 "order": item.xlink_order,
                 "level": item.level,
                 "has_children": item.has_children,
             }
         )
 
-    return dict_data
+    return sc.NameItems(data=dict_data)
 
 
 @router.get(
@@ -237,26 +239,25 @@ def get_operating_results(
         session=session, head_item_key=HeadItemKey, attr_values=attr_values
     )
 
-    contexts = read_context_list(
+    # コンテキストリストを取得
+    contexts = read_context_dict(
         head_item_key=HeadItemKey, attr_value=attr_value, session=session
-    )[attr_value]
+    ).data[attr_value]
 
+    context_list = [list(context) for context in product(*contexts.values())]
+
+    # 名前リストを取得
     names = read_names(
         head_item_key=HeadItemKey, attr_value=attr_value, session=session
-    )[attr_value]
+    ).data[attr_value]
 
-    context_list = product(*contexts.values())
+    names_to_list = [name.to_name for name in names]
+    names_to_dict = {
+        name.to_name: {"from": name.from_name, "order": name.order} for name in names
+    }
+    from_list = list(set([name.from_name for name in names]))
 
-    context_list = [list(context) for context in context_list]
-
-    names_to_list = [name["to"] for name in names]
-
-    to_from_dict = {name["to"]: name["from"] for name in names}
-
-    to_order_dict = {name["to"]: name["order"] for name in names}
-
-    from_list = list(set(to_from_dict.values()))
-
+    # 非分数情報を取得
     items = crud.get_ix_non_fraction_records(
         session=session,
         head_item_key=HeadItemKey,
@@ -264,38 +265,44 @@ def get_operating_results(
         contexts=context_list,
     )
 
+    # 非分数情報が取得できなかった場合はエラーを返す
     if items is None:
         raise HTTPException(status_code=404, detail="Items not found")
 
+    # ラベルを取得
     parentLabels = get_label(
         head_item_key=HeadItemKey, names=from_list, session=session
     )
 
-    parentList = []
+    # 親リストを作成
+    parentList: List[sc.MetricParentSchema] = []
+    print(from_list)
     for from_item in from_list:
         try:
-            if to_from_dict[from_item].startswith(
+            if names_to_dict[from_item]["from"].startswith(
                 "tse-ed-t_Note"
             ):  # ここで取得する属性値を指定
                 continue
-            elif to_from_dict[from_item].endswith(
+            elif names_to_dict[from_item]["from"].endswith(
                 attr_type_dict[attr_type]["from_name"]
             ):  # ここで取得する属性値を指定
                 parentList.append(
-                    {
-                        "name": from_item,
-                        "order": to_order_dict[from_item],
-                        "label": parentLabels[from_item],
-                    }
+                    sc.MetricParentSchema(
+                        name=from_item,
+                        order=names_to_dict[from_item]["order"],
+                        label=parentLabels[from_item],
+                    )
                 )
         except KeyError:
             continue
-    parentList = sorted(parentList, key=lambda x: x["order"])
+
+    # 親リストをorderでソート
+    parentList = sorted(parentList, key=lambda x: x.order)
 
     for item in items:
         for parent in parentList:
             try:
-                if to_from_dict[item.name] == parent["name"]:
+                if names_to_dict[item.name]["from"] == parent.name:
                     item_dict = {
                         "key": item.item_key,
                         "name": item.name,
@@ -303,9 +310,9 @@ def get_operating_results(
                         "unit": item.unit_ref,
                     }
                     if item.name.startswith("tse-ed-t_ChangeIn"):
-                        parent["change"] = item_dict
+                        parent.change = item_dict
                     else:
-                        parent["value"] = item_dict
+                        parent.value = item_dict
             except KeyError:
                 continue
 
