@@ -1,5 +1,8 @@
 from typing import Any
 
+from fastapi import APIRouter, HTTPException, Query
+from sqlmodel import Session, select
+
 from app.api.deps import SessionDep
 from app.models import (
     IxFilePath,
@@ -9,8 +12,8 @@ from app.models import (
     IxSourceFile,
     ScLinkBaseRef,
 )
-from fastapi import APIRouter, HTTPException, Query
-from sqlmodel import Session, select
+
+from . import crud
 
 router = APIRouter()
 
@@ -29,24 +32,21 @@ def is_model_checking(*, session: SessionDep, head_item_key: str = Query(...)) -
     Raises:
     - HTTPException: テーブルにhead_item_keyが存在しない場合
     """
+    models = [
+        IxHeadTitle,
+        IxFilePath,
+        IxNonNumeric,
+        IxNonFraction,
+        IxSourceFile,
+        ScLinkBaseRef,
+    ]
 
-    is_exists(session, IxHeadTitle, head_item_key)
-    is_exists(session, IxFilePath, head_item_key)
-    is_exists(session, IxNonNumeric, head_item_key)
-    is_exists(session, IxNonFraction, head_item_key)
-    is_exists(session, IxSourceFile, head_item_key)
-    is_exists(session, ScLinkBaseRef, head_item_key)
-
+    for model in models:
+        if not crud.is_exists(
+            session=session, model=model, head_item_key=head_item_key
+        ):
+            raise HTTPException(
+                status_code=404,
+                detail=f"{model.__name__}に{head_item_key}が存在しません",
+            )
     return True
-
-
-def is_exists(session: Session, model: Any, head_item_key: str) -> bool:
-    """モデルにhead_item_keyが存在するか確認する"""
-    statement = select(model).where(model.head_item_key == head_item_key)
-    result = session.exec(statement)
-    item_exists = result.first()
-
-    if not item_exists:
-        raise HTTPException(
-            status_code=400, detail=f"{model.__name__}にhead_item_keyが存在しません"
-        )
