@@ -4,6 +4,7 @@ from sqlmodel import select
 from app.api.deps import SessionDep
 from app.models import StockWiki
 
+from . import crud
 from . import schema as sc
 
 router = APIRouter()
@@ -16,10 +17,7 @@ def create_stock_wiki_item(
     """
     Create new item.
     """
-    item = StockWiki.model_validate(item_in)
-    session.add(item)
-    session.commit()
-    session.refresh(item)
+    item = crud.create_stock_wiki_item(item_in=item_in, session=session)
 
     return item
 
@@ -29,8 +27,8 @@ def get_stock_wiki_item(*, code: str, session: SessionDep) -> sc.StockWikiPublic
     """
     Get item.
     """
-    statement = select(StockWiki).where(StockWiki.code == code)
-    item = session.exec(statement).first()
+    item = crud.get_stock_wiki_item(code=code, session=session)
+
     return item
 
 
@@ -39,6 +37,7 @@ def get_stock_wiki_items(*, session: SessionDep) -> sc.StockWikisPublicList:
     """
     Get all items.
     """
-    statement = select(StockWiki)
-    items = session.exec(statement).all()
-    return sc.StockWikisPublicList(count=len(items), data=items)
+
+    items = crud.get_stock_wiki_items(session=session)
+
+    return items
