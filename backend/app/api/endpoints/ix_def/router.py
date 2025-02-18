@@ -10,6 +10,7 @@ from sqlmodel import and_, select
 from app.api.deps import SessionDep
 from app.models import IxDefinitionArc, IxDefinitionLoc
 
+from . import crud
 from . import schema as sc
 
 router = APIRouter()
@@ -22,15 +23,12 @@ router = APIRouter()
 )
 def create_ix_def_loc_item(
     *, session: SessionDep, item_in: sc.IxDefinitionLocCreate
-) -> Any:
+) -> IxDefinitionArc:
     """
     Create new item.
     """
 
-    item = IxDefinitionLoc.model_validate(item_in)
-    session.add(item)
-    session.commit()
-    session.refresh(item)
+    item = crud.create_ix_def_loc_item(session=session, item_in=item_in)
 
     return item
 
@@ -42,105 +40,34 @@ def create_ix_def_loc_item(
 )
 def create_ix_def_arc_item(
     *, session: SessionDep, item_in: sc.IxDefinitionArcCreate
-) -> Any:
+) -> IxDefinitionArc:
     """
     Create new item.
     """
-    item = IxDefinitionArc.model_validate(item_in)
-    session.add(item)
-    session.commit()
-    session.refresh(item)
+    item = crud.create_ix_def_arc_item(session=session, item_in=item_in)
 
     return item
 
 
 @router.post("/link/def/loc/list/", response_model=str, include_in_schema=False)
-def create_ix_def_loc_items_exists(
+def create_ix_def_loc_items(
     *, session: SessionDep, items_in: sc.IxDefinitionLocCreateList
 ) -> Any:
     """
     Create new items.(Insert Select ... Not Exists)
     """
-    new_items = [IxDefinitionLoc.model_validate(item) for item in items_in.data]
+    msg = crud.create_ix_def_loc_items(session=session, items_in=items_in)
 
-    try:
-        session.bulk_save_objects(new_items)
-        session.commit()
-    except IntegrityError:
-        session.rollback()
-        # 一意制約違反が発生した場合、個別に追加を試みる
-        new_items = []
-        for item in items_in.data:
-            new_item = IxDefinitionLoc.model_validate(item)
-            session.add(new_item)
-            try:
-                session.commit()
-                session.refresh(new_item)
-                new_items.append(new_item)
-            except IntegrityError:
-                session.rollback()  # コミット失敗時にロールバック
-
-    return f"{len(new_items)} items created."
+    return msg
 
 
 @router.post("/link/def/arc/list/", response_model=str, include_in_schema=False)
-def create_ix_def_arc_items_exists(
+def create_ix_def_arc_items(
     *, session: SessionDep, items_in: sc.IxDefinitionArcCreateList
 ) -> Any:
     """
     Create new items.(Insert Select ... Not Exists)
     """
-    new_items = [IxDefinitionArc.model_validate(item) for item in items_in.data]
+    msg = crud.create_ix_def_arc_items(session=session, items_in=items_in)
 
-    try:
-        session.bulk_save_objects(new_items)
-        session.commit()
-    except IntegrityError:
-        session.rollback()
-        # 一意制約違反が発生した場合、個別に追加を試みる
-        new_items = []
-        for item in items_in.data:
-            new_item = IxDefinitionArc.model_validate(item)
-            session.add(new_item)
-            try:
-                session.commit()
-                session.refresh(new_item)
-                new_items.append(new_item)
-            except IntegrityError:
-                session.rollback()
-
-    return f"{len(new_items)} items created."
-
-
-@router.get("/link/def/loc/is/{source_file_id}/", response_model=bool)
-def get_ix_def_loc_item(*, session: SessionDep, source_file_id: str) -> Any:
-    """
-    Get item.
-    """
-    statement = select(IxDefinitionLoc).where(
-        IxDefinitionLoc.source_file_id == source_file_id
-    )
-    result = session.exec(statement)
-    item = result.first()
-
-    if item:
-        return True
-
-    return False
-
-
-@router.get("/link/def/arc/is/{source_file_id}/", response_model=bool)
-def get_ix_def_arc_item(*, session: SessionDep, source_file_id: str) -> Any:
-    """
-    Get item.
-    """
-    statement = select(IxDefinitionArc).where(
-        IxDefinitionArc.source_file_id == source_file_id
-    )
-    result = session.exec(statement)
-    item = result.first()
-
-    if item:
-        return True
-
-    return False
+    return msg
