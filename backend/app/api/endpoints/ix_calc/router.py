@@ -7,6 +7,7 @@ from sqlmodel import select
 from app.api.deps import SessionDep
 from app.models import IxCalculationArc, IxCalculationLoc
 
+from . import crud
 from . import schema as sc
 
 router = APIRouter()
@@ -19,14 +20,11 @@ router = APIRouter()
 )
 def create_ix_cal_loc_item(
     *, session: SessionDep, item_in: sc.IxCalculationLocCreate
-) -> Any:
+) -> IxCalculationLoc:
     """
     Create new item.
     """
-    item = IxCalculationLoc.model_validate(item_in)
-    session.add(item)
-    session.commit()
-    session.refresh(item)
+    item = crud.create_ix_cal_loc_item(session, item_in)
 
     return item
 
@@ -38,14 +36,11 @@ def create_ix_cal_loc_item(
 )
 def create_ix_cal_arc_item(
     *, session: SessionDep, item_in: sc.IxCalculationArcCreate
-) -> Any:
+) -> IxCalculationArc:
     """
     Create new item.
     """
-    item = IxCalculationArc.model_validate(item_in)
-    session.add(item)
-    session.commit()
-    session.refresh(item)
+    item = crud.create_ix_cal_arc_item(session, item_in)
 
     return item
 
@@ -57,26 +52,9 @@ def create_ix_cal_loc_items_exists(
     """
     Create new items.(Insert Select ... Not Exists)
     """
-    new_items = [IxCalculationLoc.model_validate(item) for item in items_in.data]
+    msg = crud.create_ix_cal_loc_items(session, items_in)
 
-    try:
-        session.bulk_save_objects(new_items)
-        session.commit()
-    except IntegrityError:
-        session.rollback()
-        # 一意制約違反が発生した場合、個別に追加を試みる
-        new_items = []
-        for item in items_in.data:
-            new_item = IxCalculationLoc.model_validate(item)
-            session.add(new_item)
-            try:
-                session.commit()
-                session.refresh(new_item)
-                new_items.append(new_item)
-            except IntegrityError:
-                session.rollback()  # コミット失敗時にロールバック
-
-    return f"{len(new_items)} items created."
+    return msg
 
 
 @router.post("/link/cal/arc/list/", response_model=str, include_in_schema=False)
@@ -86,26 +64,9 @@ def create_ix_cal_arc_items_exists(
     """
     Create new items.(Insert Select ... Not Exists)
     """
-    new_items = [IxCalculationArc.model_validate(item) for item in items_in.data]
+    msg = crud.create_ix_cal_arc_items(session, items_in)
 
-    try:
-        session.bulk_save_objects(new_items)
-        session.commit()
-    except IntegrityError:
-        session.rollback()
-        # 一意制約違反が発生した場合、個別に追加を試みる
-        new_items = []
-        for item in items_in.data:
-            new_item = IxCalculationArc.model_validate(item)
-            session.add(new_item)
-            try:
-                session.commit()
-                session.refresh(new_item)
-                new_items.append(new_item)
-            except IntegrityError:
-                session.rollback()
-
-    return f"{len(new_items)} items created."
+    return msg
 
 
 @router.get("/link/cal/loc/is/{source_file_id}/", response_model=bool)
