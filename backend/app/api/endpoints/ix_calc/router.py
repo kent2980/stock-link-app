@@ -46,7 +46,7 @@ def create_ix_cal_arc_item(
 
 
 @router.post("/link/cal/loc/list/", response_model=str, include_in_schema=False)
-def create_ix_cal_loc_items_exists(
+def create_ix_cal_loc_items(
     *, session: SessionDep, items_in: sc.IxCalculationLocCreateList
 ) -> Any:
     """
@@ -58,7 +58,7 @@ def create_ix_cal_loc_items_exists(
 
 
 @router.post("/link/cal/arc/list/", response_model=str, include_in_schema=False)
-def create_ix_cal_arc_items_exists(
+def create_ix_cal_arc_items(
     *, session: SessionDep, items_in: sc.IxCalculationArcCreateList
 ) -> Any:
     """
