@@ -1,25 +1,12 @@
 from collections import defaultdict
 from itertools import product
-from typing import Any, Dict, List
+from typing import Dict, List
 
 from fastapi import APIRouter, HTTPException, Query
-from sqlalchemy import func
-from sqlalchemy.orm import aliased
-from sqlmodel import and_, case, exists, literal, or_, select
 
 from app.api.deps import SessionDep
-from app.models import (
-    IxDefinitionArc,
-    IxDefinitionLoc,
-    IxHeadTitle,
-    IxLabelArc,
-    IxLabelLoc,
-    IxLabelValue,
-    IxNonFraction,
-    IxNonNumeric,
-    ScLinkBaseRef,
-)
 
+from . import crud
 from . import schema as sc
 
 router = APIRouter()
@@ -32,87 +19,16 @@ router = APIRouter()
 )
 def get_document_info(*, session: SessionDep, code: str) -> sc.IxDocumentInfoList:
     """
-    ## XBRL文書情報を取得するエンドポイント
+    #### XBRL文書情報を取得するエンドポイント
     - **機能**: 証券コードからXBRL文書情報を取得します。
     - **認証不要**
     - **レスポンス形式**: JSON
     - **param1**: code: str 必須項目
     """
 
-    statement = select(IxHeadTitle).where(IxHeadTitle.securities_code == code)
-    result = session.exec(statement)
-    items = result.all()
+    items = crud.get_ix_head_title_by_code(session=session, code=code)
 
     return sc.IxDocumentInfoList(data=items, count=len(items))
-
-
-@router.get(
-    "/tree/menus/{head_item_key}",
-    response_model=sc.MenuLabelList,
-    summary="attr_valueと日本語ラベルを取得",
-)
-def read_menu_labels(
-    *, head_item_key: str, xbrl_type: str, session: SessionDep
-) -> sc.MenuLabelList:
-    """
-    ## attr_valueと日本語ラベルを取得するエンドポイント
-    - **機能**: HeadItemKeyからattr_valueと日本語ラベルを取得します。
-    - **認証不要**
-    - **レスポンス形式**: JSON
-    - **param1**: head_item_key: str 必須項目
-    - **param2**: xbrl_type: str 必須項目
-    """
-
-    statement = (
-        select(IxDefinitionArc.attr_value, IxLabelValue.label)
-        .join(
-            ScLinkBaseRef,
-            IxDefinitionArc.head_item_key == ScLinkBaseRef.head_item_key,
-        )
-        .join(
-            IxDefinitionLoc,
-            and_(
-                IxDefinitionArc.source_file_id == IxDefinitionLoc.source_file_id,
-                IxDefinitionArc.xlink_from == IxDefinitionLoc.xlink_label,
-            ),
-        )
-        .join(
-            IxLabelLoc,
-            and_(
-                IxLabelLoc.source_file_id == ScLinkBaseRef.href_source_file_id,
-                IxLabelLoc.xlink_href == IxDefinitionLoc.xlink_href,
-            ),
-        )
-        .join(
-            IxLabelArc,
-            and_(
-                IxLabelArc.source_file_id == IxLabelLoc.source_file_id,
-                IxLabelArc.xlink_from == IxLabelLoc.xlink_label,
-            ),
-        )
-        .join(
-            IxLabelValue,
-            and_(
-                IxLabelValue.source_file_id == IxLabelArc.source_file_id,
-                IxLabelValue.xlink_label == IxLabelArc.xlink_to,
-            ),
-        )
-        .where(
-            IxDefinitionArc.head_item_key == head_item_key,
-            IxLabelValue.xlink_role == "http://www.xbrl.org/2003/role/label",
-            IxDefinitionArc.xlink_arcrole == "http://xbrl.org/int/dim/arcrole/all",
-            ScLinkBaseRef.xbrl_type == xbrl_type,
-        )
-        .order_by(IxDefinitionArc.id)
-    )
-
-    results = session.exec(statement)
-    items = results.all()
-
-    if items is None:
-        raise HTTPException(status_code=404, detail="Items not found")
-
-    return sc.MenuLabelList(data=items, count=len(items))
 
 
 @router.get(
@@ -130,7 +46,7 @@ def read_tree_items(
     session: SessionDep,
 ) -> sc.TreeItemsList:
     """
-    ## 表示リンクアイテムを取得するエンドポイント
+    #### 表示リンクアイテムを取得するエンドポイント
     - **機能**: HeadItemKeyから表示リンクのツリーアイテム一覧を取得します。
     - **認証不要**
     - **レスポンス形式**: JSON
@@ -141,184 +57,14 @@ def read_tree_items(
     - **param5**: xbrl_type: str 任意項目
     """
 
-    scl1 = aliased(ScLinkBaseRef)
-    scl2 = aliased(ScLinkBaseRef)
-    ida1 = aliased(IxDefinitionArc)
-    ida2 = aliased(IxDefinitionArc)
-    ida3 = aliased(IxDefinitionArc)
-    idl1 = aliased(IxDefinitionLoc)
-    idl2 = aliased(IxDefinitionLoc)
-    idl3 = aliased(IxDefinitionLoc)
-    idl4 = aliased(IxDefinitionLoc)
-
-    # 再帰的CTEの定義
-    tree_h = (
-        select(
-            ida1.id,
-            ida1.xlink_from,
-            ida1.xlink_to,
-            ida1.head_item_key,
-            ida1.attr_value,
-            ida1.xlink_arcrole,
-            ida1.source_file_id,
-            ida1.xlink_order,
-            idl1.xlink_href.label("from_href"),
-            idl2.xlink_href.label("to_href"),
-            literal(1).label("level"),  # ツリー深さの初期値
-        )
-        .join(
-            idl1,
-            and_(
-                ida1.head_item_key == idl1.head_item_key,
-                ida1.source_file_id == idl1.source_file_id,
-                ida1.xlink_from == idl1.xlink_label,
-                ida1.attr_value == idl1.attr_value,
-            ),
-        )
-        .join(
-            idl2,
-            and_(
-                ida1.head_item_key == idl2.head_item_key,
-                ida1.source_file_id == idl2.source_file_id,
-                ida1.xlink_to == idl2.xlink_label,
-                ida1.attr_value == idl2.attr_value,
-            ),
-        )
-        .join(
-            scl1,
-            and_(
-                ida1.head_item_key == scl1.head_item_key,
-                ida1.source_file_id == scl1.href_source_file_id,
-            ),
-        )
-        .where(
-            ida1.head_item_key == head_item_key,
-            ida1.xlink_from
-            == (
-                select(ida2.xlink_from)
-                .where(
-                    and_(
-                        ida2.head_item_key == head_item_key,
-                        ida2.xlink_arcrole == "http://xbrl.org/int/dim/arcrole/all",
-                        ida1.source_file_id == ida2.source_file_id,
-                        ida1.attr_value == ida2.attr_value,
-                    )
-                )
-                .scalar_subquery()
-            ),
-        )
+    items = crud.read_tree_items(
+        head_item_key=head_item_key,
+        attr_value=attr_value,
+        has_children=has_children,
+        xlink_arcrole=xlink_arcrole,
+        xbrl_type=xbrl_type,
+        session=session,
     )
-
-    if attr_value:
-        tree_h = tree_h.where(ida1.attr_value == attr_value)
-    if xbrl_type:
-        tree_h = tree_h.where(scl1.xbrl_type == xbrl_type)
-
-    tree_h = tree_h.cte(name="tree_h", recursive=True)  # 再帰CTEの定義
-
-    tree_h_alias = aliased(tree_h)
-
-    recursive = (
-        select(
-            ida3.id,
-            ida3.xlink_from,
-            ida3.xlink_to,
-            ida3.head_item_key,
-            ida3.attr_value,
-            ida3.xlink_arcrole,
-            ida3.source_file_id,
-            ida3.xlink_order,
-            idl3.xlink_href.label("from_href"),  # リンク先の更新
-            idl4.xlink_href.label("to_href"),  # リンク元の更新
-            (tree_h_alias.c.level + 1).label("level"),  # ツリー深さの更新
-        )
-        .join(
-            idl3,
-            and_(
-                ida3.head_item_key == idl3.head_item_key,
-                ida3.source_file_id == idl3.source_file_id,
-                ida3.xlink_from == idl3.xlink_label,
-                ida3.attr_value == idl3.attr_value,
-            ),
-        )
-        .join(
-            idl4,
-            and_(
-                ida3.head_item_key == idl4.head_item_key,
-                ida3.source_file_id == idl4.source_file_id,
-                ida3.xlink_to == idl4.xlink_label,
-                ida3.attr_value == idl4.attr_value,
-            ),
-        )
-        .join(
-            tree_h_alias,
-            and_(
-                idl3.head_item_key == tree_h_alias.c.head_item_key,
-                idl3.xlink_href == tree_h_alias.c.to_href,
-                idl3.attr_value == tree_h_alias.c.attr_value,
-            ),
-        )
-        .join(
-            scl2,
-            and_(
-                ida3.head_item_key == scl2.head_item_key,
-                ida3.source_file_id == scl2.href_source_file_id,
-            ),
-        )
-        .where(
-            ida3.head_item_key == head_item_key,
-        )
-    )
-
-    if attr_value:
-        recursive = recursive.where(ida3.attr_value == attr_value)
-    if xbrl_type:
-        recursive = recursive.where(scl2.xbrl_type == xbrl_type)
-
-    tree_h = tree_h.union_all(recursive)  # 再帰CTEの結合
-
-    # 最終的なクエリの構築
-    final_query = (
-        select(
-            tree_h.c.id,
-            tree_h.c.from_href.label("xlink_from"),  # リンク元の更新
-            tree_h.c.to_href.label("xlink_to"),  # リンク先の更新
-            tree_h.c.attr_value,
-            func.split_part(tree_h.c.xlink_arcrole, "/", 7).label(
-                "xlink_arcrole"
-            ),  # リンクアークロールの取得
-            tree_h.c.xlink_order,
-            tree_h.c.level,
-            case(  # 子要素の有無を判定
-                (
-                    exists().where(tree_h_alias.c.from_href == tree_h.c.to_href),
-                    True,
-                ),
-                else_=False,
-            ).label("has_children"),
-        )
-        .select_from(tree_h)
-        .order_by(tree_h.c.id)
-    )
-
-    if has_children is not None:  # 子要素の有無でフィルタリング
-        final_query = final_query.where(
-            case(
-                (
-                    exists().where(tree_h_alias.c.from_href == tree_h.c.to_href),
-                    True,  # 子要素がある場合
-                ),
-                else_=False,  # 子要素がない場合
-            ).label("has_children")
-            == has_children
-        )
-    if xlink_arcrole:
-        xlink_arcrole_str = f"http://xbrl.org/int/dim/arcrole/{xlink_arcrole}"
-        final_query = final_query.where(tree_h.c.xlink_arcrole == xlink_arcrole_str)
-
-    # クエリの実行
-    results = session.exec(final_query)
-    items = results.all()
 
     if items is None:
         raise HTTPException(status_code=404, detail="Items not found")
@@ -335,7 +81,7 @@ def read_context_list(
     *, head_item_key: str, attr_value: str = Query(None), session: SessionDep
 ) -> Dict:
     """
-    ## コンテキストリストを取得するエンドポイント
+    #### コンテキストリストを取得するエンドポイント
     - **機能**: HeadItemKeyからコンテキストリストを取得します。
     - **認証不要**
     - **レスポンス形式**: JSON
@@ -344,18 +90,18 @@ def read_context_list(
 
     arcrole = "dimension-domain"
 
-    data = read_tree_items(
+    data = crud.read_tree_items(
         head_item_key=head_item_key,
         xlink_arcrole=arcrole,
         session=session,
         attr_value=attr_value,
         has_children=False,
         xbrl_type="sm",
-    ).data
+    )
 
     dict_data = defaultdict(lambda: defaultdict(list))
 
-    for item in data:
+    for item in data.data:
         dict_data[item.attr_value][item.xlink_from].append(item.xlink_to.split("_")[-1])
 
     return dict_data
@@ -368,7 +114,7 @@ def read_names(
     *, head_item_key: str, attr_value: str = Query(None), session: SessionDep
 ) -> Dict:
     """
-    ## 名前リストを取得するエンドポイント
+    #### 名前リストを取得するエンドポイント
     - **機能**: HeadItemKeyから名前リストを取得します。
     - **認証不要**
     - **レスポンス形式**: JSON
@@ -377,18 +123,18 @@ def read_names(
 
     arcrole = "domain-member"
 
-    data = read_tree_items(
+    data = crud.read_tree_items(
         head_item_key=head_item_key,
         xlink_arcrole=arcrole,
         session=session,
         has_children=None,
         xbrl_type="sm",
         attr_value=attr_value,
-    ).data
+    )
 
     dict_data = defaultdict(list)
 
-    for item in data:
+    for item in data.data:
         dict_data[item.attr_value].append(
             {
                 "to": item.xlink_to,
@@ -409,16 +155,14 @@ def read_names(
 )
 def get_company(*, HeadItemKey: str, session: SessionDep) -> sc.CompanySchema:
     """
-    ## 企業情報を取得するエンドポイント
+    #### 企業情報を取得するエンドポイント
     - **機能**: HeadItemKeyから企業情報を取得します。
     - **認証不要**
     - **レスポンス形式**: JSON
     - **param1**: HeadItemKey: str 必須項目
     """
 
-    statement = select(IxHeadTitle).where(IxHeadTitle.item_key == HeadItemKey)
-    result = session.exec(statement)
-    item = result.first()
+    item = crud.get_ix_head_title_by_item_key(session=session, item_key=HeadItemKey)
 
     if item is None:
         raise HTTPException(status_code=404, detail="Item not found")
@@ -441,32 +185,9 @@ def get_label(
     session: SessionDep,
 ) -> Dict[str, str]:
 
-    statement = (
-        select(ScLinkBaseRef, IxLabelValue.label, IxLabelLoc.xlink_href)
-        .join(
-            IxLabelArc,
-            and_(
-                IxLabelValue.source_file_id == IxLabelArc.source_file_id,
-                IxLabelValue.xlink_label == IxLabelArc.xlink_to,
-            ),
-        )
-        .join(
-            IxLabelLoc,
-            and_(
-                IxLabelValue.source_file_id == IxLabelLoc.source_file_id,
-                IxLabelArc.xlink_from == IxLabelLoc.xlink_label,
-            ),
-        )
-        .where(
-            ScLinkBaseRef.head_item_key == head_item_key,
-            ScLinkBaseRef.xbrl_type == "sm",
-            IxLabelValue.source_file_id == ScLinkBaseRef.href_source_file_id,
-            IxLabelLoc.xlink_href.in_(names),
-            IxLabelValue.xlink_role == "http://www.xbrl.org/2003/role/label",
-        )
+    items = crud.get_label_by_names(
+        session=session, head_item_key=head_item_key, names=names
     )
-    result = session.exec(statement)
-    items = result.all()
 
     if items is None:
         raise HTTPException(status_code=404, detail="Items not found")
@@ -486,7 +207,7 @@ def get_operating_results(
     session: SessionDep,
 ) -> sc.FinancialResponseSchema:
     """
-    ## 経営成績を取得するエンドポイント
+    #### 経営成績を取得するエンドポイント
     - **機能**: HeadItemKeyから経営成績を取得します。
     - **認証不要**
     - **レスポンス形式**: JSON
@@ -510,13 +231,11 @@ def get_operating_results(
         },
     }
 
-    statement = select(IxDefinitionArc.attr_value).where(
-        IxDefinitionArc.head_item_key == HeadItemKey,
-        IxDefinitionArc.xlink_arcrole == "http://xbrl.org/int/dim/arcrole/all",
-        IxDefinitionArc.attr_value.in_(attr_type_dict[attr_type]["attr_value"]),
+    attr_values = attr_type_dict[attr_type]["attr_value"]  # ここで取得する属性値を指定
+
+    attr_value = crud.get_attr_value(  # attr_valueを取得
+        session=session, head_item_key=HeadItemKey, attr_values=attr_values
     )
-    result = session.exec(statement)
-    attr_value = result.first()
 
     contexts = read_context_list(
         head_item_key=HeadItemKey, attr_value=attr_value, session=session
@@ -538,29 +257,12 @@ def get_operating_results(
 
     from_list = list(set(to_from_dict.values()))
 
-    statement = select(IxNonFraction).where(
-        IxNonFraction.head_item_key == HeadItemKey,
-        IxNonFraction.name.in_(names_to_list),
-        func.array_to_string(IxNonFraction.context, ",").not_ilike("%Prior%"),
+    items = crud.get_ix_non_fraction_records(
+        session=session,
+        head_item_key=HeadItemKey,
+        names=names_to_list,
+        contexts=context_list,
     )
-
-    if context_list:
-        if type(context_list[0]) == str:
-            print("str")
-            statement = statement.where(
-                IxNonFraction.context.op("@>")(context_list),
-            )
-        elif type(context_list[0]) == list:
-            print("list")
-            or_conditions = [
-                IxNonFraction.context.op("@>")(context) for context in context_list
-            ]
-            statement = statement.where(or_(*or_conditions))
-
-    result = session.exec(statement)
-    items = result.all()
-
-    print(items)
 
     if items is None:
         raise HTTPException(status_code=404, detail="Items not found")
@@ -576,19 +278,18 @@ def get_operating_results(
                 "tse-ed-t_Note"
             ):  # ここで取得する属性値を指定
                 continue
-            # elif to_from_dict[from_item].endswith(
-            #     attr_type_dict[attr_type]["from_name"]
-            # ):  # ここで取得する属性値を指定
-            parentList.append(
-                {
-                    "name": from_item,
-                    "order": to_order_dict[from_item],
-                    "label": parentLabels[from_item],
-                }
-            )
+            elif to_from_dict[from_item].endswith(
+                attr_type_dict[attr_type]["from_name"]
+            ):  # ここで取得する属性値を指定
+                parentList.append(
+                    {
+                        "name": from_item,
+                        "order": to_order_dict[from_item],
+                        "label": parentLabels[from_item],
+                    }
+                )
         except KeyError:
             continue
-            print(HeadItemKey)
     parentList = sorted(parentList, key=lambda x: x["order"])
 
     for item in items:
@@ -610,8 +311,6 @@ def get_operating_results(
 
     company = get_company(HeadItemKey=HeadItemKey, session=session)
 
-    print(parentList)
-
     return sc.FinancialResponseSchema(company=company, metrics=parentList)
 
 
@@ -629,7 +328,7 @@ def get_operating_results_by_code(
     session: SessionDep,
 ) -> sc.FinancialResponseSchema:
     """
-    ## 証券コードから経営成績を取得するエンドポイント
+    #### 証券コードから経営成績を取得するエンドポイント
     - **機能**: 証券コードから経営成績を取得します。
     - **認証不要**
     - **レスポンス形式**: JSON
@@ -638,47 +337,7 @@ def get_operating_results_by_code(
     - **param3**: period: str 任意項目
     """
 
-    if year and period:
-        statement = (
-            select(IxHeadTitle)
-            .where(
-                IxHeadTitle.securities_code == code,
-                IxHeadTitle.fy_year_end.startswith(year),
-                IxHeadTitle.current_period == period,
-            )
-            .order_by(IxHeadTitle.report_type.desc(), IxHeadTitle.current_period.desc())
-        )
-    elif year:
-        statement = (
-            select(IxHeadTitle)
-            .where(
-                IxHeadTitle.securities_code == code,
-                IxHeadTitle.fy_year_end.startswith(year),
-                IxHeadTitle.current_period is not None,
-            )
-            .order_by(IxHeadTitle.report_type.desc(), IxHeadTitle.current_period.desc())
-        )
-    elif period:
-        statement = (
-            select(IxHeadTitle)
-            .where(
-                IxHeadTitle.securities_code == code,
-                IxHeadTitle.current_period == period,
-                IxHeadTitle.fy_year_end is not None,
-            )
-            .order_by(IxHeadTitle.report_type.desc(), IxHeadTitle.current_period.desc())
-        )
-    else:
-        statement = (
-            select(IxHeadTitle)
-            .where(
-                IxHeadTitle.securities_code == code,
-                IxHeadTitle.current_period is not None,
-            )
-            .order_by(IxHeadTitle.report_type.desc(), IxHeadTitle.current_period.desc())
-        )
-    result = session.exec(statement)
-    item = result.first()
+    item = crud.get_ix_head_title(session=session, code=code, year=year, period=period)
 
     if item is None:
         raise HTTPException(status_code=404, detail="Item not found")

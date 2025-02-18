@@ -1,14 +1,13 @@
 from typing import Any
 
+from app.api.deps import SessionDep
+from app.models import IxDefinitionArc, IxDefinitionLoc
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy import case, exists, literal
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import aliased
 from sqlalchemy.sql import func
 from sqlmodel import and_, select
-
-from app.api.deps import SessionDep
-from app.models import IxDefinitionArc, IxDefinitionLoc
 
 from . import schema as sc
 
@@ -85,7 +84,7 @@ def create_ix_def_loc_items_exists(
 
 @router.post("/link/def/arc/list/", response_model=str, include_in_schema=False)
 def create_ix_def_arc_items_exists(
-    *, session: SessionDep, items_in: sc.ix_def.IxDefinitionArcCreateList
+    *, session: SessionDep, items_in: sc.IxDefinitionArcCreateList
 ) -> Any:
     """
     Create new items.(Insert Select ... Not Exists)

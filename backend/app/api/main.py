@@ -1,5 +1,3 @@
-from fastapi import APIRouter
-
 from app.api.endpoints.ix_calc import router as ix_calc_router
 from app.api.endpoints.ix_check import router as ix_check_router
 from app.api.endpoints.ix_def import router as ix_def_router
@@ -14,8 +12,9 @@ from app.api.endpoints.ix_schema import router as ix_schema_router
 from app.api.endpoints.ix_source import router as ix_source_router
 from app.api.endpoints.ix_summary import router as ix_summary_router
 from app.api.endpoints.jpx_info import router as jpx_info_router
-from app.api.endpoints.manager import items, login, users, utils
+from app.api.endpoints.manager.router import items, login, users, utils
 from app.api.endpoints.stock_wiki import router as stock_wiki_router
+from fastapi import APIRouter
 
 api_router = APIRouter()
 
