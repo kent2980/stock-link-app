@@ -1,8 +1,5 @@
 from typing import Any, List, Optional
 
-from sqlalchemy.orm import aliased
-from sqlmodel import Session, and_, case, exists, func, literal, or_, select
-
 from app.models import (
     IxDefinitionArc,
     IxDefinitionLoc,
@@ -13,6 +10,8 @@ from app.models import (
     IxNonFraction,
     ScLinkBaseRef,
 )
+from sqlalchemy.orm import aliased
+from sqlmodel import Session, and_, case, exists, func, literal, or_, select
 
 from . import schema as sc
 

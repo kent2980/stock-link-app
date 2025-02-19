@@ -2,9 +2,8 @@ from collections import defaultdict
 from itertools import product
 from typing import Any, Dict, List
 
-from fastapi import APIRouter, HTTPException, Query
-
 from app.api.deps import SessionDep
+from fastapi import APIRouter, HTTPException, Query
 
 from . import crud
 from . import schema as sc
