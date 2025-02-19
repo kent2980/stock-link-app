@@ -1,6 +1,6 @@
 from collections import defaultdict
 from itertools import product
-from typing import Any, Dict, List
+from typing import Dict, List, Optional
 
 from app.api.deps import SessionDep
 from fastapi import APIRouter, HTTPException, Query
@@ -39,6 +39,7 @@ def read_tree_items(
     *,
     head_item_key: str,
     attr_value: str = Query(None),
+    level: Optional[int] = Query(None),
     has_children: bool = Query(None),
     xlink_arcrole: str = Query(None),
     xbrl_type: str = Query("sm"),
@@ -59,6 +60,7 @@ def read_tree_items(
     items = crud.read_tree_items(
         head_item_key=head_item_key,
         attr_value=attr_value,
+        level=level,
         has_children=has_children,
         xlink_arcrole=xlink_arcrole,
         xbrl_type=xbrl_type,
@@ -68,7 +70,7 @@ def read_tree_items(
     if items is None:
         raise HTTPException(status_code=404, detail="Items not found")
 
-    return sc.TreeItemsList(data=items, count=len(items))
+    return items
 
 
 @router.get(

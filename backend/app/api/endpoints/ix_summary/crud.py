@@ -182,6 +182,7 @@ def read_tree_items(
     *,
     head_item_key: str,
     attr_value: Optional[str],
+    level: Optional[int] = None,
     has_children: Optional[bool],
     xlink_arcrole: Optional[str],
     xbrl_type: str = "sm",
@@ -359,6 +360,8 @@ def read_tree_items(
         .order_by(tree_h.c.id)
     )
 
+    if level:
+        final_query = final_query.where(tree_h.c.level == level)
     if has_children is not None:  # 子要素の有無でフィルタリング
         final_query = final_query.where(
             case(

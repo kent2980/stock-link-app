@@ -9,5 +9,5 @@ npx tsc updatePostman.ts
 ## 実行
 
 ```
-node updatePostman.ts
+node updatePostman.js
 ```
