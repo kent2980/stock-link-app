@@ -1,5 +1,8 @@
 from typing import Any, List, Optional
 
+from sqlalchemy.orm import aliased
+from sqlmodel import Session, and_, case, exists, func, literal, or_, select
+
 from app.models import (
     IxDefinitionArc,
     IxDefinitionLoc,
@@ -10,8 +13,6 @@ from app.models import (
     IxNonFraction,
     ScLinkBaseRef,
 )
-from sqlalchemy.orm import aliased
-from sqlmodel import Session, and_, case, exists, func, literal, or_, select
 
 from . import schema as sc
 
@@ -181,10 +182,10 @@ def read_menu_labels(
 def read_tree_items(
     *,
     head_item_key: str,
-    attr_value: Optional[str],
+    attr_value: Optional[str] = None,
     level: Optional[int] = None,
-    has_children: Optional[bool],
-    xlink_arcrole: Optional[str],
+    has_children: Optional[bool] = None,
+    xlink_arcrole: Optional[str] = None,
     xbrl_type: str = "sm",
     session: Session,
 ) -> sc.TreeItemsList:
@@ -342,6 +343,7 @@ def read_tree_items(
             tree_h.c.id,
             tree_h.c.from_href.label("xlink_from"),  # リンク元の更新
             tree_h.c.to_href.label("xlink_to"),  # リンク先の更新
+            IxLabelValue.label.label("to_label"),
             tree_h.c.attr_value,
             func.split_part(tree_h.c.xlink_arcrole, "/", 7).label(
                 "xlink_arcrole"
@@ -357,6 +359,32 @@ def read_tree_items(
             ).label("has_children"),
         )
         .select_from(tree_h)
+        .join(
+            ScLinkBaseRef,
+            tree_h.c.head_item_key == ScLinkBaseRef.head_item_key,
+        )
+        .join(
+            IxLabelLoc,
+            and_(
+                ScLinkBaseRef.href_source_file_id == IxLabelLoc.source_file_id,
+                tree_h.c.to_href == IxLabelLoc.xlink_href,
+            ),
+        )
+        .join(
+            IxLabelArc,
+            and_(
+                IxLabelLoc.source_file_id == IxLabelArc.source_file_id,
+                IxLabelLoc.xlink_label == IxLabelArc.xlink_from,
+            ),
+        )
+        .join(
+            IxLabelValue,
+            and_(
+                IxLabelArc.source_file_id == IxLabelValue.source_file_id,
+                IxLabelArc.xlink_to == IxLabelValue.xlink_label,
+            ),
+        )
+        .where(IxLabelValue.xlink_role == "http://www.xbrl.org/2003/role/label")
         .order_by(tree_h.c.id)
     )
 
@@ -394,7 +422,11 @@ def get_label_by_names(session: Session, head_item_key: str, names: List[str]) -
     """
 
     statement = (
-        select(ScLinkBaseRef, IxLabelValue.label, IxLabelLoc.xlink_href)
+        select(
+            ScLinkBaseRef.head_item_key,
+            IxLabelValue.label,
+            IxLabelLoc.xlink_href.label("name"),
+        )
         .join(
             IxLabelArc,
             and_(
@@ -420,7 +452,7 @@ def get_label_by_names(session: Session, head_item_key: str, names: List[str]) -
     result = session.exec(statement)
     items = result.all()
 
-    return items
+    return sc.LabelItems(data=items)
 
 
 def get_ix_non_fraction_records(
@@ -453,7 +485,7 @@ def get_ix_non_fraction_records(
             or_conditions = [
                 IxNonFraction.context.op("@>")(context) for context in contexts
             ]
-            statement = statement.where(or_(*or_conditions))
+            statement = statement.where(and_(*or_conditions))
 
     result = session.exec(statement)
     items = result.all()

@@ -1,9 +1,10 @@
 from collections import defaultdict
 from itertools import product
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
+
+from fastapi import APIRouter, HTTPException, Query
 
 from app.api.deps import SessionDep
-from fastapi import APIRouter, HTTPException, Query
 
 from . import crud
 from . import schema as sc
@@ -68,7 +69,7 @@ def read_tree_items(
     )
 
     if items is None:
-        raise HTTPException(status_code=404, detail="Items not found")
+        raise HTTPException(status_code=404, detail="Items not founda")
 
     return items
 
@@ -168,7 +169,7 @@ def get_company(*, HeadItemKey: str, session: SessionDep) -> sc.CompanySchema:
     item = crud.get_ix_head_title_by_item_key(session=session, item_key=HeadItemKey)
 
     if item is None:
-        raise HTTPException(status_code=404, detail="Item not found")
+        raise HTTPException(status_code=404, detail="Item not founda")
 
     item_dict = {
         "code": item.securities_code,
@@ -186,16 +187,18 @@ def get_label(
     head_item_key: str,
     names: List[str],
     session: SessionDep,
-) -> Dict[str, str]:
+) -> sc.LabelItemsDict:
 
     items = crud.get_label_by_names(
         session=session, head_item_key=head_item_key, names=names
     )
 
     if items is None:
-        raise HTTPException(status_code=404, detail="Items not found")
+        raise HTTPException(status_code=404, detail="Items not founda")
 
-    return {item.xlink_href: item.label for item in items}
+    items_dict = {item.xlink_href: item.label for item in items}
+
+    return sc.LabelItemsDict(data=items_dict)
 
 
 @router.get(
@@ -268,7 +271,7 @@ def get_operating_results(
 
     # 非分数情報が取得できなかった場合はエラーを返す
     if items is None:
-        raise HTTPException(status_code=404, detail="Items not found")
+        raise HTTPException(status_code=404, detail="Items not founda")
 
     # ラベルを取得
     parentLabels = get_label(
@@ -291,7 +294,7 @@ def get_operating_results(
                     sc.MetricParentSchema(
                         name=from_item,
                         order=names_to_dict[from_item]["order"],
-                        label=parentLabels[from_item],
+                        label=parentLabels.data[from_item],
                     )
                 )
         except KeyError:
@@ -355,3 +358,75 @@ def get_operating_results_by_code(
     return get_operating_results(
         HeadItemKey=HeadItemKey, attr_type=attr_type, session=session
     )
+
+
+@router.get("/summary/ope/test/{head_item_key}", summary="テスト")
+def ope_test(
+    *,
+    session: SessionDep,
+    head_item_key: str,
+) -> Any:
+
+    head_item = crud.get_ix_head_title_by_item_key(
+        session=session, item_key=head_item_key
+    )
+
+    if head_item.current_period is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+    elif head_item.current_period == "FY":
+        attr_value = "BusinessResultsOperatingResults"
+    else:
+        attr_value = "BusinessResultsQuarterlyOperatingResults"
+
+    tree_items = crud.read_tree_items(
+        head_item_key=head_item_key,
+        attr_value=attr_value,
+        session=session,
+        xbrl_type="sm",
+    )
+
+    is_consolidated = any(
+        item.xlink_to == "tse-ed-t_ConsolidatedMember" for item in tree_items.data
+    )
+
+    if is_consolidated:
+        from_name = "tse-ed-t_ConsolidatedIncomeStatementsInformationAbstract"
+    else:
+        from_name = "tse-ed-t_IncomeStatementsInformationAbstract"
+
+    parent_items = [
+        item.xlink_to for item in tree_items.data if item.xlink_from == from_name
+    ]
+
+    child_items = [
+        item.xlink_to for item in tree_items.data if item.xlink_from in parent_items
+    ]
+
+    contexts = list(
+        read_context_dict(
+            head_item_key=head_item_key, attr_value=attr_value, session=session
+        )
+        .data[attr_value]
+        .values()
+    )
+
+    ix_non_fractions = crud.get_ix_non_fraction_records(
+        session=session,
+        head_item_key=head_item_key,
+        names=child_items,
+        contexts=contexts,
+    )
+
+    contexts = [
+        item.xlink_to
+        for item in tree_items.data
+        if item.xlink_arcrole == "dimension-domain"
+    ]
+
+    from_dict = defaultdict(list)
+    for item in tree_items.data:
+        if item.xlink_arcrole == "dimension-domain":
+            from_dict[item.xlink_from].append(item.xlink_to)
+    from_dict = list(from_dict.values())
+
+    return tree_items, contexts, from_dict

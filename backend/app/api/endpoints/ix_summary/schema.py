@@ -39,6 +39,7 @@ class TreeItem(SQLModel):
     id: int
     xlink_from: str
     xlink_to: str
+    to_label: str
     attr_value: str
     xlink_arcrole: str
     xlink_order: float
@@ -117,6 +118,22 @@ class MetricParentSchema(SQLModel):
 class FinancialResponseSchema(SQLModel):
     company: CompanySchema
     metrics: List[MetricParentSchema]
+
+
+class LabelItemsDict(SQLModel):
+
+    data: Dict[str, str]
+
+
+class LabelItem(SQLModel):
+
+    name: str
+    label: str
+
+
+class LabelItems(SQLModel):
+
+    data: List[LabelItem]
 
 
 # endregion
