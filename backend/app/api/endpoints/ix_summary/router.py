@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import APIRouter, HTTPException, Query
 
 from app.api.deps import SessionDep
@@ -38,8 +40,7 @@ def get_operating_results(
         "non_consolidated": "tse-ed-t_IncomeStatementsInformationAbstract",
     }
 
-    items_list = []
-    from_labels = None
+    items_list: List[sc.FinancialResponseSchema] = []
     for head_item_key in head_item_keys:
         try:
             items = utils.get_summary_items(
@@ -48,13 +49,14 @@ def get_operating_results(
                 attr_value_dict=attr_value_dict,
                 from_name_dict=from_name_dict,
             )
-            items_list.append(items[0])
-            from_labels = items[1]
+            items_list.append(items)
         except HeadItemNotFound as e:
             continue
         except NotDictKeyError as e:
             raise HTTPException(status_code=400, detail=str(e))
 
+    labels = utils.get_header_labels(items_list)
+
     return sc.FinancialResponseListSchema(
-        data=items_list, count=len(items_list), labels=from_labels
+        data=items_list, count=len(items_list), labels=labels
     )

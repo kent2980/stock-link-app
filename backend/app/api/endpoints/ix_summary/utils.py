@@ -49,12 +49,12 @@ def get_summary_items(
     head_item_key: str,
     attr_value_dict: Dict[str, str],
     from_name_dict: Dict[str, str],
-) -> tuple[sc.FinancialResponseSchema, List[str]]:
+) -> sc.FinancialResponseSchema:
     """
     #### この関数は、指定された条件に一致するiXBRLの非分数情報を取得する関数です。
     - **機能**:指定された条件に一致するiXBRLの非分数情報を取得します。
     - **引数**:session: Session, head_item_key: str, attr_value_dict: Dict[str, str], from_name_dict: Dict[str, str]
-    - **戻り値**:sc.FinancialResponseSchema, List[str]
+    - **戻り値**:List[sc.MetricParentSchema]
     """
 
     # キーのバリデーションを行い、エラーがあれば例外を発生させる
@@ -139,13 +139,28 @@ def get_summary_items(
                         unit=item.unit_ref,
                     )
 
-    company = get_company_schema(head_item)
-
-    from_labels = [
-        item.to_label for item in tree_items.data if item.xlink_from == from_name
-    ]
-
-    return (
-        sc.FinancialResponseSchema(company=company, metrics=schema_items),
-        from_labels,
+    period = sc.PeriodSchema(
+        accountingStandard=head_item.report_type,
+        fiscalYear=head_item.fy_year_end,
+        period=head_item.current_period,
     )
+
+    return sc.FinancialResponseSchema(period=period, metrics=schema_items)
+
+
+def get_header_labels(
+    items: List[sc.FinancialResponseSchema],
+) -> List[sc.LabelItemSchema]:
+    """
+    #### この関数は、ヘッダーラベルを取得する関数です。
+    - **機能**:ヘッダーラベルを取得します。
+    - **引数**:items: List[sc.FinancialResponseSchema]
+    - **戻り値**:List[sc.LabelItemSchema
+    """
+
+    labels = []
+    for item in items:
+        for metric in item.metrics:
+            labels.append(sc.LabelItemSchema(label=metric.label))
+
+    return labels

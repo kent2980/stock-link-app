@@ -76,9 +76,6 @@ class IxNonFractionsPublicList(SQLModel):
 class CompanySchema(SQLModel):
     code: str
     name: str
-    accountingStandard: str
-    fiscalYear: str
-    fiscalQuarter: str
 
 
 class ContextItems(SQLModel):
@@ -115,15 +112,27 @@ class MetricParentSchema(SQLModel):
     change: Optional[MetricSchema] = Field(default=None)
 
 
+class PeriodSchema(SQLModel):
+
+    accountingStandard: str
+    fiscalYear: str
+    period: str
+
+
+class LabelItemSchema(SQLModel):
+
+    label: str
+
+
 class FinancialResponseSchema(SQLModel):
-    company: CompanySchema
+    period: PeriodSchema
     metrics: List[MetricParentSchema]
 
 
 class FinancialResponseListSchema(SQLModel):
     count: int
+    labels: List[LabelItemSchema]
     data: List[FinancialResponseSchema]
-    labels: List[str]
 
 
 class LabelItemsDict(SQLModel):
