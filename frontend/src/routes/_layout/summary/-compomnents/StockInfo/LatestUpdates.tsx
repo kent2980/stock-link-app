@@ -33,7 +33,7 @@ const LatestUpdates: React.FC<LatestUpdatesProps> = ({ code }) => {
             <Tr>
               {data.labels.map((item, key) => (
                 <Th key={key} colSpan={2}>
-                  {item}
+                  {item.label}
                 </Th>
               ))}
             </Tr>

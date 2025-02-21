@@ -40,35 +40,17 @@ export const $Body_login_login_access_token = {
 	},
 } as const;
 
-export const $CompanySchema = {
-	properties: {
-		code: {
-	type: 'string',
-	isRequired: true,
-},
-		name: {
-	type: 'string',
-	isRequired: true,
-},
-		accountingStandard: {
-	type: 'string',
-	isRequired: true,
-},
-		fiscalYear: {
-	type: 'string',
-	isRequired: true,
-},
-		fiscalQuarter: {
-	type: 'string',
-	isRequired: true,
-},
-	},
-} as const;
-
 export const $FinancialResponseListSchema = {
 	properties: {
 		count: {
 	type: 'number',
+	isRequired: true,
+},
+		labels: {
+	type: 'array',
+	contains: {
+		type: 'LabelItemSchema',
+	},
 	isRequired: true,
 },
 		data: {
@@ -78,20 +60,13 @@ export const $FinancialResponseListSchema = {
 	},
 	isRequired: true,
 },
-		labels: {
-	type: 'array',
-	contains: {
-	type: 'string',
-},
-	isRequired: true,
-},
 	},
 } as const;
 
 export const $FinancialResponseSchema = {
 	properties: {
-		company: {
-	type: 'CompanySchema',
+		period: {
+	type: 'PeriodSchema',
 	isRequired: true,
 },
 		metrics: {
@@ -285,6 +260,15 @@ export const $JpxStockInfosPublicList = {
 	},
 } as const;
 
+export const $LabelItemSchema = {
+	properties: {
+		label: {
+	type: 'string',
+	isRequired: true,
+},
+	},
+} as const;
+
 export const $Message = {
 	properties: {
 		message: {
@@ -369,6 +353,23 @@ export const $NewPassword = {
 	isRequired: true,
 	maxLength: 40,
 	minLength: 8,
+},
+	},
+} as const;
+
+export const $PeriodSchema = {
+	properties: {
+		accountingStandard: {
+	type: 'string',
+	isRequired: true,
+},
+		fiscalYear: {
+	type: 'string',
+	isRequired: true,
+},
+		period: {
+	type: 'string',
+	isRequired: true,
 },
 	},
 } as const;

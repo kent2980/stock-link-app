@@ -129,6 +129,13 @@ class FinancialResponseSchema(SQLModel):
     metrics: List[MetricParentSchema]
 
 
+class ForecastFinancialResponseSchema(SQLModel):
+    period: PeriodSchema
+    metrics: List[MetricParentSchema]
+    upperMetrics: List[MetricParentSchema]
+    lowerMetrics: List[MetricParentSchema]
+
+
 class FinancialResponseListSchema(SQLModel):
     count: int
     labels: List[LabelItemSchema]

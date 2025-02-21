@@ -49,6 +49,7 @@ def get_summary_items(
     head_item_key: str,
     attr_value_dict: Dict[str, str],
     from_name_dict: Dict[str, str],
+    is_change: bool = True,
 ) -> sc.FinancialResponseSchema:
     """
     #### この関数は、指定された条件に一致するiXBRLの非分数情報を取得する関数です。
@@ -95,13 +96,18 @@ def get_summary_items(
     parent_items = [
         item.xlink_to for item in tree_items.data if item.xlink_from == from_name
     ]
-
-    child_items = {
-        item.xlink_to: item.xlink_from
-        for item in tree_items.data
-        if item.xlink_from in parent_items
-    }
-
+    if is_change:
+        child_items = {
+            item.xlink_to: item.xlink_from
+            for item in tree_items.data
+            if item.xlink_from in parent_items
+        }
+    else:
+        child_items = {
+            item.xlink_to: item.xlink_to
+            for item in tree_items.data
+            if item.xlink_from == from_name
+        }
     contexts = get_context_list(tree_items, attr_value)
 
     ix_non_fractions = crud.get_ix_non_fraction_records(
@@ -164,3 +170,63 @@ def get_header_labels(
             labels.append(sc.LabelItemSchema(label=metric.label))
 
     return labels
+
+
+def get_financial_response_list_schema(
+    head_item_keys: List[str],
+    session: Session,
+    attr_value_dict: Dict[str, str],
+    from_name_dict: Dict[str, str],
+    is_change: bool = True,
+) -> sc.FinancialResponseListSchema:
+    """
+    #### この関数は、FinancialResponseListSchemaを取得する関数です。
+    - **機能**:FinancialResponseListSchemaを取得します。
+    - **引数**:items: List[sc.FinancialResponseSchema]
+    - **戻り値**:sc.FinancialResponseListSchema
+    - **例外**:NotDictKeyError
+    """
+
+    items_list: List[sc.FinancialResponseSchema] = []
+    for head_item_key in head_item_keys:
+        try:
+            items = get_summary_items(
+                session=session,
+                head_item_key=head_item_key,
+                attr_value_dict=attr_value_dict,
+                from_name_dict=from_name_dict,
+                is_change=is_change,
+            )
+            items_list.append(items)
+        except HeadItemNotFound as e:
+            continue
+        except NotDictKeyError as e:
+            raise NotDictKeyError(str(e))
+
+    labels = get_header_labels(items_list)
+
+    return sc.FinancialResponseListSchema(
+        data=items_list, count=len(items_list), labels=labels
+    )
+
+
+def get_head_item_key(
+    session: Session,
+    code: str,
+) -> List[str]:
+    """
+    #### この関数は、指定された証券コードに一致するhead_item_keyを取得する関数です。
+    - **機能**:指定された証券コードに一致するhead_item_keyを取得します。
+    - **引数**:session: Session, code: str
+    - **戻り値**:List[str]
+    - **例外**:HeadItemNotFound
+    """
+
+    headItems = crud.get_ix_head_title_by_code(session=session, code=code)
+
+    if len(headItems) == 0:
+        raise HeadItemNotFound("Item not found")
+
+    head_item_keys = [item.item_key for item in headItems]
+
+    return head_item_keys

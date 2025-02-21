@@ -482,8 +482,9 @@ def get_ix_non_fraction_records(
                 IxNonFraction.context.op("@>")(contexts),
             )
         elif type(contexts[0]) == list:
+            print("list")
             or_conditions = [
-                IxNonFraction.context.op("@>")(context) for context in contexts
+                IxNonFraction.context.op("&&")(context) for context in contexts
             ]
             statement = statement.where(and_(*or_conditions))
 

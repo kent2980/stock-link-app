@@ -9,26 +9,16 @@ export type Body_login_login_access_token = {
 
 
 
-export type CompanySchema = {
-	code: string;
-	name: string;
-	accountingStandard: string;
-	fiscalYear: string;
-	fiscalQuarter: string;
-};
-
-
-
 export type FinancialResponseListSchema = {
 	count: number;
+	labels: Array<LabelItemSchema>;
 	data: Array<FinancialResponseSchema>;
-	labels: Array<string>;
 };
 
 
 
 export type FinancialResponseSchema = {
-	company: CompanySchema;
+	period: PeriodSchema;
 	metrics: Array<MetricParentSchema>;
 };
 
@@ -91,6 +81,12 @@ export type JpxStockInfosPublicList = {
 
 
 
+export type LabelItemSchema = {
+	label: string;
+};
+
+
+
 export type Message = {
 	message: string;
 };
@@ -119,6 +115,14 @@ export type MetricSchema = {
 export type NewPassword = {
 	token: string;
 	new_password: string;
+};
+
+
+
+export type PeriodSchema = {
+	accountingStandard: string;
+	fiscalYear: string;
+	period: string;
 };
 
 
