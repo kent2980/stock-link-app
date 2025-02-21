@@ -14,6 +14,7 @@ const WikiInfo: React.FC<WikiInfoProps> = ({ code }) => {
       return await WikiService.getStockWikiItem({ code: code });
     },
   });
+
   const get_url = (url: string | null) => {
     if (url) {
       return url;
@@ -21,22 +22,17 @@ const WikiInfo: React.FC<WikiInfoProps> = ({ code }) => {
       return undefined;
     }
   };
+
   return (
     <>
-      <VStack
-        bg="gray.900"
-        p={4}
-        borderRadius="md"
-        w="90vw"
-        spacing={2}
-        align="start"
-      >
+      <VStack bg="gray.900" spacing={2} align="start">
         <Text fontSize="md">企業情報</Text>
         <Text color="gray.300" fontSize="sm">
-          {data.description}
+          {data?.description}
         </Text>
         <Text fontSize="sm" color="gray.500" textAlign="left">
-          引用元: Wikipedia URL:<Link href={get_url(data.url)}>{data.url}</Link>
+          引用元: Wikipedia URL:
+          <Link href={get_url(data?.url)}>{data?.url}</Link>
         </Text>
       </VStack>
     </>

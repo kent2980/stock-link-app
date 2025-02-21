@@ -19,7 +19,7 @@ const LatestUpdates: React.FC<LatestUpdatesProps> = ({ code }) => {
   const { data } = useSuspenseQuery({
     queryKey: ["latestUpdates", code],
     queryFn: async () => {
-      return SummaryService.getOperatingResultsByCode({ code });
+      return SummaryService.getOperatingResults({ code });
     },
   });
   return (
@@ -31,22 +31,24 @@ const LatestUpdates: React.FC<LatestUpdatesProps> = ({ code }) => {
         <Table>
           <thead>
             <Tr>
-              {data.metrics.map((item, key) => (
+              {data.labels.map((item, key) => (
                 <Th key={key} colSpan={2}>
-                  {item.label}
+                  {item}
                 </Th>
               ))}
             </Tr>
           </thead>
           <Tbody>
-            <Tr>
-              {data.metrics.map((item) => (
-                <>
-                  <Td>{item.value?.value}</Td>
-                  <Td>{item.change?.value}%</Td>
-                </>
-              ))}
-            </Tr>
+            {data.data.map((item, key) => (
+              <Tr key={key}>
+                {item.metrics.map((metric) => (
+                  <>
+                    <Td>{metric.value?.value}</Td>
+                    <Td>{metric.change?.value}%</Td>
+                  </>
+                ))}
+              </Tr>
+            ))}
           </Tbody>
         </Table>
       </TableContainer>

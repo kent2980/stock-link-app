@@ -19,6 +19,14 @@ export type CompanySchema = {
 
 
 
+export type FinancialResponseListSchema = {
+	count: number;
+	data: Array<FinancialResponseSchema>;
+	labels: Array<string>;
+};
+
+
+
 export type FinancialResponseSchema = {
 	company: CompanySchema;
 	metrics: Array<MetricParentSchema>;
@@ -61,23 +69,6 @@ export type ItemUpdate = {
 
 
 
-export type IxDocumentInfo = {
-	item_key: string;
-	document_name: string;
-	reporting_date: string;
-	current_period: string | null;
-	report_type: string;
-};
-
-
-
-export type IxDocumentInfoList = {
-	data: Array<IxDocumentInfo>;
-	count: number;
-};
-
-
-
 export type JpxStockInfoPublic = {
 	input_date: string;
 	code: string;
@@ -100,26 +91,6 @@ export type JpxStockInfosPublicList = {
 
 
 
-/**
- * メニューラベルを表すクラス
- */
-export type MenuLabel = {
-	attr_value: string;
-	label: string;
-};
-
-
-
-/**
- * メニューラベルのリストを表すクラス
- */
-export type MenuLabelList = {
-	data: Array<MenuLabel>;
-	count: number;
-};
-
-
-
 export type Message = {
 	message: string;
 };
@@ -130,8 +101,8 @@ export type MetricParentSchema = {
 	name: string;
 	order: number;
 	label: string;
-	value: MetricSchema | null;
-	change: MetricSchema | null;
+	value?: MetricSchema | null;
+	change?: MetricSchema | null;
 };
 
 
@@ -189,32 +160,6 @@ export type StockWikisPublicList = {
 export type Token = {
 	access_token: string;
 	token_type?: string;
-};
-
-
-
-/**
- * ツリーアイテムを表すクラス
- */
-export type TreeItem = {
-	id: number;
-	xlink_from: string;
-	xlink_to: string;
-	attr_value: string;
-	xlink_arcrole: string;
-	xlink_order: number;
-	level: number;
-	has_children: boolean;
-};
-
-
-
-/**
- * ツリーアイテムのリストを表すクラス
- */
-export type TreeItemsList = {
-	count: number;
-	data: Array<TreeItem>;
 };
 
 

@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from sqlmodel import select
 
 from app.api.deps import SessionDep
@@ -28,6 +28,9 @@ def get_stock_wiki_item(*, code: str, session: SessionDep) -> sc.StockWikiPublic
     Get item.
     """
     item = crud.get_stock_wiki_item(code=code, session=session)
+
+    if item is None:
+        raise HTTPException(status_code=404, detail="Item not found")
 
     return item
 

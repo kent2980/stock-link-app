@@ -2,7 +2,7 @@ import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
 
-import type { IndustriesList,JpxStockInfoPublic,JpxStockInfosPublicList,CompanySchema,FinancialResponseSchema,IxDocumentInfoList,MenuLabelList,TreeItemsList,StockWikiCreate,StockWikiPublic,StockWikisPublicList,Body_login_login_access_token,Message,NewPassword,Token,UserPublic,UpdatePassword,UserCreate,UserRegister,UsersPublic,UserUpdate,UserUpdateMe,ItemPublic,ItemUpdate } from './models';
+import type { IndustriesList,JpxStockInfoPublic,JpxStockInfosPublicList,FinancialResponseListSchema,StockWikiCreate,StockWikiPublic,StockWikisPublicList,Body_login_login_access_token,Message,NewPassword,Token,UserPublic,UpdatePassword,UserCreate,UserRegister,UsersPublic,UserUpdate,UserUpdateMe,ItemPublic,ItemUpdate } from './models';
 
 export type TDataReadJpxStockInfoItem = {
                 code: string
@@ -158,282 +158,27 @@ industry17Code,
 
 }
 
-export type TDataGetDocumentInfo = {
-                code: string
-                
-            }
-export type TDataReadMenuLabels = {
-                headItemKey: string
-xbrlType: string
-                
-            }
-export type TDataReadTreeItems = {
-                attrValue?: string
-hasChildren?: boolean
-headItemKey: string
-xbrlType?: string
-xlinkArcrole?: string
-                
-            }
-export type TDataReadContextList = {
-                attrValue?: string
-headItemKey: string
-                
-            }
-export type TDataReadNames = {
-                attrValue?: string
-headItemKey: string
-                
-            }
-export type TDataGetCompany = {
-                headItemKey: string
-                
-            }
 export type TDataGetOperatingResults = {
-                headItemKey: string
-                
-            }
-export type TDataGetOperatingResultsByCode = {
                 code: string
-period?: string
-year?: string
                 
             }
 
 export class SummaryService {
 
 	/**
-	 * XBRL文書情報を取得
-	 * ## XBRL文書情報を取得するエンドポイント
- * - **機能**: 証券コードからXBRL文書情報を取得します。
- * - **認証不要**
- * - **レスポンス形式**: JSON
- * - **param1**: code: str 必須項目
-	 * @returns IxDocumentInfoList Successful Response
+	 * 経営成績情報を取得
+	 * @returns FinancialResponseListSchema Successful Response
 	 * @throws ApiError
 	 */
-	public static getDocumentInfo(data: TDataGetDocumentInfo): CancelablePromise<IxDocumentInfoList> {
+	public static getOperatingResults(data: TDataGetOperatingResults): CancelablePromise<FinancialResponseListSchema> {
 		const {
 code,
 } = data;
 		return __request(OpenAPI, {
 			method: 'GET',
-			url: '/api/v1/ix/summary/doc/info/{code}',
+			url: '/api/v1/ix/summary/items/operating_results/{code}',
 			path: {
 				code
-			},
-			errors: {
-				422: `Validation Error`,
-			},
-		});
-	}
-
-	/**
-	 * attr_valueと日本語ラベルを取得
-	 * ## attr_valueと日本語ラベルを取得するエンドポイント
- * - **機能**: HeadItemKeyからattr_valueと日本語ラベルを取得します。
- * - **認証不要**
- * - **レスポンス形式**: JSON
- * - **param1**: head_item_key: str 必須項目
- * - **param2**: xbrl_type: str 必須項目
-	 * @returns MenuLabelList Successful Response
-	 * @throws ApiError
-	 */
-	public static readMenuLabels(data: TDataReadMenuLabels): CancelablePromise<MenuLabelList> {
-		const {
-headItemKey,
-xbrlType,
-} = data;
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/api/v1/ix/summary/tree/menus/{head_item_key}',
-			path: {
-				head_item_key: headItemKey
-			},
-			query: {
-				xbrl_type: xbrlType
-			},
-			errors: {
-				422: `Validation Error`,
-			},
-		});
-	}
-
-	/**
-	 * 表示リンクアイテムを取得
-	 * ## 表示リンクアイテムを取得するエンドポイント
- * - **機能**: HeadItemKeyから表示リンクのツリーアイテム一覧を取得します。
- * - **認証不要**
- * - **レスポンス形式**: JSON
- * - **param1**: head_item_key: str 必須項目
- * - **param2**: attr_value: str 任意項目
- * - **param3**: has_children: bool 任意項目
- * - **param4**: xlink_arcrole: str 任意項目
- * - **param5**: xbrl_type: str 任意項目
-	 * @returns TreeItemsList Successful Response
-	 * @throws ApiError
-	 */
-	public static readTreeItems(data: TDataReadTreeItems): CancelablePromise<TreeItemsList> {
-		const {
-attrValue,
-hasChildren,
-headItemKey,
-xbrlType = 'sm',
-xlinkArcrole,
-} = data;
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/api/v1/ix/summary/tree/items/{head_item_key}',
-			path: {
-				head_item_key: headItemKey
-			},
-			query: {
-				attr_value: attrValue, has_children: hasChildren, xlink_arcrole: xlinkArcrole, xbrl_type: xbrlType
-			},
-			errors: {
-				422: `Validation Error`,
-			},
-		});
-	}
-
-	/**
-	 * コンテキストリストを取得
-	 * ## コンテキストリストを取得するエンドポイント
- * - **機能**: HeadItemKeyからコンテキストリストを取得します。
- * - **認証不要**
- * - **レスポンス形式**: JSON
- * - **param1**: head_item_key: str 必須項目
-	 * @returns unknown Successful Response
-	 * @throws ApiError
-	 */
-	public static readContextList(data: TDataReadContextList): CancelablePromise<Record<string, unknown>> {
-		const {
-attrValue,
-headItemKey,
-} = data;
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/api/v1/ix/summary/tree/contexts/{head_item_key}',
-			path: {
-				head_item_key: headItemKey
-			},
-			query: {
-				attr_value: attrValue
-			},
-			errors: {
-				422: `Validation Error`,
-			},
-		});
-	}
-
-	/**
-	 * 名前リストを取得
-	 * ## 名前リストを取得するエンドポイント
- * - **機能**: HeadItemKeyから名前リストを取得します。
- * - **認証不要**
- * - **レスポンス形式**: JSON
- * - **param1**: head_item_key: str 必須項目
-	 * @returns unknown Successful Response
-	 * @throws ApiError
-	 */
-	public static readNames(data: TDataReadNames): CancelablePromise<Record<string, unknown>> {
-		const {
-attrValue,
-headItemKey,
-} = data;
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/api/v1/ix/summary/tree/names/{head_item_key}',
-			path: {
-				head_item_key: headItemKey
-			},
-			query: {
-				attr_value: attrValue
-			},
-			errors: {
-				422: `Validation Error`,
-			},
-		});
-	}
-
-	/**
-	 * 企業情報を取得
-	 * ## 企業情報を取得するエンドポイント
- * - **機能**: HeadItemKeyから企業情報を取得します。
- * - **認証不要**
- * - **レスポンス形式**: JSON
- * - **param1**: HeadItemKey: str 必須項目
-	 * @returns CompanySchema Successful Response
-	 * @throws ApiError
-	 */
-	public static getCompany(data: TDataGetCompany): CancelablePromise<CompanySchema> {
-		const {
-headItemKey,
-} = data;
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/api/v1/ix/summary/Company/{HeadItemKey}',
-			path: {
-				HeadItemKey: headItemKey
-			},
-			errors: {
-				422: `Validation Error`,
-			},
-		});
-	}
-
-	/**
-	 * 経営成績を取得
-	 * ## 経営成績を取得するエンドポイント
- * - **機能**: HeadItemKeyから経営成績を取得します。
- * - **認証不要**
- * - **レスポンス形式**: JSON
- * - **param1**: HeadItemKey: str 必須項目
-	 * @returns FinancialResponseSchema Successful Response
-	 * @throws ApiError
-	 */
-	public static getOperatingResults(data: TDataGetOperatingResults): CancelablePromise<FinancialResponseSchema> {
-		const {
-headItemKey,
-} = data;
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/api/v1/ix/summary/summary/operatingResults/{HeadItemKey}',
-			path: {
-				HeadItemKey: headItemKey
-			},
-			errors: {
-				422: `Validation Error`,
-			},
-		});
-	}
-
-	/**
-	 * 証券コードから経営成績を取得
-	 * ## 証券コードから経営成績を取得するエンドポイント
- * - **機能**: 証券コードから経営成績を取得します。
- * - **認証不要**
- * - **レスポンス形式**: JSON
- * - **param1**: code: str 必須項目
- * - **param2**: year: str 任意項目
- * - **param3**: period: str 任意項目
-	 * @returns FinancialResponseSchema Successful Response
-	 * @throws ApiError
-	 */
-	public static getOperatingResultsByCode(data: TDataGetOperatingResultsByCode): CancelablePromise<FinancialResponseSchema> {
-		const {
-code,
-period,
-year,
-} = data;
-		return __request(OpenAPI, {
-			method: 'GET',
-			url: '/api/v1/ix/summary/operatingResults/{code}',
-			path: {
-				code
-			},
-			query: {
-				year, period
 			},
 			errors: {
 				422: `Validation Error`,

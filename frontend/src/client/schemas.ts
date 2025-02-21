@@ -65,6 +65,29 @@ export const $CompanySchema = {
 	},
 } as const;
 
+export const $FinancialResponseListSchema = {
+	properties: {
+		count: {
+	type: 'number',
+	isRequired: true,
+},
+		data: {
+	type: 'array',
+	contains: {
+		type: 'FinancialResponseSchema',
+	},
+	isRequired: true,
+},
+		labels: {
+	type: 'array',
+	contains: {
+	type: 'string',
+},
+	isRequired: true,
+},
+	},
+} as const;
+
 export const $FinancialResponseSchema = {
 	properties: {
 		company: {
@@ -171,53 +194,6 @@ export const $ItemUpdate = {
 	},
 } as const;
 
-export const $IxDocumentInfo = {
-	properties: {
-		item_key: {
-	type: 'string',
-	isRequired: true,
-},
-		document_name: {
-	type: 'string',
-	isRequired: true,
-},
-		reporting_date: {
-	type: 'string',
-	isRequired: true,
-	format: 'date',
-},
-		current_period: {
-	type: 'any-of',
-	contains: [{
-	type: 'string',
-}, {
-	type: 'null',
-}],
-	isRequired: true,
-},
-		report_type: {
-	type: 'string',
-	isRequired: true,
-},
-	},
-} as const;
-
-export const $IxDocumentInfoList = {
-	properties: {
-		data: {
-	type: 'array',
-	contains: {
-		type: 'IxDocumentInfo',
-	},
-	isRequired: true,
-},
-		count: {
-	type: 'number',
-	isRequired: true,
-},
-	},
-} as const;
-
 export const $JpxStockInfoPublic = {
 	properties: {
 		input_date: {
@@ -309,37 +285,6 @@ export const $JpxStockInfosPublicList = {
 	},
 } as const;
 
-export const $MenuLabel = {
-	description: `メニューラベルを表すクラス`,
-	properties: {
-		attr_value: {
-	type: 'string',
-	isRequired: true,
-},
-		label: {
-	type: 'string',
-	isRequired: true,
-},
-	},
-} as const;
-
-export const $MenuLabelList = {
-	description: `メニューラベルのリストを表すクラス`,
-	properties: {
-		data: {
-	type: 'array',
-	contains: {
-		type: 'MenuLabel',
-	},
-	isRequired: true,
-},
-		count: {
-	type: 'number',
-	isRequired: true,
-},
-	},
-} as const;
-
 export const $Message = {
 	properties: {
 		message: {
@@ -370,7 +315,6 @@ export const $MetricParentSchema = {
 }, {
 	type: 'null',
 }],
-	isRequired: true,
 },
 		change: {
 	type: 'any-of',
@@ -379,7 +323,6 @@ export const $MetricParentSchema = {
 }, {
 	type: 'null',
 }],
-	isRequired: true,
 },
 	},
 } as const;
@@ -523,61 +466,6 @@ export const $Token = {
 		token_type: {
 	type: 'string',
 	default: 'bearer',
-},
-	},
-} as const;
-
-export const $TreeItem = {
-	description: `ツリーアイテムを表すクラス`,
-	properties: {
-		id: {
-	type: 'number',
-	isRequired: true,
-},
-		xlink_from: {
-	type: 'string',
-	isRequired: true,
-},
-		xlink_to: {
-	type: 'string',
-	isRequired: true,
-},
-		attr_value: {
-	type: 'string',
-	isRequired: true,
-},
-		xlink_arcrole: {
-	type: 'string',
-	isRequired: true,
-},
-		xlink_order: {
-	type: 'number',
-	isRequired: true,
-},
-		level: {
-	type: 'number',
-	isRequired: true,
-},
-		has_children: {
-	type: 'boolean',
-	isRequired: true,
-},
-	},
-} as const;
-
-export const $TreeItemsList = {
-	description: `ツリーアイテムのリストを表すクラス`,
-	properties: {
-		count: {
-	type: 'number',
-	isRequired: true,
-},
-		data: {
-	type: 'array',
-	contains: {
-		type: 'TreeItem',
-	},
-	isRequired: true,
 },
 	},
 } as const;

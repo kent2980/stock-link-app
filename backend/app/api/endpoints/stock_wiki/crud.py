@@ -1,3 +1,5 @@
+from typing import Optional
+
 from sqlmodel import Session, select
 
 from app.models import StockWiki
@@ -19,7 +21,7 @@ def create_stock_wiki_item(
     return item
 
 
-def get_stock_wiki_item(*, code: str, session: Session) -> sc.StockWikiPublic:
+def get_stock_wiki_item(*, code: str, session: Session) -> Optional[StockWiki]:
     """
     Get item.
     """

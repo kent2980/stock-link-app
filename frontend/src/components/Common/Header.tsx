@@ -110,7 +110,7 @@ function DesignMapAccordion() {
     {
       title: "共通コンテンツ",
       path: "/summary/$code/layout/stockInfo",
-      params: { code: "1383" },
+      params: { code: "7605" },
     },
   ];
   const items = [

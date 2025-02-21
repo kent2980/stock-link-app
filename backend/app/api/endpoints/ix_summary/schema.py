@@ -120,6 +120,12 @@ class FinancialResponseSchema(SQLModel):
     metrics: List[MetricParentSchema]
 
 
+class FinancialResponseListSchema(SQLModel):
+    count: int
+    data: List[FinancialResponseSchema]
+    labels: List[str]
+
+
 class LabelItemsDict(SQLModel):
 
     data: Dict[str, str]
