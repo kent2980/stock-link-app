@@ -13,6 +13,7 @@ const WikiInfo: React.FC<WikiInfoProps> = ({ code }) => {
     queryFn: async () => {
       return await WikiService.getStockWikiItem({ code: code });
     },
+    retry: 0,
   });
 
   const get_url = (url: string | null) => {

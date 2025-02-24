@@ -39,16 +39,19 @@ const LatestUpdates: React.FC<LatestUpdatesProps> = ({ code }) => {
             </Tr>
           </thead>
           <Tbody>
-            {data.data.map((item, key) => (
-              <Tr key={key}>
-                {item.metrics.map((metric) => (
-                  <>
-                    <Td>{metric.value?.value}</Td>
-                    <Td>{metric.change?.value}%</Td>
-                  </>
-                ))}
-              </Tr>
-            ))}
+            {data.data.map(
+              (item, key) =>
+                item.metrics.is_active && (
+                  <Tr key={key}>
+                    {item.metrics.data?.map((metric) => (
+                      <>
+                        <Td>{metric.value?.value}</Td>
+                        <Td>{metric.change?.value}%</Td>
+                      </>
+                    ))}
+                  </Tr>
+                )
+            )}
           </Tbody>
         </Table>
       </TableContainer>

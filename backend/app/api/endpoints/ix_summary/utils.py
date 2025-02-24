@@ -3,7 +3,7 @@ from typing import Any, Dict, List
 
 from sqlmodel import Session
 
-from app.models import IxHeadTitle
+from app.models import IxHeadTitle, IxNonFraction
 
 from . import crud
 from . import schema as sc
@@ -42,6 +42,40 @@ def get_company_schema(item: IxHeadTitle) -> sc.CompanySchema:
     }
 
     return sc.CompanySchema(**item_dict)
+
+
+def create_metric_parent_schema(item) -> sc.MetricParentSchema:
+    return sc.MetricParentSchema(
+        name=item.xlink_to,
+        order=item.xlink_order,
+        label=item.to_label,
+    )
+
+
+def get_metric_schema_value_and_change(
+    items: List[IxNonFraction],
+    schema_items: list[sc.MetricParentSchema],
+    child_items: Dict[str, str],
+    metric_contexts: List[str],
+):
+    for item in items:
+        for schema_item in schema_items:
+            if schema_item.name == child_items[item.name]:
+                if bool(set(item.context) & set(metric_contexts)):
+                    if item.name.startswith("tse-ed-t_ChangeIn"):
+                        schema_item.change = sc.MetricSchema(
+                            key=item.item_key,
+                            name=item.name,
+                            value=item.numeric,
+                            unit=item.unit_ref,
+                        )
+                    else:
+                        schema_item.value = sc.MetricSchema(
+                            key=item.item_key,
+                            name=item.name,
+                            value=item.numeric,
+                            unit=item.unit_ref,
+                        )
 
 
 def get_summary_items(
@@ -117,33 +151,46 @@ def get_summary_items(
         contexts=contexts,
     )
 
-    schema_items: List[sc.MetricParentSchema] = []
+    schema_items: sc.MetricItems = sc.MetricItems(data=[])
+    upper_schema_items: sc.MetricItems = sc.MetricItems(data=[])
+    lower_schema_items: sc.MetricItems = sc.MetricItems(data=[])
     for item in tree_items.data:
         if item.xlink_from == from_name:
-            schema_items.append(
-                sc.MetricParentSchema(
-                    name=item.xlink_to,
-                    order=item.xlink_order,
-                    label=item.to_label,
-                )
-            )
+            schema_items.data.append(create_metric_parent_schema(item))
+            upper_schema_items.data.append(create_metric_parent_schema(item))
+            lower_schema_items.data.append(create_metric_parent_schema(item))
+
+    metric_contexts = ["ResultMember", "ForecastMember"]
+    upper_contexts = ["UpperMember"]
+    lower_contexts = ["LowerMember"]
+    contexts_list = [metric_contexts, upper_contexts, lower_contexts]
+    schema_items_dict = {
+        metric_contexts.__str__(): schema_items,
+        upper_contexts.__str__(): upper_schema_items,
+        lower_contexts.__str__(): lower_schema_items,
+    }
+
     for item in ix_non_fractions:
-        for schema_item in schema_items:
-            if schema_item.name == child_items[item.name]:
-                if item.name.startswith("tse-ed-t_ChangeIn"):
-                    schema_item.change = sc.MetricSchema(
-                        key=item.item_key,
-                        name=item.name,
-                        value=item.numeric,
-                        unit=item.unit_ref,
-                    )
-                else:
-                    schema_item.value = sc.MetricSchema(
-                        key=item.item_key,
-                        name=item.name,
-                        value=item.numeric,
-                        unit=item.unit_ref,
-                    )
+        for contexts in contexts_list:
+            if bool(set(item.context) & set(contexts)):
+                for schema_item in schema_items_dict[contexts.__str__()].data:
+                    if schema_item.name == child_items[item.name]:
+                        if item.name.startswith("tse-ed-t_ChangeIn"):
+                            schema_item.change = sc.MetricSchema(
+                                key=item.item_key,
+                                name=item.name,
+                                value=item.numeric,
+                                unit=item.unit_ref,
+                            )
+                        else:
+                            schema_item.value = sc.MetricSchema(
+                                key=item.item_key,
+                                name=item.name,
+                                value=item.numeric,
+                                unit=item.unit_ref,
+                            )
+                        if item.numeric is not None:
+                            schema_items_dict[contexts.__str__()].is_active = True
 
     period = sc.PeriodSchema(
         accountingStandard=head_item.report_type,
@@ -151,7 +198,12 @@ def get_summary_items(
         period=head_item.current_period,
     )
 
-    return sc.FinancialResponseSchema(period=period, metrics=schema_items)
+    return sc.FinancialResponseSchema(
+        period=period,
+        metrics=schema_items,
+        upperMetrics=upper_schema_items,
+        lowerMetrics=lower_schema_items,
+    )
 
 
 def get_header_labels(
@@ -166,7 +218,7 @@ def get_header_labels(
 
     labels = []
     for item in items:
-        for metric in item.metrics:
+        for metric in item.metrics.data:
             labels.append(sc.LabelItemSchema(label=metric.label))
 
     return labels

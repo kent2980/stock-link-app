@@ -70,10 +70,15 @@ export const $FinancialResponseSchema = {
 	isRequired: true,
 },
 		metrics: {
-	type: 'array',
-	contains: {
-		type: 'MetricParentSchema',
-	},
+	type: 'MetricItems',
+	isRequired: true,
+},
+		upperMetrics: {
+	type: 'MetricItems',
+	isRequired: true,
+},
+		lowerMetrics: {
+	type: 'MetricItems',
 	isRequired: true,
 },
 	},
@@ -274,6 +279,26 @@ export const $Message = {
 		message: {
 	type: 'string',
 	isRequired: true,
+},
+	},
+} as const;
+
+export const $MetricItems = {
+	properties: {
+		is_active: {
+	type: 'boolean',
+	default: false,
+},
+		data: {
+	type: 'any-of',
+	contains: [{
+	type: 'array',
+	contains: {
+		type: 'MetricParentSchema',
+	},
+}, {
+	type: 'null',
+}],
 },
 	},
 } as const;

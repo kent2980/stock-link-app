@@ -124,16 +124,16 @@ class LabelItemSchema(SQLModel):
     label: str
 
 
+class MetricItems(SQLModel):
+    is_active: bool = Field(default=False)
+    data: Optional[List[MetricParentSchema]] = Field(default=None)
+
+
 class FinancialResponseSchema(SQLModel):
     period: PeriodSchema
-    metrics: List[MetricParentSchema]
-
-
-class ForecastFinancialResponseSchema(SQLModel):
-    period: PeriodSchema
-    metrics: List[MetricParentSchema]
-    upperMetrics: List[MetricParentSchema]
-    lowerMetrics: List[MetricParentSchema]
+    metrics: MetricItems
+    upperMetrics: MetricItems
+    lowerMetrics: MetricItems
 
 
 class FinancialResponseListSchema(SQLModel):

@@ -162,6 +162,14 @@ export type TDataGetOperatingResults = {
                 code: string
                 
             }
+export type TDataGetOtherOperatingResults = {
+                code: string
+                
+            }
+export type TDataGetForecasts = {
+                code: string
+                
+            }
 
 export class SummaryService {
 
@@ -177,6 +185,48 @@ code,
 		return __request(OpenAPI, {
 			method: 'GET',
 			url: '/api/v1/ix/summary/items/operating_results/{code}',
+			path: {
+				code
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * その他の経営成績情報を取得
+	 * @returns FinancialResponseListSchema Successful Response
+	 * @throws ApiError
+	 */
+	public static getOtherOperatingResults(data: TDataGetOtherOperatingResults): CancelablePromise<FinancialResponseListSchema> {
+		const {
+code,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/ix/summary/items/other_operating_results/{code}',
+			path: {
+				code
+			},
+			errors: {
+				422: `Validation Error`,
+			},
+		});
+	}
+
+	/**
+	 * 予測情報を取得
+	 * @returns FinancialResponseListSchema Successful Response
+	 * @throws ApiError
+	 */
+	public static getForecasts(data: TDataGetForecasts): CancelablePromise<FinancialResponseListSchema> {
+		const {
+code,
+} = data;
+		return __request(OpenAPI, {
+			method: 'GET',
+			url: '/api/v1/ix/summary/items/forecasts/{code}',
 			path: {
 				code
 			},

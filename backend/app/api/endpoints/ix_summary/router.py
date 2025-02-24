@@ -3,7 +3,6 @@ from typing import List
 from fastapi import APIRouter, HTTPException, Query
 
 from app.api.deps import SessionDep
-from app.api.endpoints.ix_summary.schema import ForecastFinancialResponseSchema
 
 from . import crud
 from . import schema as sc
@@ -92,7 +91,7 @@ def get_forecasts(
     *,
     session: SessionDep,
     code: str,
-) -> sc.ForecastFinancialResponseSchema:
+) -> sc.FinancialResponseListSchema:
 
     attr_value_dict = {
         "FY": "Forecasts",

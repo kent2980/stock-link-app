@@ -19,7 +19,9 @@ export type FinancialResponseListSchema = {
 
 export type FinancialResponseSchema = {
 	period: PeriodSchema;
-	metrics: Array<MetricParentSchema>;
+	metrics: MetricItems;
+	upperMetrics: MetricItems;
+	lowerMetrics: MetricItems;
 };
 
 
@@ -89,6 +91,13 @@ export type LabelItemSchema = {
 
 export type Message = {
 	message: string;
+};
+
+
+
+export type MetricItems = {
+	is_active?: boolean;
+	data?: Array<MetricParentSchema> | null;
 };
 
 

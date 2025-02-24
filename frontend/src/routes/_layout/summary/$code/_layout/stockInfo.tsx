@@ -25,7 +25,6 @@ function StockInfo() {
               </VStack>
             }
           >
-            ß
             <WikiInfo code={code} />
           </Suspense>
         </WikiInfoErrorBound>
