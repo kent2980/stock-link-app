@@ -126,7 +126,7 @@ class LabelItemSchema(SQLModel):
 
 class MetricItems(SQLModel):
     is_active: bool = Field(default=False)
-    data: Optional[List[MetricParentSchema]] = Field(default=None)
+    data: Optional[List[MetricParentSchema]] = Field(default=[])
 
 
 class FinancialResponseSchema(SQLModel):

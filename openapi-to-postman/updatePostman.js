@@ -39,9 +39,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = require("axios");
 var fs = require("fs");
 var openapiToPostman = require("openapi-to-postmanv2");
-var util_1 = require("util");
-var readFileAsync = (0, util_1.promisify)(fs.readFile);
-var convertAsync = (0, util_1.promisify)(openapiToPostman.convert);
 // Postman APIキーとコレクションID、ワークスペースIDを設定
 var apiKey = "PMAK-67a9fea28e4dbb0001be6025-ce3f2ca5ba99421e91008b72a0cd45a4c2";
 var collectionId = "25361473-fa50396c-0934-4cd6-a8eb-92f7c99054b5";
@@ -51,61 +48,54 @@ var openApiFileUrl = "http://localhost:8000/api/v1/openapi.json";
 var openApiFilePath = "/Users/user/Vscode/XBRL_Parse_Project/stock-link-app/openapi-to-postman/doc/openapi.json";
 function updatePostman() {
     return __awaiter(this, void 0, void 0, function () {
-        var openApiData, conversionResult, reason, collectionData, url, headers, response, error_1;
+        var openApiData;
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    // OpenAPI JSONファイルをダウンロード
+            // OpenAPI JSONファイルをダウンロード
+            axios_1.default
+                .get(openApiFileUrl)
+                .then(function (response) {
+                fs.writeFileSync(openApiFilePath, JSON.stringify(response.data));
+            })
+                .catch(function (error) {
+                console.error("エラーが発生しました:", error);
+            });
+            try {
+                openApiData = fs.readFileSync(openApiFilePath, "utf8");
+                // OpenAPIをPostmanコレクションに変換
+                openapiToPostman.convert({ type: "string", data: openApiData }, {}, function (err, conversionResult) {
+                    if (err || !conversionResult.result) {
+                        var reason = conversionResult.reason || "不明なエラー";
+                        throw new Error("\u5909\u63DB\u306B\u5931\u6557\u3057\u307E\u3057\u305F: ".concat(reason));
+                    }
+                    var collectionData = conversionResult.output[0].data;
+                    // Postman APIエンドポイント
+                    var url = "https://api.getpostman.com/collections/" + collectionId;
+                    // ヘッダー情報
+                    var headers = {
+                        "Content-Type": "application/json",
+                        "X-API-Key": apiKey,
+                    };
+                    // PUTリクエストでコレクションを更新
                     axios_1.default
-                        .get(openApiFileUrl)
+                        .put(url, { collection: collectionData }, { headers: headers })
                         .then(function (response) {
-                        fs.writeFileSync(openApiFilePath, JSON.stringify(response.data));
+                        if (response.status === 200) {
+                            console.log("コレクションが正常に更新されました。");
+                        }
+                        else {
+                            console.error("\u30A8\u30E9\u30FC\u304C\u767A\u751F\u3057\u307E\u3057\u305F: ".concat(response.status));
+                            console.error(response.data);
+                        }
                     })
                         .catch(function (error) {
                         console.error("エラーが発生しました:", error);
                     });
-                    _a.label = 1;
-                case 1:
-                    if (!!fs.existsSync(openApiFilePath)) return [3 /*break*/, 3];
-                    return [4 /*yield*/, new Promise(function (resolve) { return setTimeout(resolve, 1000); })];
-                case 2:
-                    _a.sent();
-                    return [3 /*break*/, 1];
-                case 3:
-                    _a.trys.push([3, 7, , 8]);
-                    return [4 /*yield*/, readFileAsync(openApiFilePath, "utf8")];
-                case 4:
-                    openApiData = _a.sent();
-                    return [4 /*yield*/, convertAsync({ type: "string", data: openApiData }, {})];
-                case 5:
-                    conversionResult = _a.sent();
-                    if (!conversionResult.result) {
-                        reason = conversionResult.reason || "不明なエラー";
-                        throw new Error("\u5909\u63DB\u306B\u5931\u6557\u3057\u307E\u3057\u305F: ".concat(reason));
-                    }
-                    collectionData = conversionResult.output[0].data;
-                    url = "https://api.getpostman.com/collections/" + collectionId;
-                    headers = {
-                        "Content-Type": "application/json",
-                        "X-API-Key": apiKey,
-                    };
-                    return [4 /*yield*/, axios_1.default.put(url, { collection: collectionData }, { headers: headers })];
-                case 6:
-                    response = _a.sent();
-                    if (response.status === 200) {
-                        console.log("コレクションが正常に更新されました。");
-                    }
-                    else {
-                        console.error("\u30A8\u30E9\u30FC\u304C\u767A\u751F\u3057\u307E\u3057\u305F: ".concat(response.status));
-                        console.error(response.data);
-                    }
-                    return [3 /*break*/, 8];
-                case 7:
-                    error_1 = _a.sent();
-                    console.error("エラーが発生しました:", error_1);
-                    return [3 /*break*/, 8];
-                case 8: return [2 /*return*/];
+                });
             }
+            catch (error) {
+                console.error("エラーが発生しました:", error);
+            }
+            return [2 /*return*/];
         });
     });
 }

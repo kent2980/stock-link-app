@@ -3,7 +3,7 @@ from typing import Any, Dict, List
 
 from sqlmodel import Session
 
-from app.models import IxHeadTitle, IxNonFraction
+from app.models import IxNonFraction
 
 from . import crud
 from . import schema as sc
@@ -23,25 +23,6 @@ def get_context_list(items: sc.TreeItemsList, attr_value: str) -> List[List[str]
             if item.xlink_arcrole == "dimension-domain":
                 from_dict[item.xlink_from].append(item.xlink_to.split("_")[-1])
     return list(from_dict.values())
-
-
-def get_company_schema(item: IxHeadTitle) -> sc.CompanySchema:
-    """
-    #### この関数は、IxHeadTitleからCompanySchemaを取得する関数です。
-    - **機能**:IxHeadTitleからCompanySchemaを取得します。
-    - **引数**:item: IxHeadTitle
-    - **戻り値**:sc.CompanySchema
-    """
-
-    item_dict = {
-        "code": item.securities_code,
-        "name": item.company_name,
-        "accountingStandard": item.report_type,
-        "fiscalYear": item.fy_year_end,
-        "fiscalQuarter": item.current_period,
-    }
-
-    return sc.CompanySchema(**item_dict)
 
 
 def create_metric_parent_schema(item) -> sc.MetricParentSchema:
@@ -89,28 +70,41 @@ def get_summary_items(
     #### この関数は、指定された条件に一致するiXBRLの非分数情報を取得する関数です。
     - **機能**:指定された条件に一致するiXBRLの非分数情報を取得します。
     - **引数**:session: Session, head_item_key: str, attr_value_dict: Dict[str, str], from_name_dict: Dict[str, str]
-    - **戻り値**:List[sc.MetricParentSchema]
+    - **戻り値**:sc.FinancialResponseSchema
+    - **例外**:NotDictKeyError, HeadItem
     """
 
+    # region 引数のバリデーション
     # キーのバリデーションを行い、エラーがあれば例外を発生させる
-    if not list(attr_value_dict.keys()).__eq__(["FY", "QU"]):
+    if not list(attr_value_dict.keys()).__eq__(
+        ["FY", "QU"]
+    ):  # attr_value_dictのキーがFY, QUでない場合、例外を発生させる
         raise NotDictKeyError("not dict keys error. keys must be 'FY' or 'QU'.")
-    if not list(from_name_dict.keys()).__eq__(["consolidated", "non_consolidated"]):
+    if not list(from_name_dict.keys()).__eq__(
+        ["consolidated", "non_consolidated"]
+    ):  # from_name_dictのキーがconsolidated, non_consolidatedでない場合、例外を発生させる
         raise NotDictKeyError(
             "not dict keys error. keys must be 'consolidated' or 'non_consolidated'."
         )
+    # endregion
 
-    head_item = crud.get_ix_head_title_by_item_key(
+    # region head_itemの取得
+    head_item = crud.get_ix_head_title_by_item_key(  # head_itemを取得
         session=session, item_key=head_item_key
     )
 
-    if head_item.current_period is None:
+    # region attr_valueの設定
+    if head_item.current_period is None:  # head_itemが存在しない場合、例外を発生させる
         raise HeadItemNotFound("head item not found.")
-    elif head_item.current_period == "FY":
+    elif (
+        head_item.current_period == "FY"
+    ):  # head_itemのcurrent_periodがFYの場合、attr_valueをFYに設定
         attr_value = attr_value_dict["FY"]
-    else:
+    else:  # head_itemのcurrent_periodがQUの場合、attr_valueをQUに設定
         attr_value = attr_value_dict["QU"]
+    # endregion
 
+    # region tree_itemsの取得
     tree_items = crud.read_tree_items(
         head_item_key=head_item_key,
         attr_value=attr_value,
@@ -118,32 +112,41 @@ def get_summary_items(
         xbrl_type="sm",
     )
 
-    is_consolidated = any(
+    # region is_consolidatedの設定
+    is_consolidated = any(  # is_consolidatedを取得
         item.xlink_to == "tse-ed-t_ConsolidatedMember" for item in tree_items.data
     )
 
-    if is_consolidated:
+    if is_consolidated:  # is_consolidatedがTrueの場合、from_nameを"consolidated"に設定
         from_name = from_name_dict["consolidated"]
-    else:
+    else:  # is_consolidatedがFalseの場合、from_nameを"non_consolidated"に設定
         from_name = from_name_dict["non_consolidated"]
+    # endregion
 
+    # region parent_itemsの取得
     parent_items = [
         item.xlink_to for item in tree_items.data if item.xlink_from == from_name
     ]
-    if is_change:
+
+    # region child_itemsの取得
+    if is_change:  # is_changeがTrueの場合、child_itemsを取得
         child_items = {
             item.xlink_to: item.xlink_from
             for item in tree_items.data
             if item.xlink_from in parent_items
         }
-    else:
+    else:  # is_changeがFalseの場合、child_itemsを取得
         child_items = {
             item.xlink_to: item.xlink_to
             for item in tree_items.data
             if item.xlink_from == from_name
         }
+    # endregion
+
+    # contextの取得
     contexts = get_context_list(tree_items, attr_value)
 
+    # ix_non_fractionsの取得
     ix_non_fractions = crud.get_ix_non_fraction_records(
         session=session,
         head_item_key=head_item_key,
@@ -151,59 +154,69 @@ def get_summary_items(
         contexts=contexts,
     )
 
-    schema_items: sc.MetricItems = sc.MetricItems(data=[])
-    upper_schema_items: sc.MetricItems = sc.MetricItems(data=[])
-    lower_schema_items: sc.MetricItems = sc.MetricItems(data=[])
-    for item in tree_items.data:
-        if item.xlink_from == from_name:
+    schema_items: sc.MetricItems = sc.MetricItems()  # schema_itemsを初期化
+    upper_schema_items: sc.MetricItems = sc.MetricItems()  # upper_schema_itemsを初期化
+    lower_schema_items: sc.MetricItems = sc.MetricItems()  # lower_schema_itemsを初期化
+    for item in tree_items.data:  # tree_items.dataの要素を取得
+        if item.xlink_from == from_name:  # item.xlink_fromがfrom_nameと一致する場合
             schema_items.data.append(create_metric_parent_schema(item))
             upper_schema_items.data.append(create_metric_parent_schema(item))
             lower_schema_items.data.append(create_metric_parent_schema(item))
 
-    metric_contexts = ["ResultMember", "ForecastMember"]
-    upper_contexts = ["UpperMember"]
-    lower_contexts = ["LowerMember"]
-    contexts_list = [metric_contexts, upper_contexts, lower_contexts]
-    schema_items_dict = {
-        metric_contexts.__str__(): schema_items,
-        upper_contexts.__str__(): upper_schema_items,
-        lower_contexts.__str__(): lower_schema_items,
+    metrics_contexts = ["ResultMember", "ForecastMember"]  # metrics_contextsを設定
+    upper_contexts = ["UpperMember"]  # upper_contextsを設定
+    lower_contexts = ["LowerMember"]  # lower_contextsを設定
+    all_contexts = [metrics_contexts, upper_contexts, lower_contexts]
+    schema_items_dict = {  # schema_items_dictを設定
+        str(metrics_contexts): schema_items,
+        str(upper_contexts): upper_schema_items,
+        str(lower_contexts): lower_schema_items,
     }
 
-    for item in ix_non_fractions:
-        for contexts in contexts_list:
-            if bool(set(item.context) & set(contexts)):
-                for schema_item in schema_items_dict[contexts.__str__()].data:
-                    if schema_item.name == child_items[item.name]:
-                        if item.name.startswith("tse-ed-t_ChangeIn"):
+    for item in ix_non_fractions:  # ix_non_fractionsの要素を取得
+        for contexts in all_contexts:  # all_contextsの要素を取得
+            if bool(
+                set(item.context) & set(contexts)
+            ):  # item.contextとcontextsの積集合が空でない場合
+                for schema_item in schema_items_dict[
+                    str(contexts)
+                ].data:  # schema_items_dict[str(contexts)].dataの要素を取得
+                    if (
+                        schema_item.name == child_items[item.name]
+                    ):  # schema_item.nameがchild_items[item.name]と一致する場合
+                        if item.numeric is not None:  # item.numericがNoneでない場合
+                            schema_items_dict[str(contexts)].is_active = True
+                        if item.name.startswith(
+                            "tse-ed-t_ChangeIn"
+                        ):  # item.nameが"tse-ed-t_ChangeIn"で始まる場合
                             schema_item.change = sc.MetricSchema(
                                 key=item.item_key,
                                 name=item.name,
                                 value=item.numeric,
                                 unit=item.unit_ref,
                             )
-                        else:
+                        else:  # item.nameが"tse-ed-t_ChangeIn"で始まらない場合
                             schema_item.value = sc.MetricSchema(
                                 key=item.item_key,
                                 name=item.name,
                                 value=item.numeric,
                                 unit=item.unit_ref,
                             )
-                        if item.numeric is not None:
-                            schema_items_dict[contexts.__str__()].is_active = True
 
-    period = sc.PeriodSchema(
+    period = sc.PeriodSchema(  # periodを設定
         accountingStandard=head_item.report_type,
         fiscalYear=head_item.fy_year_end,
         period=head_item.current_period,
     )
 
-    return sc.FinancialResponseSchema(
+    res = sc.FinancialResponseSchema(  # FinancialResponseSchemaを返す
         period=period,
         metrics=schema_items,
         upperMetrics=upper_schema_items,
         lowerMetrics=lower_schema_items,
     )
+
+    return res
 
 
 def get_header_labels(
