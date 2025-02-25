@@ -154,54 +154,41 @@ def get_summary_items(
         contexts=contexts,
     )
 
-    schema_items: sc.MetricItems = sc.MetricItems()  # schema_itemsを初期化
-    upper_schema_items: sc.MetricItems = sc.MetricItems()  # upper_schema_itemsを初期化
-    lower_schema_items: sc.MetricItems = sc.MetricItems()  # lower_schema_itemsを初期化
-    for item in tree_items.data:  # tree_items.dataの要素を取得
-        if item.xlink_from == from_name:  # item.xlink_fromがfrom_nameと一致する場合
-            schema_items.data.append(create_metric_parent_schema(item))
-            upper_schema_items.data.append(create_metric_parent_schema(item))
-            lower_schema_items.data.append(create_metric_parent_schema(item))
-
-    metrics_contexts = ["ResultMember", "ForecastMember"]  # metrics_contextsを設定
-    upper_contexts = ["UpperMember"]  # upper_contextsを設定
-    lower_contexts = ["LowerMember"]  # lower_contextsを設定
-    all_contexts = [metrics_contexts, upper_contexts, lower_contexts]
-    schema_items_dict = {  # schema_items_dictを設定
-        str(metrics_contexts): schema_items,
-        str(upper_contexts): upper_schema_items,
-        str(lower_contexts): lower_schema_items,
+    schema_items = {
+        "metrics": sc.MetricItems(),
+        "upper": sc.MetricItems(),
+        "lower": sc.MetricItems(),
     }
 
-    for item in ix_non_fractions:  # ix_non_fractionsの要素を取得
-        for contexts in all_contexts:  # all_contextsの要素を取得
-            if bool(
-                set(item.context) & set(contexts)
-            ):  # item.contextとcontextsの積集合が空でない場合
-                for schema_item in schema_items_dict[
-                    str(contexts)
-                ].data:  # schema_items_dict[str(contexts)].dataの要素を取得
-                    if (
-                        schema_item.name == child_items[item.name]
-                    ):  # schema_item.nameがchild_items[item.name]と一致する場合
-                        if item.numeric is not None:  # item.numericがNoneでない場合
-                            schema_items_dict[str(contexts)].is_active = True
-                        if item.name.startswith(
-                            "tse-ed-t_ChangeIn"
-                        ):  # item.nameが"tse-ed-t_ChangeIn"で始まる場合
-                            schema_item.change = sc.MetricSchema(
-                                key=item.item_key,
-                                name=item.name,
-                                value=item.numeric,
-                                unit=item.unit_ref,
-                            )
-                        else:  # item.nameが"tse-ed-t_ChangeIn"で始まらない場合
-                            schema_item.value = sc.MetricSchema(
-                                key=item.item_key,
-                                name=item.name,
-                                value=item.numeric,
-                                unit=item.unit_ref,
-                            )
+    for item in tree_items.data:
+        if item.xlink_from == from_name:
+            schema_items["metrics"].data.append(create_metric_parent_schema(item))
+            schema_items["upper"].data.append(create_metric_parent_schema(item))
+            schema_items["lower"].data.append(create_metric_parent_schema(item))
+
+    context_mapping = {
+        "metrics": ["ResultMember", "ForecastMember"],
+        "upper": ["UpperMember"],
+        "lower": ["LowerMember"],
+    }
+
+    for item in ix_non_fractions:
+        for key, contexts in context_mapping.items():
+            if bool(set(item.context) & set(contexts)):
+                for schema_item in schema_items[key].data:
+                    if schema_item.name == child_items[item.name]:
+                        if item.numeric is not None:
+                            schema_items[key].is_active = True
+                        metric_schema = sc.MetricSchema(
+                            key=item.item_key,
+                            name=item.name,
+                            value=item.numeric,
+                            unit=item.unit_ref,
+                        )
+                        if item.name.startswith("tse-ed-t_ChangeIn"):
+                            schema_item.change = metric_schema
+                        else:
+                            schema_item.value = metric_schema
 
     period = sc.PeriodSchema(  # periodを設定
         accountingStandard=head_item.report_type,
@@ -211,9 +198,9 @@ def get_summary_items(
 
     res = sc.FinancialResponseSchema(  # FinancialResponseSchemaを返す
         period=period,
-        metrics=schema_items,
-        upperMetrics=upper_schema_items,
-        lowerMetrics=lower_schema_items,
+        metrics=schema_items["metrics"],
+        upperMetrics=schema_items["upper"],
+        lowerMetrics=schema_items["lower"],
     )
 
     return res
