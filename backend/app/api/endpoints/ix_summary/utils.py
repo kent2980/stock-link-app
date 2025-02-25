@@ -144,30 +144,33 @@ def get_summary_items(
     # endregion
 
     # contextの取得
-    contexts = get_context_list(tree_items, attr_value)
+    context_list = get_context_list(tree_items, attr_value)
 
     # ix_non_fractionsの取得
     ix_non_fractions = crud.get_ix_non_fraction_records(
         session=session,
         head_item_key=head_item_key,
         names=child_items.keys(),
-        contexts=contexts,
+        contexts=context_list,
     )
 
     schema_items = {
-        "metrics": sc.MetricItems(),
+        "result": sc.MetricItems(),
+        "forecast": sc.MetricItems(),
         "upper": sc.MetricItems(),
         "lower": sc.MetricItems(),
     }
 
     for item in tree_items.data:
         if item.xlink_from == from_name:
-            schema_items["metrics"].data.append(create_metric_parent_schema(item))
+            schema_items["result"].data.append(create_metric_parent_schema(item))
+            schema_items["forecast"].data.append(create_metric_parent_schema(item))
             schema_items["upper"].data.append(create_metric_parent_schema(item))
             schema_items["lower"].data.append(create_metric_parent_schema(item))
 
     context_mapping = {
-        "metrics": ["ResultMember", "ForecastMember"],
+        "result": ["ResultMember"],
+        "forecast": ["ForecastMember"],
         "upper": ["UpperMember"],
         "lower": ["LowerMember"],
     }
@@ -175,6 +178,7 @@ def get_summary_items(
     for item in ix_non_fractions:
         for key, contexts in context_mapping.items():
             if bool(set(item.context) & set(contexts)):
+                print(item.context, item.numeric)
                 for schema_item in schema_items[key].data:
                     if schema_item.name == child_items[item.name]:
                         if item.numeric is not None:
@@ -198,9 +202,10 @@ def get_summary_items(
 
     res = sc.FinancialResponseSchema(  # FinancialResponseSchemaを返す
         period=period,
-        metrics=schema_items["metrics"],
-        upperMetrics=schema_items["upper"],
-        lowerMetrics=schema_items["lower"],
+        result=schema_items["result"],
+        forecast=schema_items["forecast"],
+        upper=schema_items["upper"],
+        lower=schema_items["lower"],
     )
 
     return res
@@ -218,8 +223,8 @@ def get_header_labels(
 
     labels = []
     for item in items:
-        for metric in item.metrics.data:
-            labels.append(sc.LabelItemSchema(label=metric.label))
+        for result in item.result.data:
+            labels.append(sc.LabelItemSchema(label=result.label))
 
     return labels
 

@@ -131,9 +131,10 @@ class MetricItems(SQLModel):
 
 class FinancialResponseSchema(SQLModel):
     period: PeriodSchema
-    metrics: MetricItems
-    upperMetrics: MetricItems
-    lowerMetrics: MetricItems
+    result: MetricItems
+    forecast: MetricItems
+    upper: MetricItems
+    lower: MetricItems
 
 
 class FinancialResponseListSchema(SQLModel):
