@@ -25,7 +25,7 @@ class TreeItemsList(SQLModel):
     data: List[TreeItem]
 
 
-class MetricSchema(SQLModel):
+class FinValueBase(SQLModel):
     """メトリック情報を表すクラス"""
 
     name: str
@@ -33,17 +33,17 @@ class MetricSchema(SQLModel):
     unit: Optional[str]
 
 
-class MetricParentSchema(SQLModel):
+class FinValueAbstractBase(SQLModel):
     """メトリック親情報を表すクラス"""
 
     name: str
     order: float
     label: str
-    value: Optional[MetricSchema] = Field(default=None)
-    change: Optional[MetricSchema] = Field(default=None)
+    value: Optional[FinValueBase] = Field(default=None)
+    change: Optional[FinValueBase] = Field(default=None)
 
 
-class PeriodSchema(SQLModel):
+class PeriodSchemaBase(SQLModel):
     """期間情報を表すクラス"""
 
     accountingStandard: str
@@ -51,30 +51,30 @@ class PeriodSchema(SQLModel):
     period: str
 
 
-class MetricItems(SQLModel):
+class FinItemsBase(SQLModel):
     """メトリック情報のリストを表すクラス"""
 
     is_active: bool = Field(default=False)
-    data: Optional[List[MetricParentSchema]] = Field(default=[])
+    data: Optional[List[FinValueAbstractBase]] = Field(default=[])
 
 
-class FinancialResponseSchema(SQLModel):
+class FinStructBase(SQLModel):
     """ファイナンシャルレスポンス情報を表すクラス"""
 
-    period: PeriodSchema
-    result: MetricItems
-    forecast: MetricItems
-    upper: MetricItems
-    lower: MetricItems
+    period: PeriodSchemaBase
+    result: FinItemsBase
+    forecast: FinItemsBase
+    upper: FinItemsBase
+    lower: FinItemsBase
 
 
-class LabelItemSchema(SQLModel):
+class LabelBase(SQLModel):
 
     label: str
 
 
-class FinancialResponseListSchema(SQLModel):
+class FinResponseBase(SQLModel):
 
     count: int
-    labels: List[LabelItemSchema]
-    data: List[FinancialResponseSchema]
+    labels: List[LabelBase]
+    data: List[FinStructBase]

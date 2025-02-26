@@ -15,13 +15,13 @@ router = APIRouter()
 @router.get(
     "/operating_results/income/{code}",
     summary="経営成績情報を取得",
-    response_model=sc.FinancialResponseListSchema,
+    response_model=sc.FinResponseBase,
 )
 def get_operating_results(
     *,
     session: SessionDep,
     code: str,
-) -> sc.FinancialResponseListSchema:
+) -> sc.FinResponseBase:
 
     attr_value_dict = {  # この辞書は、attr_valueとfrom_nameの対応を表しています。
         "FY": "BusinessResultsOperatingResults",
@@ -55,7 +55,7 @@ def get_other_operating_results(
     *,
     session: SessionDep,
     code: str,
-) -> sc.FinancialResponseListSchema:
+) -> sc.FinResponseBase:
 
     attr_value_dict = {
         "FY": "BusinessResultsOperatingResults",
@@ -89,7 +89,7 @@ def get_forecasts(
     *,
     session: SessionDep,
     code: str,
-) -> sc.FinancialResponseListSchema:
+) -> sc.FinResponseBase:
 
     attr_value_dict = {
         "FY": "Forecasts",
@@ -121,13 +121,13 @@ def get_forecasts(
 @router.get(
     "/financial_position/{code}",
     summary="財政状態情報を取得",
-    response_model=sc.FinancialResponseListSchema,
+    response_model=sc.FinResponseBase,
 )
 def get_financial_position(
     *,
     session: SessionDep,
     code: str,
-) -> sc.FinancialResponseListSchema:
+) -> sc.FinResponseBase:
 
     attr_value_dict = {
         "FY": "BusinessResultsFinancialPositions",
@@ -159,13 +159,13 @@ def get_financial_position(
 @router.get(
     "/cash_flows/{code}",
     summary="キャッシュフロー情報を取得",
-    response_model=sc.FinancialResponseListSchema,
+    response_model=sc.FinResponseBase,
 )
 def get_cash_flows(
     *,
     session: SessionDep,
     code: str,
-) -> sc.FinancialResponseListSchema:
+) -> sc.FinResponseBase:
 
     attr_value_dict = {
         "FY": "BusinessResultsCashFlows",
@@ -197,13 +197,13 @@ def get_cash_flows(
 @router.get(
     "/dividends/{code}",
     summary="配当情報を取得",
-    response_model=sc.FinancialResponseListSchema,
+    response_model=sc.FinResponseBase,
 )
 def get_dividends(
     *,
     session: SessionDep,
     code: str,
-) -> sc.FinancialResponseListSchema:
+) -> sc.FinResponseBase:
 
     attr_value_dict = {
         "FY": "Dividends",

@@ -25,8 +25,8 @@ def get_context_list(items: sc.TreeItemsList, attr_value: str) -> List[List[str]
     return list(from_dict.values())
 
 
-def create_metric_parent_schema(item) -> sc.MetricParentSchema:
-    return sc.MetricParentSchema(
+def create_metric_parent_schema(item) -> sc.FinValueAbstractBase:
+    return sc.FinValueAbstractBase(
         name=item.xlink_to,
         order=item.xlink_order,
         label=item.to_label,
@@ -35,7 +35,7 @@ def create_metric_parent_schema(item) -> sc.MetricParentSchema:
 
 def get_metric_schema_value_and_change(
     items: List[IxNonFraction],
-    schema_items: list[sc.MetricParentSchema],
+    schema_items: list[sc.FinValueAbstractBase],
     child_items: Dict[str, str],
     metric_contexts: List[str],
 ):
@@ -44,14 +44,14 @@ def get_metric_schema_value_and_change(
             if schema_item.name == child_items[item.name]:
                 if bool(set(item.context) & set(metric_contexts)):
                     if item.name.startswith("tse-ed-t_ChangeIn"):
-                        schema_item.change = sc.MetricSchema(
+                        schema_item.change = sc.FinValueBase(
                             key=item.item_key,
                             name=item.name,
                             value=item.numeric,
                             unit=item.unit_ref,
                         )
                     else:
-                        schema_item.value = sc.MetricSchema(
+                        schema_item.value = sc.FinValueBase(
                             key=item.item_key,
                             name=item.name,
                             value=item.numeric,
@@ -65,12 +65,12 @@ def get_summary_items(
     attr_value_dict: Dict[str, str],
     from_name_dict: Dict[str, str],
     is_change: bool = True,
-) -> sc.FinancialResponseSchema:
+) -> sc.FinStructBase:
     """
     #### この関数は、指定された条件に一致するiXBRLの非分数情報を取得する関数です。
     - **機能**:指定された条件に一致するiXBRLの非分数情報を取得します。
     - **引数**:session: Session, head_item_key: str, attr_value_dict: Dict[str, str], from_name_dict: Dict[str, str]
-    - **戻り値**:sc.FinancialResponseSchema
+    - **戻り値**:sc.FinStructBase
     - **例外**:NotDictKeyError, HeadItem
     """
 
@@ -155,10 +155,10 @@ def get_summary_items(
     )
 
     schema_items = {
-        "result": sc.MetricItems(),
-        "forecast": sc.MetricItems(),
-        "upper": sc.MetricItems(),
-        "lower": sc.MetricItems(),
+        "result": sc.FinItemsBase(),
+        "forecast": sc.FinItemsBase(),
+        "upper": sc.FinItemsBase(),
+        "lower": sc.FinItemsBase(),
     }
 
     for item in tree_items.data:
@@ -183,7 +183,7 @@ def get_summary_items(
                     if schema_item.name == child_items[item.name]:
                         if item.numeric is not None:
                             schema_items[key].is_active = True
-                        metric_schema = sc.MetricSchema(
+                        metric_schema = sc.FinValueBase(
                             name=item.name,
                             value=item.numeric,
                             unit=item.unit_ref,
@@ -193,13 +193,13 @@ def get_summary_items(
                         else:
                             schema_item.value = metric_schema
 
-    period = sc.PeriodSchema(  # periodを設定
+    period = sc.PeriodSchemaBase(  # periodを設定
         accountingStandard=head_item.report_type,
         fiscalYear=head_item.fy_year_end,
         period=head_item.current_period,
     )
 
-    res = sc.FinancialResponseSchema(  # FinancialResponseSchemaを返す
+    res = sc.FinStructBase(  # FinStructBaseを返す
         period=period,
         result=schema_items["result"],
         forecast=schema_items["forecast"],
@@ -211,19 +211,19 @@ def get_summary_items(
 
 
 def get_header_labels(
-    items: List[sc.FinancialResponseSchema],
-) -> List[sc.LabelItemSchema]:
+    items: List[sc.FinStructBase],
+) -> List[sc.LabelBase]:
     """
     #### この関数は、ヘッダーラベルを取得する関数です。
     - **機能**:ヘッダーラベルを取得します。
-    - **引数**:items: List[sc.FinancialResponseSchema]
-    - **戻り値**:List[sc.LabelItemSchema]
+    - **引数**:items: List[sc.FinStructBase]
+    - **戻り値**:List[sc.LabelBase]
     """
 
     labels = []
     for item in items:
         for result in item.result.data:
-            labels.append(sc.LabelItemSchema(label=result.label))
+            labels.append(sc.LabelBase(label=result.label))
 
     return labels
 
@@ -234,16 +234,16 @@ def get_financial_response_list_schema(
     attr_value_dict: Dict[str, str],
     from_name_dict: Dict[str, str],
     is_change: bool = True,
-) -> sc.FinancialResponseListSchema:
+) -> sc.FinResponseBase:
     """
-    #### この関数は、FinancialResponseListSchemaを取得する関数です。
-    - **機能**:FinancialResponseListSchemaを取得します。
-    - **引数**:items: List[sc.FinancialResponseSchema]
-    - **戻り値**:sc.FinancialResponseListSchema
+    #### この関数は、FinResponseBaseを取得する関数です。
+    - **機能**:FinResponseBaseを取得します。
+    - **引数**:items: List[sc.FinStructBase]
+    - **戻り値**:sc.FinResponseBase
     - **例外**:NotDictKeyError
     """
 
-    items_list: List[sc.FinancialResponseSchema] = []
+    items_list: List[sc.FinStructBase] = []
     for head_item_key in head_item_keys:
         try:
             items = get_summary_items(
@@ -261,9 +261,7 @@ def get_financial_response_list_schema(
 
     labels = get_header_labels(items_list)
 
-    return sc.FinancialResponseListSchema(
-        data=items_list, count=len(items_list), labels=labels
-    )
+    return sc.FinResponseBase(data=items_list, count=len(items_list), labels=labels)
 
 
 def get_head_item_key(
