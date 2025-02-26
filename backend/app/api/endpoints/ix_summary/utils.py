@@ -184,7 +184,6 @@ def get_summary_items(
                         if item.numeric is not None:
                             schema_items[key].is_active = True
                         metric_schema = sc.MetricSchema(
-                            key=item.item_key,
                             name=item.name,
                             value=item.numeric,
                             unit=item.unit_ref,

@@ -25,33 +25,17 @@ class TreeItemsList(SQLModel):
     data: List[TreeItem]
 
 
-class IxNonFractionPublic(SQLModel):
-    """iXBRLの非分数情報を表すクラス"""
-
-    id: int
-    context: List[str]
-    name: str
-    display_numeric: Optional[str]
-    display_scale: Optional[str]
-    from_name: str
-
-
-class IxNonFractionsPublicList(SQLModel):
-    """iXBRLの非分数情報のリストを表すクラス"""
-
-    count: int
-    data: Dict[str, List[IxNonFractionPublic]]
-
-
-# region Operating Group
 class MetricSchema(SQLModel):
-    key: str
+    """メトリック情報を表すクラス"""
+
     name: str
     value: Optional[float]
     unit: Optional[str]
 
 
 class MetricParentSchema(SQLModel):
+    """メトリック親情報を表すクラス"""
+
     name: str
     order: float
     label: str
@@ -60,23 +44,23 @@ class MetricParentSchema(SQLModel):
 
 
 class PeriodSchema(SQLModel):
+    """期間情報を表すクラス"""
 
     accountingStandard: str
     fiscalYear: str
     period: str
 
 
-class LabelItemSchema(SQLModel):
-
-    label: str
-
-
 class MetricItems(SQLModel):
+    """メトリック情報のリストを表すクラス"""
+
     is_active: bool = Field(default=False)
     data: Optional[List[MetricParentSchema]] = Field(default=[])
 
 
 class FinancialResponseSchema(SQLModel):
+    """ファイナンシャルレスポンス情報を表すクラス"""
+
     period: PeriodSchema
     result: MetricItems
     forecast: MetricItems
@@ -84,10 +68,13 @@ class FinancialResponseSchema(SQLModel):
     lower: MetricItems
 
 
+class LabelItemSchema(SQLModel):
+
+    label: str
+
+
 class FinancialResponseListSchema(SQLModel):
+
     count: int
     labels: List[LabelItemSchema]
     data: List[FinancialResponseSchema]
-
-
-# endregion
