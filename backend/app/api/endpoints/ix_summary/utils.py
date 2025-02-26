@@ -3,7 +3,7 @@ from typing import Any, Dict, List
 
 from sqlmodel import Session
 
-from app.models import IxNonFraction
+from app.models import IxHeadTitle, IxNonFraction
 
 from . import crud
 from . import schema as sc
@@ -59,13 +59,77 @@ def get_metric_schema_value_and_change(
                         )
 
 
+def get_attr_value(head_item: IxHeadTitle, attr_value_dict: Dict[str, str]) -> str:
+
+    # region attr_valueの設定
+    if head_item.current_period is None:  # head_itemが存在しない場合、例外を発生させる
+        raise HeadItemNotFound("head item not found.")
+    elif (
+        head_item.current_period == "FY"
+    ):  # head_itemのcurrent_periodがFYの場合、attr_valueをFYに設定
+        attr_value = attr_value_dict["FY"]
+    else:  # head_itemのcurrent_periodがQUの場合、attr_valueをQUに設定
+        attr_value = attr_value_dict["QU"]
+    # endregion
+
+    return attr_value
+
+
+def get_from_name(from_name_dict: Dict[str, str], tree_items: sc.TreeItemsList) -> str:
+
+    # region is_consolidatedの設定
+    is_consolidated = any(  # is_consolidatedを取得
+        item.xlink_to == "tse-ed-t_ConsolidatedMember" for item in tree_items.data
+    )
+
+    if is_consolidated:  # is_consolidatedがTrueの場合、from_nameを"consolidated"に設定
+        from_name = from_name_dict["consolidated"]
+    else:  # is_consolidatedがFalseの場合、from_nameを"non_consolidated"に設定
+        from_name = from_name_dict["non_consolidated"]
+    # endregion
+
+    return from_name
+
+
+def get_parent_items(tree_items: sc.TreeItemsList, from_name: str) -> List[str]:
+    parent_items = [
+        item.xlink_to for item in tree_items.data if item.xlink_from == from_name
+    ]
+
+    return parent_items
+
+
+def get_child_items(
+    tree_items: sc.TreeItemsList,
+    from_name: str,
+    is_change: bool,
+    parent_items: List[str],
+) -> Dict[str, str]:
+    # region child_itemsの取得
+    if is_change:  # is_changeがTrueの場合、child_itemsを取得
+        child_items = {
+            item.xlink_to: item.xlink_from
+            for item in tree_items.data
+            if item.xlink_from in parent_items
+        }
+    else:  # is_changeがFalseの場合、child_itemsを取得
+        child_items = {
+            item.xlink_to: item.xlink_to
+            for item in tree_items.data
+            if item.xlink_from == from_name
+        }
+    # endregion
+
+    return child_items
+
+
 def get_summary_items(
     session: Session,
     head_item_key: str,
     attr_value_dict: Dict[str, str],
     from_name_dict: Dict[str, str],
     is_change: bool = True,
-) -> sc.FinStructBase:
+) -> List[IxNonFraction]:
     """
     #### この関数は、指定された条件に一致するiXBRLの非分数情報を取得する関数です。
     - **機能**:指定された条件に一致するiXBRLの非分数情報を取得します。
@@ -93,16 +157,7 @@ def get_summary_items(
         session=session, item_key=head_item_key
     )
 
-    # region attr_valueの設定
-    if head_item.current_period is None:  # head_itemが存在しない場合、例外を発生させる
-        raise HeadItemNotFound("head item not found.")
-    elif (
-        head_item.current_period == "FY"
-    ):  # head_itemのcurrent_periodがFYの場合、attr_valueをFYに設定
-        attr_value = attr_value_dict["FY"]
-    else:  # head_itemのcurrent_periodがQUの場合、attr_valueをQUに設定
-        attr_value = attr_value_dict["QU"]
-    # endregion
+    attr_value = get_attr_value(head_item, attr_value_dict)
 
     # region tree_itemsの取得
     tree_items = crud.read_tree_items(
@@ -112,36 +167,17 @@ def get_summary_items(
         xbrl_type="sm",
     )
 
-    # region is_consolidatedの設定
-    is_consolidated = any(  # is_consolidatedを取得
-        item.xlink_to == "tse-ed-t_ConsolidatedMember" for item in tree_items.data
-    )
-
-    if is_consolidated:  # is_consolidatedがTrueの場合、from_nameを"consolidated"に設定
-        from_name = from_name_dict["consolidated"]
-    else:  # is_consolidatedがFalseの場合、from_nameを"non_consolidated"に設定
-        from_name = from_name_dict["non_consolidated"]
-    # endregion
+    from_name = get_from_name(from_name_dict, tree_items)
 
     # region parent_itemsの取得
-    parent_items = [
-        item.xlink_to for item in tree_items.data if item.xlink_from == from_name
-    ]
+    parent_items = get_parent_items(tree_items, from_name)
 
-    # region child_itemsの取得
-    if is_change:  # is_changeがTrueの場合、child_itemsを取得
-        child_items = {
-            item.xlink_to: item.xlink_from
-            for item in tree_items.data
-            if item.xlink_from in parent_items
-        }
-    else:  # is_changeがFalseの場合、child_itemsを取得
-        child_items = {
-            item.xlink_to: item.xlink_to
-            for item in tree_items.data
-            if item.xlink_from == from_name
-        }
-    # endregion
+    child_items = get_child_items(
+        tree_items=tree_items,
+        from_name=from_name,
+        is_change=is_change,
+        parent_items=parent_items,
+    )
 
     # contextの取得
     context_list = get_context_list(tree_items, attr_value)
@@ -152,6 +188,48 @@ def get_summary_items(
         head_item_key=head_item_key,
         names=child_items.keys(),
         contexts=context_list,
+    )
+
+    return ix_non_fractions
+
+
+def get_struct(
+    session: Session,
+    ix_non_fractions: List[IxNonFraction],
+    head_item_key: str,
+    attr_value_dict: Dict[str, str],
+    from_name_dict: Dict[str, str],
+    is_change: bool = True,
+) -> sc.FinStructBase:
+    """
+    #### この関数は、FinStructBaseを取得する関数です。
+    - **機能**:FinStructBaseを取得します。
+    - **引数**:head_item: Any, tree_items: sc.TreeItemsList, ix_non_fractions: List[IxNonFraction], from_name: str, child_items: Dict[str, str]
+    - **戻り値**:sc.FinStructBase
+    """
+
+    head_item = crud.get_ix_head_title_by_item_key(  # head_itemを取得
+        session=session, item_key=head_item_key
+    )
+
+    attr_value = get_attr_value(head_item, attr_value_dict)
+
+    tree_items = crud.read_tree_items(
+        head_item_key=head_item_key,
+        attr_value=attr_value,
+        session=session,
+        xbrl_type="sm",
+    )
+
+    from_name = get_from_name(from_name_dict, tree_items)
+
+    parent_items = get_parent_items(tree_items, from_name)
+
+    child_items = get_child_items(
+        tree_items=tree_items,
+        from_name=from_name,
+        is_change=is_change,
+        parent_items=parent_items,
     )
 
     schema_items = {
@@ -210,9 +288,7 @@ def get_summary_items(
     return res
 
 
-def get_header_labels(
-    items: List[sc.FinStructBase],
-) -> List[sc.LabelBase]:
+def get_header_labels(items: List[sc.FinStructBase]) -> List[sc.LabelBase]:
     """
     #### この関数は、ヘッダーラベルを取得する関数です。
     - **機能**:ヘッダーラベルを取得します。
@@ -246,8 +322,16 @@ def get_financial_response_list_schema(
     items_list: List[sc.FinStructBase] = []
     for head_item_key in head_item_keys:
         try:
-            items = get_summary_items(
+            summary = get_summary_items(
                 session=session,
+                head_item_key=head_item_key,
+                attr_value_dict=attr_value_dict,
+                from_name_dict=from_name_dict,
+                is_change=is_change,
+            )
+            items = get_struct(
+                session=session,
+                ix_non_fractions=summary,
                 head_item_key=head_item_key,
                 attr_value_dict=attr_value_dict,
                 from_name_dict=from_name_dict,
