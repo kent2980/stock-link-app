@@ -4,35 +4,6 @@ from typing import Any, Dict, List, Optional
 from sqlmodel import Field, SQLModel
 
 
-class IxDocumentInfo(SQLModel):
-
-    item_key: str
-    document_name: str
-    reporting_date: datetime.date
-    current_period: Optional[str]
-    report_type: str
-
-
-class IxDocumentInfoList(SQLModel):
-
-    data: list[IxDocumentInfo]
-    count: int
-
-
-class MenuLabel(SQLModel):
-    """メニューラベルを表すクラス"""
-
-    attr_value: str
-    label: str
-
-
-class MenuLabelList(SQLModel):
-    """メニューラベルのリストを表すクラス"""
-
-    data: List[MenuLabel]
-    count: int
-
-
 class TreeItem(SQLModel):
     """ツリーアイテムを表すクラス"""
 
@@ -73,30 +44,6 @@ class IxNonFractionsPublicList(SQLModel):
 
 
 # region Operating Group
-class CompanySchema(SQLModel):
-    code: str
-    name: str
-
-
-class ContextItems(SQLModel):
-
-    data: Dict[str, Dict[str, List[str]]]
-
-
-class NameItem(SQLModel):
-
-    to_name: str
-    from_name: str
-    order: float
-    level: int
-    has_children: bool
-
-
-class NameItems(SQLModel):
-
-    data: Dict[str, List[NameItem]]
-
-
 class MetricSchema(SQLModel):
     key: str
     name: str
@@ -141,22 +88,6 @@ class FinancialResponseListSchema(SQLModel):
     count: int
     labels: List[LabelItemSchema]
     data: List[FinancialResponseSchema]
-
-
-class LabelItemsDict(SQLModel):
-
-    data: Dict[str, str]
-
-
-class LabelItem(SQLModel):
-
-    name: str
-    label: str
-
-
-class LabelItems(SQLModel):
-
-    data: List[LabelItem]
 
 
 # endregion

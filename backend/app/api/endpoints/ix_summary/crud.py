@@ -118,67 +118,6 @@ def get_attr_value(
     return item
 
 
-def read_menu_labels(
-    *, head_item_key: str, xbrl_type: str, session: Session
-) -> sc.MenuLabelList:
-    """
-    #### attr_valueと日本語ラベルを取得するエンドポイント
-    - **機能**: HeadItemKeyからattr_valueと日本語ラベルを取得します。
-    - **認証不要**
-    - **レスポンス形式**: JSON
-    - **param1**: head_item_key: str 必須項目
-    - **param2**: xbrl_type: str 必須項目
-    """
-
-    statement = (
-        select(IxDefinitionArc.attr_value, IxLabelValue.label)
-        .join(
-            ScLinkBaseRef,
-            IxDefinitionArc.head_item_key == ScLinkBaseRef.head_item_key,
-        )
-        .join(
-            IxDefinitionLoc,
-            and_(
-                IxDefinitionArc.source_file_id == IxDefinitionLoc.source_file_id,
-                IxDefinitionArc.xlink_from == IxDefinitionLoc.xlink_label,
-            ),
-        )
-        .join(
-            IxLabelLoc,
-            and_(
-                IxLabelLoc.source_file_id == ScLinkBaseRef.href_source_file_id,
-                IxLabelLoc.xlink_href == IxDefinitionLoc.xlink_href,
-            ),
-        )
-        .join(
-            IxLabelArc,
-            and_(
-                IxLabelArc.source_file_id == IxLabelLoc.source_file_id,
-                IxLabelArc.xlink_from == IxLabelLoc.xlink_label,
-            ),
-        )
-        .join(
-            IxLabelValue,
-            and_(
-                IxLabelValue.source_file_id == IxLabelArc.source_file_id,
-                IxLabelValue.xlink_label == IxLabelArc.xlink_to,
-            ),
-        )
-        .where(
-            IxDefinitionArc.head_item_key == head_item_key,
-            IxLabelValue.xlink_role == "http://www.xbrl.org/2003/role/label",
-            IxDefinitionArc.xlink_arcrole == "http://xbrl.org/int/dim/arcrole/all",
-            ScLinkBaseRef.xbrl_type == xbrl_type,
-        )
-        .order_by(IxDefinitionArc.id)
-    )
-
-    results = session.exec(statement)
-    items = results.all()
-
-    return items
-
-
 def read_tree_items(
     *,
     head_item_key: str,
@@ -410,49 +349,6 @@ def read_tree_items(
     items = results.all()
 
     return sc.TreeItemsList(count=len(items), data=items)
-
-
-def get_label_by_names(session: Session, head_item_key: str, names: List[str]) -> Any:
-    """
-    #### IxLabelValueテーブルからIDに紐づくレコードを取得する
-    - **機能**: IDに紐づくIxLabelValueテーブルのレコードを取得する
-    - **param1**: session: Session  DBセッション
-    - **param2**: head_item_key: str ID
-    - **param3**: names: List[str] ラベル名
-    """
-
-    statement = (
-        select(
-            ScLinkBaseRef.head_item_key,
-            IxLabelValue.label,
-            IxLabelLoc.xlink_href.label("name"),
-        )
-        .join(
-            IxLabelArc,
-            and_(
-                IxLabelValue.source_file_id == IxLabelArc.source_file_id,
-                IxLabelValue.xlink_label == IxLabelArc.xlink_to,
-            ),
-        )
-        .join(
-            IxLabelLoc,
-            and_(
-                IxLabelValue.source_file_id == IxLabelLoc.source_file_id,
-                IxLabelArc.xlink_from == IxLabelLoc.xlink_label,
-            ),
-        )
-        .where(
-            ScLinkBaseRef.head_item_key == head_item_key,
-            ScLinkBaseRef.xbrl_type == "sm",
-            IxLabelValue.source_file_id == ScLinkBaseRef.href_source_file_id,
-            IxLabelLoc.xlink_href.in_(names),
-            IxLabelValue.xlink_role == "http://www.xbrl.org/2003/role/label",
-        )
-    )
-    result = session.exec(statement)
-    items = result.all()
-
-    return sc.LabelItems(data=items)
 
 
 def get_ix_non_fraction_records(

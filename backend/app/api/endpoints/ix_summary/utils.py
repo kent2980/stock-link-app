@@ -218,7 +218,7 @@ def get_header_labels(
     #### この関数は、ヘッダーラベルを取得する関数です。
     - **機能**:ヘッダーラベルを取得します。
     - **引数**:items: List[sc.FinancialResponseSchema]
-    - **戻り値**:List[sc.LabelItemSchema
+    - **戻り値**:List[sc.LabelItemSchema]
     """
 
     labels = []
