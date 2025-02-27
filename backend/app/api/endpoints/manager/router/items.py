@@ -1,16 +1,15 @@
 import uuid
 from typing import Any
 
-from fastapi import APIRouter, HTTPException
-from sqlmodel import func, select
-
 from app.api.deps import CurrentUser, SessionDep
 from app.models import Item, ItemCreate, ItemPublic, ItemsPublic, ItemUpdate, Message
+from fastapi import APIRouter, HTTPException
+from sqlmodel import func, select
 
 router = APIRouter(prefix="/items", tags=["items"])
 
 
-@router.get("/", response_model=ItemsPublic, include_in_schema=False)
+@router.get("/", response_model=ItemsPublic, include_in_schema=True)
 def read_items(
     session: SessionDep, current_user: CurrentUser, skip: int = 0, limit: int = 100
 ) -> Any:
@@ -41,7 +40,7 @@ def read_items(
     return ItemsPublic(data=items, count=count)
 
 
-@router.get("/{id}", response_model=ItemPublic, include_in_schema=False)
+@router.get("/{id}", response_model=ItemPublic, include_in_schema=True)
 def read_item(session: SessionDep, current_user: CurrentUser, id: uuid.UUID) -> Any:
     """
     Get item by ID.
@@ -54,7 +53,7 @@ def read_item(session: SessionDep, current_user: CurrentUser, id: uuid.UUID) -> 
     return item
 
 
-@router.post("/", response_model=ItemPublic, include_in_schema=False)
+@router.post("/", response_model=ItemPublic, include_in_schema=True)
 def create_item(
     *, session: SessionDep, current_user: CurrentUser, item_in: ItemCreate
 ) -> Any:

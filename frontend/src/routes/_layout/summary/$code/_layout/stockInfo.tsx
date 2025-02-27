@@ -2,7 +2,6 @@ import { Box, Skeleton, VStack } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 import WikiInfoErrorBound from "../../-compomnents/ErrorBoundary/WikiInfoErrorBound";
-import LatestUpdates from "../../-compomnents/StockInfo/LatestUpdates";
 import WikiInfo from "../../-compomnents/StockInfo/WikiInfo";
 export const Route = createFileRoute(
   "/_layout/summary/$code/_layout/stockInfo"
@@ -18,7 +17,7 @@ function StockInfo() {
         <WikiInfoErrorBound>
           <Suspense
             fallback={
-              <VStack spacing={4}>
+              <VStack gap={4}>
                 {Array.from({ length: 3 }).map((_, index) => (
                   <Skeleton key={index} height="20px" w="100%" />
                 ))}
@@ -30,7 +29,7 @@ function StockInfo() {
         </WikiInfoErrorBound>
       </Box>
       <Suspense fallback={<div>Loading...</div>}>
-        <LatestUpdates code={code} />
+        {/* <LatestUpdates code={code} /> */}
       </Suspense>
     </>
   );

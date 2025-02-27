@@ -10,7 +10,7 @@ function _Layout() {
   const { code } = Route.useParams();
   return (
     <>
-      <VStack spacing={10} align="flex-start" ml={{ base: 4, md: 14 }}>
+      <VStack gap={10} align="flex-start" ml={{ base: 4, md: 14 }}>
         <SummaryHeader code={code} />
         <Outlet />
       </VStack>

@@ -118,7 +118,7 @@ function ItemsTable() {
         <PaginationRoot
           count={count}
           pageSize={PER_PAGE}
-          onPageChange={({ page }) => setPage(page)}
+          onPageChange={({ page }: { page: number }) => setPage(page)}
         >
           <Flex>
             <PaginationPrevTrigger />

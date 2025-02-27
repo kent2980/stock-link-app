@@ -3,7 +3,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import { useEffect, useState } from "react";
 import CustomCheckboxArea from "../../components/Industries/CustomCheckboxArea";
-import ItemList from "../../components/Industries/ItemList";
 import Sidebar from "../../components/Industries/Sidebar";
 import { HeaderAddressItem, HeaderStore } from "../../Store/HeaderStore";
 import { IndustriesStore } from "../../Store/IndustriesStore";
@@ -63,7 +62,7 @@ function Industries() {
         />
         <Box flex="1" ml="20%">
           <CustomCheckboxArea />
-          <ItemList industry33Code={industry33Code} isItems={isItems} />
+          {/* <ItemList industry33Code={industry33Code} isItems={isItems} /> */}
         </Box>
       </HStack>
     </Box>

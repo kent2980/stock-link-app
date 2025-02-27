@@ -26,7 +26,7 @@ const WikiInfo: React.FC<WikiInfoProps> = ({ code }) => {
 
   return (
     <>
-      <VStack bg="gray.900" spacing={2} align="start">
+      <VStack bg="gray.900" gap={2} align="start">
         <Text fontSize="md">企業情報</Text>
         <Text color="gray.300" fontSize="sm">
           {data?.description}

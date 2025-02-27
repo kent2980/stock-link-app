@@ -1,12 +1,4 @@
-import {
-  Heading,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Th,
-  Tr,
-} from "@chakra-ui/react";
+import { Heading, Table } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import React from "react";
 import { SummaryService } from "../../../../../client";
@@ -27,34 +19,32 @@ const LatestUpdates: React.FC<LatestUpdatesProps> = ({ code }) => {
       <Heading as="h2" size="md">
         経営成績
       </Heading>
-      <TableContainer>
-        <Table>
-          <thead>
-            <Tr>
-              {data.labels.map((item, key) => (
-                <Th key={key} colSpan={2}>
-                  {item.label}
-                </Th>
-              ))}
-            </Tr>
-          </thead>
-          <Tbody>
-            {data.data.map(
-              (item, key) =>
-                item.metrics.is_active && (
-                  <Tr key={key}>
-                    {item.metrics.data?.map((metric) => (
-                      <>
-                        <Td>{metric.value?.value}</Td>
-                        <Td>{metric.change?.value}%</Td>
-                      </>
-                    ))}
-                  </Tr>
-                )
-            )}
-          </Tbody>
-        </Table>
-      </TableContainer>
+      <Table.Root>
+        <Table.Header>
+          <Table.Row>
+            {data.labels.map((item, key) => (
+              <Table.ColumnHeader key={key} colSpan={2}>
+                {item.label}
+              </Table.ColumnHeader>
+            ))}
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {data.data.map(
+            (item, key) =>
+              item.result.is_active && (
+                <Table.Row key={key}>
+                  {item.result.data?.map((metric) => (
+                    <>
+                      <Table.Cell>{metric.value?.value}</Table.Cell>
+                      <Table.Cell>{metric.change?.value}%</Table.Cell>
+                    </>
+                  ))}
+                </Table.Row>
+              )
+          )}
+        </Table.Body>
+      </Table.Root>
     </>
   );
 };

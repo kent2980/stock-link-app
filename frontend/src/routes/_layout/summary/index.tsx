@@ -20,7 +20,7 @@ function Index() {
       height="100vh"
       p={4}
     >
-      <VStack spacing={4} textAlign="center">
+      <VStack gap={4} textAlign="center">
         <Text fontSize="md" color="gray.700">
           銘柄コードが指定されていません。
         </Text>
