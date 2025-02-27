@@ -15,13 +15,13 @@ router = APIRouter()
 @router.get(
     "/operating_results/income/{code}",
     summary="経営成績情報を取得",
-    response_model=sc.FinResponseBase,
+    response_model=sc.FinResultResponse,
 )
 def get_operating_results(
     *,
     session: SessionDep,
     code: str,
-) -> sc.FinResponseBase:
+) -> sc.FinResultResponse:
 
     attr_value_dict = {  # この辞書は、attr_valueとfrom_nameの対応を表しています。
         "FY": "BusinessResultsOperatingResults",
@@ -39,7 +39,7 @@ def get_operating_results(
         raise HTTPException(status_code=404, detail=str(e))
 
     try:
-        return utils.get_financial_response_list_schema(
+        items = utils.get_summary_items_list(
             session=session,
             head_item_keys=head_item_keys,
             attr_value_dict=attr_value_dict,
@@ -49,13 +49,30 @@ def get_operating_results(
     except NotDictKeyError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
+    results = []
+    for item in items:
+        result = utils.get_struct(
+            items=item,
+        )
+        results.append(result)
+
+    label = utils.get_header_labels(results)
+
+    res = sc.FinResultResponse(
+        count=len(results),
+        labels=label,
+        data=results,
+    )
+
+    return res
+
 
 @router.get("/operating_results/other/{code}", summary="その他の経営成績情報を取得")
 def get_other_operating_results(
     *,
     session: SessionDep,
     code: str,
-) -> sc.FinResponseBase:
+) -> sc.FinResultResponse:
 
     attr_value_dict = {
         "FY": "BusinessResultsOperatingResults",
@@ -73,7 +90,7 @@ def get_other_operating_results(
         raise HTTPException(status_code=404, detail=str(e))
 
     try:
-        return utils.get_financial_response_list_schema(
+        items = utils.get_summary_items_list(
             session=session,
             head_item_keys=head_item_keys,
             attr_value_dict=attr_value_dict,
@@ -83,13 +100,30 @@ def get_other_operating_results(
     except NotDictKeyError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
+    results = []
+    for item in items:
+        result = utils.get_struct(
+            items=item,
+        )
+        results.append(result)
+
+    label = utils.get_header_labels(results)
+
+    res = sc.FinResultResponse(
+        count=len(results),
+        labels=label,
+        data=results,
+    )
+
+    return res
+
 
 @router.get("/forecasts/{code}", summary="予測情報を取得")
 def get_forecasts(
     *,
     session: SessionDep,
     code: str,
-) -> sc.FinResponseBase:
+) -> sc.FinForecastResponse:
 
     attr_value_dict = {
         "FY": "Forecasts",
@@ -107,7 +141,7 @@ def get_forecasts(
         raise HTTPException(status_code=404, detail=str(e))
 
     try:
-        return utils.get_financial_response_list_schema(
+        items = utils.get_summary_items_list(
             session=session,
             head_item_keys=head_item_keys,
             attr_value_dict=attr_value_dict,
@@ -117,17 +151,34 @@ def get_forecasts(
     except NotDictKeyError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
+    results = []
+    for item in items:
+        result = utils.get_struct(
+            items=item,
+        )
+        results.append(result)
+
+    label = utils.get_header_labels(results)
+
+    res = sc.FinForecastResponse(
+        count=len(results),
+        labels=label,
+        data=results,
+    )
+
+    return res
+
 
 @router.get(
     "/financial_position/{code}",
     summary="財政状態情報を取得",
-    response_model=sc.FinResponseBase,
+    response_model=sc.FinResultResponse,
 )
 def get_financial_position(
     *,
     session: SessionDep,
     code: str,
-) -> sc.FinResponseBase:
+) -> sc.FinResultResponse:
 
     attr_value_dict = {
         "FY": "BusinessResultsFinancialPositions",
@@ -145,7 +196,7 @@ def get_financial_position(
         raise HTTPException(status_code=404, detail=str(e))
 
     try:
-        return utils.get_financial_response_list_schema(
+        items = utils.get_summary_items_list(
             session=session,
             head_item_keys=head_item_keys,
             attr_value_dict=attr_value_dict,
@@ -155,17 +206,34 @@ def get_financial_position(
     except NotDictKeyError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
+    results = []
+    for item in items:
+        result = utils.get_struct(
+            items=item,
+        )
+        results.append(result)
+
+    label = utils.get_header_labels(results)
+
+    res = sc.FinResultResponse(
+        count=len(results),
+        labels=label,
+        data=results,
+    )
+
+    return res
+
 
 @router.get(
     "/cash_flows/{code}",
     summary="キャッシュフロー情報を取得",
-    response_model=sc.FinResponseBase,
+    response_model=sc.FinResultResponse,
 )
 def get_cash_flows(
     *,
     session: SessionDep,
     code: str,
-) -> sc.FinResponseBase:
+) -> sc.FinResultResponse:
 
     attr_value_dict = {
         "FY": "BusinessResultsCashFlows",
@@ -183,7 +251,7 @@ def get_cash_flows(
         raise HTTPException(status_code=404, detail=str(e))
 
     try:
-        return utils.get_financial_response_list_schema(
+        items = utils.get_summary_items_list(
             session=session,
             head_item_keys=head_item_keys,
             attr_value_dict=attr_value_dict,
@@ -192,6 +260,23 @@ def get_cash_flows(
         )
     except NotDictKeyError as e:
         raise HTTPException(status_code=404, detail=str(e))
+
+    results = []
+    for item in items:
+        result = utils.get_struct(
+            items=item,
+        )
+        results.append(result)
+
+    label = utils.get_header_labels(results)
+
+    res = sc.FinResultResponse(
+        count=len(results),
+        labels=label,
+        data=results,
+    )
+
+    return res
 
 
 @router.get(
@@ -221,7 +306,7 @@ def get_dividends(
         raise HTTPException(status_code=404, detail=str(e))
 
     try:
-        return utils.get_financial_response_list_schema(
+        items = utils.get_summary_items_list(
             session=session,
             head_item_keys=head_item_keys,
             attr_value_dict=attr_value_dict,
@@ -230,3 +315,20 @@ def get_dividends(
         )
     except NotDictKeyError as e:
         raise HTTPException(status_code=404, detail=str(e))
+
+    results = []
+    for item in items:
+        result = utils.get_struct(
+            items=item,
+        )
+        results.append(result)
+
+    label = utils.get_header_labels(results)
+
+    res = sc.FinResponseBase(
+        count=len(results),
+        labels=label,
+        data=results,
+    )
+
+    return res

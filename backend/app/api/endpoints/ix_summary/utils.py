@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 
 from sqlmodel import Session
 
@@ -8,6 +8,7 @@ from app.models import IxHeadTitle, IxNonFraction
 from . import crud
 from . import schema as sc
 from .exceptions import HeadItemNotFound, NotDictKeyError
+from .summaryItems import SummaryItems
 
 
 def get_context_list(items: sc.TreeItemsList, attr_value: str) -> List[List[str]]:
@@ -123,20 +124,13 @@ def get_child_items(
     return child_items
 
 
-def get_summary_items(
+def var_init(
     session: Session,
     head_item_key: str,
     attr_value_dict: Dict[str, str],
     from_name_dict: Dict[str, str],
     is_change: bool = True,
-) -> List[IxNonFraction]:
-    """
-    #### この関数は、指定された条件に一致するiXBRLの非分数情報を取得する関数です。
-    - **機能**:指定された条件に一致するiXBRLの非分数情報を取得します。
-    - **引数**:session: Session, head_item_key: str, attr_value_dict: Dict[str, str], from_name_dict: Dict[str, str]
-    - **戻り値**:sc.FinStructBase
-    - **例外**:NotDictKeyError, HeadItem
-    """
+):
 
     # region 引数のバリデーション
     # キーのバリデーションを行い、エラーがあれば例外を発生させる
@@ -182,6 +176,48 @@ def get_summary_items(
     # contextの取得
     context_list = get_context_list(tree_items, attr_value)
 
+    return (
+        head_item,
+        attr_value,
+        tree_items,
+        from_name,
+        parent_items,
+        child_items,
+        context_list,
+    )
+
+
+def get_summary_items(
+    session: Session,
+    head_item_key: str,
+    attr_value_dict: Dict[str, str],
+    from_name_dict: Dict[str, str],
+    is_change: bool = True,
+) -> SummaryItems:
+    """
+    #### この関数は、指定された条件に一致するiXBRLの非分数情報を取得する関数です。
+    - **機能**:指定された条件に一致するiXBRLの非分数情報を取得します。
+    - **引数**:session: Session, head_item_key: str, attr_value_dict: Dict[str, str], from_name_dict: Dict[str, str]
+    - **戻り値**:sc.FinStructBase
+    - **例外**:NotDictKeyError, HeadItem
+    """
+
+    (
+        head_item,
+        attr_value,
+        tree_items,
+        from_name,
+        parent_items,
+        child_items,
+        context_list,
+    ) = var_init(
+        session=session,
+        head_item_key=head_item_key,
+        attr_value_dict=attr_value_dict,
+        from_name_dict=from_name_dict,
+        is_change=is_change,
+    )
+
     # ix_non_fractionsの取得
     ix_non_fractions = crud.get_ix_non_fraction_records(
         session=session,
@@ -190,17 +226,23 @@ def get_summary_items(
         contexts=context_list,
     )
 
-    return ix_non_fractions
+    items = SummaryItems(
+        head_item=head_item,
+        attr_value=attr_value,
+        tree_items=tree_items,
+        from_name=from_name,
+        parent_items=parent_items,
+        child_items=child_items,
+        context_list=context_list,
+        ix_non_fractions=ix_non_fractions,
+    )
+
+    return items
 
 
 def get_struct(
-    session: Session,
-    ix_non_fractions: List[IxNonFraction],
-    head_item_key: str,
-    attr_value_dict: Dict[str, str],
-    from_name_dict: Dict[str, str],
-    is_change: bool = True,
-) -> sc.FinStructBase:
+    items: SummaryItems,
+) -> sc.FinResultStruct:
     """
     #### この関数は、FinStructBaseを取得する関数です。
     - **機能**:FinStructBaseを取得します。
@@ -208,33 +250,14 @@ def get_struct(
     - **戻り値**:sc.FinStructBase
     """
 
-    head_item = crud.get_ix_head_title_by_item_key(  # head_itemを取得
-        session=session, item_key=head_item_key
-    )
-
-    attr_value = get_attr_value(head_item, attr_value_dict)
-
-    tree_items = crud.read_tree_items(
-        head_item_key=head_item_key,
-        attr_value=attr_value,
-        session=session,
-        xbrl_type="sm",
-    )
-
-    from_name = get_from_name(from_name_dict, tree_items)
-
-    parent_items = get_parent_items(tree_items, from_name)
-
-    child_items = get_child_items(
-        tree_items=tree_items,
-        from_name=from_name,
-        is_change=is_change,
-        parent_items=parent_items,
-    )
+    head_item = items.get_head_item()
+    tree_items = items.get_tree_items()
+    from_name = items.get_from_name()
+    child_items = items.get_child_items()
+    ix_non_fractions = items.get_ix_non_fractions()
 
     schema_items = {
         "result": sc.FinItemsBase(),
-        "forecast": sc.FinItemsBase(),
         "upper": sc.FinItemsBase(),
         "lower": sc.FinItemsBase(),
     }
@@ -242,13 +265,11 @@ def get_struct(
     for item in tree_items.data:
         if item.xlink_from == from_name:
             schema_items["result"].data.append(create_metric_parent_schema(item))
-            schema_items["forecast"].data.append(create_metric_parent_schema(item))
             schema_items["upper"].data.append(create_metric_parent_schema(item))
             schema_items["lower"].data.append(create_metric_parent_schema(item))
 
     context_mapping = {
         "result": ["ResultMember"],
-        "forecast": ["ForecastMember"],
         "upper": ["UpperMember"],
         "lower": ["LowerMember"],
     }
@@ -256,7 +277,6 @@ def get_struct(
     for item in ix_non_fractions:
         for key, contexts in context_mapping.items():
             if bool(set(item.context) & set(contexts)):
-                print(item.context, item.numeric)
                 for schema_item in schema_items[key].data:
                     if schema_item.name == child_items[item.name]:
                         if item.numeric is not None:
@@ -277,10 +297,9 @@ def get_struct(
         period=head_item.current_period,
     )
 
-    res = sc.FinStructBase(  # FinStructBaseを返す
+    res = sc.FinResultStruct(  # FinStructBaseを返す
         period=period,
         result=schema_items["result"],
-        forecast=schema_items["forecast"],
         upper=schema_items["upper"],
         lower=schema_items["lower"],
     )
@@ -304,13 +323,13 @@ def get_header_labels(items: List[sc.FinStructBase]) -> List[sc.LabelBase]:
     return labels
 
 
-def get_financial_response_list_schema(
+def get_summary_items_list(
     head_item_keys: List[str],
     session: Session,
     attr_value_dict: Dict[str, str],
     from_name_dict: Dict[str, str],
     is_change: bool = True,
-) -> sc.FinResponseBase:
+) -> List[SummaryItems]:
     """
     #### この関数は、FinResponseBaseを取得する関数です。
     - **機能**:FinResponseBaseを取得します。
@@ -319,19 +338,11 @@ def get_financial_response_list_schema(
     - **例外**:NotDictKeyError
     """
 
-    items_list: List[sc.FinStructBase] = []
+    items_list = []
     for head_item_key in head_item_keys:
         try:
-            summary = get_summary_items(
+            items = get_summary_items(
                 session=session,
-                head_item_key=head_item_key,
-                attr_value_dict=attr_value_dict,
-                from_name_dict=from_name_dict,
-                is_change=is_change,
-            )
-            items = get_struct(
-                session=session,
-                ix_non_fractions=summary,
                 head_item_key=head_item_key,
                 attr_value_dict=attr_value_dict,
                 from_name_dict=from_name_dict,
@@ -343,9 +354,7 @@ def get_financial_response_list_schema(
         except NotDictKeyError as e:
             raise NotDictKeyError(str(e))
 
-    labels = get_header_labels(items_list)
-
-    return sc.FinResponseBase(data=items_list, count=len(items_list), labels=labels)
+    return items_list
 
 
 def get_head_item_key(

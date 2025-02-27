@@ -62,10 +62,18 @@ class FinStructBase(SQLModel):
     """ファイナンシャルレスポンス情報を表すクラス"""
 
     period: PeriodSchemaBase
-    result: FinItemsBase
-    forecast: FinItemsBase
     upper: FinItemsBase
     lower: FinItemsBase
+
+
+class FinResultStruct(FinStructBase):
+
+    result: FinItemsBase
+
+
+class FinForecastStruct(FinStructBase):
+
+    forecast: FinItemsBase
 
 
 class LabelBase(SQLModel):
@@ -78,3 +86,13 @@ class FinResponseBase(SQLModel):
     count: int
     labels: List[LabelBase]
     data: List[FinStructBase]
+
+
+class FinResultResponse(FinResponseBase):
+
+    data: List[FinResultStruct]
+
+
+class FinForecastResponse(FinResponseBase):
+
+    data: List[FinForecastStruct]
