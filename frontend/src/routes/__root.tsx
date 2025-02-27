@@ -1,9 +1,7 @@
 import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 import React, { Suspense } from "react";
 
-import { Box } from "@chakra-ui/react";
-import { QueryClient } from "@tanstack/react-query";
-import NotFound from "../components/Common/NotFound";
+import NotFound from "@/components/Common/NotFound";
 
 const loadDevtools = () =>
   Promise.all([

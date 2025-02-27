@@ -1,7 +1,5 @@
-import { Container } from "@chakra-ui/react";
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect } from "react";
-import { HeaderAddressItem, HeaderStore } from "../../Store/HeaderStore";
+import { Box, Container, Text } from "@chakra-ui/react";
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_layout/")({
   component: Index,
@@ -24,8 +22,15 @@ function Index() {
   }, []);
 
   return (
-    <Container>
-      <Link to="/industries">Industries</Link>
-    </Container>
+    <>
+      <Container maxW="full">
+        <Box pt={12} m={4}>
+          <Text fontSize="2xl" truncate maxW="sm">
+            Hi, {currentUser?.full_name || currentUser?.email} 👋🏼
+          </Text>
+          <Text>Welcome back, nice to see you again!</Text>
+        </Box>
+      </Container>
+    </>
   );
 }
