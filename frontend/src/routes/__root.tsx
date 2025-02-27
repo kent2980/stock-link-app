@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react";
 import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 import React, { Suspense } from "react";
 
