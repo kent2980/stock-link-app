@@ -156,6 +156,7 @@ def get_forecasts(
     for item in items:
         result = utils.get_struct(
             items=item,
+            struct=sc.FinForecastStruct(),
         )
         results.append(result)
 

@@ -270,7 +270,7 @@ def get_struct(
                     if item.xlink_from == from_name:
                         field.data.append(create_metric_parent_schema(item))
 
-    if isinstance(struct, sc.FinResultStruct):
+    if isinstance(struct, sc.FinStructBase):
         for item in ix_non_fractions:
             for key in struct.__fields__.keys():
                 struct_default = getattr(struct, key)
@@ -299,8 +299,6 @@ def get_struct(
 
     struct.period = period
 
-    print(struct)
-
     return struct
 
 
@@ -314,8 +312,14 @@ def get_header_labels(items: List[sc.FinStructBase]) -> List[sc.LabelBase]:
 
     labels = []
     for item in items:
-        for result in item.result.data:
-            labels.append(sc.LabelBase(label=result.label))
+        for key in item.__fields__.keys():
+            field = getattr(item, key)
+            if isinstance(field, sc.FinItemsBase):
+                for result in field.data:
+                    labels.append(sc.LabelBase(label=result.label))
+
+    # labelsから重複を削除
+    labels = list({label.label: label for label in labels}.values())
 
     return labels
 
