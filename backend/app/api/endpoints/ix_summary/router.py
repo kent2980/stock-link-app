@@ -53,6 +53,7 @@ def get_operating_results(
     for item in items:
         result = utils.get_struct(
             items=item,
+            struct=sc.FinResultStruct(),
         )
         results.append(result)
 

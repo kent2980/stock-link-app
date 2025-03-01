@@ -8,6 +8,7 @@ from app.models import IxHeadTitle, IxNonFraction
 from . import crud
 from . import schema as sc
 from .exceptions import HeadItemNotFound, NotDictKeyError
+from .structItem import StructItem
 from .summaryItems import SummaryItems
 
 
@@ -242,6 +243,7 @@ def get_summary_items(
 
 def get_struct(
     items: SummaryItems,
+    struct: sc.FinResultStruct,
 ) -> sc.FinResultStruct:
     """
     #### この関数は、FinStructBaseを取得する関数です。
@@ -250,46 +252,44 @@ def get_struct(
     - **戻り値**:sc.FinStructBase
     """
 
+    # structがsc.FinStructBaseまたはその継承クラスでない場合、例外を発生させる
+    if not isinstance(struct, sc.FinStructBase):
+        raise TypeError("struct must be sc.FinStructBase or its subclass.")
+    # print(struct.__fields__.keys())
     head_item = items.get_head_item()
     tree_items = items.get_tree_items()
     from_name = items.get_from_name()
     child_items = items.get_child_items()
     ix_non_fractions = items.get_ix_non_fractions()
 
-    schema_items = {
-        "result": sc.FinItemsBase(),
-        "upper": sc.FinItemsBase(),
-        "lower": sc.FinItemsBase(),
-    }
-
     for item in tree_items.data:
         if item.xlink_from == from_name:
-            schema_items["result"].data.append(create_metric_parent_schema(item))
-            schema_items["upper"].data.append(create_metric_parent_schema(item))
-            schema_items["lower"].data.append(create_metric_parent_schema(item))
+            for key in struct.__fields__.keys():
+                field = getattr(struct, key)
+                if isinstance(field, sc.FinItemsBase):
+                    if item.xlink_from == from_name:
+                        field.data.append(create_metric_parent_schema(item))
 
-    context_mapping = {
-        "result": ["ResultMember"],
-        "upper": ["UpperMember"],
-        "lower": ["LowerMember"],
-    }
-
-    for item in ix_non_fractions:
-        for key, contexts in context_mapping.items():
-            if bool(set(item.context) & set(contexts)):
-                for schema_item in schema_items[key].data:
-                    if schema_item.name == child_items[item.name]:
-                        if item.numeric is not None:
-                            schema_items[key].is_active = True
-                        metric_schema = sc.FinValueBase(
-                            name=item.name,
-                            value=item.numeric,
-                            unit=item.unit_ref,
-                        )
-                        if item.name.startswith("tse-ed-t_ChangeIn"):
-                            schema_item.change = metric_schema
-                        else:
-                            schema_item.value = metric_schema
+    if isinstance(struct, sc.FinResultStruct):
+        for item in ix_non_fractions:
+            for key in struct.__fields__.keys():
+                struct_default = getattr(struct, key)
+                if isinstance(struct_default, sc.FinItemsBase):
+                    context = struct_default.context
+                    if context in item.context:
+                        for struct_item in struct_default.data:
+                            if struct_item.name == child_items[item.name]:
+                                if item.numeric is not None:
+                                    struct_default.is_active = True
+                                metric_schema = sc.FinValueBase(
+                                    name=item.name,
+                                    value=item.numeric,
+                                    unit=item.unit_ref,
+                                )
+                                if item.name.startswith("tse-ed-t_ChangeIn"):
+                                    struct_item.change = metric_schema
+                                else:
+                                    struct_item.value = metric_schema
 
     period = sc.PeriodSchemaBase(  # periodを設定
         accountingStandard=head_item.report_type,
@@ -297,14 +297,11 @@ def get_struct(
         period=head_item.current_period,
     )
 
-    res = sc.FinResultStruct(  # FinStructBaseを返す
-        period=period,
-        result=schema_items["result"],
-        upper=schema_items["upper"],
-        lower=schema_items["lower"],
-    )
+    struct.period = period
 
-    return res
+    print(struct)
+
+    return struct
 
 
 def get_header_labels(items: List[sc.FinStructBase]) -> List[sc.LabelBase]:

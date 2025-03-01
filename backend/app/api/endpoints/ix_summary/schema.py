@@ -56,24 +56,27 @@ class FinItemsBase(SQLModel):
 
     is_active: bool = Field(default=False)
     data: Optional[List[FinValueAbstractBase]] = Field(default=[])
+    context: Optional[str] = Field(default=None)
 
 
 class FinStructBase(SQLModel):
     """ファイナンシャルレスポンス情報を表すクラス"""
 
-    period: PeriodSchemaBase
-    upper: FinItemsBase
-    lower: FinItemsBase
+    period: Optional[PeriodSchemaBase] = Field(default=None)
+    upper: Optional[FinItemsBase] = Field(default=FinItemsBase(context="UpperMember"))
+    lower: Optional[FinItemsBase] = Field(default=FinItemsBase(context="LowerMember"))
 
 
 class FinResultStruct(FinStructBase):
 
-    result: FinItemsBase
+    result: Optional[FinItemsBase] = Field(default=FinItemsBase(context="ResultMember"))
 
 
 class FinForecastStruct(FinStructBase):
 
-    forecast: FinItemsBase
+    forecast: Optional[FinItemsBase] = Field(
+        default=FinItemsBase(context="ForecastMember")
+    )
 
 
 class LabelBase(SQLModel):

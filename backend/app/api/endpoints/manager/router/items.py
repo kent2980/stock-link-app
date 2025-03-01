@@ -1,12 +1,13 @@
 import uuid
 from typing import Any
 
-from app.api.deps import CurrentUser, SessionDep
-from app.models import Item, ItemCreate, ItemPublic, ItemsPublic, ItemUpdate, Message
 from fastapi import APIRouter, HTTPException
 from sqlmodel import func, select
 
-router = APIRouter(prefix="/items", tags=["items"])
+from app.api.deps import CurrentUser, SessionDep
+from app.models import Item, ItemCreate, ItemPublic, ItemsPublic, ItemUpdate, Message
+
+router = APIRouter()
 
 
 @router.get("/", response_model=ItemsPublic, include_in_schema=True)

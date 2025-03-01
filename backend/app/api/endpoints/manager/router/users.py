@@ -4,8 +4,8 @@ from typing import Any
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import col, delete, func, select
 
-from app.api.endpoints.manager import crud
 from app.api.deps import CurrentUser, SessionDep, get_current_active_superuser
+from app.api.endpoints.manager import crud
 from app.core.config import settings
 from app.core.security import get_password_hash, verify_password
 from app.models import (
@@ -22,7 +22,7 @@ from app.models import (
 )
 from app.utils.utils import generate_new_account_email, send_email
 
-router = APIRouter(prefix="/users", tags=["users"])
+router = APIRouter()
 
 
 @router.get(
