@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react"
 
 export const toaster = createToaster({
-  placement: "top-end",
+  placement: "bottom-end",
   pauseOnPageIdle: true,
 })
 
@@ -19,7 +19,7 @@ export const Toaster = () => {
     <Portal>
       <ChakraToaster toaster={toaster} insetInline={{ mdDown: "4" }}>
         {(toast) => (
-          <Toast.Root width={{ md: "sm" }} color={toast.meta?.color}>
+          <Toast.Root width={{ md: "sm" }}>
             {toast.type === "loading" ? (
               <Spinner size="sm" color="blue.solid" />
             ) : (

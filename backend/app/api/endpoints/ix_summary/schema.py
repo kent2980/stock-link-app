@@ -63,16 +63,26 @@ class FinStructBase(SQLModel):
     """ファイナンシャルレスポンス情報を表すクラス"""
 
     period: Optional[PeriodSchemaBase] = Field(default=None)
-    upper: Optional[FinItemsBase] = Field(default=FinItemsBase(context="UpperMember"))
-    lower: Optional[FinItemsBase] = Field(default=FinItemsBase(context="LowerMember"))
 
 
-class FinResultStruct(FinStructBase):
+class FinUpperAndLower(FinStructBase):
+    """メトリックの上下限情報を表すクラス"""
+
+    upper: Optional[float] = Field(default=FinItemsBase(context="UpperMember"))
+    lower: Optional[float] = Field(default=FinItemsBase(context="LowerMember"))
+
+
+class FinResultStruct(FinUpperAndLower):
 
     result: Optional[FinItemsBase] = Field(default=FinItemsBase(context="ResultMember"))
 
 
-class FinForecastStruct(FinStructBase):
+class FinResultOnlyStruct(FinStructBase):
+
+    result: Optional[FinItemsBase] = Field(default=FinItemsBase(context="ResultMember"))
+
+
+class FinForecastStruct(FinUpperAndLower):
 
     forecast: Optional[FinItemsBase] = Field(
         default=FinItemsBase(context="ForecastMember")
@@ -94,6 +104,11 @@ class FinResponseBase(SQLModel):
 class FinResultResponse(FinResponseBase):
 
     data: List[FinResultStruct]
+
+
+class FinResultOnlyResponse(FinResponseBase):
+
+    data: List[FinResultOnlyStruct]
 
 
 class FinForecastResponse(FinResponseBase):

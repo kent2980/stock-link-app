@@ -16,10 +16,10 @@ export type FinForecastResponse = {
 };
 
 export type FinForecastStruct = {
-    period: PeriodSchemaBase;
-    upper: FinItemsBase;
-    lower: FinItemsBase;
-    forecast: FinItemsBase;
+    period?: (PeriodSchemaBase | null);
+    upper?: (number | null);
+    lower?: (number | null);
+    forecast?: (FinItemsBase | null);
 };
 
 /**
@@ -28,12 +28,24 @@ export type FinForecastStruct = {
 export type FinItemsBase = {
     is_active?: boolean;
     data?: (Array<FinValueAbstractBase> | null);
+    context?: (string | null);
 };
 
 export type FinResponseBase = {
     count: number;
     labels: Array<LabelBase>;
     data: Array<FinStructBase>;
+};
+
+export type FinResultOnlyResponse = {
+    count: number;
+    labels: Array<LabelBase>;
+    data: Array<FinResultOnlyStruct>;
+};
+
+export type FinResultOnlyStruct = {
+    period?: (PeriodSchemaBase | null);
+    result?: (FinItemsBase | null);
 };
 
 export type FinResultResponse = {
@@ -43,19 +55,17 @@ export type FinResultResponse = {
 };
 
 export type FinResultStruct = {
-    period: PeriodSchemaBase;
-    upper: FinItemsBase;
-    lower: FinItemsBase;
-    result: FinItemsBase;
+    period?: (PeriodSchemaBase | null);
+    upper?: (number | null);
+    lower?: (number | null);
+    result?: (FinItemsBase | null);
 };
 
 /**
  * ファイナンシャルレスポンス情報を表すクラス
  */
 export type FinStructBase = {
-    period: PeriodSchemaBase;
-    upper: FinItemsBase;
-    lower: FinItemsBase;
+    period?: (PeriodSchemaBase | null);
 };
 
 /**
@@ -352,13 +362,13 @@ export type SummaryGetFinancialPositionData = {
     code: string;
 };
 
-export type SummaryGetFinancialPositionResponse = (FinResultResponse);
+export type SummaryGetFinancialPositionResponse = (FinResultOnlyResponse);
 
 export type SummaryGetCashFlowsData = {
     code: string;
 };
 
-export type SummaryGetCashFlowsResponse = (FinResultResponse);
+export type SummaryGetCashFlowsResponse = (FinResultOnlyResponse);
 
 export type SummaryGetDividendsData = {
     code: string;

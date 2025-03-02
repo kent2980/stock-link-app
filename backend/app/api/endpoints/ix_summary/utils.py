@@ -219,6 +219,9 @@ def get_summary_items(
         is_change=is_change,
     )
 
+    if tree_items.count == 0:
+        raise HeadItemNotFound("Item not found")
+
     # ix_non_fractionsの取得
     ix_non_fractions = crud.get_ix_non_fraction_records(
         session=session,
@@ -255,7 +258,7 @@ def get_struct(
     # structがsc.FinStructBaseまたはその継承クラスでない場合、例外を発生させる
     if not isinstance(struct, sc.FinStructBase):
         raise TypeError("struct must be sc.FinStructBase or its subclass.")
-    # print(struct.__fields__.keys())
+
     head_item = items.get_head_item()
     tree_items = items.get_tree_items()
     from_name = items.get_from_name()

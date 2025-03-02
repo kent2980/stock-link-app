@@ -1,10 +1,9 @@
 from typing import List
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException
 
 from app.api.deps import SessionDep
 
-from . import crud
 from . import schema as sc
 from . import utils
 from .exceptions import HeadItemNotFound, NotDictKeyError
@@ -105,6 +104,7 @@ def get_other_operating_results(
     for item in items:
         result = utils.get_struct(
             items=item,
+            struct=sc.FinResultStruct(),
         )
         results.append(result)
 
@@ -174,13 +174,13 @@ def get_forecasts(
 @router.get(
     "/financial_position/{code}",
     summary="財政状態情報を取得",
-    response_model=sc.FinResultResponse,
+    response_model=sc.FinResultOnlyResponse,
 )
 def get_financial_position(
     *,
     session: SessionDep,
     code: str,
-) -> sc.FinResultResponse:
+) -> sc.FinResultOnlyResponse:
 
     attr_value_dict = {
         "FY": "BusinessResultsFinancialPositions",
@@ -212,12 +212,13 @@ def get_financial_position(
     for item in items:
         result = utils.get_struct(
             items=item,
+            struct=sc.FinResultOnlyStruct(),
         )
         results.append(result)
 
     label = utils.get_header_labels(results)
 
-    res = sc.FinResultResponse(
+    res = sc.FinResultOnlyResponse(
         count=len(results),
         labels=label,
         data=results,
@@ -229,13 +230,13 @@ def get_financial_position(
 @router.get(
     "/cash_flows/{code}",
     summary="キャッシュフロー情報を取得",
-    response_model=sc.FinResultResponse,
+    response_model=sc.FinResultOnlyResponse,
 )
 def get_cash_flows(
     *,
     session: SessionDep,
     code: str,
-) -> sc.FinResultResponse:
+) -> sc.FinResultOnlyResponse:
 
     attr_value_dict = {
         "FY": "BusinessResultsCashFlows",
@@ -267,12 +268,13 @@ def get_cash_flows(
     for item in items:
         result = utils.get_struct(
             items=item,
+            struct=sc.FinResultOnlyStruct(),
         )
         results.append(result)
 
     label = utils.get_header_labels(results)
 
-    res = sc.FinResultResponse(
+    res = sc.FinResultOnlyResponse(
         count=len(results),
         labels=label,
         data=results,

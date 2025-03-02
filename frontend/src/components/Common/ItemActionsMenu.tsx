@@ -1,19 +1,19 @@
-import { IconButton } from "@chakra-ui/react"
-import { BsThreeDotsVertical } from "react-icons/bs"
-import { MenuContent, MenuRoot, MenuTrigger } from "../ui/menu"
+import { IconButton } from "@chakra-ui/react";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { MenuContent, MenuRoot, MenuTrigger } from "../ui/menu";
 
-import type { ItemPublic } from "@/client"
-import DeleteItem from "../Items/DeleteItem"
-import EditItem from "../Items/EditItem"
+import type { ItemPublic } from "@/client";
+import DeleteItem from "../Items/DeleteItem";
+import EditItem from "../Items/EditItem";
 
 interface ItemActionsMenuProps {
-  item: ItemPublic
+  item: ItemPublic;
 }
 
 export const ItemActionsMenu = ({ item }: ItemActionsMenuProps) => {
   return (
     <MenuRoot>
-      <MenuTrigger asChild>
+      <MenuTrigger>
         <IconButton variant="ghost" color="inherit">
           <BsThreeDotsVertical />
         </IconButton>
@@ -23,5 +23,5 @@ export const ItemActionsMenu = ({ item }: ItemActionsMenuProps) => {
         <DeleteItem id={item.id} />
       </MenuContent>
     </MenuRoot>
-  )
-}
+  );
+};

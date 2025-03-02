@@ -1,45 +1,36 @@
 import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  Drawer,
+  DrawerBackdrop,
   DrawerBody,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
-  DrawerOverlay,
+  DrawerRoot,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import {
+  AccordionItem,
+  AccordionItemContent,
+  AccordionItemTrigger,
+  AccordionRoot,
+  Box,
+  Breadcrumb,
+  Button,
   Flex,
   FlexProps,
   HStack,
-  IconButton,
-  List,
   ListItem,
-  useColorModeValue,
-  useDisclosure,
+  ListRoot,
 } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { GrMenu } from "react-icons/gr";
 import { HeaderStore } from "../../Store/HeaderStore";
 import UserMenu from "./UserMenu";
 
 function Header(props: FlexProps) {
   const { HeaderAddressItems } = useStore(HeaderStore, (state) => state); // ストアからデータを取得
-
-  // ダークモードの設定
-  const bgColor = useColorModeValue("ui.light", "ui.dark");
-  const textColor = useColorModeValue("ui.dark", "ui.light");
-  const boxShadow = useColorModeValue(
-    "1px 1px 4px #c0bcbc",
-    "1px 1px 4px #000000"
-  );
 
   // ヘッダーの高さを設定
   const headerHeight = 59;
@@ -51,46 +42,54 @@ function Header(props: FlexProps) {
     }));
   }, [headerHeight]); // ヘッダーの高さが変更された場合のみ実行
 
-  const { isOpen, onOpen, onClose } = useDisclosure(); // メニューの開閉状態を管理
+  const [open, setOpen] = useState(false);
 
   return (
     <Flex
       h={headerHeight}
       {...props}
-      bg={bgColor}
-      color={textColor}
       position="fixed"
       top={0}
       right={0}
       w={"100%"}
       p={3}
-      boxShadow={boxShadow}
       zIndex={100}
     >
-      <HStack spacing={3} ml={3}>
-        <Breadcrumb separator=">" fontSize="md" color="gray.800" spacing="16px">
+      <HStack gap={3} ml={3}>
+        <Breadcrumb.Root fontSize="md" color="gray.800" gap="16px">
           {HeaderAddressItems.map((item, index) => (
-            <BreadcrumbItem key={index}>
-              <BreadcrumbLink href={item.href}>{item.label}</BreadcrumbLink>
-            </BreadcrumbItem>
+            <>
+              <Breadcrumb.Item key={index}>
+                <Breadcrumb.Link href={item.href}>{item.label}</Breadcrumb.Link>
+              </Breadcrumb.Item>
+              <Breadcrumb.Separator>/</Breadcrumb.Separator>
+            </>
           ))}
-        </Breadcrumb>
+        </Breadcrumb.Root>
       </HStack>
-      <HStack spacing={6} ml="auto">
+      <HStack gap={6} ml="auto" wrap={"wrap"}>
         <Box zIndex={120}>
-          <IconButton aria-label="Menu" icon={<GrMenu />} onClick={onOpen} />
-          <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
-            <DrawerOverlay />
-            <DrawerContent bg="ui.dark">
+          <DrawerRoot
+            placement="start"
+            open={open}
+            onOpenChange={(e: any) => setOpen(e.open)}
+          >
+            <DrawerBackdrop />
+            <DrawerTrigger>
+              <Button>
+                <GrMenu />
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent>
               <DrawerHeader borderBottomWidth="1px" fontSize={14}>
-                デザインマップ
+                <DrawerTitle>デザインマップ</DrawerTitle>
               </DrawerHeader>
               <DrawerBody>
                 <DesignMapAccordion />
               </DrawerBody>
               <DrawerFooter></DrawerFooter>
             </DrawerContent>
-          </Drawer>
+          </DrawerRoot>
         </Box>
         <UserMenu />
       </HStack>
@@ -118,19 +117,18 @@ function DesignMapAccordion() {
     { title: "決算サマリーページ", pages: summaryPages },
   ];
   return (
-    <Accordion allowToggle>
+    <AccordionRoot>
       {items.map((item, index) => (
-        <AccordionItem key={index}>
-          <h2>
-            <AccordionButton>
+        <AccordionItem key={index} value={item.title}>
+          <AccordionItemTrigger>
+            <h2>
               <Box as="span" flex={1} textAlign={"left"} fontSize={14}>
                 {item.title}
               </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4}>
-            <List fontSize={12.5}>
+            </h2>
+          </AccordionItemTrigger>
+          <AccordionItemContent pb={4}>
+            <ListRoot fontSize={12.5}>
               {item.pages.map((page, index) => (
                 <ListItem
                   key={index}
@@ -143,11 +141,11 @@ function DesignMapAccordion() {
                   </Link>
                 </ListItem>
               ))}
-            </List>
-          </AccordionPanel>
+            </ListRoot>
+          </AccordionItemContent>
         </AccordionItem>
       ))}
-    </Accordion>
+    </AccordionRoot>
   );
 }
 
