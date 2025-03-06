@@ -9,6 +9,18 @@ export type Body_login_login_access_token = {
     client_secret?: (string | null);
 };
 
+export type DocumentListPublic = {
+    id: number;
+    securities_code: string;
+    company_name: string;
+    document_name: string;
+};
+
+export type DocumentListPublics = {
+    count: number;
+    data: Array<DocumentListPublic>;
+};
+
 export type FinForecastResponse = {
     count: number;
     labels: Array<LabelBase>;
@@ -278,6 +290,22 @@ export type ItemsDeleteItemData = {
 };
 
 export type ItemsDeleteItemResponse = (Message);
+
+export type IxGetDocumentCountData = {
+    dateStr?: (string | null);
+};
+
+export type IxGetDocumentCountResponse = (number);
+
+export type IxGetLatestDocumentTitleResponse = (string);
+
+export type IxGetDocumentListData = {
+    dateStr?: (string | null);
+    limit?: (number | null);
+    page?: (number | null);
+};
+
+export type IxGetDocumentListResponse = (DocumentListPublics);
 
 export type JpxReadJpxStockInfoItemData = {
     code: string;

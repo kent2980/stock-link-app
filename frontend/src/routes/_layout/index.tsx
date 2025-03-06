@@ -1,6 +1,15 @@
-import { Box, Container, Text } from "@chakra-ui/react";
+import IRCard from "@/components/Index/IRCard";
+import {
+  Center,
+  Container,
+  Flex,
+  IconButton,
+  Input,
+  Wrap,
+} from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
+import { BsSearch } from "react-icons/bs";
 import { HeaderAddressItem, HeaderStore } from "../../Store/HeaderStore";
 
 export const Route = createFileRoute("/_layout/")({
@@ -24,15 +33,19 @@ function Index() {
   }, []);
 
   return (
-    <>
-      <Container maxW="full">
-        <Box pt={12} m={4}>
-          <Text fontSize="2xl" truncate maxW="sm">
-            {/* Hi, {currentUser?.full_name || currentUser?.email} 👋🏼 */}
-          </Text>
-          <Text>Welcome back, nice to see you again!</Text>
-        </Box>
-      </Container>
-    </>
+    <Container>
+      {/* 検索バー */}
+      <Center>
+        <Flex gap={2} mt={2}>
+          <Input placeholder="Search..." />
+          <IconButton aria-label="Search database">
+            <BsSearch />
+          </IconButton>
+        </Flex>
+      </Center>
+      <Wrap gap={2} mt={4}>
+        <IRCard select_date={null} />
+      </Wrap>
+    </Container>
   );
 }

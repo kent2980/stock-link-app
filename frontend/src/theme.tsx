@@ -15,12 +15,29 @@ export const system = createSystem(defaultConfig, {
       color: "ui.main",
       fontWeight: "bold",
     },
+    th: {
+      backgroundColor: "ui.light",
+      color: "ui.dark",
+      borderStyle: "solid",
+      borderColor: "gray.300",
+      borderWidth: "1px",
+    },
+    td: {
+      backgroundColor: "ui.light",
+      color: "ui.dark",
+      borderStyle: "solid",
+      borderColor: "gray.300",
+      borderWidth: "1px",
+    },
   },
   theme: {
     tokens: {
       colors: {
         ui: {
-          main: { value: "#009688" },
+          main: { value: "#434242ff" },
+          secondary: { value: "#dedfe1ff" },
+          dark: { value: "#333333" },
+          light: { value: "#f5f5f5" },
         },
       },
     },

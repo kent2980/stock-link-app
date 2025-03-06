@@ -26,12 +26,10 @@ const WikiInfo: React.FC<WikiInfoProps> = ({ code }) => {
 
   return (
     <>
-      <VStack bg="gray.900" gap={2} align="start">
+      <VStack gap={2} align="start">
         <Text fontSize="md">企業情報</Text>
-        <Text color="gray.300" fontSize="sm">
-          {data?.description}
-        </Text>
-        <Text fontSize="sm" color="gray.500" textAlign="left">
+        <Text fontSize="sm">{data?.description}</Text>
+        <Text fontSize="sm" textAlign="left">
           引用元: Wikipedia URL:
           <Link href={get_url(data?.url)}>{data?.url}</Link>
         </Text>

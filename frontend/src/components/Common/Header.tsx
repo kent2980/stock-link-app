@@ -1,21 +1,10 @@
 import {
-  DrawerBackdrop,
-  DrawerBody,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerRoot,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
-import {
   AccordionItem,
   AccordionItemContent,
   AccordionItemTrigger,
   AccordionRoot,
   Box,
   Breadcrumb,
-  Button,
   Flex,
   FlexProps,
   HStack,
@@ -25,7 +14,6 @@ import {
 import { Link } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import { useEffect, useState } from "react";
-import { GrMenu } from "react-icons/gr";
 import { HeaderStore } from "../../Store/HeaderStore";
 import UserMenu from "./UserMenu";
 
@@ -54,6 +42,7 @@ function Header(props: FlexProps) {
       w={"100%"}
       p={3}
       zIndex={100}
+      bg="ui.main"
     >
       <HStack gap={3} ml={3}>
         <Breadcrumb.Root fontSize="md" color="gray.800" gap="16px">
@@ -68,29 +57,6 @@ function Header(props: FlexProps) {
         </Breadcrumb.Root>
       </HStack>
       <HStack gap={6} ml="auto" wrap={"wrap"}>
-        <Box zIndex={120}>
-          <DrawerRoot
-            placement="start"
-            open={open}
-            onOpenChange={(e: any) => setOpen(e.open)}
-          >
-            <DrawerBackdrop />
-            <DrawerTrigger>
-              <Button>
-                <GrMenu />
-              </Button>
-            </DrawerTrigger>
-            <DrawerContent>
-              <DrawerHeader borderBottomWidth="1px" fontSize={14}>
-                <DrawerTitle>デザインマップ</DrawerTitle>
-              </DrawerHeader>
-              <DrawerBody>
-                <DesignMapAccordion />
-              </DrawerBody>
-              <DrawerFooter></DrawerFooter>
-            </DrawerContent>
-          </DrawerRoot>
-        </Box>
         <UserMenu />
       </HStack>
     </Flex>

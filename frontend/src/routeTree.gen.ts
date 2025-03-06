@@ -17,11 +17,12 @@ import { Route as RecoverPasswordImport } from './routes/recover-password'
 import { Route as LoginImport } from './routes/login'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
+import { Route as LayoutVirtualImport } from './routes/_layout/virtual'
 import { Route as LayoutSettingsImport } from './routes/_layout/settings'
 import { Route as LayoutItemsImport } from './routes/_layout/items'
-import { Route as LayoutIndustriesImport } from './routes/_layout/industries'
 import { Route as LayoutAdminImport } from './routes/_layout/admin'
 import { Route as LayoutSummaryIndexImport } from './routes/_layout/summary/index'
+import { Route as LayoutStoreIndexImport } from './routes/_layout/store/index'
 import { Route as LayoutSummaryCodeLayoutImport } from './routes/_layout/summary/$code/_layout'
 import { Route as LayoutSummaryCodeLayoutStockInfoImport } from './routes/_layout/summary/$code/_layout/stockInfo'
 import { Route as LayoutSummaryCodeLayoutHeadKeySummaryImport } from './routes/_layout/summary/$code/_layout/$headKey/summary'
@@ -58,6 +59,11 @@ const LayoutIndexRoute = LayoutIndexImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutVirtualRoute = LayoutVirtualImport.update({
+  path: '/virtual',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 const LayoutSettingsRoute = LayoutSettingsImport.update({
   path: '/settings',
   getParentRoute: () => LayoutRoute,
@@ -68,11 +74,6 @@ const LayoutItemsRoute = LayoutItemsImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutIndustriesRoute = LayoutIndustriesImport.update({
-  path: '/industries',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
 const LayoutAdminRoute = LayoutAdminImport.update({
   path: '/admin',
   getParentRoute: () => LayoutRoute,
@@ -80,6 +81,11 @@ const LayoutAdminRoute = LayoutAdminImport.update({
 
 const LayoutSummaryIndexRoute = LayoutSummaryIndexImport.update({
   path: '/summary/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutStoreIndexRoute = LayoutStoreIndexImport.update({
+  path: '/store/',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -128,10 +134,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutAdminImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/industries': {
-      preLoaderRoute: typeof LayoutIndustriesImport
-      parentRoute: typeof LayoutImport
-    }
     '/_layout/items': {
       preLoaderRoute: typeof LayoutItemsImport
       parentRoute: typeof LayoutImport
@@ -140,8 +142,16 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutSettingsImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/virtual': {
+      preLoaderRoute: typeof LayoutVirtualImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/': {
       preLoaderRoute: typeof LayoutIndexImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/store/': {
+      preLoaderRoute: typeof LayoutStoreIndexImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/summary/': {
@@ -168,10 +178,11 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren([
   LayoutRoute.addChildren([
     LayoutAdminRoute,
-    LayoutIndustriesRoute,
     LayoutItemsRoute,
     LayoutSettingsRoute,
+    LayoutVirtualRoute,
     LayoutIndexRoute,
+    LayoutStoreIndexRoute,
     LayoutSummaryIndexRoute,
     LayoutSummaryCodeLayoutRoute.addChildren([
       LayoutSummaryCodeLayoutStockInfoRoute,

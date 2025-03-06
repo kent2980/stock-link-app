@@ -36,22 +36,22 @@ const HeaderContents: React.FC<SummaryHeaderProps> = ({ code }) => {
     "プライム(内国株式)": "東京証券取引所 プライム市場",
   };
   return (
-    <Box fontWeight={800}>
+    <Box fontWeight={500}>
       <Grid
         templateColumns={{
           base: "repeat(5, auto)",
           md: "auto auto auto auto auto",
         }}
-        gap={{ base: 1, md: 10 }}
+        gap={{ base: 2, md: 10 }}
         justifyContent={{ base: "-moz-initial", md: "start" }}
       >
         <GridItem colSpan={1}>
           <Box
             as="span"
-            bg="#ffffffdd"
-            color="ui.dark"
             px={2}
             py={0.4}
+            border={"1px solid"}
+            borderColor="ui.dark"
             borderRadius="md"
             boxShadow={"0 0 1px 1px #ffffffdd"}
           >

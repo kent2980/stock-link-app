@@ -1,11 +1,11 @@
-import { Box, Flex, IconButton, Text } from "@chakra-ui/react";
+import { Box, BoxProps, Flex, IconButton, Text } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { FaBars } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 
 import type { UserPublic } from "@/client";
 import useAuth from "@/hooks/useAuth";
+import { GrMenu } from "react-icons/gr";
 import {
   DrawerBackdrop,
   DrawerBody,
@@ -16,7 +16,7 @@ import {
 } from "../ui/drawer";
 import SidebarItems from "./SidebarItems";
 
-const Sidebar = () => {
+const Sidebar = (props: BoxProps) => {
   const queryClient = useQueryClient();
   const currentUser = queryClient.getQueryData<UserPublic>(["currentUser"]);
   const { logout } = useAuth();
@@ -33,15 +33,16 @@ const Sidebar = () => {
         <DrawerBackdrop />
         <DrawerTrigger asChild>
           <IconButton
-            variant="ghost"
-            color="inherit"
             display={{ base: "flex", md: "none" }}
             aria-label="Open Menu"
             position="absolute"
-            zIndex="100"
+            zIndex="140"
             m={4}
+            top={0}
+            borderRadius={10}
+            size="sm"
           >
-            <FaBars />
+            <GrMenu />
           </IconButton>
         </DrawerTrigger>
         <DrawerContent maxW="xs">
@@ -79,14 +80,16 @@ const Sidebar = () => {
 
       <Box
         display={{ base: "none", md: "flex" }}
-        position="sticky"
-        bg="bg.subtle"
-        top={0}
-        minW="xs"
-        h="100vh"
+        position="relative"
+        flexBasis="auto"
+        flexShrink="0"
+        bg="ui.light"
         p={4}
+        m="0"
+        justifyContent="flex-end" // 追加
+        {...props}
       >
-        <Box w="100%">
+        <Box bg="ui.secondary" id="sideBarItem" p={4} borderRadius="md" w="80%">
           <SidebarItems />
         </Box>
       </Box>

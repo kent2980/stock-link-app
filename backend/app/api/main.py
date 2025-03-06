@@ -1,7 +1,10 @@
+from fastapi import APIRouter
+
 from app.api.endpoints.ix_calc import router as ix_calc_router
 from app.api.endpoints.ix_check import router as ix_check_router
 from app.api.endpoints.ix_def import router as ix_def_router
 from app.api.endpoints.ix_head import router as ix_head_router
+from app.api.endpoints.ix_info import router as ix_info_router
 from app.api.endpoints.ix_lab import router as ix_lab_router
 from app.api.endpoints.ix_non_fraction import router as ix_non_fraction_router
 from app.api.endpoints.ix_non_numeric import router as ix_non_numeric_router
@@ -14,10 +17,10 @@ from app.api.endpoints.ix_summary import router as ix_summary_router
 from app.api.endpoints.jpx_info import router as jpx_info_router
 from app.api.endpoints.manager.router import items, login, users, utils
 from app.api.endpoints.stock_wiki import router as stock_wiki_router
-from fastapi import APIRouter
 
 api_router = APIRouter()
 
+api_router.include_router(ix_info_router.router, prefix="/ix/stock_info", tags=["ix"])
 api_router.include_router(
     jpx_info_router.router, prefix="/jpx/stock_info", tags=["jpx"]
 )
