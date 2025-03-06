@@ -88,7 +88,29 @@ def get_document_list(
     if limit:
         items = items[:limit]
 
+    schemas = []
+    report_type = {
+        "edjp": "決算短信(日本基準)",
+        "edus": "決算短信(米国基準)",
+        "edif": "決算短信(IFRS)",
+    }
+    for item in items:
+        try:
+            document_short_name = report_type[item.report_type]
+        except KeyError:
+            document_short_name = item.document_name
+        schema = sc.DocumentListPublic(
+            id=item.id,
+            head_item_key=item.item_key,
+            insert_date=item.insert_date,
+            securities_code=item.securities_code,
+            company_name=item.company_name,
+            document_name=item.document_name,
+            document_short_name=document_short_name,
+        )
+        schemas.append(schema)
+
     return sc.DocumentListPublics(
         count=count,
-        data=items,
+        data=schemas,
     )

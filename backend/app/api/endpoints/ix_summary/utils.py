@@ -1,3 +1,4 @@
+import re
 from collections import defaultdict
 from typing import Any, Dict, List, Tuple
 
@@ -45,20 +46,39 @@ def get_metric_schema_value_and_change(
         for schema_item in schema_items:
             if schema_item.name == child_items[item.name]:
                 if bool(set(item.context) & set(metric_contexts)):
-                    if item.name.startswith("tse-ed-t_ChangeIn"):
-                        schema_item.change = sc.FinValueBase(
-                            key=item.item_key,
-                            name=item.name,
-                            value=item.numeric,
-                            unit=item.unit_ref,
-                        )
+                    is_current = any(
+                        re.match(r"Current.*", context) for context in item.context
+                    )
+                    if is_current:
+                        if item.name.startswith("tse-ed-t_ChangeIn"):
+                            schema_item.curChange = sc.FinValueBase(
+                                name=item.name,
+                                value=item.numeric,
+                                unit=item.unit_ref,
+                                display_scale=item.display_scale,
+                            )
+                        else:
+                            schema_item.curValue = sc.FinValueBase(
+                                name=item.name,
+                                value=item.numeric,
+                                unit=item.unit_ref,
+                                display_scale=item.display_scale,
+                            )
                     else:
-                        schema_item.value = sc.FinValueBase(
-                            key=item.item_key,
-                            name=item.name,
-                            value=item.numeric,
-                            unit=item.unit_ref,
-                        )
+                        if item.name.startswith("tse-ed-t_ChangeIn"):
+                            schema_item.preChange = sc.FinValueBase(
+                                name=item.name,
+                                value=item.numeric,
+                                unit=item.unit_ref,
+                                display_scale=item.display_scale,
+                            )
+                        else:
+                            schema_item.preValue = sc.FinValueBase(
+                                name=item.name,
+                                value=item.numeric,
+                                unit=item.unit_ref,
+                                display_scale=item.display_scale,
+                            )
 
 
 def get_attr_value(head_item: IxHeadTitle, attr_value_dict: Dict[str, str]) -> str:
@@ -288,11 +308,22 @@ def get_struct(
                                     name=item.name,
                                     value=item.numeric,
                                     unit=item.unit_ref,
+                                    display_scale=item.display_scale,
                                 )
-                                if item.name.startswith("tse-ed-t_ChangeIn"):
-                                    struct_item.change = metric_schema
+                                is_current = any(
+                                    re.match(r"Current.*", context)
+                                    for context in item.context
+                                )
+                                if is_current:
+                                    if item.name.startswith("tse-ed-t_ChangeIn"):
+                                        struct_item.curChange = metric_schema
+                                    else:
+                                        struct_item.curValue = metric_schema
                                 else:
-                                    struct_item.value = metric_schema
+                                    if item.name.startswith("tse-ed-t_ChangeIn"):
+                                        struct_item.preChange = metric_schema
+                                    else:
+                                        struct_item.preValue = metric_schema
 
     period = sc.PeriodSchemaBase(  # periodを設定
         accountingStandard=head_item.report_type,

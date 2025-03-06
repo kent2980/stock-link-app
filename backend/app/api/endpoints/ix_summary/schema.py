@@ -31,6 +31,7 @@ class FinValueBase(SQLModel):
     name: str
     value: Optional[float]
     unit: Optional[str]
+    display_scale: Optional[str]
 
 
 class FinValueAbstractBase(SQLModel):
@@ -39,8 +40,10 @@ class FinValueAbstractBase(SQLModel):
     name: str
     order: float
     label: str
-    value: Optional[FinValueBase] = Field(default=None)
-    change: Optional[FinValueBase] = Field(default=None)
+    curValue: Optional[FinValueBase] = Field(default=None)
+    curChange: Optional[FinValueBase] = Field(default=None)
+    preValue: Optional[FinValueBase] = Field(default=None)
+    preChange: Optional[FinValueBase] = Field(default=None)
 
 
 class PeriodSchemaBase(SQLModel):

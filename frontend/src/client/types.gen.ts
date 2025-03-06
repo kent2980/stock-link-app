@@ -11,9 +11,12 @@ export type Body_login_login_access_token = {
 
 export type DocumentListPublic = {
     id: number;
+    head_item_key: string;
+    insert_date: string;
     securities_code: string;
     company_name: string;
     document_name: string;
+    document_short_name: string;
 };
 
 export type DocumentListPublics = {
@@ -87,8 +90,10 @@ export type FinValueAbstractBase = {
     name: string;
     order: number;
     label: string;
-    value?: (FinValueBase | null);
-    change?: (FinValueBase | null);
+    curValue?: (FinValueBase | null);
+    curChange?: (FinValueBase | null);
+    preValue?: (FinValueBase | null);
+    preChange?: (FinValueBase | null);
 };
 
 /**
@@ -98,6 +103,7 @@ export type FinValueBase = {
     name: string;
     value: (number | null);
     unit: (string | null);
+    display_scale: (string | null);
 };
 
 export type HTTPValidationError = {
@@ -369,37 +375,79 @@ export type LoginRecoverPasswordHtmlContentData = {
 export type LoginRecoverPasswordHtmlContentResponse = (string);
 
 export type SummaryGetOperatingResultsData = {
-    code: string;
+    /**
+     * 銘柄コード
+     */
+    code?: (string | null);
+    /**
+     * head_item_key
+     */
+    headItemKey?: (string | null);
 };
 
 export type SummaryGetOperatingResultsResponse = (FinResultResponse);
 
 export type SummaryGetOtherOperatingResultsData = {
-    code: string;
+    /**
+     * 銘柄コード
+     */
+    code?: (string | null);
+    /**
+     * head_item_key
+     */
+    headItemKey?: (string | null);
 };
 
 export type SummaryGetOtherOperatingResultsResponse = (FinResultResponse);
 
 export type SummaryGetForecastsData = {
-    code: string;
+    /**
+     * 銘柄コード
+     */
+    code?: (string | null);
+    /**
+     * head_item_key
+     */
+    headItemKey?: (string | null);
 };
 
 export type SummaryGetForecastsResponse = (FinForecastResponse);
 
 export type SummaryGetFinancialPositionData = {
-    code: string;
+    /**
+     * 銘柄コード
+     */
+    code?: (string | null);
+    /**
+     * head_item_key
+     */
+    headItemKey?: (string | null);
 };
 
 export type SummaryGetFinancialPositionResponse = (FinResultOnlyResponse);
 
 export type SummaryGetCashFlowsData = {
-    code: string;
+    /**
+     * 銘柄コード
+     */
+    code?: (string | null);
+    /**
+     * head_item_key
+     */
+    headItemKey?: (string | null);
 };
 
 export type SummaryGetCashFlowsResponse = (FinResultOnlyResponse);
 
 export type SummaryGetDividendsData = {
-    code: string;
+    /**
+     * 銘柄コード
+     */
+    code?: (string | null);
+    /**
+     * head_item_key
+     */
+    headItemKey?: (string | null);
 };
 
 export type SummaryGetDividendsResponse = (FinResponseBase);

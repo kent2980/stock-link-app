@@ -405,16 +405,18 @@ export class SummaryService {
     /**
      * 経営成績情報を取得
      * @param data The data for the request.
-     * @param data.code
+     * @param data.code 銘柄コード
+     * @param data.headItemKey head_item_key
      * @returns FinResultResponse Successful Response
      * @throws ApiError
      */
-    public static getOperatingResults(data: SummaryGetOperatingResultsData): CancelablePromise<SummaryGetOperatingResultsResponse> {
+    public static getOperatingResults(data: SummaryGetOperatingResultsData = {}): CancelablePromise<SummaryGetOperatingResultsResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/ix/summary/operating_results/income/{code}',
-            path: {
-                code: data.code
+            url: '/api/v1/ix/summary/operating_results/income/',
+            query: {
+                code: data.code,
+                head_item_key: data.headItemKey
             },
             errors: {
                 422: 'Validation Error'
@@ -425,16 +427,18 @@ export class SummaryService {
     /**
      * その他の経営成績情報を取得
      * @param data The data for the request.
-     * @param data.code
+     * @param data.code 銘柄コード
+     * @param data.headItemKey head_item_key
      * @returns FinResultResponse Successful Response
      * @throws ApiError
      */
-    public static getOtherOperatingResults(data: SummaryGetOtherOperatingResultsData): CancelablePromise<SummaryGetOtherOperatingResultsResponse> {
+    public static getOtherOperatingResults(data: SummaryGetOtherOperatingResultsData = {}): CancelablePromise<SummaryGetOtherOperatingResultsResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/ix/summary/operating_results/other/{code}',
-            path: {
-                code: data.code
+            url: '/api/v1/ix/summary/operating_results/other/',
+            query: {
+                code: data.code,
+                head_item_key: data.headItemKey
             },
             errors: {
                 422: 'Validation Error'
@@ -445,16 +449,18 @@ export class SummaryService {
     /**
      * 予測情報を取得
      * @param data The data for the request.
-     * @param data.code
+     * @param data.code 銘柄コード
+     * @param data.headItemKey head_item_key
      * @returns FinForecastResponse Successful Response
      * @throws ApiError
      */
-    public static getForecasts(data: SummaryGetForecastsData): CancelablePromise<SummaryGetForecastsResponse> {
+    public static getForecasts(data: SummaryGetForecastsData = {}): CancelablePromise<SummaryGetForecastsResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/ix/summary/forecasts/{code}',
-            path: {
-                code: data.code
+            url: '/api/v1/ix/summary/forecasts/',
+            query: {
+                code: data.code,
+                head_item_key: data.headItemKey
             },
             errors: {
                 422: 'Validation Error'
@@ -465,16 +471,18 @@ export class SummaryService {
     /**
      * 財政状態情報を取得
      * @param data The data for the request.
-     * @param data.code
+     * @param data.code 銘柄コード
+     * @param data.headItemKey head_item_key
      * @returns FinResultOnlyResponse Successful Response
      * @throws ApiError
      */
-    public static getFinancialPosition(data: SummaryGetFinancialPositionData): CancelablePromise<SummaryGetFinancialPositionResponse> {
+    public static getFinancialPosition(data: SummaryGetFinancialPositionData = {}): CancelablePromise<SummaryGetFinancialPositionResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/ix/summary/financial_position/{code}',
-            path: {
-                code: data.code
+            url: '/api/v1/ix/summary/financial_position/',
+            query: {
+                code: data.code,
+                head_item_key: data.headItemKey
             },
             errors: {
                 422: 'Validation Error'
@@ -485,16 +493,18 @@ export class SummaryService {
     /**
      * キャッシュフロー情報を取得
      * @param data The data for the request.
-     * @param data.code
+     * @param data.code 銘柄コード
+     * @param data.headItemKey head_item_key
      * @returns FinResultOnlyResponse Successful Response
      * @throws ApiError
      */
-    public static getCashFlows(data: SummaryGetCashFlowsData): CancelablePromise<SummaryGetCashFlowsResponse> {
+    public static getCashFlows(data: SummaryGetCashFlowsData = {}): CancelablePromise<SummaryGetCashFlowsResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/ix/summary/cash_flows/{code}',
-            path: {
-                code: data.code
+            url: '/api/v1/ix/summary/cash_flows/',
+            query: {
+                code: data.code,
+                head_item_key: data.headItemKey
             },
             errors: {
                 422: 'Validation Error'
@@ -505,16 +515,18 @@ export class SummaryService {
     /**
      * 配当情報を取得
      * @param data The data for the request.
-     * @param data.code
+     * @param data.code 銘柄コード
+     * @param data.headItemKey head_item_key
      * @returns FinResponseBase Successful Response
      * @throws ApiError
      */
-    public static getDividends(data: SummaryGetDividendsData): CancelablePromise<SummaryGetDividendsResponse> {
+    public static getDividends(data: SummaryGetDividendsData = {}): CancelablePromise<SummaryGetDividendsResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/ix/summary/dividends/{code}',
-            path: {
-                code: data.code
+            url: '/api/v1/ix/summary/dividends/',
+            query: {
+                code: data.code,
+                head_item_key: data.headItemKey
             },
             errors: {
                 422: 'Validation Error'

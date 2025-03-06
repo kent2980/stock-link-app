@@ -369,7 +369,7 @@ def get_ix_non_fraction_records(
     statement = select(IxNonFraction).where(
         IxNonFraction.head_item_key == head_item_key,
         IxNonFraction.name.in_(names),
-        func.array_to_string(IxNonFraction.context, ",").not_ilike("%Prior%"),
+        # func.array_to_string(IxNonFraction.context, ",").not_ilike("%Prior%"),
     )
 
     if contexts:

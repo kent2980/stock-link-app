@@ -1,19 +1,6 @@
-import {
-  AccordionItem,
-  AccordionItemContent,
-  AccordionItemTrigger,
-  AccordionRoot,
-  Box,
-  Breadcrumb,
-  Flex,
-  FlexProps,
-  HStack,
-  ListItem,
-  ListRoot,
-} from "@chakra-ui/react";
-import { Link } from "@tanstack/react-router";
+import { Breadcrumb, Flex, FlexProps, HStack } from "@chakra-ui/react";
 import { useStore } from "@tanstack/react-store";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { HeaderStore } from "../../Store/HeaderStore";
 import UserMenu from "./UserMenu";
 
@@ -29,8 +16,6 @@ function Header(props: FlexProps) {
       height: headerHeight,
     }));
   }, [headerHeight]); // ヘッダーの高さが変更された場合のみ実行
-
-  const [open, setOpen] = useState(false);
 
   return (
     <Flex
@@ -60,58 +45,6 @@ function Header(props: FlexProps) {
         <UserMenu />
       </HStack>
     </Flex>
-  );
-}
-
-type CustomItemProps = {
-  title: string;
-  path: string;
-  params?: any | undefined;
-};
-
-function DesignMapAccordion() {
-  const summaryPages: CustomItemProps[] = [
-    { title: "エラーページ", path: "/summary" },
-    {
-      title: "共通コンテンツ",
-      path: "/summary/$code/layout/stockInfo",
-      params: { code: "1758" },
-    },
-  ];
-  const items = [
-    { title: "固定ページ", pages: [{ title: "トップページ", path: "/" }] },
-    { title: "決算サマリーページ", pages: summaryPages },
-  ];
-  return (
-    <AccordionRoot>
-      {items.map((item, index) => (
-        <AccordionItem key={index} value={item.title}>
-          <AccordionItemTrigger>
-            <h2>
-              <Box as="span" flex={1} textAlign={"left"} fontSize={14}>
-                {item.title}
-              </Box>
-            </h2>
-          </AccordionItemTrigger>
-          <AccordionItemContent pb={4}>
-            <ListRoot fontSize={12.5}>
-              {item.pages.map((page, index) => (
-                <ListItem
-                  key={index}
-                  ml={4}
-                  p={1}
-                  _hover={{ bg: "gray.100", color: "ui.dark" }}
-                >
-                  <Link to={page.path} params={page.params}>
-                    {page.title}
-                  </Link>
-                </ListItem>
-              ))}
-            </ListRoot>
-          </AccordionItemContent>
-        </AccordionItem>
-      ))}
-    </AccordionRoot>
   );
 }
 
