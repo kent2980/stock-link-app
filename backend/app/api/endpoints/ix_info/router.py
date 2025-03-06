@@ -94,9 +94,16 @@ def get_document_list(
         "edus": "決算短信(米国基準)",
         "edif": "決算短信(IFRS)",
     }
+    period = {
+        "Q1": "第1四半期",
+        "Q2": "第2四半期",
+        "Q3": "第3四半期",
+        "H1": "中間",
+        "FY": "通期",
+    }
     for item in items:
         try:
-            document_short_name = report_type[item.report_type]
+            document_short_name = f"{item.reporting_date.year}年{period[item.current_period]} {report_type[item.report_type]}"
         except KeyError:
             document_short_name = item.document_name
         schema = sc.DocumentListPublic(

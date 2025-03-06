@@ -49,36 +49,22 @@ def get_metric_schema_value_and_change(
                     is_current = any(
                         re.match(r"Current.*", context) for context in item.context
                     )
+                    valueBase = sc.FinValueBase(
+                        name=item.name,
+                        value=item.numeric,
+                        unit=item.unit_ref,
+                        display_scale=item.display_scale,
+                    )
                     if is_current:
                         if item.name.startswith("tse-ed-t_ChangeIn"):
-                            schema_item.curChange = sc.FinValueBase(
-                                name=item.name,
-                                value=item.numeric,
-                                unit=item.unit_ref,
-                                display_scale=item.display_scale,
-                            )
+                            schema_item.curChange = valueBase
                         else:
-                            schema_item.curValue = sc.FinValueBase(
-                                name=item.name,
-                                value=item.numeric,
-                                unit=item.unit_ref,
-                                display_scale=item.display_scale,
-                            )
+                            schema_item.curValue = valueBase
                     else:
                         if item.name.startswith("tse-ed-t_ChangeIn"):
-                            schema_item.preChange = sc.FinValueBase(
-                                name=item.name,
-                                value=item.numeric,
-                                unit=item.unit_ref,
-                                display_scale=item.display_scale,
-                            )
+                            schema_item.preChange = valueBase
                         else:
-                            schema_item.preValue = sc.FinValueBase(
-                                name=item.name,
-                                value=item.numeric,
-                                unit=item.unit_ref,
-                                display_scale=item.display_scale,
-                            )
+                            schema_item.preValue = valueBase
 
 
 def get_attr_value(head_item: IxHeadTitle, attr_value_dict: Dict[str, str]) -> str:
