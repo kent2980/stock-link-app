@@ -46,7 +46,7 @@ function Virtual() {
           h={`${rowVirtualizer.getTotalSize()}px`}
           w="100%"
           position="relative"
-          maxW="calc(100vw - 250px)" // サイドバーの幅を考慮して最大幅を設定
+          maxW={{ base: "100%", md: "calc(100vw - 250px)" }}
           m="auto" // 中央に配置
         >
           {rowVirtualizer.getVirtualItems().map((virtualRow) => (

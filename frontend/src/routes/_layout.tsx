@@ -34,7 +34,7 @@ function Layout() {
         <Flex
           flex="1"
           direction="column"
-          p={4}
+          p={{ base: 0, md: 4 }}
           overflowY="auto"
           bg="ui.light"
           maxW={{ base: "100%", md: "720px" }}
