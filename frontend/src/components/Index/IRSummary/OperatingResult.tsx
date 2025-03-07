@@ -22,7 +22,7 @@ function OperatingResult({ head_item_key }: OperatingResultProps) {
           <>
             {item?.result?.data?.map((result) => {
               return (
-                <Box border="1px solid" borderColor="gray.400" p={2} m={2}>
+                <Box border="1px solid" borderColor="gray.400" p={2}>
                   <Stat.Root>
                     <Stat.Label>{result.label}</Stat.Label>
                     <HStack>
