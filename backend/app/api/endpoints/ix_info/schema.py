@@ -12,6 +12,7 @@ class DocumentListPublic(SQLModel):
     company_name: str
     document_name: str
     document_short_name: str
+    report_type: str
 
 
 class DocumentListPublics(SQLModel):

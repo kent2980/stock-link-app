@@ -39,7 +39,7 @@ function ViewItems() {
   const rowVirtualizer = useVirtualizer({
     count: data.count,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 600,
+    estimateSize: () => 1000,
     overscan: 5,
   });
 
@@ -47,8 +47,16 @@ function ViewItems() {
 
   const today = new Date();
 
+  for (let i = 0; i < data.count; i++) {
+    if (["edjp", "edif", "edus"].includes(data.data[i].report_type)) {
+      rowVirtualizer.resizeItem(i, 1000);
+    } else {
+      rowVirtualizer.resizeItem(i, 300);
+    }
+  }
+
   return (
-    <Box>
+    <>
       <Box ref={parentRef} overflow="auto" height={`calc(100vh - ${height}px)`}>
         <List.Root
           h={`${rowVirtualizer.getTotalSize()}px`}
@@ -113,6 +121,6 @@ function ViewItems() {
           })}
         </List.Root>
       </Box>
-    </Box>
+    </>
   );
 }

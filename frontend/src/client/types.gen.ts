@@ -17,6 +17,7 @@ export type DocumentListPublic = {
     company_name: string;
     document_name: string;
     document_short_name: string;
+    report_type: string;
 };
 
 export type DocumentListPublics = {

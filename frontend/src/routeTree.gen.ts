@@ -21,6 +21,7 @@ import { Route as LayoutVirtualImport } from './routes/_layout/virtual'
 import { Route as LayoutSettingsImport } from './routes/_layout/settings'
 import { Route as LayoutItemsImport } from './routes/_layout/items'
 import { Route as LayoutAdminImport } from './routes/_layout/admin'
+import { Route as LayoutResponsiveImport } from './routes/_layout/Responsive'
 import { Route as LayoutStoreIndexImport } from './routes/_layout/store/index'
 
 // Create/Update Routes
@@ -75,6 +76,11 @@ const LayoutAdminRoute = LayoutAdminImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutResponsiveRoute = LayoutResponsiveImport.update({
+  path: '/Responsive',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 const LayoutStoreIndexRoute = LayoutStoreIndexImport.update({
   path: '/store/',
   getParentRoute: () => LayoutRoute,
@@ -103,6 +109,10 @@ declare module '@tanstack/react-router' {
     '/signup': {
       preLoaderRoute: typeof SignupImport
       parentRoute: typeof rootRoute
+    }
+    '/_layout/Responsive': {
+      preLoaderRoute: typeof LayoutResponsiveImport
+      parentRoute: typeof LayoutImport
     }
     '/_layout/admin': {
       preLoaderRoute: typeof LayoutAdminImport
@@ -135,6 +145,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   LayoutRoute.addChildren([
+    LayoutResponsiveRoute,
     LayoutAdminRoute,
     LayoutItemsRoute,
     LayoutSettingsRoute,
