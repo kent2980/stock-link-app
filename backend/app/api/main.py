@@ -38,7 +38,7 @@ api_router.include_router(
     ix_head_router.router,
     prefix="/xbrl",
     tags=["xbrl_ix_head"],
-    include_in_schema=False,
+    include_in_schema=True,
 )
 api_router.include_router(
     ix_non_fraction_router.router,

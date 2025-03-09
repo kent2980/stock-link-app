@@ -142,6 +142,144 @@ export type ItemUpdate = {
     description?: (string | null);
 };
 
+/**
+ * iXBRLのヘッダー情報を表すクラス
+ */
+export type IxHeadTitlePublic = {
+    /**
+     * 作成日時
+     */
+    insert_date: string;
+    /**
+     * 更新日時
+     */
+    update_date: string;
+    /**
+     * アイテムキー
+     */
+    item_key: string;
+    /**
+     * 会社名
+     */
+    company_name: (string | null);
+    /**
+     * 証券コード
+     */
+    securities_code: (string | null);
+    /**
+     * 書類名
+     */
+    document_name: (string | null);
+    /**
+     * 報告日
+     */
+    reporting_date: (string | null);
+    /**
+     * 現在の期間
+     */
+    current_period: (string | null);
+    /**
+     * 報告書タイプ
+     */
+    report_type: (string | null);
+    /**
+     * 上場市場
+     */
+    listed_market: (string | null);
+    /**
+     * 市場区分
+     */
+    market_section: (string | null);
+    /**
+     * URL
+     */
+    url: (string | null);
+    /**
+     * 貸借対照表フラグ
+     */
+    is_bs: (boolean | null);
+    /**
+     * 損益計算書フラグ
+     */
+    is_pl: (boolean | null);
+    /**
+     * キャッシュフロー計算書フラグ
+     */
+    is_cf: (boolean | null);
+    /**
+     * 包括利益計算書フラグ
+     */
+    is_ci: (boolean | null);
+    /**
+     * 株主資本等変動計算書フラグ
+     */
+    is_sce: (boolean | null);
+    /**
+     * 財政状態計算書フラグ
+     */
+    is_sfp: (boolean | null);
+    /**
+     * 会計年度末
+     */
+    fy_year_end: (string | null);
+    /**
+     * 電話番号
+     */
+    tel: (string | null);
+    /**
+     * 配当修正フラグ
+     */
+    is_div_rev: (boolean | null);
+    /**
+     * 配当収益率
+     */
+    div_inc_rt: (string | null);
+    /**
+     * 業績予測修正フラグ
+     */
+    is_fcst_rev: (boolean | null);
+    /**
+     * 予測営業利益成長率
+     */
+    fcst_oi_gr_rt: (string | null);
+    /**
+     * 営業利益進捗率
+     */
+    oi_prog_rt: (number | null);
+    /**
+     * 特定事業フラグ
+     */
+    specific_business: (boolean | null);
+    /**
+     * 連結決算フラグ
+     */
+    is_consolidated: (boolean | null);
+    /**
+     * 売上高増減率
+     */
+    change_in_net_sales: (number | null);
+    /**
+     * 経常利益増減率
+     */
+    change_in_ordinary_income: (number | null);
+    /**
+     * 当期純利益増減率
+     */
+    change_in_net_income: (number | null);
+    /**
+     * 予想売上高増減率
+     */
+    change_in_fore_net_sales: (number | null);
+    /**
+     * 予想経常利益増減率
+     */
+    change_in_fore_ordinary_income: (number | null);
+    /**
+     * 予想純利益増減率
+     */
+    change_in_fore_net_income: (number | null);
+};
+
 export type JpxStockInfoPublic = {
     input_date: string;
     code: string;
@@ -528,3 +666,15 @@ export type WikiGetStockWikiItemData = {
 };
 
 export type WikiGetStockWikiItemResponse = (StockWikiPublic);
+
+export type XbrlIxHeadIsIxHeadTitleItemActiveData = {
+    headItemKey: string;
+};
+
+export type XbrlIxHeadIsIxHeadTitleItemActiveResponse = (boolean);
+
+export type XbrlIxHeadReadIxHeadTitleItemData = {
+    headItemKey: string;
+};
+
+export type XbrlIxHeadReadIxHeadTitleItemResponse = (IxHeadTitlePublic);

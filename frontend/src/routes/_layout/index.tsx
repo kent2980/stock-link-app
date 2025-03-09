@@ -1,6 +1,6 @@
 import MainDataView from "@/components/Index/MainDataView";
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { HeaderAddressItem, HeaderStore } from "../../Store/HeaderStore";
 
 export const Route = createFileRoute("/_layout/")({
@@ -25,7 +25,9 @@ function Index() {
 
   return (
     <>
-      <MainDataView />
+      <Suspense fallback={<div>Loading...</div>}>
+        <MainDataView />
+      </Suspense>
     </>
   );
 }

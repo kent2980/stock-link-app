@@ -12,7 +12,6 @@ const items = [
   { icon: GrNew, title: "IR Store", path: "/store" },
   { icon: GrCube, title: "銘柄別", path: "/settings" },
   { icon: GrAction, title: "仮想化", path: "/virtual" },
-  { icon: GrAction, title: "responsive", path: "/Responsive" },
 ];
 
 interface SidebarItemsProps {

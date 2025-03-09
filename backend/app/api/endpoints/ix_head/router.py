@@ -72,3 +72,16 @@ def is_ix_head_title_item_active(*, session: SessionDep, head_item_key: str) -> 
     )
 
     return is_active
+
+
+@router.get("/ix/head/", response_model=sc.IxHeadTitlePublic)
+def read_ix_head_title_item(
+    *, session: SessionDep, head_item_key: str = Query(...)
+) -> IxHeadTitle:
+    """
+    Get item by head_item_key.
+    """
+    item = crud.read_ix_head_title_item(session=session, head_item_key=head_item_key)
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return item

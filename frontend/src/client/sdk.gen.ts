@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, IxGetDocumentCountData, IxGetDocumentCountResponse, IxGetLatestDocumentTitleResponse, IxGetDocumentListData, IxGetDocumentListResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, SummaryGetOperatingResultsData, SummaryGetOperatingResultsResponse, SummaryGetOtherOperatingResultsData, SummaryGetOtherOperatingResultsResponse, SummaryGetForecastsData, SummaryGetForecastsResponse, SummaryGetFinancialPositionData, SummaryGetFinancialPositionResponse, SummaryGetCashFlowsData, SummaryGetCashFlowsResponse, SummaryGetDividendsData, SummaryGetDividendsResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemsResponse, WikiCreateStockWikiItemData, WikiCreateStockWikiItemResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse } from './types.gen';
+import type { ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, IxGetDocumentCountData, IxGetDocumentCountResponse, IxGetLatestDocumentTitleResponse, IxGetDocumentListData, IxGetDocumentListResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, SummaryGetOperatingResultsData, SummaryGetOperatingResultsResponse, SummaryGetOtherOperatingResultsData, SummaryGetOtherOperatingResultsResponse, SummaryGetForecastsData, SummaryGetForecastsResponse, SummaryGetFinancialPositionData, SummaryGetFinancialPositionResponse, SummaryGetCashFlowsData, SummaryGetCashFlowsResponse, SummaryGetDividendsData, SummaryGetDividendsResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemsResponse, WikiCreateStockWikiItemData, WikiCreateStockWikiItemResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, XbrlIxHeadIsIxHeadTitleItemActiveData, XbrlIxHeadIsIxHeadTitleItemActiveResponse, XbrlIxHeadReadIxHeadTitleItemData, XbrlIxHeadReadIxHeadTitleItemResponse } from './types.gen';
 
 export class ItemsService {
     /**
@@ -818,6 +818,51 @@ export class WikiService {
             url: '/api/v1/wiki/{code}',
             path: {
                 code: data.code
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+}
+
+export class XbrlIxHeadService {
+    /**
+     * Is Ix Head Title Item Active
+     * Check if item is active.
+     * @param data The data for the request.
+     * @param data.headItemKey
+     * @returns boolean Successful Response
+     * @throws ApiError
+     */
+    public static isIxHeadTitleItemActive(data: XbrlIxHeadIsIxHeadTitleItemActiveData): CancelablePromise<XbrlIxHeadIsIxHeadTitleItemActiveResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/xbrl/ix/head/is_active/',
+            query: {
+                head_item_key: data.headItemKey
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Ix Head Title Item
+     * Get item by head_item_key.
+     * @param data The data for the request.
+     * @param data.headItemKey
+     * @returns IxHeadTitlePublic Successful Response
+     * @throws ApiError
+     */
+    public static readIxHeadTitleItem(data: XbrlIxHeadReadIxHeadTitleItemData): CancelablePromise<XbrlIxHeadReadIxHeadTitleItemResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/xbrl/ix/head/',
+            query: {
+                head_item_key: data.headItemKey
             },
             errors: {
                 422: 'Validation Error'
