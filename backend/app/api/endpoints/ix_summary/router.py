@@ -77,12 +77,11 @@ def get_operating_results(
     return res
 
 
-@router.get("/operating_results/other/", summary="その他の経営成績情報を取得")
+@router.get("/operating_results/other/{}", summary="その他の経営成績情報を取得")
 def get_other_operating_results(
     *,
     session: SessionDep,
-    code: Optional[str] = Query(None, description="銘柄コード"),
-    head_item_key: Optional[str] = Query(None, description="head_item_key"),
+    code: str,
 ) -> sc.FinResultResponse:
 
     attr_value_dict = {
@@ -95,13 +94,10 @@ def get_other_operating_results(
         "non_consolidated": "tse-ed-t_OtherOperatingResultsAbstract",
     }
 
-    if head_item_key is None:
-        try:
-            head_item_keys = utils.get_head_item_key(session=session, code=code)
-        except HeadItemNotFound as e:
-            raise HTTPException(status_code=404, detail=str(e))
-    else:
-        head_item_keys = [head_item_key]
+    try:
+        head_item_keys = utils.get_head_item_key(session=session, code=code)
+    except HeadItemNotFound as e:
+        raise HTTPException(status_code=404, detail=str(e))
 
     try:
         items = utils.get_summary_items_list(
@@ -133,12 +129,11 @@ def get_other_operating_results(
     return res
 
 
-@router.get("/forecasts/", summary="予測情報を取得")
+@router.get("/forecasts/{code}", summary="予測情報を取得")
 def get_forecasts(
     *,
     session: SessionDep,
-    code: Optional[str] = Query(None, description="銘柄コード"),
-    head_item_key: Optional[str] = Query(None, description="head_item_key"),
+    code: str,
 ) -> sc.FinForecastResponse:
 
     attr_value_dict = {
@@ -151,13 +146,10 @@ def get_forecasts(
         "non_consolidated": "tse-ed-t_MainTableOfForecastsAbstract",
     }
 
-    if head_item_key is None:
-        try:
-            head_item_keys = utils.get_head_item_key(session=session, code=code)
-        except HeadItemNotFound as e:
-            raise HTTPException(status_code=404, detail=str(e))
-    else:
-        head_item_keys = [head_item_key]
+    try:
+        head_item_keys = utils.get_head_item_key(session=session, code=code)
+    except HeadItemNotFound as e:
+        raise HTTPException(status_code=404, detail=str(e))
 
     try:
         items = utils.get_summary_items_list(
@@ -190,15 +182,14 @@ def get_forecasts(
 
 
 @router.get(
-    "/financial_position/",
+    "/financial_position/{code}",
     summary="財政状態情報を取得",
     response_model=sc.FinResultOnlyResponse,
 )
 def get_financial_position(
     *,
     session: SessionDep,
-    code: Optional[str] = Query(None, description="銘柄コード"),
-    head_item_key: Optional[str] = Query(None, description="head_item_key"),
+    code: str,
 ) -> sc.FinResultOnlyResponse:
 
     attr_value_dict = {
@@ -211,13 +202,10 @@ def get_financial_position(
         "non_consolidated": "tse-ed-t_FinancialPositionsAbstract",
     }
 
-    if head_item_key is None:
-        try:
-            head_item_keys = utils.get_head_item_key(session=session, code=code)
-        except HeadItemNotFound as e:
-            raise HTTPException(status_code=404, detail=str(e))
-    else:
-        head_item_keys = [head_item_key]
+    try:
+        head_item_keys = utils.get_head_item_key(session=session, code=code)
+    except HeadItemNotFound as e:
+        raise HTTPException(status_code=404, detail=str(e))
 
     try:
         items = utils.get_summary_items_list(
@@ -250,15 +238,14 @@ def get_financial_position(
 
 
 @router.get(
-    "/cash_flows/",
+    "/cash_flows/{code}",
     summary="キャッシュフロー情報を取得",
     response_model=sc.FinResultOnlyResponse,
 )
 def get_cash_flows(
     *,
     session: SessionDep,
-    code: Optional[str] = Query(None, description="銘柄コード"),
-    head_item_key: Optional[str] = Query(None, description="head_item_key"),
+    code: str,
 ) -> sc.FinResultOnlyResponse:
 
     attr_value_dict = {
@@ -271,13 +258,10 @@ def get_cash_flows(
         "non_consolidated": "tse-ed-t_CashFlowsAbstract",
     }
 
-    if head_item_key is None:
-        try:
-            head_item_keys = utils.get_head_item_key(session=session, code=code)
-        except HeadItemNotFound as e:
-            raise HTTPException(status_code=404, detail=str(e))
-    else:
-        head_item_keys = [head_item_key]
+    try:
+        head_item_keys = utils.get_head_item_key(session=session, code=code)
+    except HeadItemNotFound as e:
+        raise HTTPException(status_code=404, detail=str(e))
 
     try:
         items = utils.get_summary_items_list(
@@ -310,15 +294,14 @@ def get_cash_flows(
 
 
 @router.get(
-    "/dividends/",
+    "/dividends/{code}",
     summary="配当情報を取得",
     response_model=sc.FinResponseBase,
 )
 def get_dividends(
     *,
     session: SessionDep,
-    code: Optional[str] = Query(None, description="銘柄コード"),
-    head_item_key: Optional[str] = Query(None, description="head_item_key"),
+    code: str,
 ) -> sc.FinResponseBase:
 
     attr_value_dict = {
@@ -331,13 +314,10 @@ def get_dividends(
         "non_consolidated": "tse-ed-t_DividendsAbstract",
     }
 
-    if head_item_key is None:
-        try:
-            head_item_keys = utils.get_head_item_key(session=session, code=code)
-        except HeadItemNotFound as e:
-            raise HTTPException(status_code=404, detail=str(e))
-    else:
-        head_item_keys = [head_item_key]
+    try:
+        head_item_keys = utils.get_head_item_key(session=session, code=code)
+    except HeadItemNotFound as e:
+        raise HTTPException(status_code=404, detail=str(e))
 
     try:
         items = utils.get_summary_items_list(

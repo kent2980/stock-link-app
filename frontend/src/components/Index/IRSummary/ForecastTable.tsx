@@ -1,5 +1,13 @@
 import { SummaryService } from "@/client";
-import { Box, Card, Flex, Heading, Table } from "@chakra-ui/react";
+import {
+  Badge,
+  Box,
+  Card,
+  Flex,
+  FormatNumber,
+  Heading,
+  Table,
+} from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 interface ForecastTableProps {
@@ -15,6 +23,8 @@ const ForecastTable = ({ head_item_key }: ForecastTableProps) => {
       });
     },
   });
+
+  const badgeWidth = 16;
   return (
     <Box>
       <Card.Root boxShadow="lg" borderRadius="xl" overflow="hidden">
@@ -46,8 +56,42 @@ const ForecastTable = ({ head_item_key }: ForecastTableProps) => {
                     >
                       {result.label} ({result.curValue?.display_scale})
                     </Table.Cell>
-                    <Table.Cell fontSize={10} textAlign="center">
-                      {result.curValue?.value}
+                    <Table.Cell fontSize={12} textAlign="center">
+                      <Flex gap={2} alignItems="center" justifyContent="center">
+                        <Box w="40%" textAlign="right">
+                          <FormatNumber value={result.curValue?.value ?? 0} />
+                        </Box>
+                        <Flex
+                          w="60%"
+                          alignItems="center"
+                          justifyContent="center"
+                        >
+                          {result.curChange?.value ? (
+                            <Badge
+                              w={badgeWidth}
+                              colorPalette={
+                                (result.curChange?.value ?? 0) > 0
+                                  ? "green"
+                                  : "red"
+                              }
+                              justifyContent="center"
+                            >
+                              {result.curChange?.value
+                                .toString()
+                                .replace("-", "▲ ") ?? ""}
+                              %
+                            </Badge>
+                          ) : (
+                            <Badge
+                              w={badgeWidth}
+                              colorPalette="blue"
+                              justifyContent="center"
+                            >
+                              -
+                            </Badge>
+                          )}
+                        </Flex>
+                      </Flex>
                     </Table.Cell>
                   </Table.Row>
                 ))
