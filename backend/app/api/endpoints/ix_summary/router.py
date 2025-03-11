@@ -129,12 +129,19 @@ def get_other_operating_results(
     return res
 
 
-@router.get("/forecasts/{code}", summary="予測情報を取得")
+@router.get("/forecasts/", summary="予測情報を取得")
 def get_forecasts(
     *,
     session: SessionDep,
-    code: str,
+    code: Optional[str] = Query(None, description="銘柄コード"),
+    head_item_key: Optional[str] = Query(None, description="head_item_key"),
 ) -> sc.FinForecastResponse:
+
+    if code and head_item_key:
+        raise HTTPException(
+            status_code=404,
+            detail="銘柄コードかhead_item_keyどちらかを指定してください",
+        )
 
     attr_value_dict = {
         "FY": "Forecasts",
@@ -146,10 +153,13 @@ def get_forecasts(
         "non_consolidated": "tse-ed-t_MainTableOfForecastsAbstract",
     }
 
-    try:
-        head_item_keys = utils.get_head_item_key(session=session, code=code)
-    except HeadItemNotFound as e:
-        raise HTTPException(status_code=404, detail=str(e))
+    if head_item_key is None:
+        try:
+            head_item_keys = utils.get_head_item_key(session=session, code=code)
+        except HeadItemNotFound as e:
+            raise HTTPException(status_code=404, detail=str(e))
+    else:
+        head_item_keys = [head_item_key]
 
     try:
         items = utils.get_summary_items_list(
@@ -343,6 +353,70 @@ def get_dividends(
         count=len(results),
         labels=label,
         data=results,
+    )
+
+    return res
+
+
+@router.get(
+    "/forecast_progress_rate/{head_item_key}",
+    summary="予測進捗率情報を取得",
+    response_model=sc.ForecastProgressRateResponse,
+)
+def get_forecast_progress_rate(
+    *,
+    session: SessionDep,
+    head_item_key: str,
+) -> sc.ForecastProgressRateResponse:
+
+    ope_items = get_operating_results(
+        session=session, code=None, head_item_key=head_item_key
+    ).data[0]
+    fore_items = get_forecasts(
+        session=session, code=None, head_item_key=head_item_key
+    ).data[0]
+
+    def calculate_progress_rate(ope_data: sc.FinItemsBase, fore_data: sc.FinItemsBase):
+        if ope_data.is_active:
+            rates = []
+            for ope_item in ope_data.data:
+                name = ope_item.curValue.name
+                label = ope_item.label
+                value = ope_item.curValue.value
+                try:
+                    forecast = next(
+                        (
+                            item.curValue.value
+                            for item in fore_data.data
+                            if item.curValue.name == name
+                        ),
+                        None,
+                    )
+                    if forecast is not None:
+                        progress_rate = round((value / forecast) * 100, 2)
+                        rates.append(
+                            sc.ForecastProgressRate(
+                                name=name,
+                                label=label,
+                                value=progress_rate,
+                            )
+                        )
+                except AttributeError:
+                    continue
+                except ZeroDivisionError:
+                    continue
+            return rates
+        else:
+            return None
+
+    result_rate = calculate_progress_rate(ope_items.result, fore_items.forecast)
+    upper_rate = calculate_progress_rate(ope_items.upper, fore_items.upper)
+    lower_rate = calculate_progress_rate(ope_items.lower, fore_items.lower)
+
+    res = sc.ForecastProgressRateResponse(
+        result=result_rate,
+        upper=upper_rate,
+        lower=lower_rate,
     )
 
     return res

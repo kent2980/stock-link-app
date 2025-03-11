@@ -2,6 +2,7 @@ import { XbrlIxHeadService } from "@/client";
 import { Box, Flex } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Suspense } from "react";
+import ForecastProgressRate from "./IRSummary/ForecastProgressRate";
 import ForecastTable from "./IRSummary/ForecastTable";
 import OperatingResult from "./IRSummary/OperatingResult";
 
@@ -29,6 +30,9 @@ function IRSummary({ head_item_key }: IXSummaryProps) {
           </Suspense>
           <Suspense fallback={<div>Loading...</div>}>
             <ForecastTable head_item_key={head_item_key} />
+          </Suspense>
+          <Suspense fallback={<div>Loading...</div>}>
+            <ForecastProgressRate head_item_key={head_item_key} />
           </Suspense>
         </Flex>
       ) : (

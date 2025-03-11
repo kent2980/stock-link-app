@@ -9,7 +9,6 @@ from app.models import IxHeadTitle, IxNonFraction
 from . import crud
 from . import schema as sc
 from .exceptions import HeadItemNotFound, NotDictKeyError
-from .structItem import StructItem
 from .summaryItems import SummaryItems
 
 
@@ -46,8 +45,8 @@ def get_metric_schema_value_and_change(
         for schema_item in schema_items:
             if schema_item.name == child_items[item.name]:
                 if bool(set(item.context) & set(metric_contexts)):
-                    is_current = any(
-                        re.match(r"Current.*", context) for context in item.context
+                    is_prior = any(
+                        re.match(r"Prior.*", context) for context in item.context
                     )
                     valueBase = sc.FinValueBase(
                         name=item.name,
@@ -55,16 +54,16 @@ def get_metric_schema_value_and_change(
                         unit=item.unit_ref,
                         display_scale=item.display_scale,
                     )
-                    if is_current:
-                        if item.name.startswith("tse-ed-t_ChangeIn"):
-                            schema_item.curChange = valueBase
-                        else:
-                            schema_item.curValue = valueBase
-                    else:
+                    if is_prior:
                         if item.name.startswith("tse-ed-t_ChangeIn"):
                             schema_item.preChange = valueBase
                         else:
                             schema_item.preValue = valueBase
+                    else:
+                        if item.name.startswith("tse-ed-t_ChangeIn"):
+                            schema_item.curChange = valueBase
+                        else:
+                            schema_item.curValue = valueBase
 
 
 def get_attr_value(head_item: IxHeadTitle, attr_value_dict: Dict[str, str]) -> str:
@@ -296,20 +295,20 @@ def get_struct(
                                     unit=item.unit_ref,
                                     display_scale=item.display_scale,
                                 )
-                                is_current = any(
-                                    re.match(r"Current.*", context)
+                                is_prior = any(
+                                    re.match(r"Prior.*", context)
                                     for context in item.context
                                 )
-                                if is_current:
-                                    if item.name.startswith("tse-ed-t_ChangeIn"):
-                                        struct_item.curChange = metric_schema
-                                    else:
-                                        struct_item.curValue = metric_schema
-                                else:
+                                if is_prior:
                                     if item.name.startswith("tse-ed-t_ChangeIn"):
                                         struct_item.preChange = metric_schema
                                     else:
                                         struct_item.preValue = metric_schema
+                                else:
+                                    if item.name.startswith("tse-ed-t_ChangeIn"):
+                                        struct_item.curChange = metric_schema
+                                    else:
+                                        struct_item.curValue = metric_schema
 
     period = sc.PeriodSchemaBase(  # periodを設定
         accountingStandard=head_item.report_type,
@@ -318,6 +317,7 @@ def get_struct(
     )
 
     struct.period = period
+    struct.head_item_key = head_item.item_key
 
     return struct
 

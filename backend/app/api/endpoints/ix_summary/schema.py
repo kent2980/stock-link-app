@@ -66,6 +66,7 @@ class FinStructBase(SQLModel):
     """ファイナンシャルレスポンス情報を表すクラス"""
 
     period: Optional[PeriodSchemaBase] = Field(default=None)
+    head_item_key: Optional[str] = Field(default=None)
 
 
 class FinUpperAndLower(FinStructBase):
@@ -117,3 +118,17 @@ class FinResultOnlyResponse(FinResponseBase):
 class FinForecastResponse(FinResponseBase):
 
     data: List[FinForecastStruct]
+
+
+class ForecastProgressRate(SQLModel):
+
+    name: str
+    label: str
+    value: Optional[float]
+
+
+class ForecastProgressRateResponse(SQLModel):
+
+    result: Optional[List[ForecastProgressRate]]
+    upper: Optional[List[ForecastProgressRate]]
+    lower: Optional[List[ForecastProgressRate]]
