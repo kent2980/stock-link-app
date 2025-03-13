@@ -89,7 +89,7 @@ const Sidebar = (props: BoxProps) => {
         justifyContent="flex-end" // 追加
         {...props}
       >
-        <Box bg="ui.secondary" id="sideBarItem" p={4} borderRadius="md" w="80%">
+        <Box bg="ui.main" id="sideBarItem" p={4} borderRadius="md" w="100%">
           <SidebarItems />
         </Box>
       </Box>

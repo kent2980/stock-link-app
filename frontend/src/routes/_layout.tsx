@@ -37,7 +37,7 @@ function Layout() {
           p={{ base: 0, md: 4 }}
           overflowY="auto"
           bg="ui.light"
-          maxW={{ base: "100%", md: "720px" }}
+          // maxW={{ base: "100%", md: "720px" }}
           h={`calc(100vh - ${height}px)`}
         >
           <Outlet />

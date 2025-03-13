@@ -28,6 +28,7 @@ function Header(props: FlexProps) {
       p={3}
       zIndex={100}
       bg="ui.main"
+      boxShadow="sm"
     >
       <HStack gap={3} ml={3}>
         <Breadcrumb.Root fontSize="md" color="gray.800" gap="16px">
