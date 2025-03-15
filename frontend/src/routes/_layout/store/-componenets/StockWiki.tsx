@@ -18,16 +18,12 @@ const StockWiki: React.FC<StockWikiProps> = ({ code }) => {
     retry: 0,
   });
 
-  const getUrl = (url: string | null) => {
+  const getUrl = (url: string | null | undefined) => {
     if (url === null) {
       return undefined;
     }
     return url;
   };
-
-  if (error) {
-    return <Text>エラーが発生しました</Text>;
-  }
 
   return (
     <Box w={{ base: "100%", md: "60%" }}>
@@ -38,7 +34,11 @@ const StockWiki: React.FC<StockWikiProps> = ({ code }) => {
         boxShadow="md"
         fontSize={{ base: 14, md: 16 }}
       >
-        <Text>{data.description}</Text>
+        {data.description ? (
+          <Text>{data.description}</Text>
+        ) : (
+          <Text>データがありません</Text>
+        )}
       </Box>
       <Flex direction={{ base: "column", md: "row" }} gap={2} pt={4}>
         <Text color="gray.500" fontSize={{ base: 12, md: 14 }} textAlign="left">

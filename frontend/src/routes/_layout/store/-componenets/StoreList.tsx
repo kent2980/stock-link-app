@@ -2,7 +2,6 @@ import { IxService } from "@/client";
 import { HeaderStore } from "@/Store/HeaderStore";
 import { Box, Flex, List, Text } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { useStore } from "@tanstack/react-store";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import React, { Suspense, useEffect, useRef } from "react";
 import { ErrorBoundary } from "react-error-boundary";
@@ -28,30 +27,45 @@ export const StoreList: React.FC<StoreListProps> = () => {
     overscan: 3,
   });
 
-  const { height } = useStore(HeaderStore, (state) => state);
-
   useEffect(() => {
-    console.log(window.scrollY);
-  }, [window.scrollY]);
-  // スクロールでヘッダーを隠す
-  useEffect(() => {
-    const handleScroll = () => {
-      const header = document.getElementById("header");
-      console.log(window.scrollY, height);
-      if (header) {
-        if (window.scrollY > height) {
+    const handleScroll = (event: Event) => {
+      const target = event.target as HTMLElement;
+      console.log("Scroll position:", target.scrollTop);
+      if (59 < target.scrollTop) {
+        HeaderStore.setState((state) => ({
+          ...state,
+          height: 0,
+        }));
+        // id="header"の要素を取得
+        const header = document.getElementById("header");
+        // headerのdisplayをnoneにする
+        if (header) {
           header.style.display = "none";
-        } else {
+        }
+      }
+      if (target.scrollTop < 59) {
+        HeaderStore.setState((state) => ({
+          ...state,
+          height: 59,
+        }));
+        const header = document.getElementById("header");
+        if (header) {
           header.style.display = "block";
         }
       }
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [window.scrollY]);
 
+    const scrollElement = parentRef.current;
+    if (scrollElement) {
+      scrollElement.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      if (scrollElement) {
+        scrollElement.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, []);
   return (
     <>
       <Box ref={parentRef} w="100%" overflow="auto" height="100vh">
@@ -89,30 +103,31 @@ export const StoreList: React.FC<StoreListProps> = () => {
                     alignItems="center"
                   >
                     <Header item={item} />
-                    <ErrorBoundary
-                      FallbackComponent={({ error }) => (
-                        <Box
-                          bg="gray.100"
-                          p={2}
-                          borderRadius={8}
-                          minW={{ base: "100%", md: "60%" }}
-                          minH="60px"
-                          boxShadow="md"
-                          textAlign="center"
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="center"
-                        >
-                          <Text color="red.500">
-                            企業概要が存在しません: {error.message}
-                          </Text>
-                        </Box>
-                      )}
-                    >
-                      <Suspense fallback={<Box>Loading...</Box>}>
+
+                    <Suspense fallback={<Box>Loading...</Box>}>
+                      <ErrorBoundary
+                        FallbackComponent={({ error }) => (
+                          <Box
+                            bg="gray.100"
+                            p={2}
+                            borderRadius={8}
+                            minW={{ base: "100%", md: "60%" }}
+                            minH="60px"
+                            boxShadow="md"
+                            textAlign="center"
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                          >
+                            <Text color="red.500">
+                              企業概要が存在しません: {error.message}
+                            </Text>
+                          </Box>
+                        )}
+                      >
                         <StockWiki code={item.securities_code} />
-                      </Suspense>
-                    </ErrorBoundary>
+                      </ErrorBoundary>
+                    </Suspense>
                   </Flex>
                   <Flex direction="column" gap={5} p={2} alignItems="center">
                     {item.report_type.startsWith("ed") ? (

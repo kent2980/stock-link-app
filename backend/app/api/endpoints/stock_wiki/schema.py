@@ -20,9 +20,10 @@ class StockWikiPublic(SQLModel):
     """
 
     code: str
-    name: str
-    description: Optional[str]
-    url: Optional[str]
+    name: Optional[str] = Field(default=None)
+    description: Optional[str] = Field(default=None)
+    url: Optional[str] = Field(default=None)
+    error: Optional[str] = Field(default=None)
 
 
 class StockWikisPublicList(SQLModel):

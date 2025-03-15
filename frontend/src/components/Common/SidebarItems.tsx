@@ -5,6 +5,7 @@ import { FiHome, FiUsers } from "react-icons/fi";
 import type { IconType } from "react-icons/lib";
 
 import type { UserPublic } from "@/client";
+import React from "react";
 import { GrAction, GrCube, GrNew } from "react-icons/gr";
 
 const items = [
@@ -33,7 +34,7 @@ const SidebarItems = ({ onClose }: SidebarItemsProps) => {
     : items;
 
   const listItems = finalItems.map(({ icon, title, path }) => (
-    <>
+    <React.Fragment key={title}>
       <RouterLink key={title} to={path} onClick={onClose}>
         <Flex
           gap={4}
@@ -50,7 +51,7 @@ const SidebarItems = ({ onClose }: SidebarItemsProps) => {
         </Flex>
       </RouterLink>
       <Separator size="sm" borderColor="#adadad" borderWidth="0.4px" />
-    </>
+    </React.Fragment>
   ));
 
   return (

@@ -352,9 +352,10 @@ export type StockWikiCreate = {
  */
 export type StockWikiPublic = {
     code: string;
-    name: string;
-    description: (string | null);
-    url: (string | null);
+    name?: (string | null);
+    description?: (string | null);
+    url?: (string | null);
+    error?: (string | null);
 };
 
 /**
