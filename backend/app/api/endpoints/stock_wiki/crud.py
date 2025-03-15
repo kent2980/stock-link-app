@@ -1,5 +1,6 @@
 from typing import Optional
 
+from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session, select
 
 from app.models import StockWiki
@@ -13,12 +14,17 @@ def create_stock_wiki_item(
     """
     Create new item.
     """
-    item = StockWiki.model_validate(item_in)
-    session.add(item)
-    session.commit()
-    session.refresh(item)
 
-    return item
+    try:
+        item = StockWiki.model_validate(item_in)
+        session.add(item)
+        session.commit()
+        session.refresh(item)
+
+        return item
+    except IntegrityError as e:
+        session.rollback()
+        raise IntegrityError(statement=e.statement, orig=e.orig, params=e.params) from e
 
 
 def get_stock_wiki_item(*, code: str, session: Session) -> Optional[StockWiki]:

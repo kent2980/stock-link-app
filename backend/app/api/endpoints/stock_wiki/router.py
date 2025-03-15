@@ -1,8 +1,7 @@
 from fastapi import APIRouter, HTTPException
-from sqlmodel import select
+from sqlalchemy.exc import IntegrityError
 
 from app.api.deps import SessionDep
-from app.models import StockWiki
 
 from . import crud
 from . import schema as sc
@@ -17,9 +16,13 @@ def create_stock_wiki_item(
     """
     Create new item.
     """
-    item = crud.create_stock_wiki_item(item_in=item_in, session=session)
 
-    return item
+    try:
+        item = crud.create_stock_wiki_item(item_in=item_in, session=session)
+
+        return item
+    except IntegrityError as e:
+        raise HTTPException(status_code=400, detail="Stock already exists") from e
 
 
 @router.get("/{code}", response_model=sc.StockWikiPublic)

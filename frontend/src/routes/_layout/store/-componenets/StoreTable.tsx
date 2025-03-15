@@ -3,7 +3,7 @@ import { Box, Checkbox, Flex, Table, Text } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import React, { Suspense, useRef } from "react";
-import BusinessPerformance from "./BusinessPerformance";
+import BusinessPerformance from "./OperatingResultItems";
 
 interface StoreTableProps {}
 
@@ -65,7 +65,9 @@ export const StoreTable: React.FC<StoreTableProps> = () => {
                       <Table.Cell>
                         <Flex direction="column" gap={2}>
                           <Flex direction="column" gap={0}>
-                            <Text fontSize={10}>経営成績</Text>
+                            <Text fontSize={10} color="gray.700">
+                              経営成績
+                            </Text>
                             <Suspense fallback={<Box>Loading...</Box>}>
                               <BusinessPerformance
                                 head_item_key={item.head_item_key}
@@ -73,7 +75,9 @@ export const StoreTable: React.FC<StoreTableProps> = () => {
                             </Suspense>
                           </Flex>
                           <Flex direction="column" gap={0}>
-                            <Text fontSize={10}>業績予想</Text>
+                            <Text fontSize={10} color="gray.700">
+                              業績予想
+                            </Text>
                             <Suspense fallback={<Box>Loading...</Box>}>
                               <BusinessPerformance
                                 head_item_key={item.head_item_key}
