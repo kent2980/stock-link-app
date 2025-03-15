@@ -18,6 +18,7 @@ export type DocumentListPublic = {
     document_name: string;
     document_short_name: string;
     report_type: string;
+    url: (string | null);
 };
 
 export type DocumentListPublics = {

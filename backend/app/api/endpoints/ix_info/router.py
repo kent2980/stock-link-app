@@ -115,6 +115,7 @@ def get_document_list(
             document_name=item.document_name,
             document_short_name=document_short_name,
             report_type=item.report_type,
+            url=item.url,
         )
         schemas.append(schema)
 

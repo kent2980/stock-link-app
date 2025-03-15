@@ -1,36 +1,55 @@
-import { Badge } from "@chakra-ui/react";
+import { FinValueAbstractBase } from "@/client";
+import { Stat, Text } from "@chakra-ui/react";
 
-export const shortBusinessName = (name: string) => {
-  let shortName = "";
-  let color = "";
-  if (name.match(".*売上.*|.*営業収益.*")) {
-    shortName = "売";
-    color = "green";
-  } else if (name == "営業利益") {
-    shortName = "営";
-    color = "blue";
-  } else if (name == "経常利益" || name == "税引前利益") {
-    shortName = "経";
-    color = "purple";
-  } else if (name.match(".*親会社.*当期.*利益.*|.*純利益.*")) {
-    shortName = "純";
-    color = "red";
-  } else if (name.match(".*当期利益.*")) {
-    shortName = "当";
-    color = "orange";
-  } else if (name.match(".*包括利益.*")) {
-    shortName = "包";
-    color = "teal";
-  } else {
-    shortName = name;
+const shortBusinessChange = (value: number | null | undefined) => {
+  if (value == null) {
+    return <Text>-</Text>;
   }
-  return <Badge colorPalette={color}>{shortName}</Badge>;
+
+  return <Text>{value.toFixed(1).replace("-", "▲") + "%"}</Text>;
 };
 
-export const shortBusinessValue = (value: number | null | undefined) => {
+const shortBusinessValue = (
+  value: number | null | undefined,
+  scale: string | null | undefined
+) => {
   if (value == null) {
-    return "-";
+    return <Text>-</Text>;
   }
 
-  return value.toFixed(1).replace("-", "▲") + "%";
+  // valueを桁区切り
+  const formatValue = value.toLocaleString("ja-JP", {
+    maximumFractionDigits: 0,
+  });
+
+  return (
+    <Stat.Root size="sm">
+      <Stat.ValueText alignItems="baseline" fontSize={{ base: 14, md: "md" }}>
+        {formatValue}
+        <Stat.ValueUnit fontSize={{ base: 10, md: 12 }}>{scale}</Stat.ValueUnit>
+      </Stat.ValueText>
+    </Stat.Root>
+  );
+};
+
+export const curValue = (item: FinValueAbstractBase, value: string) => {
+  if (value === "change") {
+    return shortBusinessChange(item.curChange?.value);
+  } else {
+    return shortBusinessValue(
+      item.curValue?.value,
+      item.curValue?.display_scale
+    );
+  }
+};
+
+export const preValue = (item: FinValueAbstractBase, value: string) => {
+  if (value === "change") {
+    return shortBusinessChange(item.preChange?.value);
+  } else {
+    return shortBusinessValue(
+      item.preValue?.value,
+      item.preValue?.display_scale
+    );
+  }
 };

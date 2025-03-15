@@ -1,12 +1,13 @@
 import { IxService } from "@/client";
+import { HeaderStore } from "@/Store/HeaderStore";
 import { Box, Flex, List, Text } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useStore } from "@tanstack/react-store";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import React, { Suspense, useRef } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import ForecastItems from "./ForecastItems";
+import FinancialSummary from "./FinancialSummary";
 import Header from "./Header";
-import OperatingResultItems from "./OperatingResultItems";
 import StockWiki from "./StockWiki";
 
 interface StoreListProps {}
@@ -18,30 +19,48 @@ export const StoreList: React.FC<StoreListProps> = () => {
       return await IxService.getDocumentList();
     },
   });
-  const parentRef = useRef<HTMLDivElement>(null);
+  const parentRef = useRef<Element | null>(null);
 
-  console.log(window.innerWidth);
-  const size = () => {
-    if (window.innerWidth < 768) {
-      return 1200;
-    }
-    return 800;
-  };
   const rowVirtualizer = useVirtualizer({
     count: data.count,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => size(),
-    overscan: 5,
+    estimateSize: () => 1400,
+    overscan: 3,
   });
+
+  const { height } = useStore(HeaderStore, (state) => state);
+
+  useEffect(() => {
+    console.log(window.scrollY);
+  }, [window.scrollY]);
+  // スクロールでヘッダーを隠す
+  useEffect(() => {
+    const handleScroll = () => {
+      const header = document.getElementById("header");
+      console.log(window.scrollY, height);
+      if (header) {
+        if (window.scrollY > height) {
+          header.style.display = "none";
+        } else {
+          header.style.display = "block";
+        }
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [window.scrollY]);
 
   return (
     <>
-      <Box ref={parentRef} w="100%">
+      <Box ref={parentRef} w="100%" overflow="auto" height="100vh">
         <List.Root
           height={`${rowVirtualizer.getTotalSize()}px`}
           w="100%"
           position="relative"
           bg="white"
+          fontSize={{ base: 12, md: 16 }}
         >
           {rowVirtualizer.getVirtualItems().map((virtualRow) => {
             const item = data.data[virtualRow.index];
@@ -60,25 +79,34 @@ export const StoreList: React.FC<StoreListProps> = () => {
                 borderBottom="1px solid"
                 borderColor="gray.200"
               >
-                <Box
-                  display={{ base: "box", md: "flex" }}
-                  direction={{ base: "column", md: "row" }}
-                  gap={2}
-                  justifyContent={{ base: "center", md: "flex-start" }}
-                  alignItems={{ base: "center", md: "flex-start" }}
-                >
+                <Box>
                   <Flex
                     direction="column"
                     gap={3}
-                    w={{ base: "100%", md: "35%" }}
+                    w="100%"
                     p={6}
-                    justifyContent={{ base: "center", md: "flex-start" }}
-                    alignItems={{ base: "center", md: "flex-start" }}
+                    justifyContent="center"
+                    alignItems="center"
                   >
                     <Header item={item} />
                     <ErrorBoundary
                       FallbackComponent={({ error }) => (
-                        <Text>企業概要が存在しません</Text>
+                        <Box
+                          bg="gray.100"
+                          p={2}
+                          borderRadius={8}
+                          minW={{ base: "100%", md: "60%" }}
+                          minH="60px"
+                          boxShadow="md"
+                          textAlign="center"
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
+                        >
+                          <Text color="red.500">
+                            企業概要が存在しません: {error.message}
+                          </Text>
+                        </Box>
                       )}
                     >
                       <Suspense fallback={<Box>Loading...</Box>}>
@@ -86,24 +114,9 @@ export const StoreList: React.FC<StoreListProps> = () => {
                       </Suspense>
                     </ErrorBoundary>
                   </Flex>
-                  <Flex direction="column" gap={5} p={2}>
+                  <Flex direction="column" gap={5} p={2} alignItems="center">
                     {item.report_type.startsWith("ed") ? (
-                      <>
-                        <Text textAlign="center" w="100%">
-                          {item.document_short_name}
-                        </Text>
-                        <Text textAlign="center" color="gray.700" fontSize={12}>
-                          ※()内は昨年度の増減率です。
-                        </Text>
-                        <Suspense fallback={<Box>Loading...</Box>}>
-                          <OperatingResultItems
-                            head_item_key={item.head_item_key}
-                          />
-                        </Suspense>
-                        <Suspense fallback={<Box>Loading...</Box>}>
-                          <ForecastItems head_item_key={item.head_item_key} />
-                        </Suspense>
-                      </>
+                      <FinancialSummary item={item} />
                     ) : (
                       <Text fontSize={10} color="gray.700">
                         {item.report_type}

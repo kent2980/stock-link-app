@@ -1,15 +1,19 @@
 import { SummaryService } from "@/client";
-import { Card, Flex, Heading } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { shortBusinessValue } from "../- utils/utils";
+import { curValue } from "../- utils/utils";
+import BusinessResultHeader from "./BusinessResultHeader";
 import BusinessResultItems from "./BusinessResultItems";
 import BusinessResultRoot from "./BusinessResultRoot";
 
 interface ForecastItemsProps {
   head_item_key: string;
+  value: string;
 }
 
-const ForecastItems: React.FC<ForecastItemsProps> = ({ head_item_key }) => {
+const ForecastItems: React.FC<ForecastItemsProps> = ({
+  head_item_key,
+  value,
+}) => {
   const { data } = useSuspenseQuery({
     queryKey: ["ForecastItems", head_item_key],
     queryFn: async () => {
@@ -20,25 +24,18 @@ const ForecastItems: React.FC<ForecastItemsProps> = ({ head_item_key }) => {
   });
 
   return (
-    <Card.Root>
-      <Card.Body>
-        <Flex direction="column" gap={1}>
-          <Heading size="md">業績予想</Heading>
-          <BusinessResultRoot>
-            {data.data.map((items) =>
-              items.forecast?.data?.map((item, key) => (
-                <BusinessResultItems
-                  key={key}
-                  label={item.label}
-                  curChange={shortBusinessValue(item.curChange?.value)}
-                  preChange={shortBusinessValue(item.preChange?.value)}
-                />
-              ))
-            )}
-          </BusinessResultRoot>
-        </Flex>
-      </Card.Body>
-    </Card.Root>
+    <BusinessResultRoot title="業績予想">
+      <BusinessResultHeader />
+      {data.data.map((items) =>
+        items.forecast?.data?.map((item, key) => (
+          <BusinessResultItems
+            key={key}
+            label={item.label}
+            curChange={curValue(item, value)}
+          />
+        ))
+      )}
+    </BusinessResultRoot>
   );
 };
 

@@ -8,7 +8,7 @@ function Header(props: FlexProps) {
   const { HeaderAddressItems } = useStore(HeaderStore, (state) => state); // ストアからデータを取得
 
   // ヘッダーの高さを設定
-  const headerHeight = 59;
+  const headerHeight = 20;
   useEffect(() => {
     HeaderStore.setState((state) => ({
       // ストアにデータをセット
@@ -19,6 +19,7 @@ function Header(props: FlexProps) {
 
   return (
     <Flex
+      id="header"
       h={headerHeight}
       {...props}
       position="fixed"
