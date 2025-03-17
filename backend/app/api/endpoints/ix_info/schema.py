@@ -1,7 +1,7 @@
 import datetime
 from typing import Optional
 
-from sqlmodel import Field, SQLModel
+from sqlmodel import SQLModel
 
 
 class DocumentListPublic(SQLModel):
@@ -14,6 +14,8 @@ class DocumentListPublic(SQLModel):
     document_short_name: str
     report_type: str
     url: Optional[str]
+    period_index: Optional[int]
+    current_period: Optional[str]
 
 
 class DocumentListPublics(SQLModel):

@@ -1,3 +1,5 @@
+import collections
+from collections import defaultdict
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException, Query
@@ -367,6 +369,7 @@ def get_forecast_progress_rate(
     *,
     session: SessionDep,
     head_item_key: str,
+    operating_result_late: Optional[int] = Query(None),
 ) -> sc.ForecastProgressRateResponse:
 
     ope_items = get_operating_results(
@@ -409,12 +412,12 @@ def get_forecast_progress_rate(
         else:
             return None
 
-    result_rate = calculate_progress_rate(ope_items.result, fore_items.forecast)
+    forecast_rate = calculate_progress_rate(ope_items.result, fore_items.forecast)
     upper_rate = calculate_progress_rate(ope_items.upper, fore_items.upper)
     lower_rate = calculate_progress_rate(ope_items.lower, fore_items.lower)
 
     res = sc.ForecastProgressRateResponse(
-        result=result_rate,
+        forecast=forecast_rate,
         upper=upper_rate,
         lower=lower_rate,
     )

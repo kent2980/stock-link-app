@@ -36,18 +36,20 @@ const Header: React.FC<HeaderProps> = ({ item }: HeaderProps) => {
           {item.company_name}
         </Heading>
       </Flex>
-      <Box>
-        <Text>
-          公式サイト：
-          <Link
-            href={get_url(item.url)}
-            color="ui.link"
-            _hover={{ color: "ui.link_hover" }}
-          >
-            {item.url}
-          </Link>
-        </Text>
-      </Box>
+      {item.url ? (
+        <Box>
+          <Text fontSize={{ base: 14, md: 16 }}>
+            公式サイト：
+            <Link
+              href={get_url(item.url)}
+              color="ui.link"
+              _hover={{ color: "ui.link_hover" }}
+            >
+              <Text>{item.url}</Text>
+            </Link>
+          </Text>
+        </Box>
+      ) : null}
     </Flex>
   );
 };

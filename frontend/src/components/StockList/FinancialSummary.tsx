@@ -1,5 +1,5 @@
 import { DocumentListPublic } from "@/client";
-import { Box, Flex, SegmentGroup, Text } from "@chakra-ui/react";
+import { Box, Flex, SegmentGroup, Steps, Text } from "@chakra-ui/react";
 import { Suspense, useState } from "react";
 import ForecastItems from "./ForecastItems";
 import OperatingResultItems from "./OperatingResultItems";
@@ -14,9 +14,21 @@ const FinancialSummary: React.FC<FinancialSummaryProps> = ({
   const [value, setValue] = useState("change");
   return (
     <>
-      <Text textAlign="center" w="100%">
+      <Text textAlign="center" w="100%" fontSize={{ base: 16, md: 18 }}>
         {item.document_short_name}
       </Text>
+      <Box>
+        <Steps.Root defaultStep={item.period_index ?? 0} count={4} size="xs">
+          <Steps.List>
+            {Array.from({ length: 4 }).map((_, index) => (
+              <Steps.Item key={index} index={index} title={index.toString()}>
+                <Steps.Indicator />
+                <Steps.Separator />
+              </Steps.Item>
+            ))}
+          </Steps.List>
+        </Steps.Root>
+      </Box>
       <Flex
         align="flex-start"
         w={{ base: "100%", md: "70%" }}
@@ -31,7 +43,7 @@ const FinancialSummary: React.FC<FinancialSummaryProps> = ({
         >
           <SegmentGroup.Indicator />
           <SegmentGroup.Item value="change" w="50%">
-            <SegmentGroup.ItemText>増減</SegmentGroup.ItemText>
+            <SegmentGroup.ItemText>増減率</SegmentGroup.ItemText>
             <SegmentGroup.ItemHiddenInput />
           </SegmentGroup.Item>
           <SegmentGroup.Item value="value" w="50%">
@@ -39,11 +51,6 @@ const FinancialSummary: React.FC<FinancialSummaryProps> = ({
             <SegmentGroup.ItemHiddenInput />
           </SegmentGroup.Item>
         </SegmentGroup.Root>
-        <Flex alignItems="center" justifyContent="center">
-          <Text color="gray.700" fontSize={{ base: 12, md: 14 }}>
-            ※()内は昨年度の数値です。
-          </Text>
-        </Flex>
       </Flex>
       <Suspense fallback={<Box>Loading...</Box>}>
         <OperatingResultItems

@@ -6,7 +6,16 @@ const shortBusinessChange = (value: number | null | undefined) => {
     return <Text>-</Text>;
   }
 
-  return <Text>{value.toFixed(1).replace("-", "▲") + "%"}</Text>;
+  const item = (
+    <Stat.Root size="sm">
+      <Stat.ValueText alignItems="baseline" fontSize={{ base: 14, md: "md" }}>
+        {value.toFixed(1).replace("-", "▲")}
+        <Stat.ValueUnit fontSize={{ base: 10, md: 12 }}>%</Stat.ValueUnit>
+      </Stat.ValueText>
+    </Stat.Root>
+  );
+
+  return item;
 };
 
 const shortBusinessValue = (

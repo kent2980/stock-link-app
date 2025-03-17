@@ -9,15 +9,20 @@ const BusinessResultRoot: React.FC<BusinessResultRootProps> = ({
   title,
 }) => {
   return (
-    <Card.Root
-      w={{ base: "100%", md: "70%" }}
-      boxShadow={{ base: "sm", md: "md" }}
-      bg="gray.100"
-    >
-      <Card.Body>
+    <Card.Root w={{ base: "100%", md: "70%" }} borderRadius={0}>
+      <Card.Header p={3}>
+        <Heading size="md">{title}</Heading>
+      </Card.Header>
+      <Card.Body p={3}>
         <Flex direction="column" gap={1} alignItems="center">
-          <Heading size="md">{title}</Heading>
-          <DataList.Root orientation="horizontal" divideY="1px" minW="100%">
+          <DataList.Root
+            orientation="horizontal"
+            divideY="1px"
+            minW="100%"
+            divideColor={"gray.400"}
+            divideStyle={"solid"}
+            gap={0}
+          >
             {children}
           </DataList.Root>
         </Flex>

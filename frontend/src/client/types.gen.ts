@@ -19,6 +19,8 @@ export type DocumentListPublic = {
     document_short_name: string;
     report_type: string;
     url: (string | null);
+    period_index: (number | null);
+    current_period: (string | null);
 };
 
 export type DocumentListPublics = {

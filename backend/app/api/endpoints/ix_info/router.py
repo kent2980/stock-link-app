@@ -98,8 +98,15 @@ def get_document_list(
         "Q1": "第1四半期",
         "Q2": "第2四半期",
         "Q3": "第3四半期",
-        "H1": "中間",
+        "HY": "中間",
         "FY": "通期",
+    }
+    period_index = {
+        "Q1": 0,
+        "Q2": 1,
+        "Q3": 2,
+        "HY": 2,
+        "FY": 3,
     }
     for item in items:
         try:
@@ -116,6 +123,12 @@ def get_document_list(
             document_short_name=document_short_name,
             report_type=item.report_type,
             url=item.url,
+            current_period=item.current_period,
+            period_index=(
+                period_index[item.current_period]
+                if item.current_period in period_index
+                else None
+            ),
         )
         schemas.append(schema)
 

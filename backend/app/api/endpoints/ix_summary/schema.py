@@ -46,6 +46,12 @@ class FinValueAbstractBase(SQLModel):
     preChange: Optional[FinValueBase] = Field(default=None)
 
 
+class FinValueWithProgressRate(FinValueAbstractBase):
+    """メトリック親情報を表すクラス"""
+
+    progress_rate: Optional[float]
+
+
 class PeriodSchemaBase(SQLModel):
     """期間情報を表すクラス"""
 
@@ -129,6 +135,18 @@ class ForecastProgressRate(SQLModel):
 
 class ForecastProgressRateResponse(SQLModel):
 
-    result: Optional[List[ForecastProgressRate]]
+    forecast: Optional[List[ForecastProgressRate]]
     upper: Optional[List[ForecastProgressRate]]
     lower: Optional[List[ForecastProgressRate]]
+
+
+class ForecastAndProgressRate(ForecastProgressRate):
+
+    data: Optional[List[FinValueAbstractBase]]
+
+
+class ForecastAndProgressRateResponse(SQLModel):
+
+    forecast: Optional[List[ForecastAndProgressRate]]
+    lower: Optional[List[ForecastAndProgressRate]]
+    upper: Optional[List[ForecastAndProgressRate]]

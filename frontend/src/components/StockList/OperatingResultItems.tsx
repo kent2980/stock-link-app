@@ -1,6 +1,6 @@
 import { SummaryService } from "@/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { curValue, preValue } from "../- utils/utils";
+import { curValue, preValue } from "../../routes/_layout/store/- utils/utils";
 import BusinessResultHeader from "./BusinessResultHeader";
 import BusinessResultItems from "./BusinessResultItems";
 import BusinessResultRoot from "./BusinessResultRoot";
