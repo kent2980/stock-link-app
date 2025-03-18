@@ -121,7 +121,7 @@ export type ForecastProgressRate = {
 };
 
 export type ForecastProgressRateResponse = {
-    result: (Array<ForecastProgressRate> | null);
+    forecast: (Array<ForecastProgressRate> | null);
     upper: (Array<ForecastProgressRate> | null);
     lower: (Array<ForecastProgressRate> | null);
 };
@@ -585,6 +585,7 @@ export type SummaryGetDividendsResponse = (FinResponseBase);
 
 export type SummaryGetForecastProgressRateData = {
     headItemKey: string;
+    operatingResultLate?: (number | null);
 };
 
 export type SummaryGetForecastProgressRateResponse = (ForecastProgressRateResponse);

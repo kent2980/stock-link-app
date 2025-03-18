@@ -530,6 +530,7 @@ export class SummaryService {
      * 予測進捗率情報を取得
      * @param data The data for the request.
      * @param data.headItemKey
+     * @param data.operatingResultLate
      * @returns ForecastProgressRateResponse Successful Response
      * @throws ApiError
      */
@@ -539,6 +540,9 @@ export class SummaryService {
             url: '/api/v1/ix/summary/forecast_progress_rate/{head_item_key}',
             path: {
                 head_item_key: data.headItemKey
+            },
+            query: {
+                operating_result_late: data.operatingResultLate
             },
             errors: {
                 422: 'Validation Error'

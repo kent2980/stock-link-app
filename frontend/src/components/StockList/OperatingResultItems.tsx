@@ -25,7 +25,10 @@ const OperatingResultItems: React.FC<OperatingResultItemsProps> = ({
 
   return (
     <BusinessResultRoot title="経営成績">
-      <BusinessResultHeader preChange={true} />
+      <BusinessResultHeader
+        columns={["今期", "前年同期"]}
+        widths={["50%", "50%"]}
+      />
       {data.data.map((items) =>
         items.result?.data?.map((item, key) => (
           <BusinessResultItems

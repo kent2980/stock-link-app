@@ -1,7 +1,7 @@
 import { FinValueAbstractBase } from "@/client";
 import { Stat, Text } from "@chakra-ui/react";
 
-const shortBusinessChange = (value: number | null | undefined) => {
+export const shortBusinessChange = (value: number | null | undefined) => {
   if (value == null) {
     return <Text>-</Text>;
   }

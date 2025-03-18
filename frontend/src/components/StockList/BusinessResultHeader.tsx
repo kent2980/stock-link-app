@@ -1,11 +1,12 @@
 import { DataList } from "@chakra-ui/react";
 
 interface BusinessResultHeaderProps {
-  preChange?: boolean | null;
+  columns: string[];
+  widths: string[];
 }
 
 const BusinessResultHeader: React.FC<BusinessResultHeaderProps> = ({
-  preChange = null,
+  columns,
 }: BusinessResultHeaderProps) => {
   return (
     <DataList.Item
@@ -14,15 +15,12 @@ const BusinessResultHeader: React.FC<BusinessResultHeaderProps> = ({
       fontSize={{ base: "sm", md: "md" }}
       color={"gray.600"}
     >
-      <DataList.ItemLabel w={preChange ? { base: "20%", md: "40%" } : "55%"} />
-      <DataList.ItemValue w={preChange ? { base: "40%", md: "30%" } : "45%"}>
-        今期
-      </DataList.ItemValue>
-      {preChange && (
-        <DataList.ItemValue w={{ base: "40%", md: "30%" }}>
-          前年同期
+      <DataList.ItemLabel w={{ base: "20%", md: "40%" }} />
+      {columns.map((column, index) => (
+        <DataList.ItemValue key={index} w={{ base: "40%", md: "30%" }}>
+          {column}
         </DataList.ItemValue>
-      )}
+      ))}
     </DataList.Item>
   );
 };
