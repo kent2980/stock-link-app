@@ -103,7 +103,7 @@ function TestData({ code }: TestDataProps) {
         item.result?.data?.map((result, key) => (
           <Box key={key}>
             {result.label}
-            {result.value?.value}
+            {result.curValue?.value}
           </Box>
         ))
       )}

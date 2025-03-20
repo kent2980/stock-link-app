@@ -1,4 +1,5 @@
 import MainDataView from "@/components/Index/MainDataView";
+import { Box } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense, useEffect } from "react";
 import { HeaderAddressItem, HeaderStore } from "../../Store/HeaderStore";
@@ -25,6 +26,7 @@ function Index() {
 
   return (
     <>
+      <Box></Box>
       <Suspense fallback={<div>Loading...</div>}>
         <MainDataView />
       </Suspense>

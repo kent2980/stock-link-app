@@ -25,9 +25,9 @@
   "include": [
     "src/**/*.ts",
     "tests/**/*.ts",
-    "playwright.config.ts",
-    "**/*.ts",
-    "**/*.tsx"
+    "playwright.config.ts"
+    // "**/*.ts",
+    // "**/*.tsx"
   ],
   "exclude": ["node_modules"],
   "references": [

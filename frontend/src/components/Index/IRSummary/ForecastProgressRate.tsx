@@ -18,7 +18,7 @@ const ForecastProgressRate: React.FC<ForecastProgressRateProps> = ({
   });
   return (
     <div className="forecast-progress-rate">
-      {data.result?.map((item, key) => (
+      {data.forecast?.map((item, key) => (
         <div key={key}>
           <div>{item.label}</div>
           <div>{item.value}%</div>

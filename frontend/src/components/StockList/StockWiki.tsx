@@ -8,7 +8,7 @@ interface StockWikiProps {
 }
 
 const StockWiki: React.FC<StockWikiProps> = ({ code }) => {
-  const { data, error } = useSuspenseQuery({
+  const { data } = useSuspenseQuery({
     queryKey: ["stock", code],
     queryFn: async () => {
       return await WikiService.getStockWikiItem({

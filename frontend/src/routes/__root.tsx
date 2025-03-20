@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
-import React from "react";
+import React, { Suspense } from "react";
 
 import NotFound from "@/components/Common/NotFound";
 import { QueryClient } from "@tanstack/react-query";
@@ -31,9 +31,9 @@ export const Route = createRootRouteWithContext<{
   component: () => (
     <>
       <Outlet />
-      {/* <Suspense>
+      <Suspense>
         <TanStackDevtools />
-      </Suspense> */}
+      </Suspense>
     </>
   ),
   notFoundComponent: () => <NotFound />,
