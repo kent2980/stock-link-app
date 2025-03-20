@@ -6,3 +6,4 @@ node_modules/
 /playwright/.cache/
 # macOSの隠しファイルを無視
 .DS_Store
+**/*.DS_Store
