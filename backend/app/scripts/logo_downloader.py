@@ -1,5 +1,4 @@
 import os
-import typing
 from typing import Optional
 from urllib.parse import urljoin
 
