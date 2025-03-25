@@ -85,7 +85,7 @@ def active_is_generate(*, session: Session, head_item_key: str) -> bool:
     if item is None:
         return False
 
-    item.is_generate = True
+    item.is_generated = True
     session.add(item)
     session.commit()
 

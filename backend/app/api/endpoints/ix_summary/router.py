@@ -363,63 +363,68 @@ def get_dividends(
 @router.get(
     "/forecast_progress_rate/{head_item_key}",
     summary="予測進捗率情報を取得",
-    response_model=sc.ForecastProgressRateResponse,
+    response_model=Optional[sc.ForecastProgressRateResponse],
 )
 def get_forecast_progress_rate(
     *,
     session: SessionDep,
     head_item_key: str,
     operating_result_late: Optional[int] = Query(None),
-) -> sc.ForecastProgressRateResponse:
+) -> Optional[sc.ForecastProgressRateResponse]:
+    try:
+        ope_items = get_operating_results(
+            session=session, code=None, head_item_key=head_item_key
+        ).data[0]
+        fore_items = get_forecasts(
+            session=session, code=None, head_item_key=head_item_key
+        ).data[0]
 
-    ope_items = get_operating_results(
-        session=session, code=None, head_item_key=head_item_key
-    ).data[0]
-    fore_items = get_forecasts(
-        session=session, code=None, head_item_key=head_item_key
-    ).data[0]
-
-    def calculate_progress_rate(ope_data: sc.FinItemsBase, fore_data: sc.FinItemsBase):
-        if ope_data.is_active:
-            rates = []
-            for ope_item in ope_data.data:
-                name = ope_item.curValue.name
-                label = ope_item.label
-                value = ope_item.curValue.value
-                try:
-                    forecast = next(
-                        (
-                            item.curValue.value
-                            for item in fore_data.data
-                            if item.curValue.name == name
-                        ),
-                        None,
-                    )
-                    if forecast is not None:
-                        progress_rate = round((value / forecast) * 100, 2)
-                        rates.append(
-                            sc.ForecastProgressRate(
-                                name=name,
-                                label=label,
-                                value=progress_rate,
-                            )
+        def calculate_progress_rate(
+            ope_data: sc.FinItemsBase, fore_data: sc.FinItemsBase
+        ):
+            if ope_data.is_active:
+                rates = []
+                for ope_item in ope_data.data:
+                    name = ope_item.curValue.name
+                    label = ope_item.label
+                    value = ope_item.curValue.value
+                    try:
+                        forecast = next(
+                            (
+                                item.curValue.value
+                                for item in fore_data.data
+                                if item.curValue.name == name
+                            ),
+                            None,
                         )
-                except AttributeError:
-                    continue
-                except ZeroDivisionError:
-                    continue
-            return rates
-        else:
-            return None
+                        if forecast is not None:
+                            progress_rate = round((value / forecast) * 100, 2)
+                            rates.append(
+                                sc.ForecastProgressRate(
+                                    name=name,
+                                    label=label,
+                                    value=progress_rate,
+                                )
+                            )
+                    except AttributeError:
+                        continue
+                    except ZeroDivisionError:
+                        continue
+                return rates
+            else:
+                return None
 
-    forecast_rate = calculate_progress_rate(ope_items.result, fore_items.forecast)
-    upper_rate = calculate_progress_rate(ope_items.upper, fore_items.upper)
-    lower_rate = calculate_progress_rate(ope_items.lower, fore_items.lower)
+        forecast_rate = calculate_progress_rate(ope_items.result, fore_items.forecast)
+        upper_rate = calculate_progress_rate(ope_items.upper, fore_items.upper)
+        lower_rate = calculate_progress_rate(ope_items.lower, fore_items.lower)
 
-    res = sc.ForecastProgressRateResponse(
-        forecast=forecast_rate,
-        upper=upper_rate,
-        lower=lower_rate,
-    )
+        res = sc.ForecastProgressRateResponse(
+            forecast=forecast_rate,
+            upper=upper_rate,
+            lower=lower_rate,
+        )
 
-    return res
+        return res
+
+    except IndexError:
+        return None

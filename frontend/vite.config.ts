@@ -1,7 +1,6 @@
 import { TanStackRouterVite } from "@tanstack/router-vite-plugin";
 import react from "@vitejs/plugin-react-swc";
 import dotenv from "dotenv";
-import fs from "fs";
 import path from "path";
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
@@ -51,9 +50,9 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
     port: 3000,
-    https: {
-      key: fs.readFileSync("../certs/key.pem"),
-      cert: fs.readFileSync("../certs/cert.pem"),
-    },
+    // https: {
+    //   key: fs.readFileSync("../certs/key.pem"),
+    //   cert: fs.readFileSync("../certs/cert.pem"),
+    // },
   },
 });
