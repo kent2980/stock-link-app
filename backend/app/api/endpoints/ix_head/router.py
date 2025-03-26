@@ -1,7 +1,7 @@
 import datetime
 import re
 from decimal import Decimal
-from typing import Any, List, Optional
+from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy.exc import IntegrityError
@@ -85,3 +85,57 @@ def read_ix_head_title_item(
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
     return item
+
+
+@router.get(
+    "/ix/head/list/",
+    response_model=sc.IxHeadTitlesPublic,
+    summary="XBRL文書のリストを取得",
+)
+def read_ix_head_title_items(
+    *,
+    session: SessionDep,
+) -> sc.IxHeadTitlesPublic:
+    """
+    Get items.
+    """
+    statement = select(IxHeadTitle).order_by(IxHeadTitle.insert_date.desc())
+    results = session.exec(statement)
+    items = results.all()
+    count = len(items)
+
+    if count == 0:
+        raise HTTPException(status_code=404, detail="Items not found")
+
+    return sc.IxHeadTitlesPublic(
+        count=count,
+        data=items,
+    )
+
+
+@router.get("/url_list/", response_model=sc.UrlSchemaList)
+def read_ix_head_title_items_url_list(
+    *,
+    session: SessionDep,
+) -> sc.UrlSchemaList:
+    """
+    Get items.
+    """
+    statement = (
+        select(IxHeadTitle.securities_code, IxHeadTitle.url)
+        .where(IxHeadTitle.url is not None, IxHeadTitle.securities_code is not None)
+        .order_by(IxHeadTitle.insert_date.desc())
+    )
+    results = session.exec(statement)
+    items = results.all()
+
+    if not items:
+        raise HTTPException(status_code=404, detail="Items not found")
+
+    url_list = []
+    for item in items:
+        if item.securities_code and item.url:
+            url_list.append(
+                sc.UrlSchema(securities_code=item.securities_code, url=item.url)
+            )
+    return sc.UrlSchemaList(data=url_list, count=len(url_list))

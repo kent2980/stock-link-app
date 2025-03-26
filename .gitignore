@@ -7,3 +7,4 @@ node_modules/
 # macOSの隠しファイルを無視
 .DS_Store
 **/*.DS_Store
+/frontend/public/assets/images/stock_logo/**
