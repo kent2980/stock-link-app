@@ -33,10 +33,7 @@ def get_stock_wiki_item(*, code: str, session: SessionDep) -> sc.StockWikiPublic
     item = crud.get_stock_wiki_item(code=code, session=session)
 
     if item is None:
-        return sc.StockWikiPublic(
-            code=code,
-            error="企業情報が見つかりませんでした。",
-        )
+        raise HTTPException(status_code=404, detail="Stock not found")
     else:
         return sc.StockWikiPublic(
             code=item.code,

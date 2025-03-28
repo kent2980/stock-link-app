@@ -1,10 +1,10 @@
-import { Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
-import Sidebar from "@/components/Common/Sidebar";
 import { isLoggedIn } from "@/hooks/useAuth";
 import { HeaderStore } from "@/Store/HeaderStore";
 import { useStore } from "@tanstack/react-store";
+import Footer from "../components/Common/Footer";
 import Header from "../components/Common/Header";
 
 export const Route = createFileRoute("/_layout")({
@@ -22,27 +22,16 @@ function Layout() {
   const { height } = useStore(HeaderStore, (state) => state);
   return (
     <Flex direction="column">
-      <Header />
-      <Flex
-        flex="1"
-        overflow="hidden"
+      <Header bg="linear-gradient(to right, #eef1f3, #fefefe)" />
+      <Box
         mt={height}
-        position="relative"
-        flexDirection="row"
+        bg="linear-gradient(to right, #e9ebef, #eceff6)"
+        h={"calc(100vh - " + height + "px)"}
+        w={"100%"}
       >
-        <Sidebar minW="25vw" />
-        <Flex
-          flex="1"
-          direction="column"
-          p={{ base: 0, md: 4 }}
-          overflowY="auto"
-          bg="ui.light"
-          // maxW={{ base: "100%", md: "720px" }}
-          h={`calc(100vh - ${height}px)`}
-        >
-          <Outlet />
-        </Flex>
-      </Flex>
+        <Outlet />
+      </Box>
+      <Footer bg="linear-gradient(to right, #ffffff, #fefefe)" />
     </Flex>
   );
 }

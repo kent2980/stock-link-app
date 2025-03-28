@@ -1,6 +1,6 @@
 import { DocumentListPublic } from "@/client";
 import { Box, Flex, Heading, Image, Link, Text } from "@chakra-ui/react";
-import logo_json from "../../../public/assets/images/stock_logo/logo_list.json";
+import logo_json from "../../json/logo_list.json";
 
 interface HeaderProps {
   item: DocumentListPublic;

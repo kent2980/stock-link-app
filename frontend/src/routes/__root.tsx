@@ -31,9 +31,11 @@ export const Route = createRootRouteWithContext<{
   component: () => (
     <>
       <Outlet />
-      <Suspense>
-        <TanStackDevtools />
-      </Suspense>
+      <Box display={{ base: "none", md: "block" }}>
+        <Suspense>
+          <TanStackDevtools />
+        </Suspense>
+      </Box>
     </>
   ),
   notFoundComponent: () => <NotFound />,

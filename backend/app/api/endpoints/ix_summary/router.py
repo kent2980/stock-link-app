@@ -410,6 +410,8 @@ def get_forecast_progress_rate(
                         continue
                     except ZeroDivisionError:
                         continue
+                    except ValueError:
+                        continue
                 return rates
             else:
                 return None

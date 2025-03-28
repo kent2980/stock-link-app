@@ -139,6 +139,7 @@ if __name__ == "__main__":
 
     api_url = "http://localhost:8000/api/v1/xbrl/url_list/"
     directory = "../frontend/public/assets/images/stock_logo/"
+    json_output_dir = "../frontend/src/json/"
     response = requests.get(api_url)
     if response.status_code == 200:
         data = response.json()
@@ -163,10 +164,10 @@ if __name__ == "__main__":
             file_name, file_ext = file_split[0], ""  # 拡張子がない場合は空文字列
         file_data.append(
             {
-                "file_name": file_name,
-                "file_ext": file_ext,
+                "code": file_name.replace("_logo", ""),
+                "file_name": file,
             }
         )
-    json_path = os.path.join(directory, "logo_list.json")
+    json_path = os.path.join(json_output_dir, "logo_list.json")
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(file_data, f, ensure_ascii=False, indent=4)
