@@ -1,6 +1,6 @@
 import re
 from datetime import date
-from typing import Optional
+from typing import List, Optional
 
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
@@ -57,6 +57,7 @@ def get_latest_document_title(*, session: SessionDep) -> str:
 def get_document_list(
     *,
     session: SessionDep,
+    report_types: Optional[List[str]] = Query(None),
     date_str: Optional[str] = Query(None),
     limit: Optional[int] = Query(None),
     page: Optional[int] = Query(1),
@@ -75,6 +76,8 @@ def get_document_list(
         .where(IxHeadTitle.securities_code != None)
         .order_by(IxHeadTitle.id)
     )
+    if report_types:
+        statement = statement.where(IxHeadTitle.report_type.in_(report_types))
     if convert_date:
         statement = statement.where(IxHeadTitle.reporting_date == convert_date)
     results = session.exec(statement)

@@ -299,6 +299,14 @@ export type IxHeadTitlePublic = {
     change_in_fore_net_income: (number | null);
 };
 
+/**
+ * iXBRLのヘッダー情報のリストを表すクラス
+ */
+export type IxHeadTitlesPublic = {
+    data: Array<IxHeadTitlePublic>;
+    count: number;
+};
+
 export type JpxStockInfoPublic = {
     input_date: string;
     code: string;
@@ -376,6 +384,28 @@ export type Token = {
 export type UpdatePassword = {
     current_password: string;
     new_password: string;
+};
+
+/**
+ * URLを表すクラス
+ */
+export type UrlSchema = {
+    /**
+     * URL
+     */
+    url: string;
+    /**
+     * 証券コード
+     */
+    securities_code: string;
+};
+
+/**
+ * URLのリストを表すクラス
+ */
+export type UrlSchemaList = {
+    data: Array<UrlSchema>;
+    count: number;
 };
 
 export type UserCreate = {
@@ -468,6 +498,7 @@ export type IxGetDocumentListData = {
     dateStr?: (string | null);
     limit?: (number | null);
     page?: (number | null);
+    reportTypes?: (Array<(string)> | null);
 };
 
 export type IxGetDocumentListResponse = (DocumentListPublics);
@@ -588,7 +619,7 @@ export type SummaryGetForecastProgressRateData = {
     operatingResultLate?: (number | null);
 };
 
-export type SummaryGetForecastProgressRateResponse = (ForecastProgressRateResponse);
+export type SummaryGetForecastProgressRateResponse = ((ForecastProgressRateResponse | null));
 
 export type UsersReadUsersData = {
     limit?: number;
@@ -677,3 +708,7 @@ export type XbrlIxHeadReadIxHeadTitleItemData = {
 };
 
 export type XbrlIxHeadReadIxHeadTitleItemResponse = (IxHeadTitlePublic);
+
+export type XbrlIxHeadReadIxHeadTitleItemsResponse = (IxHeadTitlesPublic);
+
+export type XbrlIxHeadReadIxHeadTitleItemsUrlListResponse = (UrlSchemaList);

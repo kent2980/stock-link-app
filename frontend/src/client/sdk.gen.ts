@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, IxGetDocumentCountData, IxGetDocumentCountResponse, IxGetLatestDocumentTitleResponse, IxGetDocumentListData, IxGetDocumentListResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, SummaryGetOperatingResultsData, SummaryGetOperatingResultsResponse, SummaryGetOtherOperatingResultsData, SummaryGetOtherOperatingResultsResponse, SummaryGetForecastsData, SummaryGetForecastsResponse, SummaryGetFinancialPositionData, SummaryGetFinancialPositionResponse, SummaryGetCashFlowsData, SummaryGetCashFlowsResponse, SummaryGetDividendsData, SummaryGetDividendsResponse, SummaryGetForecastProgressRateData, SummaryGetForecastProgressRateResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemsResponse, WikiCreateStockWikiItemData, WikiCreateStockWikiItemResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, XbrlIxHeadIsIxHeadTitleItemActiveData, XbrlIxHeadIsIxHeadTitleItemActiveResponse, XbrlIxHeadReadIxHeadTitleItemData, XbrlIxHeadReadIxHeadTitleItemResponse } from './types.gen';
+import type { ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, IxGetDocumentCountData, IxGetDocumentCountResponse, IxGetLatestDocumentTitleResponse, IxGetDocumentListData, IxGetDocumentListResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, SummaryGetOperatingResultsData, SummaryGetOperatingResultsResponse, SummaryGetOtherOperatingResultsData, SummaryGetOtherOperatingResultsResponse, SummaryGetForecastsData, SummaryGetForecastsResponse, SummaryGetFinancialPositionData, SummaryGetFinancialPositionResponse, SummaryGetCashFlowsData, SummaryGetCashFlowsResponse, SummaryGetDividendsData, SummaryGetDividendsResponse, SummaryGetForecastProgressRateData, SummaryGetForecastProgressRateResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemsResponse, WikiCreateStockWikiItemData, WikiCreateStockWikiItemResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, XbrlIxHeadIsIxHeadTitleItemActiveData, XbrlIxHeadIsIxHeadTitleItemActiveResponse, XbrlIxHeadReadIxHeadTitleItemData, XbrlIxHeadReadIxHeadTitleItemResponse, XbrlIxHeadReadIxHeadTitleItemsResponse, XbrlIxHeadReadIxHeadTitleItemsUrlListResponse } from './types.gen';
 
 export class ItemsService {
     /**
@@ -153,6 +153,7 @@ export class IxService {
     /**
      * XBRL文書のリストを取得
      * @param data The data for the request.
+     * @param data.reportTypes
      * @param data.dateStr
      * @param data.limit
      * @param data.page
@@ -164,6 +165,7 @@ export class IxService {
             method: 'GET',
             url: '/api/v1/ix/stock_info/document/list',
             query: {
+                report_types: data.reportTypes,
                 date_str: data.dateStr,
                 limit: data.limit,
                 page: data.page
@@ -531,7 +533,7 @@ export class SummaryService {
      * @param data The data for the request.
      * @param data.headItemKey
      * @param data.operatingResultLate
-     * @returns ForecastProgressRateResponse Successful Response
+     * @returns unknown Successful Response
      * @throws ApiError
      */
     public static getForecastProgressRate(data: SummaryGetForecastProgressRateData): CancelablePromise<SummaryGetForecastProgressRateResponse> {
@@ -883,6 +885,32 @@ export class XbrlIxHeadService {
             errors: {
                 422: 'Validation Error'
             }
+        });
+    }
+    
+    /**
+     * XBRL文書のリストを取得
+     * Get items.
+     * @returns IxHeadTitlesPublic Successful Response
+     * @throws ApiError
+     */
+    public static readIxHeadTitleItems(): CancelablePromise<XbrlIxHeadReadIxHeadTitleItemsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/xbrl/ix/head/list/'
+        });
+    }
+    
+    /**
+     * Read Ix Head Title Items Url List
+     * Get items.
+     * @returns UrlSchemaList Successful Response
+     * @throws ApiError
+     */
+    public static readIxHeadTitleItemsUrlList(): CancelablePromise<XbrlIxHeadReadIxHeadTitleItemsUrlListResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/xbrl/url_list/'
         });
     }
     
