@@ -80,12 +80,11 @@ const DataDisplay: React.FC<DataDisplayProps> = ({
   };
 
   return (
-    <Box>
+    <Box my={4}>
       <Text
         color="gray.600"
         fontSize="16px"
         fontWeight="semibold"
-        mb={4}
         textAlign="left"
       >
         {title}
