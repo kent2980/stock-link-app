@@ -1,3 +1,4 @@
+import IndexHeader from "@/components/Common/IndexHeader";
 import StockList from "@/components/StockListItem/StockList";
 import { Box } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
@@ -24,10 +25,13 @@ function Index() {
     });
   }, []);
 
+  const HEADER_HEIGHT = "120px";
+
   return (
-    <Box>
+    <Box overflow="hidden">
+      <IndexHeader h={HEADER_HEIGHT} />
       <Suspense fallback={<div>Loading...</div>}>
-        <StockList />
+        <StockList pt={HEADER_HEIGHT} />
       </Suspense>
     </Box>
   );

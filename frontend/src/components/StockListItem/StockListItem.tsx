@@ -1,43 +1,34 @@
 import { DocumentListPublic } from "@/client";
-import { Box, Card, Flex, VStack } from "@chakra-ui/react";
-import React from "react";
-import DataDisplay from "./DataDisplay";
-import Footer from "./Footer";
+import { Box, BoxProps, Skeleton } from "@chakra-ui/react";
+import React, { Suspense } from "react";
+import BusinessResult from "./DataDisplay/BusinessResult";
 import Header from "./Header";
-import ProgressBar from "./ProgressBar";
 
-interface StockListItemProps {
+interface StockListItemProps extends BoxProps {
   item: DocumentListPublic;
 }
 
-const StockListItem: React.FC<StockListItemProps> = ({ item }) => {
+const StockListItem: React.FC<StockListItemProps> = ({ item, ...props }) => {
+  const { company_name, securities_code, head_item_key, current_period } = item;
+  const title = () => {
+    if (current_period === "Q1") {
+      return "第1四半期決算";
+    } else if (current_period === "Q2") {
+      return "第2四半期決算";
+    } else if (current_period === "Q3") {
+      return "第3四半期決算";
+    } else if (current_period === "FY") {
+      return "通期決算";
+    } else if (current_period === "HY") {
+      return "中間決算";
+    }
+  };
   return (
-    <Box>
-      <Flex
-        dir="row"
-        justify="center"
-        m={{ base: "0 auto", md: "0 auto" }}
-        p={{ base: 2, md: 4 }}
-      >
-        <Card.Root w={{ base: "100%", md: "1024px" }} bg="white" shadow="md">
-          <Card.Header borderBottom={"1px solid #eaeaea"}>
-            <Header
-              company_name={item.company_name}
-              securities_code={item.securities_code}
-            />
-          </Card.Header>
-          <Card.Body>
-            <VStack gap={5} align="stretch">
-              <ProgressBar value={40} />
-              <DataDisplay />
-              <DataDisplay />
-            </VStack>
-          </Card.Body>
-          <Card.Footer>
-            <Footer />
-          </Card.Footer>
-        </Card.Root>
-      </Flex>
+    <Box {...props} px={4}>
+      <Header item={item} />
+      <Suspense fallback={<Skeleton height="20px" width="100%" />}>
+        <BusinessResult headItemKey={item.head_item_key} />
+      </Suspense>
     </Box>
   );
 };

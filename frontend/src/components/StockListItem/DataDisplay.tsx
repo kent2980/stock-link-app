@@ -1,11 +1,13 @@
-import { Box, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, Table, Text } from "@chakra-ui/react";
 import React from "react";
 
-interface DataItem {
+export interface DataItem {
   name: string;
   currentValue: number;
-  previousValue: number;
+  previousValue?: number;
   changeRate: number;
+  previousChangeRate?: number;
+  displayScale: string;
 }
 
 interface DataDisplayProps {
@@ -18,33 +20,64 @@ const DataDisplay: React.FC<DataDisplayProps> = ({
   data = [
     {
       name: "売上高",
-      currentValue: 6700000000,
-      previousValue: 6400000000,
+      currentValue: 67,
+      previousValue: 64,
       changeRate: 4.7,
+      previousChangeRate: 3.2,
+      displayScale: "億円",
     },
     {
       name: "純利益",
-      currentValue: 60000000000,
-      previousValue: 36000000000,
+      currentValue: 600,
+      previousValue: 360,
       changeRate: 66.7,
+      previousChangeRate: 20.0,
+      displayScale: "億円",
     },
     {
       name: "営業利益",
-      currentValue: 30000000000,
-      previousValue: 27000000000,
+      currentValue: 30,
+      previousValue: 27,
       changeRate: 11.1,
+      previousChangeRate: 8.0,
+      displayScale: "億円",
     },
     {
       name: "経常利益",
-      currentValue: 40000000000,
-      previousValue: 35000000000,
+      currentValue: 40,
+      previousValue: 35,
       changeRate: 14.3,
+      previousChangeRate: 5.0,
+      displayScale: "億円",
     },
   ],
 }) => {
-  // データ数に応じたフォントサイズの調整
-  const fontSize = `${(10 / data.length) * 5}px`;
-  const valueFontSize = `${(10 / data.length) * 7}px`;
+  const GetShortLabel = (label: string) => {
+    switch (label) {
+      case "売上高":
+        return "売上";
+      case "当期純利益":
+        return "純利";
+      case "営業収益":
+        return "売上";
+      case "親会社株主に帰属する当期純利益":
+        return "純利";
+      case "売上収益":
+        return "売上";
+      case "税引前利益":
+        return "経利";
+      case "当期利益":
+        return "純利";
+      case "営業利益":
+        return "営利";
+      case "経常利益":
+        return "経利";
+      case "親会社の所有者に帰属する当期利益":
+        return "所純利";
+      default:
+        return label;
+    }
+  };
 
   return (
     <Box>
@@ -57,35 +90,36 @@ const DataDisplay: React.FC<DataDisplayProps> = ({
       >
         {title}
       </Text>
-      <HStack gap={8} justify="space-between">
-        {data.map((item, index) => (
-          <VStack key={index} gap={1} align="center">
-            <Text fontSize={fontSize} color="gray.500">
-              {item.name}
-            </Text>
-            <Text fontWeight="bold" fontSize={valueFontSize}>
-              {(item.currentValue / 1_000_000_000).toFixed(1)}億円
-              <Text as="span" fontSize={fontSize} color="gray.500" ml={2}>
-                ({item.changeRate >= 0 ? "+" : ""}
-                {item.changeRate.toFixed(1)}%)
-              </Text>
-            </Text>
-            {/* 前年の数値 */}
-            <Text fontSize={fontSize} color="gray.400">
-              {(item.previousValue / 1_000_000_000).toFixed(1)}億円
-              <br />
-              <Text
-                as="span"
-                ml={1}
-                color={item.changeRate >= 0 ? "green.600" : "red.600"}
-              >
-                ({item.changeRate >= 0 ? "+" : ""}
-                {item.changeRate.toFixed(1)}%)
-              </Text>
-            </Text>
-          </VStack>
-        ))}
-      </HStack>
+      <Table.Root size="sm">
+        <Table.Header>
+          <Table.Row>
+            <Table.ColumnHeader>項目</Table.ColumnHeader>
+            {data.slice(0, 4).map((item, index) => (
+              <Table.ColumnHeader key={index}>
+                {GetShortLabel(item.name)}
+              </Table.ColumnHeader>
+            ))}
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell>今期実績</Table.Cell>
+            {data.slice(0, 4).map((item, index) => (
+              <>
+                <Table.Cell key={index}>{item.changeRate}</Table.Cell>
+              </>
+            ))}
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>前期実績</Table.Cell>
+            {data.slice(0, 4).map((item, index) => (
+              <>
+                <Table.Cell key={index}>{item.previousChangeRate}</Table.Cell>
+              </>
+            ))}
+          </Table.Row>
+        </Table.Body>
+      </Table.Root>
     </Box>
   );
 };

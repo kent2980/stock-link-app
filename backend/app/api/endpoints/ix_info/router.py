@@ -77,7 +77,10 @@ def get_document_list(
         .order_by(IxHeadTitle.id)
     )
     if report_types:
-        statement = statement.where(IxHeadTitle.report_type.in_(report_types))
+        statement = statement.where(
+            IxHeadTitle.report_type.in_(report_types),
+            IxHeadTitle.current_period != None,
+        )
     if convert_date:
         statement = statement.where(IxHeadTitle.reporting_date == convert_date)
     results = session.exec(statement)
@@ -132,6 +135,7 @@ def get_document_list(
                 if item.current_period in period_index
                 else None
             ),
+            report_date=item.reporting_date,
         )
         schemas.append(schema)
 

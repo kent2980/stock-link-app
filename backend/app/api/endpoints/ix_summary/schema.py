@@ -78,8 +78,8 @@ class FinStructBase(SQLModel):
 class FinUpperAndLower(FinStructBase):
     """メトリックの上下限情報を表すクラス"""
 
-    upper: Optional[float] = Field(default=FinItemsBase(context="UpperMember"))
-    lower: Optional[float] = Field(default=FinItemsBase(context="LowerMember"))
+    upper: Optional[FinItemsBase] = Field(default=FinItemsBase(context="UpperMember"))
+    lower: Optional[FinItemsBase] = Field(default=FinItemsBase(context="LowerMember"))
 
 
 class FinResultStruct(FinUpperAndLower):

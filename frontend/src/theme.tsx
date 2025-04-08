@@ -33,6 +33,7 @@ export const system = createSystem(defaultConfig, {
           secondary: { value: "#d9d9d7ff" },
           dark: { value: "#333333" },
           light: { value: "#ffffff" },
+          dataBack: { value: "#f4f4f6" },
           description: { value: "#5c4c7d71" },
           bgGradation: {
             value: "linear-gradient(90deg, #ffffff 0%, #f4f6fb 100%)",

@@ -16,6 +16,7 @@ class DocumentListPublic(SQLModel):
     url: Optional[str]
     period_index: Optional[int]
     current_period: Optional[str]
+    report_date: Optional[datetime.date]
 
 
 class DocumentListPublics(SQLModel):

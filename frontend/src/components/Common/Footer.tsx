@@ -21,6 +21,8 @@ const Footer: React.FC<FlexProps> = (props) => {
       position="fixed"
       bottom={0}
       display={{ base: "flex", md: "none" }}
+      zIndex={1000}
+      boxShadow="md"
       {...props}
     >
       <Flex

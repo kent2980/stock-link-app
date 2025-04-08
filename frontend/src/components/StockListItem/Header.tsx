@@ -1,54 +1,65 @@
-import { JpxService, WikiService } from "@/client";
+import { DocumentListPublic, JpxService, WikiService } from "@/client";
 import { Box, Heading, Image, Link, Text, TextProps } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Info } from "lucide-react";
 import React, { Suspense } from "react";
 import logo_list from "../../json/logo_list.json";
-import { Tooltip } from "../ui/tooltip";
 
 interface HeaderProps {
-  company_name?: string;
-  securities_code?: string;
+  item: DocumentListPublic;
 }
 
+const LogoDisplay: React.FC<{ logoUrl: string }> = ({ logoUrl }) => {
+  return (
+    <Box
+      display="flex"
+      justifyContent="flex-start"
+      borderRadius="100%"
+      w={12}
+      h={12}
+      borderWidth={1}
+      borderColor="gray.200"
+      bg="#ded16315"
+      boxShadow="md"
+    >
+      <Image
+        src={logoUrl}
+        alt="企業ロゴ"
+        objectFit="contain"
+        w="100%"
+        h="100%"
+      />
+    </Box>
+  );
+};
+
 const Header: React.FC<HeaderProps> = ({
-  company_name = "GLOE株式会社",
-  securities_code = "9565",
+  item: {
+    company_name = "ファーマライズホールディングス株式会社",
+    securities_code = "2796",
+    report_date = Date.now(),
+    document_short_name = "決算短信",
+  },
 }) => {
   const logo_name =
     logo_list.find((item) => item.code === securities_code)?.file_name || ""; // デフォルトロゴURLを設定
   const logo_url = `/assets/images/stock_logo/${logo_name}`; // 画像のURLを生成
 
   return (
-    <Box mb={2} pb={3}>
-      <Box display="flex" justifyContent="left" mb={4} p={2} borderRadius="md">
-        <Image src={logo_url} alt="企業ロゴ" h={5} borderRadius="lg" />
-      </Box>
+    <Box w="100%">
       <Box>
-        <Box display="flex" alignItems="center" mb={1}>
-          <Heading as="h2" fontSize="xl" fontWeight="bold" mr={2}>
-            {company_name}
-          </Heading>
-          <Text fontSize="sm" color="gray.500">
+        <Box display="flex" alignItems="center" mb={1} gap={4}>
+          <LogoDisplay logoUrl={logo_url} />
+          <Text fontSize="13px" color="gray.500">
             {securities_code}
           </Text>
+          <Heading as="h2" fontSize="15px" fontWeight="bold">
+            {company_name}
+          </Heading>
         </Box>
-        <Box mb={2}>
+        <Box display="flex" justifyContent="flex-start" my={1}>
           <Suspense fallback={<Text>Loading...</Text>}>
-            <JpxDataDisplay code={securities_code} />
+            <JpxDataDisplay code={securities_code} fontSize="11.5px" />
           </Suspense>
-        </Box>
-        <Box display="flex" alignItems="center">
-          <Tooltip content="企業詳細情報">
-            <Box as="span" display="inline-flex" alignItems="center" mr={1}>
-              <Info size="16" color="#3b8af8" />
-            </Box>
-          </Tooltip>
-          <Text fontSize="xs" color="gray.500">
-            <Suspense fallback={<Text>Loading...</Text>}>
-              <WikiText code={securities_code} />
-            </Suspense>
-          </Text>
         </Box>
       </Box>
     </Box>
@@ -90,7 +101,7 @@ const JpxDataDisplay: React.FC<SelectCodeProps> = ({ code, ...props }) => {
   }
 
   return (
-    <Text fontSize="xs" color="gray.500" {...props}>
+    <Text color="gray.500" {...props}>
       {data.market_or_type.replace("(内国株式)", "市場")} /{" "}
       {data.industry_33_name} [{data.industry_17_name}]
     </Text>

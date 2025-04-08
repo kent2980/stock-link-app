@@ -21,6 +21,7 @@ export type DocumentListPublic = {
     url: (string | null);
     period_index: (number | null);
     current_period: (string | null);
+    report_date: (string | null);
 };
 
 export type DocumentListPublics = {
@@ -37,8 +38,8 @@ export type FinForecastResponse = {
 export type FinForecastStruct = {
     period?: (PeriodSchemaBase | null);
     head_item_key?: (string | null);
-    upper?: (number | null);
-    lower?: (number | null);
+    upper?: (FinItemsBase | null);
+    lower?: (FinItemsBase | null);
     forecast?: (FinItemsBase | null);
 };
 
@@ -78,8 +79,8 @@ export type FinResultResponse = {
 export type FinResultStruct = {
     period?: (PeriodSchemaBase | null);
     head_item_key?: (string | null);
-    upper?: (number | null);
-    lower?: (number | null);
+    upper?: (FinItemsBase | null);
+    lower?: (FinItemsBase | null);
     result?: (FinItemsBase | null);
 };
 

@@ -2,10 +2,7 @@ import { Box, Flex } from "@chakra-ui/react";
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
 import { isLoggedIn } from "@/hooks/useAuth";
-import { HeaderStore } from "@/Store/HeaderStore";
-import { useStore } from "@tanstack/react-store";
 import Footer from "../components/Common/Footer";
-import Header from "../components/Common/Header";
 
 export const Route = createFileRoute("/_layout")({
   component: Layout,
@@ -18,20 +15,19 @@ export const Route = createFileRoute("/_layout")({
   },
 });
 
+const HEADER_HEIGHT = "110px";
+const FOOTER_HEIGHT = "60px";
+
 function Layout() {
-  const { height } = useStore(HeaderStore, (state) => state);
   return (
     <Flex direction="column">
-      <Header bg="linear-gradient(to right, #eef1f3, #fefefe)" />
-      <Box
-        mt={height}
-        bg="linear-gradient(to right, #e9ebef, #eceff6)"
-        h={"calc(100vh - " + height + "px)"}
-        w={"100%"}
-      >
+      <Box w={"100%"} pb={FOOTER_HEIGHT}>
         <Outlet />
       </Box>
-      <Footer bg="linear-gradient(to right, #ffffff, #fefefe)" />
+      <Footer
+        bg="linear-gradient(to right, #ffffff, #fefefe)"
+        h={FOOTER_HEIGHT}
+      />
     </Flex>
   );
 }
