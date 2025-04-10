@@ -107,7 +107,7 @@ class LabelBase(SQLModel):
 class FinResponseBase(SQLModel):
 
     count: int
-    labels: List[LabelBase]
+    # labels: List[LabelBase]
     data: List[FinStructBase]
 
 

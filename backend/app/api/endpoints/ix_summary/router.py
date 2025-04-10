@@ -1,6 +1,5 @@
-import collections
-from collections import defaultdict
-from typing import Optional
+import re
+from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, HTTPException, Query
 
@@ -16,14 +15,16 @@ router = APIRouter()
 @router.get(
     "/operating_results/income/",
     summary="経営成績情報を取得",
-    response_model=sc.FinResultResponse,
+    response_model=sc.FinResultStruct,
 )
 def get_operating_results(
     *,
     session: SessionDep,
     code: Optional[str] = Query(None, description="銘柄コード"),
     head_item_key: Optional[str] = Query(None, description="head_item_key"),
-) -> sc.FinResultResponse:
+    report_types: Optional[List[str]] = Query(None, description="レポートタイプ"),
+    offset: int = Query(0, description="オフセット"),
+) -> sc.FinResultStruct:
 
     if code and head_item_key:
         raise HTTPException(
@@ -43,16 +44,16 @@ def get_operating_results(
 
     if head_item_key is None:
         try:
-            head_item_keys = utils.get_head_item_key(session=session, code=code)
+            head_item_key = utils.get_head_item_key(
+                session=session, code=code, report_types=report_types, offset=offset
+            )
         except HeadItemNotFound as e:
             raise HTTPException(status_code=404, detail=str(e))
-    else:
-        head_item_keys = [head_item_key]
 
     try:
-        items = utils.get_summary_items_list(
+        item = utils.get_summary_items(
             session=session,
-            head_item_keys=head_item_keys,
+            head_item_key=head_item_key,
             attr_value_dict=attr_value_dict,
             from_name_dict=from_name_dict,
             is_change=True,
@@ -60,31 +61,29 @@ def get_operating_results(
     except NotDictKeyError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
-    results = []
-    for item in items:
-        result = utils.get_struct(
-            items=item,
-            struct=sc.FinResultStruct(),
-        )
-        results.append(result)
-
-    label = utils.get_header_labels(results)
-
-    res = sc.FinResultResponse(
-        count=len(results),
-        labels=label,
-        data=results,
+    result = utils.get_struct(
+        items=item,
+        struct=sc.FinResultStruct(),
     )
 
-    return res
+    return result
 
 
 @router.get("/operating_results/other/{}", summary="その他の経営成績情報を取得")
 def get_other_operating_results(
     *,
     session: SessionDep,
-    code: str,
-) -> sc.FinResultResponse:
+    code: Optional[str] = Query(None, description="銘柄コード"),
+    head_item_key: Optional[str] = Query(None, description="head_item_key"),
+    report_types: Optional[List[str]] = Query(None, description="レポートタイプ"),
+    offset: int = Query(0, description="オフセット"),
+) -> sc.FinResultStruct:
+
+    if code and head_item_key:
+        raise HTTPException(
+            status_code=404,
+            detail="銘柄コードかhead_item_keyどちらかを指定してください",
+        )
 
     attr_value_dict = {
         "FY": "BusinessResultsOperatingResults",
@@ -96,15 +95,18 @@ def get_other_operating_results(
         "non_consolidated": "tse-ed-t_OtherOperatingResultsAbstract",
     }
 
-    try:
-        head_item_keys = utils.get_head_item_key(session=session, code=code)
-    except HeadItemNotFound as e:
-        raise HTTPException(status_code=404, detail=str(e))
+    if head_item_key is None:
+        try:
+            head_item_key = utils.get_head_item_key(
+                session=session, code=code, report_types=report_types, offset=offset
+            )
+        except HeadItemNotFound as e:
+            raise HTTPException(status_code=404, detail=str(e))
 
     try:
-        items = utils.get_summary_items_list(
+        item = utils.get_summary_items(
             session=session,
-            head_item_keys=head_item_keys,
+            head_item_key=head_item_key,
             attr_value_dict=attr_value_dict,
             from_name_dict=from_name_dict,
             is_change=False,
@@ -112,23 +114,12 @@ def get_other_operating_results(
     except NotDictKeyError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
-    results = []
-    for item in items:
-        result = utils.get_struct(
-            items=item,
-            struct=sc.FinResultStruct(),
-        )
-        results.append(result)
-
-    label = utils.get_header_labels(results)
-
-    res = sc.FinResultResponse(
-        count=len(results),
-        labels=label,
-        data=results,
+    result = utils.get_struct(
+        items=item,
+        struct=sc.FinResultStruct(),
     )
 
-    return res
+    return result
 
 
 @router.get("/forecasts/", summary="予測情報を取得")
@@ -137,7 +128,9 @@ def get_forecasts(
     session: SessionDep,
     code: Optional[str] = Query(None, description="銘柄コード"),
     head_item_key: Optional[str] = Query(None, description="head_item_key"),
-) -> sc.FinForecastResponse:
+    report_types: Optional[List[str]] = Query(None, description="レポートタイプ"),
+    offset: int = Query(0, description="オフセット"),
+) -> sc.FinForecastStruct:
 
     if code and head_item_key:
         raise HTTPException(
@@ -157,16 +150,16 @@ def get_forecasts(
 
     if head_item_key is None:
         try:
-            head_item_keys = utils.get_head_item_key(session=session, code=code)
+            head_item_key = utils.get_head_item_key(
+                session=session, code=code, report_types=report_types, offset=offset
+            )
         except HeadItemNotFound as e:
             raise HTTPException(status_code=404, detail=str(e))
-    else:
-        head_item_keys = [head_item_key]
 
     try:
-        items = utils.get_summary_items_list(
+        item = utils.get_summary_items(
             session=session,
-            head_item_keys=head_item_keys,
+            head_item_key=head_item_key,
             attr_value_dict=attr_value_dict,
             from_name_dict=from_name_dict,
             is_change=True,
@@ -174,35 +167,33 @@ def get_forecasts(
     except NotDictKeyError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
-    results = []
-    for item in items:
-        result = utils.get_struct(
-            items=item,
-            struct=sc.FinForecastStruct(),
-        )
-        results.append(result)
-
-    label = utils.get_header_labels(results)
-
-    res = sc.FinForecastResponse(
-        count=len(results),
-        labels=label,
-        data=results,
+    result = utils.get_struct(
+        items=item,
+        struct=sc.FinForecastStruct(),
     )
 
-    return res
+    return result
 
 
 @router.get(
-    "/financial_position/{code}",
+    "/financial_position",
     summary="財政状態情報を取得",
-    response_model=sc.FinResultOnlyResponse,
+    response_model=sc.FinResultOnlyStruct,
 )
 def get_financial_position(
     *,
     session: SessionDep,
-    code: str,
-) -> sc.FinResultOnlyResponse:
+    code: Optional[str] = Query(None, description="銘柄コード"),
+    head_item_key: Optional[str] = Query(None, description="head_item_key"),
+    report_types: Optional[List[str]] = Query(None, description="レポートタイプ"),
+    offset: int = Query(0, description="オフセット"),
+) -> sc.FinResultOnlyStruct:
+
+    if code and head_item_key:
+        raise HTTPException(
+            status_code=404,
+            detail="銘柄コードかhead_item_keyどちらかを指定してください",
+        )
 
     attr_value_dict = {
         "FY": "BusinessResultsFinancialPositions",
@@ -214,15 +205,18 @@ def get_financial_position(
         "non_consolidated": "tse-ed-t_FinancialPositionsAbstract",
     }
 
-    try:
-        head_item_keys = utils.get_head_item_key(session=session, code=code)
-    except HeadItemNotFound as e:
-        raise HTTPException(status_code=404, detail=str(e))
+    if head_item_key is None:
+        try:
+            head_item_key = utils.get_head_item_key(
+                session=session, code=code, report_types=report_types, offset=offset
+            )
+        except HeadItemNotFound as e:
+            raise HTTPException(status_code=404, detail=str(e))
 
     try:
-        items = utils.get_summary_items_list(
+        item = utils.get_summary_items(
             session=session,
-            head_item_keys=head_item_keys,
+            head_item_key=head_item_key,
             attr_value_dict=attr_value_dict,
             from_name_dict=from_name_dict,
             is_change=False,
@@ -230,35 +224,26 @@ def get_financial_position(
     except NotDictKeyError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
-    results = []
-    for item in items:
-        result = utils.get_struct(
-            items=item,
-            struct=sc.FinResultOnlyStruct(),
-        )
-        results.append(result)
-
-    label = utils.get_header_labels(results)
-
-    res = sc.FinResultOnlyResponse(
-        count=len(results),
-        labels=label,
-        data=results,
+    result = utils.get_struct(
+        items=item,
+        struct=sc.FinResultOnlyStruct(),
     )
 
-    return res
+    return result
 
 
 @router.get(
     "/cash_flows/{code}",
     summary="キャッシュフロー情報を取得",
-    response_model=sc.FinResultOnlyResponse,
+    response_model=sc.FinResultOnlyStruct,
 )
 def get_cash_flows(
     *,
     session: SessionDep,
     code: str,
-) -> sc.FinResultOnlyResponse:
+    year: Optional[str] = Query(None, description="年度"),
+    offset: int = Query(0, description="オフセット"),
+) -> sc.FinResultOnlyStruct:
 
     attr_value_dict = {
         "FY": "BusinessResultsCashFlows",
@@ -271,14 +256,23 @@ def get_cash_flows(
     }
 
     try:
-        head_item_keys = utils.get_head_item_key(session=session, code=code)
+        head_item_key = utils.get_head_item_key(
+            session=session,
+            code=code,
+            report_types=["edjp", "edif", "edus"],
+            offset=offset,
+            year=year,
+            current_period="FY",
+        )
     except HeadItemNotFound as e:
         raise HTTPException(status_code=404, detail=str(e))
 
+    print(f"head_item_key: {head_item_key}")
+
     try:
-        items = utils.get_summary_items_list(
+        item = utils.get_summary_items(
             session=session,
-            head_item_keys=head_item_keys,
+            head_item_key=head_item_key,
             attr_value_dict=attr_value_dict,
             from_name_dict=from_name_dict,
             is_change=False,
@@ -286,23 +280,12 @@ def get_cash_flows(
     except NotDictKeyError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
-    results = []
-    for item in items:
-        result = utils.get_struct(
-            items=item,
-            struct=sc.FinResultOnlyStruct(),
-        )
-        results.append(result)
-
-    label = utils.get_header_labels(results)
-
-    res = sc.FinResultOnlyResponse(
-        count=len(results),
-        labels=label,
-        data=results,
+    result = utils.get_struct(
+        items=item,
+        struct=sc.FinResultOnlyStruct(),
     )
 
-    return res
+    return result
 
 
 @router.get(
@@ -349,11 +332,11 @@ def get_dividends(
         )
         results.append(result)
 
-    label = utils.get_header_labels(results)
+    # label = utils.get_header_labels(results)
 
     res = sc.FinResponseBase(
         count=len(results),
-        labels=label,
+        # labels=label,
         data=results,
     )
 

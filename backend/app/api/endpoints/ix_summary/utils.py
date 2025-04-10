@@ -1,6 +1,6 @@
 import re
 from collections import defaultdict
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional
 
 from sqlmodel import Session
 
@@ -158,7 +158,6 @@ def var_init(
     )
 
     attr_value = get_attr_value(head_item, attr_value_dict)
-
     # region tree_itemsの取得
     tree_items = crud.read_tree_items(
         head_item_key=head_item_key,
@@ -166,6 +165,8 @@ def var_init(
         session=session,
         xbrl_type="sm",
     )
+
+    # print(tree_items)
 
     from_name = get_from_name(from_name_dict, tree_items)
 
@@ -251,8 +252,8 @@ def get_summary_items(
 
 def get_struct(
     items: SummaryItems,
-    struct: sc.FinResultStruct,
-) -> sc.FinResultStruct:
+    struct: sc.FinStructBase,
+) -> sc.FinStructBase:
     """
     #### この関数は、FinStructBaseを取得する関数です。
     - **機能**:FinStructBaseを取得します。
@@ -381,20 +382,32 @@ def get_summary_items_list(
 def get_head_item_key(
     session: Session,
     code: str,
-) -> List[str]:
+    report_types: Optional[List[str]],
+    current_period: Optional[str] = None,
+    year: Optional[str] = None,
+    offset: int = 0,
+) -> str:
     """
     #### この関数は、指定された証券コードに一致するhead_item_keyを取得する関数です。
     - **機能**:指定された証券コードに一致するhead_item_keyを取得します。
-    - **引数**:session: Session, code: str
-    - **戻り値**:List[str]
+    - **引数**:session: Session
+    - **引数**:code: str - 証券コード
+    - **引数**:report_types: List[str]  - レポートタイプ
+    - **引数**:offset: int - オフセット
+    - **戻り値**:str - head_item_key
     - **例外**:HeadItemNotFound
     """
 
-    headItems = crud.get_ix_head_title_by_code(session=session, code=code)
+    headItems = crud.get_ix_head_title(
+        session,
+        code=code,
+        report_types=report_types,
+        offset=offset,
+        current_period=current_period,
+        year=year,
+    )
 
-    if len(headItems) == 0:
-        raise HeadItemNotFound("Item not found")
+    if not headItems:
+        raise HeadItemNotFound("head item not found.")
 
-    head_item_keys = [item.item_key for item in headItems]
-
-    return head_item_keys
+    return headItems.item_key

@@ -1,5 +1,6 @@
 from typing import Any, List, Optional
 
+from fastapi import Query
 from sqlalchemy.orm import aliased
 from sqlmodel import Session, and_, case, exists, func, literal, or_, select
 
@@ -94,6 +95,48 @@ def get_ix_head_title_by_code(session: Session, code: str) -> List[IxHeadTitle]:
     result = session.exec(statement)
     items = result.all()
     return items
+
+
+def get_ix_head_title(
+    session: Session,
+    code: str,
+    report_types: Optional[List[str]] = Query(None),
+    current_period: Optional[str] = None,
+    year: Optional[str] = None,
+    offset: int = 0,
+) -> Optional[IxHeadTitle]:
+    """
+    #### IxHeadTitleテーブルから証券コードに紐づくレコードを取得する
+    - **機能**: 証券コードに紐づくIxHeadTitleテーブルのレコードを取得する
+    - **param1**: session: Session  DBセッション
+    - **param2**: code: str 証券コード
+    - **param3**: report_types: List[str] レポートタイプ
+    - **param4**: offset: int オフセット
+    - **return**: IxHeadTitle | None
+    """
+    statement = select(IxHeadTitle).where(
+        IxHeadTitle.securities_code == code,
+    )
+    if report_types:
+        statement = statement.where(
+            IxHeadTitle.report_type.in_(report_types),
+        )
+    if current_period:
+        statement = statement.where(
+            IxHeadTitle.current_period == current_period,
+        )
+    if year:
+        statement = statement.where(
+            IxHeadTitle.fy_year_end.startswith(year),
+        )
+    statement = statement.order_by(
+        IxHeadTitle.id.desc(),
+    )
+    statement = statement.offset(offset)
+    result = session.exec(statement)
+    item = result.first()
+
+    return item
 
 
 def get_attr_value(
