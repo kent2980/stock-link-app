@@ -11,20 +11,8 @@ interface StockListItemProps extends BoxProps {
 }
 
 const StockListItem: React.FC<StockListItemProps> = ({ item, ...props }) => {
-  const { company_name, securities_code, head_item_key, current_period } = item;
-  const title = () => {
-    if (current_period === "Q1") {
-      return "第1四半期決算";
-    } else if (current_period === "Q2") {
-      return "第2四半期決算";
-    } else if (current_period === "Q3") {
-      return "第3四半期決算";
-    } else if (current_period === "FY") {
-      return "通期決算";
-    } else if (current_period === "HY") {
-      return "中間決算";
-    }
-  };
+  const { securities_code } = item;
+
   return (
     <Box {...props} px={4}>
       <Header item={item} />

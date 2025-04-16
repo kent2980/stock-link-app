@@ -1,16 +1,8 @@
 import { Box, BoxProps, VStack } from "@chakra-ui/react";
-import { useNavigate } from "@tanstack/react-router";
 import { Suspense } from "react";
 import StockList from "../StockListItem/StockList";
 
 const ChildSidebar: React.FC<BoxProps> = (props) => {
-  const navigate = useNavigate();
-  const handleNavigation = (url: string) => {
-    navigate({
-      to: url,
-    });
-  };
-
   return (
     <Box
       display={{

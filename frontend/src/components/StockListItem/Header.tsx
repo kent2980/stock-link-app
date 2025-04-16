@@ -1,5 +1,5 @@
-import { DocumentListPublic, JpxService, WikiService } from "@/client";
-import { Box, Heading, Image, Link, Text, TextProps } from "@chakra-ui/react";
+import { DocumentListPublic, JpxService } from "@/client";
+import { Box, Heading, Image, Text, TextProps } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import React, { Suspense } from "react";
 import logo_list from "../../json/logo_list.json";
@@ -36,8 +36,6 @@ const Header: React.FC<HeaderProps> = ({
   item: {
     company_name = "ファーマライズホールディングス株式会社",
     securities_code = "2796",
-    report_date = Date.now(),
-    document_short_name = "決算短信",
   },
 }) => {
   const logo_name =
@@ -105,41 +103,6 @@ const JpxDataDisplay: React.FC<SelectCodeProps> = ({ code, ...props }) => {
       {data.market_or_type.replace("(内国株式)", "市場")} /{" "}
       {data.industry_33_name} [{data.industry_17_name}]
     </Text>
-  );
-};
-
-const WikiText: React.FC<SelectCodeProps> = ({ code, ...props }) => {
-  if (!code) {
-    return <Text {...props}>企業情報がありません</Text>;
-  }
-
-  const { data: wiki } = useSuspenseQuery({
-    queryKey: ["wiki", { code: code }],
-    queryFn: async () => {
-      try {
-        return await WikiService.getStockWikiItem({
-          code: code,
-        });
-      } catch (error) {
-        console.error(error);
-        return {
-          description: null,
-          url: null,
-        };
-      }
-    },
-  });
-
-  if (wiki.description === null || wiki.description === undefined) {
-    return <Text {...props}>企業情報がありません</Text>;
-  }
-  return (
-    <>
-      <Text {...props}>{wiki.description}</Text>
-      <Text>
-        (<Link href={wiki.url ?? ""}>引用:Wikipediaより</Link>)
-      </Text>
-    </>
   );
 };
 
