@@ -17,11 +17,10 @@ import { Route as RecoverPasswordImport } from './routes/recover-password'
 import { Route as LoginImport } from './routes/login'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
-import { Route as LayoutVirtualImport } from './routes/_layout/virtual'
-import { Route as LayoutSettingsImport } from './routes/_layout/settings'
-import { Route as LayoutItemsImport } from './routes/_layout/items'
-import { Route as LayoutAdminImport } from './routes/_layout/admin'
-import { Route as LayoutStoreIndexImport } from './routes/_layout/store/index'
+import { Route as LayoutCategoryImport } from './routes/_layout/category'
+import { Route as LayoutIndexDateStrImport } from './routes/_layout/index/$dateStr'
+import { Route as LayoutIndexIndustryIndustry17Import } from './routes/_layout/index/industry.$industry_17'
+import { Route as LayoutIndexDateDateStrImport } from './routes/_layout/index/date.$dateStr'
 
 // Create/Update Routes
 
@@ -55,28 +54,24 @@ const LayoutIndexRoute = LayoutIndexImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutVirtualRoute = LayoutVirtualImport.update({
-  path: '/virtual',
+const LayoutCategoryRoute = LayoutCategoryImport.update({
+  path: '/category',
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutSettingsRoute = LayoutSettingsImport.update({
-  path: '/settings',
+const LayoutIndexDateStrRoute = LayoutIndexDateStrImport.update({
+  path: '/index/$dateStr',
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutItemsRoute = LayoutItemsImport.update({
-  path: '/items',
-  getParentRoute: () => LayoutRoute,
-} as any)
+const LayoutIndexIndustryIndustry17Route =
+  LayoutIndexIndustryIndustry17Import.update({
+    path: '/index/industry/$industry_17',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 
-const LayoutAdminRoute = LayoutAdminImport.update({
-  path: '/admin',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutStoreIndexRoute = LayoutStoreIndexImport.update({
-  path: '/store/',
+const LayoutIndexDateDateStrRoute = LayoutIndexDateDateStrImport.update({
+  path: '/index/date/$dateStr',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -104,28 +99,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupImport
       parentRoute: typeof rootRoute
     }
-    '/_layout/admin': {
-      preLoaderRoute: typeof LayoutAdminImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/items': {
-      preLoaderRoute: typeof LayoutItemsImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/settings': {
-      preLoaderRoute: typeof LayoutSettingsImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/virtual': {
-      preLoaderRoute: typeof LayoutVirtualImport
+    '/_layout/category': {
+      preLoaderRoute: typeof LayoutCategoryImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/': {
       preLoaderRoute: typeof LayoutIndexImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/store/': {
-      preLoaderRoute: typeof LayoutStoreIndexImport
+    '/_layout/index/$dateStr': {
+      preLoaderRoute: typeof LayoutIndexDateStrImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/index/date/$dateStr': {
+      preLoaderRoute: typeof LayoutIndexDateDateStrImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/index/industry/$industry_17': {
+      preLoaderRoute: typeof LayoutIndexIndustryIndustry17Import
       parentRoute: typeof LayoutImport
     }
   }
@@ -135,12 +126,11 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   LayoutRoute.addChildren([
-    LayoutAdminRoute,
-    LayoutItemsRoute,
-    LayoutSettingsRoute,
-    LayoutVirtualRoute,
+    LayoutCategoryRoute,
     LayoutIndexRoute,
-    LayoutStoreIndexRoute,
+    LayoutIndexDateStrRoute,
+    LayoutIndexDateDateStrRoute,
+    LayoutIndexIndustryIndustry17Route,
   ]),
   LoginRoute,
   RecoverPasswordRoute,

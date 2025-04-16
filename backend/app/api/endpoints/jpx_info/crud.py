@@ -1,5 +1,6 @@
 from typing import List, Optional
 
+from sqlalchemy import func
 from sqlmodel import Session, select
 
 from app.models import JpxStockInfo
@@ -183,3 +184,32 @@ def read_select_industries(
     items = [item for item in items if item[0] is not None]
     items = [item for item in items if item[1] is not None]
     return sc.IndustriesList(data=items)
+
+
+def read_industry_17_count(
+    *,
+    session: Session,
+) -> sc.industry_17_count_list:
+    """
+    Get all industries.
+    """
+    statement = (
+        select(
+            JpxStockInfo.industry_17_name.label("name"),
+            JpxStockInfo.industry_17_code.label("code"),
+            func.count(JpxStockInfo.code).label("count"),
+        )
+        .where(
+            JpxStockInfo.industry_17_name.is_not(None),
+            JpxStockInfo.industry_17_code.is_not(None),
+        )
+        .group_by(
+            JpxStockInfo.industry_17_name,
+            JpxStockInfo.industry_17_code,
+        )
+        .order_by(JpxStockInfo.industry_17_code)
+    )
+    result = session.exec(statement)
+    items = result.all()
+
+    return sc.industry_17_count_list(data=items)

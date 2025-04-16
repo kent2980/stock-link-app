@@ -8,7 +8,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlmodel import func, select, update
 
 from app.api.deps import SessionDep
-from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric
+from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric, JpxStockInfo
 
 from . import crud
 from . import schema as sc
@@ -139,3 +139,32 @@ def read_ix_head_title_items_url_list(
                 sc.UrlSchema(securities_code=item.securities_code, url=item.url)
             )
     return sc.UrlSchemaList(data=url_list, count=len(url_list))
+
+
+@router.get(
+    "/calendar", summary="XBRLカレンダーを取得", response_model=sc.PublicCalenders
+)
+def get_calendar(*, session: SessionDep) -> sc.PublicCalenders:
+
+    statement = (
+        select(
+            IxHeadTitle.reporting_date,
+            func.count(IxHeadTitle.reporting_date).label("count"),
+        )
+        .where(IxHeadTitle.securities_code != None)
+        .group_by(IxHeadTitle.reporting_date)
+        .order_by(IxHeadTitle.reporting_date.desc())
+    )
+    results = session.exec(statement)
+    items = results.all()
+
+    return sc.PublicCalenders(
+        count=len(items),
+        data=[
+            sc.PublicCalender(
+                reporting_date=item[0],
+                count=item[1],
+            )
+            for item in items
+        ],
+    )

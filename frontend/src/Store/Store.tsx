@@ -1,7 +1,5 @@
 import { Store } from "@tanstack/react-store";
-import { BiAnalyse, BiHome } from "react-icons/bi";
-import { BsProjectorFill } from "react-icons/bs";
-import { FiSettings } from "react-icons/fi";
+import { BiCategory, BiHome } from "react-icons/bi";
 interface StockListState {
   [key: string]: {
     scrollPosition: number;
@@ -33,15 +31,9 @@ export const MenuListStore = new Store<MenuListState>({
   menuList: [
     { menuLabel: "Home", menuUrl: "/", menuIcon: <BiHome /> },
     {
-      menuLabel: "Analysis",
-      menuUrl: "/analysis",
-      menuIcon: <BiAnalyse />,
-    },
-    { menuLabel: "Settings", menuUrl: "/settings", menuIcon: <FiSettings /> },
-    {
-      menuLabel: "Profile",
-      menuUrl: "/profile",
-      menuIcon: <BsProjectorFill />,
+      menuLabel: "Category",
+      menuUrl: "/category",
+      menuIcon: <BiCategory />,
     },
   ],
 });

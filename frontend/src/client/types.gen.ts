@@ -29,12 +29,6 @@ export type DocumentListPublics = {
     data: Array<DocumentListPublic>;
 };
 
-export type FinForecastResponse = {
-    count: number;
-    labels: Array<LabelBase>;
-    data: Array<FinForecastStruct>;
-};
-
 export type FinForecastStruct = {
     period?: (PeriodSchemaBase | null);
     head_item_key?: (string | null);
@@ -54,26 +48,13 @@ export type FinItemsBase = {
 
 export type FinResponseBase = {
     count: number;
-    labels: Array<LabelBase>;
     data: Array<FinStructBase>;
-};
-
-export type FinResultOnlyResponse = {
-    count: number;
-    labels: Array<LabelBase>;
-    data: Array<FinResultOnlyStruct>;
 };
 
 export type FinResultOnlyStruct = {
     period?: (PeriodSchemaBase | null);
     head_item_key?: (string | null);
     result?: (FinItemsBase | null);
-};
-
-export type FinResultResponse = {
-    count: number;
-    labels: Array<LabelBase>;
-    data: Array<FinResultStruct>;
 };
 
 export type FinResultStruct = {
@@ -138,6 +119,16 @@ export type IndustriesList = {
 export type Industry = {
     code: number;
     name: string;
+};
+
+export type industry_17_count = {
+    code: number;
+    name: string;
+    count: number;
+};
+
+export type industry_17_count_list = {
+    data: Array<industry_17_count>;
 };
 
 export type ItemCreate = {
@@ -326,10 +317,6 @@ export type JpxStockInfosPublicList = {
     data: Array<JpxStockInfoPublic>;
 };
 
-export type LabelBase = {
-    label: string;
-};
-
 export type Message = {
     message: string;
 };
@@ -346,6 +333,16 @@ export type PeriodSchemaBase = {
     accountingStandard: string;
     fiscalYear: string;
     period: string;
+};
+
+export type PublicCalender = {
+    reporting_date: string;
+    count: number;
+};
+
+export type PublicCalenders = {
+    count: number;
+    data: Array<PublicCalender>;
 };
 
 /**
@@ -497,6 +494,7 @@ export type IxGetLatestDocumentTitleResponse = (string);
 
 export type IxGetDocumentListData = {
     dateStr?: (string | null);
+    industry17Code?: (number | null);
     limit?: (number | null);
     page?: (number | null);
     reportTypes?: (Array<(string)> | null);
@@ -539,6 +537,8 @@ export type JpxReadSelectIndustriesData = {
 
 export type JpxReadSelectIndustriesResponse = (IndustriesList);
 
+export type JpxReadIndustry17CountResponse = (industry_17_count_list);
+
 export type LoginLoginAccessTokenData = {
     formData: Body_login_login_access_token;
 };
@@ -574,15 +574,38 @@ export type SummaryGetOperatingResultsData = {
      * head_item_key
      */
     headItemKey?: (string | null);
+    /**
+     * オフセット
+     */
+    offset?: number;
+    /**
+     * レポートタイプ
+     */
+    reportTypes?: (Array<(string)> | null);
 };
 
-export type SummaryGetOperatingResultsResponse = (FinResultResponse);
+export type SummaryGetOperatingResultsResponse = (FinResultStruct);
 
 export type SummaryGetOtherOperatingResultsData = {
-    code: string;
+    /**
+     * 銘柄コード
+     */
+    code?: (string | null);
+    /**
+     * head_item_key
+     */
+    headItemKey?: (string | null);
+    /**
+     * オフセット
+     */
+    offset?: number;
+    /**
+     * レポートタイプ
+     */
+    reportTypes?: (Array<(string)> | null);
 };
 
-export type SummaryGetOtherOperatingResultsResponse = (FinResultResponse);
+export type SummaryGetOtherOperatingResultsResponse = (FinResultStruct);
 
 export type SummaryGetForecastsData = {
     /**
@@ -593,21 +616,52 @@ export type SummaryGetForecastsData = {
      * head_item_key
      */
     headItemKey?: (string | null);
+    /**
+     * オフセット
+     */
+    offset?: number;
+    /**
+     * レポートタイプ
+     */
+    reportTypes?: (Array<(string)> | null);
 };
 
-export type SummaryGetForecastsResponse = (FinForecastResponse);
+export type SummaryGetForecastsResponse = (FinForecastStruct);
 
 export type SummaryGetFinancialPositionData = {
-    code: string;
+    /**
+     * 銘柄コード
+     */
+    code?: (string | null);
+    /**
+     * head_item_key
+     */
+    headItemKey?: (string | null);
+    /**
+     * オフセット
+     */
+    offset?: number;
+    /**
+     * レポートタイプ
+     */
+    reportTypes?: (Array<(string)> | null);
 };
 
-export type SummaryGetFinancialPositionResponse = (FinResultOnlyResponse);
+export type SummaryGetFinancialPositionResponse = (FinResultOnlyStruct);
 
 export type SummaryGetCashFlowsData = {
     code: string;
+    /**
+     * オフセット
+     */
+    offset?: number;
+    /**
+     * 年度
+     */
+    year?: (string | null);
 };
 
-export type SummaryGetCashFlowsResponse = (FinResultOnlyResponse);
+export type SummaryGetCashFlowsResponse = (FinResultOnlyStruct);
 
 export type SummaryGetDividendsData = {
     code: string;
@@ -713,3 +767,5 @@ export type XbrlIxHeadReadIxHeadTitleItemResponse = (IxHeadTitlePublic);
 export type XbrlIxHeadReadIxHeadTitleItemsResponse = (IxHeadTitlesPublic);
 
 export type XbrlIxHeadReadIxHeadTitleItemsUrlListResponse = (UrlSchemaList);
+
+export type XbrlIxHeadGetCalendarResponse = (PublicCalenders);

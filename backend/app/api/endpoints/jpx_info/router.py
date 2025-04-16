@@ -136,3 +136,20 @@ def read_select_industries(
     )
 
     return items
+
+
+@router.get("/industry_17_list/", response_model=sc.industry_17_count_list)
+def read_industry_17_count(
+    *,
+    session: SessionDep,
+) -> sc.industry_17_count_list:
+    """
+    Get industry_17_list.
+    """
+
+    items = crud.read_industry_17_count(session=session)
+
+    if len(items.data) == 0:
+        raise HTTPException(status_code=404, detail="Items not found")
+
+    return items

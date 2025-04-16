@@ -1,6 +1,9 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
+import Header from "@/components/Common/Header";
+import ChildSidebar from "@/components/Desktop/ChildSidebar";
+import Sidebar from "@/components/Desktop/Sidebar";
 import { isLoggedIn } from "@/hooks/useAuth";
 import Footer from "../components/Common/Footer";
 
@@ -15,13 +18,16 @@ export const Route = createFileRoute("/_layout")({
   },
 });
 
-const HEADER_HEIGHT = "110px";
-const FOOTER_HEIGHT = "60px";
+const HEADER_HEIGHT = "40px";
+const FOOTER_HEIGHT = "50px";
 
 function Layout() {
   return (
     <Flex direction="column">
-      <Box w={"100%"} pb={FOOTER_HEIGHT}>
+      <Header h={{ base: HEADER_HEIGHT, md: "60px" }} />
+      <Sidebar pt="60px" />
+      <ChildSidebar pt="60px" />
+      <Box pb={{ base: 0, md: FOOTER_HEIGHT }} pt={HEADER_HEIGHT}>
         <Outlet />
       </Box>
       <Footer

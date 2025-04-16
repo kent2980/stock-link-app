@@ -1,4 +1,3 @@
-from datetime import date
 from typing import List, Optional
 
 from app.models import Field, SQLModel
@@ -52,3 +51,13 @@ class Industry(SQLModel):
 class IndustriesList(SQLModel):
 
     data: List[Industry]
+
+
+class industry_17_count(SQLModel):
+    code: int
+    name: str
+    count: int
+
+
+class industry_17_count_list(SQLModel):
+    data: List[industry_17_count]

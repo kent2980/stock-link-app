@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, IxGetDocumentCountData, IxGetDocumentCountResponse, IxGetLatestDocumentTitleResponse, IxGetDocumentListData, IxGetDocumentListResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, SummaryGetOperatingResultsData, SummaryGetOperatingResultsResponse, SummaryGetOtherOperatingResultsData, SummaryGetOtherOperatingResultsResponse, SummaryGetForecastsData, SummaryGetForecastsResponse, SummaryGetFinancialPositionData, SummaryGetFinancialPositionResponse, SummaryGetCashFlowsData, SummaryGetCashFlowsResponse, SummaryGetDividendsData, SummaryGetDividendsResponse, SummaryGetForecastProgressRateData, SummaryGetForecastProgressRateResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemsResponse, WikiCreateStockWikiItemData, WikiCreateStockWikiItemResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, XbrlIxHeadIsIxHeadTitleItemActiveData, XbrlIxHeadIsIxHeadTitleItemActiveResponse, XbrlIxHeadReadIxHeadTitleItemData, XbrlIxHeadReadIxHeadTitleItemResponse, XbrlIxHeadReadIxHeadTitleItemsResponse, XbrlIxHeadReadIxHeadTitleItemsUrlListResponse } from './types.gen';
+import type { ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, IxGetDocumentCountData, IxGetDocumentCountResponse, IxGetLatestDocumentTitleResponse, IxGetDocumentListData, IxGetDocumentListResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, JpxReadIndustry17CountResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, SummaryGetOperatingResultsData, SummaryGetOperatingResultsResponse, SummaryGetOtherOperatingResultsData, SummaryGetOtherOperatingResultsResponse, SummaryGetForecastsData, SummaryGetForecastsResponse, SummaryGetFinancialPositionData, SummaryGetFinancialPositionResponse, SummaryGetCashFlowsData, SummaryGetCashFlowsResponse, SummaryGetDividendsData, SummaryGetDividendsResponse, SummaryGetForecastProgressRateData, SummaryGetForecastProgressRateResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemsResponse, WikiCreateStockWikiItemData, WikiCreateStockWikiItemResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, XbrlIxHeadIsIxHeadTitleItemActiveData, XbrlIxHeadIsIxHeadTitleItemActiveResponse, XbrlIxHeadReadIxHeadTitleItemData, XbrlIxHeadReadIxHeadTitleItemResponse, XbrlIxHeadReadIxHeadTitleItemsResponse, XbrlIxHeadReadIxHeadTitleItemsUrlListResponse, XbrlIxHeadGetCalendarResponse } from './types.gen';
 
 export class ItemsService {
     /**
@@ -155,6 +155,7 @@ export class IxService {
      * @param data The data for the request.
      * @param data.reportTypes
      * @param data.dateStr
+     * @param data.industry17Code
      * @param data.limit
      * @param data.page
      * @returns DocumentListPublics Successful Response
@@ -167,6 +168,7 @@ export class IxService {
             query: {
                 report_types: data.reportTypes,
                 date_str: data.dateStr,
+                industry_17_code: data.industry17Code,
                 limit: data.limit,
                 page: data.page
             },
@@ -303,6 +305,19 @@ export class JpxService {
         });
     }
     
+    /**
+     * Read Industry 17 Count
+     * Get industry_17_list.
+     * @returns industry_17_count_list Successful Response
+     * @throws ApiError
+     */
+    public static readIndustry17Count(): CancelablePromise<JpxReadIndustry17CountResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/jpx/stock_info/industry_17_list/'
+        });
+    }
+    
 }
 
 export class LoginService {
@@ -409,7 +424,9 @@ export class SummaryService {
      * @param data The data for the request.
      * @param data.code 銘柄コード
      * @param data.headItemKey head_item_key
-     * @returns FinResultResponse Successful Response
+     * @param data.reportTypes レポートタイプ
+     * @param data.offset オフセット
+     * @returns FinResultStruct Successful Response
      * @throws ApiError
      */
     public static getOperatingResults(data: SummaryGetOperatingResultsData = {}): CancelablePromise<SummaryGetOperatingResultsResponse> {
@@ -418,7 +435,9 @@ export class SummaryService {
             url: '/api/v1/ix/summary/operating_results/income/',
             query: {
                 code: data.code,
-                head_item_key: data.headItemKey
+                head_item_key: data.headItemKey,
+                report_types: data.reportTypes,
+                offset: data.offset
             },
             errors: {
                 422: 'Validation Error'
@@ -429,16 +448,22 @@ export class SummaryService {
     /**
      * その他の経営成績情報を取得
      * @param data The data for the request.
-     * @param data.code
-     * @returns FinResultResponse Successful Response
+     * @param data.code 銘柄コード
+     * @param data.headItemKey head_item_key
+     * @param data.reportTypes レポートタイプ
+     * @param data.offset オフセット
+     * @returns FinResultStruct Successful Response
      * @throws ApiError
      */
-    public static getOtherOperatingResults(data: SummaryGetOtherOperatingResultsData): CancelablePromise<SummaryGetOtherOperatingResultsResponse> {
+    public static getOtherOperatingResults(data: SummaryGetOtherOperatingResultsData = {}): CancelablePromise<SummaryGetOtherOperatingResultsResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v1/ix/summary/operating_results/other/{}',
             query: {
-                code: data.code
+                code: data.code,
+                head_item_key: data.headItemKey,
+                report_types: data.reportTypes,
+                offset: data.offset
             },
             errors: {
                 422: 'Validation Error'
@@ -451,7 +476,9 @@ export class SummaryService {
      * @param data The data for the request.
      * @param data.code 銘柄コード
      * @param data.headItemKey head_item_key
-     * @returns FinForecastResponse Successful Response
+     * @param data.reportTypes レポートタイプ
+     * @param data.offset オフセット
+     * @returns FinForecastStruct Successful Response
      * @throws ApiError
      */
     public static getForecasts(data: SummaryGetForecastsData = {}): CancelablePromise<SummaryGetForecastsResponse> {
@@ -460,7 +487,9 @@ export class SummaryService {
             url: '/api/v1/ix/summary/forecasts/',
             query: {
                 code: data.code,
-                head_item_key: data.headItemKey
+                head_item_key: data.headItemKey,
+                report_types: data.reportTypes,
+                offset: data.offset
             },
             errors: {
                 422: 'Validation Error'
@@ -471,16 +500,22 @@ export class SummaryService {
     /**
      * 財政状態情報を取得
      * @param data The data for the request.
-     * @param data.code
-     * @returns FinResultOnlyResponse Successful Response
+     * @param data.code 銘柄コード
+     * @param data.headItemKey head_item_key
+     * @param data.reportTypes レポートタイプ
+     * @param data.offset オフセット
+     * @returns FinResultOnlyStruct Successful Response
      * @throws ApiError
      */
-    public static getFinancialPosition(data: SummaryGetFinancialPositionData): CancelablePromise<SummaryGetFinancialPositionResponse> {
+    public static getFinancialPosition(data: SummaryGetFinancialPositionData = {}): CancelablePromise<SummaryGetFinancialPositionResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/ix/summary/financial_position/{code}',
-            path: {
-                code: data.code
+            url: '/api/v1/ix/summary/financial_position',
+            query: {
+                code: data.code,
+                head_item_key: data.headItemKey,
+                report_types: data.reportTypes,
+                offset: data.offset
             },
             errors: {
                 422: 'Validation Error'
@@ -492,7 +527,9 @@ export class SummaryService {
      * キャッシュフロー情報を取得
      * @param data The data for the request.
      * @param data.code
-     * @returns FinResultOnlyResponse Successful Response
+     * @param data.year 年度
+     * @param data.offset オフセット
+     * @returns FinResultOnlyStruct Successful Response
      * @throws ApiError
      */
     public static getCashFlows(data: SummaryGetCashFlowsData): CancelablePromise<SummaryGetCashFlowsResponse> {
@@ -501,6 +538,10 @@ export class SummaryService {
             url: '/api/v1/ix/summary/cash_flows/{code}',
             path: {
                 code: data.code
+            },
+            query: {
+                year: data.year,
+                offset: data.offset
             },
             errors: {
                 422: 'Validation Error'
@@ -911,6 +952,18 @@ export class XbrlIxHeadService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v1/xbrl/url_list/'
+        });
+    }
+    
+    /**
+     * XBRLカレンダーを取得
+     * @returns PublicCalenders Successful Response
+     * @throws ApiError
+     */
+    public static getCalendar(): CancelablePromise<XbrlIxHeadGetCalendarResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/xbrl/calendar'
         });
     }
     

@@ -23,15 +23,16 @@ const Footer: React.FC<FlexProps> = (props) => {
       display={{ base: "flex", md: "none" }}
       zIndex={1000}
       boxShadow="md"
+      h="50px"
       {...props}
     >
       <Flex
         direction="row"
-        justifyContent="space-between"
+        justifyContent="space-evenly"
         alignItems="center"
-        w={{ base: "100%", md: "720px" }}
         m={"0 auto"}
         px={4}
+        w="100%"
       >
         {menuList.map((item, index) => (
           <IconButton

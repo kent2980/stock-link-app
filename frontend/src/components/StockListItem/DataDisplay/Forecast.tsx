@@ -17,15 +17,13 @@ const Forecast: React.FC<ForecastProps> = ({ headItemKey }) => {
       });
     },
   });
-  const items: DataItem[] = data.data.flatMap(
-    (item) =>
-      item.forecast?.data?.map((dataItem) => ({
-        name: dataItem.label,
-        currentValue: dataItem.curValue?.value ?? 0,
-        changeRate: dataItem.curChange?.value ?? 0,
-        displayScale: dataItem.curValue?.display_scale ?? "",
-      })) ?? []
-  );
+  const items: DataItem[] =
+    data.forecast?.data?.map((dataItem) => ({
+      name: dataItem.label,
+      currentValue: dataItem.curValue?.value ?? 0,
+      changeRate: dataItem.curChange?.value ?? 0,
+      displayScale: dataItem.curValue?.display_scale ?? "",
+    })) ?? [];
 
   return <Box>{/* <DataDisplay data={items} title="通期業績予測" /> */}</Box>;
 };

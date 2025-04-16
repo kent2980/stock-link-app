@@ -1,11 +1,11 @@
 import { MenuListStore } from "@/Store/Store";
-import { Flex, FlexProps, Input, Tabs } from "@chakra-ui/react";
+import { Center, Flex, FlexProps, Heading } from "@chakra-ui/react";
 import { useNavigate } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import React, { useEffect } from "react";
 import { HeaderStore } from "../../Store/HeaderStore";
 
-const IndexHeader: React.FC<FlexProps> = ({ ...props }) => {
+const Header: React.FC<FlexProps> = ({ ...props }) => {
   const navigate = useNavigate();
   const handleMenuClick = (menuUrl: string | null | undefined) => {
     console.log("menuUrl", menuUrl);
@@ -41,20 +41,9 @@ const IndexHeader: React.FC<FlexProps> = ({ ...props }) => {
         top={0}
         zIndex={1000}
       >
-        <Input placeholder="銘柄コード・銘柄名で検索" mb={2} />
-        <Tabs.Root
-          defaultValue="/"
-          variant="enclosed"
-          fitted
-          maxW="md"
-          onValueChange={(e) => handleMenuClick(e.value)}
-        >
-          <Tabs.List boxShadow="md">
-            <Tabs.Trigger value="/">決算短信</Tabs.Trigger>
-            <Tabs.Trigger value="/admin">業績修正</Tabs.Trigger>
-            <Tabs.Trigger value="/settings">配当修正</Tabs.Trigger>
-          </Tabs.List>
-        </Tabs.Root>
+        <Center color="gray.600">
+          <Heading size="md">決 算 短 信</Heading>
+        </Center>
       </Flex>
       {/* デスクトップ */}
       <Flex
@@ -64,9 +53,10 @@ const IndexHeader: React.FC<FlexProps> = ({ ...props }) => {
         w={"100%"}
         p={3}
         boxShadow="md"
-        bgGradient="linear(to-r, #eef1f3, #fefefe)"
+        bg="linear-gradient(to right, #ffffff, #fefefe)"
         borderBottom="1px solid #eaeaea"
         display={{ base: "none", md: "block" }}
+        zIndex={1000}
       >
         <Flex
           dir="row"
@@ -99,4 +89,4 @@ const IndexHeader: React.FC<FlexProps> = ({ ...props }) => {
   );
 };
 
-export default IndexHeader;
+export default Header;

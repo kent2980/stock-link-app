@@ -3,10 +3,12 @@ from datetime import date
 from typing import List, Optional
 
 from fastapi import APIRouter, HTTPException, Query
+from sqlalchemy import func
 from sqlmodel import select
 
 from app.api.deps import SessionDep
-from app.models import IxHeadTitle
+from app.api.endpoints.jpx_info.schema import industry_17_count
+from app.models import IxHeadTitle, JpxStockInfo
 
 from . import schema as sc
 
@@ -59,6 +61,7 @@ def get_document_list(
     session: SessionDep,
     report_types: Optional[List[str]] = Query(None),
     date_str: Optional[str] = Query(None),
+    industry_17_code: Optional[int] = Query(None),
     limit: Optional[int] = Query(None),
     page: Optional[int] = Query(1),
 ) -> sc.DocumentListPublics:
@@ -68,11 +71,27 @@ def get_document_list(
             status_code=400,
             detail="日付の形式が正しくありません。YYYY-MM-DD形式で指定してください。",
         )
+    if date_str is None and industry_17_code is None:
+        statement = (
+            select(IxHeadTitle)
+            .where(IxHeadTitle.reporting_date != None)
+            .order_by(IxHeadTitle.reporting_date.desc())
+        )
+        if report_types:
+            statement = statement.where(
+                IxHeadTitle.report_type.in_(report_types),
+                IxHeadTitle.current_period != None,
+            )
+        results = session.exec(statement)
+        item = results.first()
+        reporting_date = item.reporting_date
+        date_str = reporting_date.strftime("%Y-%m-%d")
 
     convert_date = date.fromisoformat(date_str) if date_str else None
 
     statement = (
         select(IxHeadTitle)
+        .join(JpxStockInfo, IxHeadTitle.securities_code == JpxStockInfo.code)
         .where(IxHeadTitle.securities_code != None)
         .order_by(IxHeadTitle.id)
     )
@@ -83,6 +102,11 @@ def get_document_list(
         )
     if convert_date:
         statement = statement.where(IxHeadTitle.reporting_date == convert_date)
+    if industry_17_code:
+        statement = statement.where(
+            JpxStockInfo.industry_17_code == industry_17_code,
+            IxHeadTitle.securities_code != None,
+        )
     results = session.exec(statement)
     items = results.all()
 

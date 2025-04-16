@@ -17,17 +17,16 @@ const BusinessResult: React.FC<BusinessResultProps> = ({ headItemKey }) => {
     },
   });
 
-  const items = data.data.flatMap(
-    (item) =>
-      item.result?.data?.map((dataItem) => ({
-        name: dataItem.label,
-        currentValue: dataItem.curValue?.value ?? 0,
-        changeRate: dataItem.curChange?.value ?? 0,
-        displayScale: dataItem.curValue?.display_scale ?? "",
-        previousValue: dataItem.preValue?.value ?? 0,
-        previousChangeRate: dataItem.preChange?.value ?? 0,
-      })) ?? []
-  );
+  const items =
+    data.result?.data?.map((dataItem) => ({
+      name: dataItem.label,
+      currentValue: dataItem.curValue?.value ?? 0,
+      changeRate: dataItem.curChange?.value ?? 0,
+      displayScale: dataItem.curValue?.display_scale ?? "",
+      previousValue: dataItem.preValue?.value ?? 0,
+      previousChangeRate: dataItem.preChange?.value ?? 0,
+    })) ?? [];
+
   return (
     <Box>
       <Suspense fallback={<Skeleton height="20px" width="100%" />}>

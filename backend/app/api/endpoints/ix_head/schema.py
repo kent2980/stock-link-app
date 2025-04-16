@@ -115,3 +115,13 @@ class UrlSchemaList(SQLModel):
 
     data: list[UrlSchema]
     count: int
+
+
+class PublicCalender(SQLModel):
+    reporting_date: datetime.date
+    count: int
+
+
+class PublicCalenders(SQLModel):
+    count: int
+    data: list[PublicCalender]

@@ -1,4 +1,4 @@
-import { Box, Table, Text } from "@chakra-ui/react";
+import { Box, FormatNumber, Table, Text } from "@chakra-ui/react";
 import React from "react";
 
 export interface DataItem {
@@ -105,7 +105,14 @@ const DataDisplay: React.FC<DataDisplayProps> = ({
             <Table.Cell>今期実績</Table.Cell>
             {data.slice(0, 4).map((item, index) => (
               <>
-                <Table.Cell key={index}>{item.changeRate}</Table.Cell>
+                <Table.Cell key={index}>
+                  <FormatNumber
+                    value={item.changeRate / 100}
+                    style="percent"
+                    maximumFractionDigits={2}
+                    minimumFractionDigits={1}
+                  />
+                </Table.Cell>
               </>
             ))}
           </Table.Row>
@@ -113,7 +120,16 @@ const DataDisplay: React.FC<DataDisplayProps> = ({
             <Table.Cell>前期実績</Table.Cell>
             {data.slice(0, 4).map((item, index) => (
               <>
-                <Table.Cell key={index}>{item.previousChangeRate}</Table.Cell>
+                {item.previousChangeRate && (
+                  <Table.Cell key={index}>
+                    <FormatNumber
+                      value={item.previousChangeRate / 100}
+                      style="percent"
+                      maximumFractionDigits={2}
+                      minimumFractionDigits={1}
+                    />
+                  </Table.Cell>
+                )}
               </>
             ))}
           </Table.Row>
