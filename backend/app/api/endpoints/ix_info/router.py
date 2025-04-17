@@ -2,13 +2,12 @@ import re
 from datetime import date
 from typing import List, Optional
 
-from fastapi import APIRouter, HTTPException, Query
-from sqlalchemy import func
-from sqlmodel import select
-
 from app.api.deps import SessionDep
 from app.api.endpoints.jpx_info.schema import industry_17_count
 from app.models import IxHeadTitle, JpxStockInfo
+from fastapi import APIRouter, HTTPException, Query
+from sqlalchemy import func
+from sqlmodel import select
 
 from . import schema as sc
 
@@ -84,6 +83,10 @@ def get_document_list(
             )
         results = session.exec(statement)
         item = results.first()
+
+        if item is None:
+            raise HTTPException(status_code=404, detail="No documents found.")
+
         reporting_date = item.reporting_date
         date_str = reporting_date.strftime("%Y-%m-%d")
 
