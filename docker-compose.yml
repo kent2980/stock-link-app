@@ -36,10 +36,10 @@ services:
       - traefik.http.routers.${STACK_NAME?Variable not set}-adminer-http.rule=PathPrefix(`/adminer`)
       - traefik.http.routers.${STACK_NAME?Variable not set}-adminer-http.entrypoints=http
       - traefik.http.routers.${STACK_NAME?Variable not set}-adminer-http.middlewares=https-redirect
-      - traefik.http.routers.${STACK_NAME?Variable not set}-adminer-https.rule=PathPrefix(`/adminer`)
-      - traefik.http.routers.${STACK_NAME?Variable not set}-adminer-https.entrypoints=https
-      - traefik.http.routers.${STACK_NAME?Variable not set}-adminer-https.tls=true
-      - traefik.http.routers.${STACK_NAME?Variable not set}-adminer-https.tls.certresolver=le
+      # - traefik.http.routers.${STACK_NAME?Variable not set}-adminer-https.rule=PathPrefix(`/adminer`)
+      # - traefik.http.routers.${STACK_NAME?Variable not set}-adminer-https.entrypoints=https
+      # - traefik.http.routers.${STACK_NAME?Variable not set}-adminer-https.tls=true
+      # - traefik.http.routers.${STACK_NAME?Variable not set}-adminer-https.tls.certresolver=le
       - traefik.http.services.${STACK_NAME?Variable not set}-adminer.loadbalancer.server.port=8080
 
   prestart:
