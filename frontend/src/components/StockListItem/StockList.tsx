@@ -25,46 +25,37 @@ export const StockList: React.FC<StockListProps> = ({
       });
     },
   });
+
+  if (!data || data.count === 0) {
+    return <Box>データが見つかりません。</Box>;
+  }
+
   const parentRef = useRef<Element | null>(null);
 
   const rowVirtualizer = useVirtualizer({
     count: data.count,
     getScrollElement: () => parentRef.current,
     estimateSize: () => 1000,
-    overscan: 10,
+    overscan: 30,
   });
 
   return (
     <>
       {/* デスクトップ */}
-      <Box
-        display={{ base: "none", md: "block" }}
-        {...props}
-        h="100vh"
-        overflow="auto"
-        color="white"
-        fontSize="sm"
-      >
-        {data.data.map((item, index) => (
-          <Box
-            key={index}
-            borderBottom="1px solid"
-            borderColor="gray.200"
-            py={4}
-          >
-            {item.company_name}
-          </Box>
-        ))}
-      </Box>
       {/* モバイル */}
       <Box
-        display={{ base: "block", md: "none" }}
         ref={parentRef}
         w="100%"
         overflow="auto"
         height="100vh"
         {...props}
         my={2}
+        css={{
+          "&::-webkit-scrollbar": {
+            display: "none", // Webkit系ブラウザでスクロールバーを非表示
+          },
+          scrollbarWidth: "none", // Firefoxでスクロールバーを非表示
+        }}
       >
         <List.Root
           height={rowVirtualizer.getTotalSize()}
@@ -84,8 +75,6 @@ export const StockList: React.FC<StockListProps> = ({
                 transform={`translateY(${virtualRow.start}px)`}
                 listStyleType="none"
                 w={{ base: "100%", md: "720px" }}
-                borderBottom="1px solid"
-                borderColor="gray.200"
                 py={4}
               >
                 <StockListItem item={item} />

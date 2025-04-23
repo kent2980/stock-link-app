@@ -18,7 +18,6 @@ import { Route as LoginImport } from './routes/login'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutCategoryImport } from './routes/_layout/category'
-import { Route as LayoutIndexDateStrImport } from './routes/_layout/index/$dateStr'
 import { Route as LayoutIndexIndustryIndustry17Import } from './routes/_layout/index/industry.$industry_17'
 import { Route as LayoutIndexDateDateStrImport } from './routes/_layout/index/date.$dateStr'
 
@@ -56,11 +55,6 @@ const LayoutIndexRoute = LayoutIndexImport.update({
 
 const LayoutCategoryRoute = LayoutCategoryImport.update({
   path: '/category',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutIndexDateStrRoute = LayoutIndexDateStrImport.update({
-  path: '/index/$dateStr',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -107,10 +101,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIndexImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/index/$dateStr': {
-      preLoaderRoute: typeof LayoutIndexDateStrImport
-      parentRoute: typeof LayoutImport
-    }
     '/_layout/index/date/$dateStr': {
       preLoaderRoute: typeof LayoutIndexDateDateStrImport
       parentRoute: typeof LayoutImport
@@ -128,7 +118,6 @@ export const routeTree = rootRoute.addChildren([
   LayoutRoute.addChildren([
     LayoutCategoryRoute,
     LayoutIndexRoute,
-    LayoutIndexDateStrRoute,
     LayoutIndexDateDateStrRoute,
     LayoutIndexIndustryIndustry17Route,
   ]),

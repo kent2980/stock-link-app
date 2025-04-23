@@ -1,5 +1,12 @@
 import { MenuListStore } from "@/Store/Store";
-import { Center, Flex, FlexProps, Heading } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Flex,
+  FlexProps,
+  Heading,
+  HStack,
+} from "@chakra-ui/react";
 import { useNavigate } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import React, { useEffect } from "react";
@@ -41,7 +48,7 @@ const Header: React.FC<FlexProps> = ({ ...props }) => {
         top={0}
         zIndex={1000}
       >
-        <Center color="gray.600">
+        <Center>
           <Heading size="md">決 算 短 信</Heading>
         </Center>
       </Flex>
@@ -50,40 +57,23 @@ const Header: React.FC<FlexProps> = ({ ...props }) => {
         id="header"
         h={headerHeight}
         {...props}
-        w={"100%"}
-        p={3}
-        boxShadow="md"
-        bg="linear-gradient(to right, #ffffff, #fefefe)"
-        borderBottom="1px solid #eaeaea"
+        w="100vw" // 横幅を 1024px に変更
         display={{ base: "none", md: "block" }}
         zIndex={1000}
+        mx="auto"
+        p={3}
+        color="gray.400"
+        _hover={{ bg: "rgba(167, 167, 167, 0.1)" }}
       >
-        <Flex
-          dir="row"
-          justify="space-between"
-          alignItems="center"
-          w={{ base: "100%", md: "720px" }}
-          m={"0 auto"}
-          h="100%"
-          px={4}
-        >
-          {menuList.map((item, index) => (
-            <Flex
-              key={index}
-              as="a"
-              fontSize="lg"
-              fontWeight="bold"
-              _hover={{ textDecoration: "underline" }}
-              _active={{ color: "ui.secondary" }}
-              px={2}
-              py={1}
-              _focus={{ boxShadow: "outline" }}
-              onClick={() => handleMenuClick(item.menuUrl)}
-            >
-              {item.menuLabel} {/* ここにメニューアイテムを追加 */}
-            </Flex>
-          ))}
-        </Flex>
+        <Center>
+          <HStack gap={10}>
+            {menuList.map((item, index) => (
+              <Box key={index} _hover={{ color: "white" }}>
+                {item.menuLabel}
+              </Box>
+            ))}
+          </HStack>
+        </Center>
       </Flex>
     </>
   );

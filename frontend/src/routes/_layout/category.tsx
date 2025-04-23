@@ -3,6 +3,7 @@ import Industry17 from "@/components/Category/Industry_17";
 import { Box } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -15,14 +16,18 @@ function Category() {
     <Box>
       <Swiper loop={true}>
         <SwiperSlide>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Calender />
-          </Suspense>
+          <ErrorBoundary fallback={<div>表示するデータがありません。</div>}>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Calender />
+            </Suspense>
+          </ErrorBoundary>
         </SwiperSlide>
         <SwiperSlide>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Industry17 />
-          </Suspense>
+          <ErrorBoundary fallback={<div>表示するデータがありません。</div>}>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Industry17 />
+            </Suspense>
+          </ErrorBoundary>
         </SwiperSlide>
       </Swiper>
     </Box>

@@ -2,12 +2,13 @@ import re
 from datetime import date
 from typing import List, Optional
 
-from app.api.deps import SessionDep
-from app.api.endpoints.jpx_info.schema import industry_17_count
-from app.models import IxHeadTitle, JpxStockInfo
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy import func
 from sqlmodel import select
+
+from app.api.deps import SessionDep
+from app.api.endpoints.jpx_info.schema import industry_17_count
+from app.models import IxHeadTitle, JpxStockInfo
 
 from . import schema as sc
 
@@ -77,10 +78,16 @@ def get_document_list(
             .order_by(IxHeadTitle.reporting_date.desc())
         )
         if report_types:
-            statement = statement.where(
-                IxHeadTitle.report_type.in_(report_types),
-                IxHeadTitle.current_period != None,
+            statement = (
+                select(IxHeadTitle)
+                .where(
+                    IxHeadTitle.report_type.in_(report_types),
+                    IxHeadTitle.current_period != None,
+                    IxHeadTitle.reporting_date != None,
+                )
+                .order_by(IxHeadTitle.reporting_date.desc())
             )
+        print(statement)
         results = session.exec(statement)
         item = results.first()
 
