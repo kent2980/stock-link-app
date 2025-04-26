@@ -1,8 +1,7 @@
 import { SummaryService } from "@/client";
-import { Box, BoxProps, Skeleton } from "@chakra-ui/react";
+import { Box, BoxProps, Text } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import React, { Suspense } from "react";
-import DataDisplay from "../DataDisplay";
+import React from "react";
 
 interface BusinessResultProps extends BoxProps {
   headItemKey: string;
@@ -29,9 +28,13 @@ const BusinessResult: React.FC<BusinessResultProps> = ({ headItemKey }) => {
 
   return (
     <Box>
-      <Suspense fallback={<Skeleton height="20px" width="100%" />}>
-        <DataDisplay data={items} title="経営成績" />
-      </Suspense>
+      {items.map((item, index) => (
+        <Box key={index} mb={2}>
+          <Text fontSize="14px" fontWeight="bold">
+            {item.name}{" "}
+          </Text>
+        </Box>
+      ))}
     </Box>
   );
 };

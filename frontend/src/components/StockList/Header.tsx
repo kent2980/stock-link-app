@@ -2,7 +2,7 @@ import { DocumentListPublic, JpxService } from "@/client";
 import { Box, Heading, Image, Text, TextProps } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import React, { Suspense } from "react";
-import logo_list from "../../json/logo_list.json";
+import logo_list from "../../logo/logo_list.json";
 
 interface HeaderProps {
   item: DocumentListPublic;
@@ -18,7 +18,7 @@ const LogoDisplay: React.FC<{ logoUrl: string }> = ({ logoUrl }) => {
       h={12}
       borderWidth={1}
       borderColor="gray.200"
-      bg="#ded16315"
+      bg="#ffffffe3"
       boxShadow="md"
     >
       <Image

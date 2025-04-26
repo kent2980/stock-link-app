@@ -22,16 +22,7 @@ function Layout() {
   return (
     <Flex direction="column">
       <Header />
-      <Box
-        w="1024px"
-        mx="auto"
-        css={{
-          "&::-webkit-scrollbar": {
-            display: "none", // Webkit系ブラウザでスクロールバーを非表示
-          },
-          scrollbarWidth: "none", // Firefoxでスクロールバーを非表示
-        }}
-      >
+      <Box w="100%" mx="auto">
         <Outlet />
       </Box>
     </Flex>
