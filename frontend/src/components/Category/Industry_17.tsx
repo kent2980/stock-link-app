@@ -28,6 +28,8 @@ const Industry17 = () => {
       width="100%"
       maxWidth="1200px"
       margin="0 auto"
+      h={"100vh"}
+      overflow="auto"
     >
       {data.data.map((item, index) => (
         <Box

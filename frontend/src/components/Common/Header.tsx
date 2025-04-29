@@ -29,6 +29,12 @@ const Header: React.FC<FlexProps> = ({ ...props }) => {
         p={3}
         color="gray.400"
         _hover={{ bg: "rgba(167, 167, 167, 0.1)" }}
+        bg="gray.50"
+        borderBottom="solid 1px"
+        borderColor="gray.200"
+        position="fixed"
+        top={0}
+        left={0}
       >
         <Center>
           <HStack gap={10}>

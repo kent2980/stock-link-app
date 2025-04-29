@@ -1,7 +1,18 @@
 import { SummaryService } from "@/client";
-import { Box, BoxProps, Text } from "@chakra-ui/react";
+import { Chart, useChart } from "@chakra-ui/charts";
+import { BoxProps, Heading } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import React from "react";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  LabelList,
+  Legend,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 interface BusinessResultProps extends BoxProps {
   headItemKey: string;
@@ -16,26 +27,90 @@ const BusinessResult: React.FC<BusinessResultProps> = ({ headItemKey }) => {
     },
   });
 
+  const truncateString = (input: string, maxLength: number = 6): string => {
+    return input.length > maxLength ? `${input.slice(0, maxLength)}...` : input;
+  };
+
   const items =
     data.result?.data?.map((dataItem) => ({
-      name: dataItem.label,
-      currentValue: dataItem.curValue?.value ?? 0,
-      changeRate: dataItem.curChange?.value ?? 0,
-      displayScale: dataItem.curValue?.display_scale ?? "",
-      previousValue: dataItem.preValue?.value ?? 0,
-      previousChangeRate: dataItem.preChange?.value ?? 0,
+      type: dataItem.label,
+      value: dataItem.curChange?.value ?? 0,
+      preValue: dataItem.preChange?.value ?? 0,
+      color: (dataItem.curChange?.value ?? 0) > 0 ? "#5b9bdace" : "#ee8c8cd1",
     })) ?? [];
 
+  const chart = useChart({
+    data: items,
+    series: [
+      { name: "preValue", color: "#939393d1" },
+      { name: "value", color: "#5fa8ecff" },
+    ],
+  });
+
   return (
-    <Box>
-      {items.map((item, index) => (
-        <Box key={index} mb={2}>
-          <Text fontSize="14px" fontWeight="bold">
-            {item.name}{" "}
-          </Text>
-        </Box>
-      ))}
-    </Box>
+    <>
+      <Heading as="h2" fontSize="15px" fontWeight="bold">
+        経営成績
+      </Heading>
+      <Chart.Root chart={chart} h="150px" fontSize={"10px"}>
+        <BarChart
+          barSize={100}
+          data={chart.data}
+          margin={{ top: 20, right: 10, left: -20, bottom: 5 }}
+        >
+          <CartesianGrid vertical={false} strokeDasharray="3 3" />
+          <XAxis
+            dataKey={chart.key("type")}
+            axisLine={false}
+            tickLine={false}
+            tickFormatter={(value) => value.slice(0, 6)}
+            stroke={chart.color("border")}
+          />
+          <YAxis
+            axisLine={false}
+            tickLine={false}
+            stroke={chart.color("border")}
+          />
+          <Tooltip
+            formatter={(value: number, name: string) => {
+              const translatedName = name === "value" ? "今期" : "昨期"; // 項目名を日本語に変更
+              return [`${value}%`, translatedName]; // 値に単位「%」を追加
+            }}
+          />
+          <Legend
+            verticalAlign="top"
+            wrapperStyle={{ lineHeight: "40px" }}
+            formatter={(name: string) => {
+              const translatedName = name === "value" ? "今期" : "昨期"; // 項目名を日本語に変更
+              return <span>{translatedName}</span>; // 値に単位「%」を追加
+            }}
+          />
+          {chart.series.map((item) => (
+            <Bar
+              key={item.name}
+              dataKey={chart.key(item.name)}
+              fill={chart.color(item.color)}
+              isAnimationActive={false}
+            >
+              {item.name === "value" && (
+                <LabelList
+                  dataKey={chart.key("value")}
+                  position="middle"
+                  style={{ fontWeight: "800", fill: chart.color("fg") }}
+                />
+              )}
+              {item.name === "preValue" && (
+                <LabelList
+                  dataKey={chart.key("preValue")}
+                  position="middle"
+                  style={{ fontWeight: "800", fill: chart.color("fg") }}
+                />
+              )}
+            </Bar>
+          ))}
+        </BarChart>
+      </Chart.Root>
+    </>
   );
 };
 export default BusinessResult;

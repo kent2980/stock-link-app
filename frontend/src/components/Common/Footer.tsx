@@ -24,6 +24,7 @@ const Footer: React.FC<FlexProps> = (props) => {
       zIndex={1000}
       boxShadow="md"
       h="50px"
+      bg="gray.50"
       {...props}
     >
       <Flex

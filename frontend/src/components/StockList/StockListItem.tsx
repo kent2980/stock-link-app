@@ -1,6 +1,7 @@
 import { DocumentListPublic } from "@/client";
-import { Box, BoxProps } from "@chakra-ui/react";
-import React from "react";
+import { Box, BoxProps, Skeleton } from "@chakra-ui/react";
+import React, { Suspense } from "react";
+import BusinessResult from "./DataDisplay/BusinessResult";
 import Header from "./Header";
 
 interface StockListItemProps extends BoxProps {
@@ -8,14 +9,18 @@ interface StockListItemProps extends BoxProps {
 }
 
 const StockListItem: React.FC<StockListItemProps> = ({ item, ...props }) => {
-  const { securities_code } = item;
-
   return (
-    <Box {...props} px={4}>
+    <Box
+      {...props}
+      px={4}
+      borderBottom="solid 1px"
+      borderColor="gray.200"
+      p={2}
+    >
       <Header item={item} />
-      {/* <Suspense fallback={<Skeleton height="20px" width="100%" />}>
+      <Suspense fallback={<Skeleton height="20px" width="100%" />}>
         <BusinessResult headItemKey={item.head_item_key} />
-      </Suspense> */}
+      </Suspense>
       {/* <Suspense fallback={<Skeleton height="20px" width="100%" />}>
         <ErrorBoundary fallback={<Box>キャッシュフローが取得できません。</Box>}>
           <CashFlow code={securities_code} />

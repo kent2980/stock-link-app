@@ -13,13 +13,12 @@ const LogoDisplay: React.FC<{ logoUrl: string }> = ({ logoUrl }) => {
     <Box
       display="flex"
       justifyContent="flex-start"
-      borderRadius="100%"
-      w={12}
-      h={12}
+      w={{ base: 16, md: 20 }}
+      h={{ base: 16, md: 20 }}
+      p={1}
       borderWidth={1}
       borderColor="gray.200"
       bg="#ffffffe3"
-      boxShadow="md"
     >
       <Image
         src={logoUrl}
@@ -43,9 +42,13 @@ const Header: React.FC<HeaderProps> = ({
   const logo_url = `/assets/images/stock_logo/${logo_name}`; // 画像のURLを生成
 
   return (
-    <Box w="100%">
-      <Box>
-        <Box display="flex" alignItems="center" mb={1} gap={4}>
+    <>
+      <Box
+        display="flex"
+        flexDirection={{ base: "column", md: "row" }}
+        gap={{ base: 1, md: 2 }}
+      >
+        <Box display="flex" alignItems="center" gap={2}>
           <LogoDisplay logoUrl={logo_url} />
           <Text fontSize="13px" color="gray.500">
             {securities_code}
@@ -54,13 +57,13 @@ const Header: React.FC<HeaderProps> = ({
             {company_name}
           </Heading>
         </Box>
-        <Box display="flex" justifyContent="flex-start" my={1}>
+        <Box display="flex" justifyContent="flex-start" alignItems="center">
           <Suspense fallback={<Text>Loading...</Text>}>
             <JpxDataDisplay code={securities_code} fontSize="11.5px" />
           </Suspense>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 

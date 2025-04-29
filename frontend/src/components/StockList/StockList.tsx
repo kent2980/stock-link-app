@@ -34,39 +34,45 @@ export const StockList: React.FC<StockListProps> = ({
 
   const virtualizer = useWindowVirtualizer({
     count: data.count,
-    estimateSize: () => 100,
-    overscan: 5,
+    estimateSize: () => 400,
+    overscan: 30,
     scrollMargin: listRef.current?.offsetTop ?? 0,
   });
 
   return (
     <>
-      <Box ref={listRef} className="List">
+      <Box
+        ref={listRef}
+        className="List"
+        {...props}
+        m={{ base: 0, md: 4 }}
+        width={{ base: "100%", md: "1024px" }}
+      >
         <Box
-          style={{
-            height: `${virtualizer.getTotalSize()}px`,
-            width: "100%",
-            position: "relative",
-          }}
+          height={virtualizer.getTotalSize()}
+          width="100%"
+          position="relative"
+          borderTop="solid 1px"
+          borderLeft="solid 1px"
+          borderRight="solid 1px"
+          borderColor="gray.200"
+          borderRadius={{ base: "0px", md: "lg" }}
         >
           {virtualizer.getVirtualItems().map((virtualRow) => {
             const item = data.data[virtualRow.index];
             return (
               <List.Root
-                key={virtualRow.index}
+                key={virtualRow.key}
+                data-index={virtualRow.index}
+                ref={virtualizer.measureElement}
                 className={
                   virtualRow.index % 2 ? "ListItemOdd" : "ListItemEven"
                 }
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: `${virtualRow.size}px`,
-                  transform: `translateY(${
-                    virtualRow.start - virtualizer.options.scrollMargin
-                  }px)`,
-                }}
+                position="absolute"
+                top={0}
+                left={0}
+                width="100%"
+                transform={`translateY(${virtualRow.start - virtualizer.options.scrollMargin}px)`}
                 listStyle={"none"}
               >
                 <StockListItem item={item} />

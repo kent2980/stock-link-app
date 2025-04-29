@@ -25,11 +25,12 @@ const Calender = () => {
       display="flex"
       flexDirection="column"
       alignItems="center"
-      justifyContent="center"
+      justifyContent="flex-start"
       width="100%"
-      maxWidth="1200px"
       margin="0 auto"
       bg="gray.50"
+      overflow="auto"
+      h={"100vh"}
     >
       {data.data.map((item, index) => (
         <Box

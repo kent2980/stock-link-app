@@ -10,8 +10,7 @@ export const system = createSystem(defaultConfig, {
       fontSize: "0.875rem",
       margin: 0,
       padding: 0,
-      backgroundColor: "black",
-      color: "white",
+      backgroundColor: "rgba(255,255,255)",
       fontFamily: "Noto Sans JP, sans-serif",
     },
     ".main-link": {
