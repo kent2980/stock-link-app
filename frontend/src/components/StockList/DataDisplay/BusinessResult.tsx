@@ -27,10 +27,6 @@ const BusinessResult: React.FC<BusinessResultProps> = ({ headItemKey }) => {
     },
   });
 
-  const truncateString = (input: string, maxLength: number = 6): string => {
-    return input.length > maxLength ? `${input.slice(0, maxLength)}...` : input;
-  };
-
   const items =
     data.result?.data?.map((dataItem) => ({
       type: dataItem.label,

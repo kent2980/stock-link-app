@@ -39,7 +39,7 @@ const Header: React.FC<FlexProps> = ({ ...props }) => {
         <Center>
           <HStack gap={10}>
             {menuList.map((item, index) => (
-              <Box key={index} _hover={{ color: "white" }}>
+              <Box key={index} _hover={{ color: "white" }} onClick={() => handleMenuClick(item.menuUrl)}>
                 {item.menuLabel}
               </Box>
             ))}
