@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup as bs
-from requests.exceptions import SSLError
+from requests.exceptions import SSLError,ConnectTimeout
 
 
 def download_logo(url, directory, filename) -> Optional[str]:
@@ -60,6 +60,9 @@ def download_logo(url, directory, filename) -> Optional[str]:
         response = requests.get(url)
     except SSLError:
         print(f"SSLエラーが発生しました: file_name: {filename}, url: {url}")
+        return None
+    except ConnectTimeout:
+        print(f"接続タイムアウトエラーが発生しました: file_name: {filename}, url: {url}")
         return None
 
     # ステータスコードが200でない場合はエラー
@@ -137,7 +140,7 @@ def download_logo(url, directory, filename) -> Optional[str]:
 
 if __name__ == "__main__":
 
-    api_url = "http://localhost:8000/api/v1/xbrl/url_list/"
+    api_url = "http://157.7.78.166/api/v1/xbrl/url_list/"
     directory = "../frontend/public/assets/images/stock_logo/"
     json_output_dir = "../frontend/src/logo/"
     response = requests.get(api_url)
