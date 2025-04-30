@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup as bs
-from requests.exceptions import SSLError,ConnectTimeout
+from requests.exceptions import ConnectTimeout, SSLError
 
 
 def download_logo(url, directory, filename) -> Optional[str]:
@@ -62,7 +62,9 @@ def download_logo(url, directory, filename) -> Optional[str]:
         print(f"SSLエラーが発生しました: file_name: {filename}, url: {url}")
         return None
     except ConnectTimeout:
-        print(f"接続タイムアウトエラーが発生しました: file_name: {filename}, url: {url}")
+        print(
+            f"接続タイムアウトエラーが発生しました: file_name: {filename}, url: {url}"
+        )
         return None
 
     # ステータスコードが200でない場合はエラー
@@ -136,6 +138,7 @@ def download_logo(url, directory, filename) -> Optional[str]:
             )
 
     print(f"ロゴファイルが見つかりませんでした。file_name: {filename}, url: {url}")
+    return None
 
 
 if __name__ == "__main__":
@@ -151,6 +154,9 @@ if __name__ == "__main__":
             securities_code = item["securities_code"]
             filename = f"{securities_code}_logo"
             output = download_logo(url, directory, filename)
+            if output is None:
+                print(f"ファイルが存在するため、スキップしました: {filename}")
+                continue
     else:
         print(f"Failed to fetch URLs. Status code: {response.status_code}")
 
