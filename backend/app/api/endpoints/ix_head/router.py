@@ -124,8 +124,7 @@ def read_ix_head_title_items_url_list(
     statement = (
         select(IxHeadTitle.securities_code, IxHeadTitle.url)
         .where(IxHeadTitle.url is not None, IxHeadTitle.securities_code is not None)
-        .order_by(IxHeadTitle.securities_code.asc())
-        .distinct()
+        .order_by(IxHeadTitle.insert_date.desc())
     )
     results = session.exec(statement)
     items = results.all()
