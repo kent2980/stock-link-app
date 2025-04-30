@@ -132,6 +132,23 @@ def download_logo(url, directory, filename) -> Optional[str]:
             # data-src属性がない場合はsrc属性を取得
             logo_url = logo["src"]
 
+        # データURIスキームの場合の処理
+        if logo_url.startswith("data:"):
+            # データURIを分割してデータ部分を取得
+            header, encoded = logo_url.split(",", 1)
+            if "image/svg+xml" in header:
+                # SVGデータをデコードして保存
+                svg_data = encoded
+                return save_file(file_path, svg_data, "svg", "w", encoding="utf-8")
+            elif "base64" in header:
+                # Base64デコードしてバイナリデータを保存
+                image_data = base64.b64decode(encoded)
+                extension = header.split(";")[0].split("/")[1]  # MIMEタイプから拡張子を取得
+                return save_file(file_path, image_data, extension, "wb")
+            else:
+                print(f"未対応のデータURI形式: {header}")
+                return None
+
         # 取得したURLが相対パスの場合は、絶対URLに変換
         if not logo_url.startswith("http"):
             logo_url = urljoin(url, logo_url)
@@ -139,6 +156,7 @@ def download_logo(url, directory, filename) -> Optional[str]:
         # 画像をダウンロード
         logo_response = requests.get(logo_url)
         print(f"logo_url: {logo_url}")
+
         # ステータスコードが200でない場合はエラー
         if logo_response.status_code == 200:
             # 拡張子がsvgの場合は、SVGとして保存
