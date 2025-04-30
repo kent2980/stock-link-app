@@ -11,6 +11,7 @@ from requests.exceptions import ConnectTimeout, SSLError
 
 
 def save_file(
+    file_path: str,
     content,
     type: str,
     mode,
@@ -27,7 +28,7 @@ def save_file(
     file_full_path = os.path.abspath(os.path.join(file_path + "." + type))
     with open(file_full_path, mode, encoding=encoding) as f:
         f.write(content)
-    print(f"{type}ファイルを保存しました: {filename}.{type},url: {url}")
+    print(f"{type}ファイルを保存しました: {file_path}.{type}")
     return file_full_path
 
 
@@ -84,8 +85,6 @@ def download_logo(url, directory, filename) -> Optional[str]:
     # ディレクトリが存在しない場合は作成
     os.makedirs(directory, exist_ok=True)
 
-    file_path = os.path.join(directory, filename)
-
     # GETリクエストを送信してHTMLを取得
     response = safe_get(url)
     if not response:
@@ -119,7 +118,7 @@ def download_logo(url, directory, filename) -> Optional[str]:
             "svg", class_=lambda class_name: class_name and "mobile" not in class_name
         )
         if svg:
-            return save_file(str(svg), "svg", "w", encoding="utf-8")
+            return save_file(file_path,str(svg), "svg", "w", encoding="utf-8")
         else:
             logo = bs_obj.find("img")
             print("imgを取得")
@@ -144,19 +143,19 @@ def download_logo(url, directory, filename) -> Optional[str]:
         if logo_response.status_code == 200:
             # 拡張子がsvgの場合は、SVGとして保存
             if re.match(r".*\.svg.*", logo_url):
-                return save_file(logo_response.text, "svg", "w", encoding="utf-8")
+                return save_file(file_path,logo_response.text, "svg", "w", encoding="utf-8")
             # 拡張子がwebpの場合は、WEBPとして保存
             elif re.match(r".*\.webp$", logo_url):
-                return save_file(logo_response.content, "webp", "wb")
+                return save_file(file_path,logo_response.content, "webp", "wb")
             # 拡張子がpngの場合は、PNGとして保存
             elif re.match(r".*\.png.*", logo_url):
-                return save_file(logo_response.content, "png", "wb")
+                return save_file(file_path,logo_response.content, "png", "wb")
             # 拡張子がjpgまたはjpegの場合は、JPEGとして保存
             elif re.match(r".*\.jpg.*|.*\.jpeg.*", logo_url):
-                return save_file(logo_response.content, "jpg", "wb")
+                return save_file(file_path,logo_response.content, "jpg", "wb")
             # 拡張子がgifの場合は、GIFとして保存
             elif re.match(r".*\.gif.*", logo_url):
-                return save_file(logo_response.content, "gif", "wb")
+                return save_file(file_path,logo_response.content, "gif", "wb")
         else:
             print(
                 f"エラーが発生したため、保存できませんでした。: {logo_response.status_code}"
