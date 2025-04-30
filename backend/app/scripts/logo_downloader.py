@@ -118,7 +118,7 @@ def download_logo(url, directory, filename) -> Optional[str]:
             "svg", class_=lambda class_name: class_name and "mobile" not in class_name
         )
         if svg:
-            return save_file(file_path,str(svg), "svg", "w", encoding="utf-8")
+            return save_file(file_path, str(svg), "svg", "w", encoding="utf-8")
         else:
             logo = bs_obj.find("img")
             print("imgを取得")
@@ -143,7 +143,9 @@ def download_logo(url, directory, filename) -> Optional[str]:
             elif "base64" in header:
                 # Base64デコードしてバイナリデータを保存
                 image_data = base64.b64decode(encoded)
-                extension = header.split(";")[0].split("/")[1]  # MIMEタイプから拡張子を取得
+                extension = header.split(";")[0].split("/")[
+                    1
+                ]  # MIMEタイプから拡張子を取得
                 return save_file(file_path, image_data, extension, "wb")
             else:
                 print(f"未対応のデータURI形式: {header}")
@@ -161,19 +163,21 @@ def download_logo(url, directory, filename) -> Optional[str]:
         if logo_response.status_code == 200:
             # 拡張子がsvgの場合は、SVGとして保存
             if re.match(r".*\.svg.*", logo_url):
-                return save_file(file_path,logo_response.text, "svg", "w", encoding="utf-8")
+                return save_file(
+                    file_path, logo_response.text, "svg", "w", encoding="utf-8"
+                )
             # 拡張子がwebpの場合は、WEBPとして保存
             elif re.match(r".*\.webp$", logo_url):
-                return save_file(file_path,logo_response.content, "webp", "wb")
+                return save_file(file_path, logo_response.content, "webp", "wb")
             # 拡張子がpngの場合は、PNGとして保存
             elif re.match(r".*\.png.*", logo_url):
-                return save_file(file_path,logo_response.content, "png", "wb")
+                return save_file(file_path, logo_response.content, "png", "wb")
             # 拡張子がjpgまたはjpegの場合は、JPEGとして保存
             elif re.match(r".*\.jpg.*|.*\.jpeg.*", logo_url):
-                return save_file(file_path,logo_response.content, "jpg", "wb")
+                return save_file(file_path, logo_response.content, "jpg", "wb")
             # 拡張子がgifの場合は、GIFとして保存
             elif re.match(r".*\.gif.*", logo_url):
-                return save_file(file_path,logo_response.content, "gif", "wb")
+                return save_file(file_path, logo_response.content, "gif", "wb")
         else:
             print(
                 f"エラーが発生したため、保存できませんでした。: {logo_response.status_code}"
@@ -188,6 +192,14 @@ if __name__ == "__main__":
     api_url = "http://157.7.78.166/api/v1/xbrl/url_list/"
     directory = "../frontend/public/assets/images/stock_logo/"
     json_output_dir = "../frontend/src/logo/"
+    json_path = os.path.join(json_output_dir, "logo_list.json")
+
+    # 処理の開始時に logo_list.json を初期化
+    os.makedirs(json_output_dir, exist_ok=True)
+    if not os.path.exists(json_path):
+        with open(json_path, "w", encoding="utf-8") as f:
+            json.dump([], f, ensure_ascii=False, indent=4)
+
     response = requests.get(api_url)
     if response.status_code == 200:
         data = response.json()
@@ -195,30 +207,42 @@ if __name__ == "__main__":
             url = item["url"]
             securities_code = item["securities_code"]
             filename = f"{securities_code}_logo"
-            output = download_logo(url, directory, filename)
-            if output is None:
-                print(f"ファイルが存在するため、スキップしました: {filename}")
+
+            # ファイルが存在するか確認
+            file_path = os.path.join(directory, filename)
+            existing_file = None
+            for ext in ["svg", "png", "jpg", "jpeg", "gif", "webp"]:
+                if os.path.exists(f"{file_path}.{ext}"):
+                    existing_file = f"{filename}.{ext}"
+                    break
+
+            # ファイルが存在する場合でも logo_list.json に追記
+            if existing_file:
+                print(f"ファイルが存在するため、スキップしました: {existing_file}")
+                with open(json_path, "r+", encoding="utf-8") as f:
+                    file_data = json.load(f)
+                    file_data.append(
+                        {
+                            "code": securities_code,
+                            "file_name": existing_file,
+                        }
+                    )
+                    f.seek(0)
+                    json.dump(file_data, f, ensure_ascii=False, indent=4)
                 continue
+
+            # ファイルをダウンロードして保存
+            output = download_logo(url, directory, filename)
+            if output:
+                with open(json_path, "r+", encoding="utf-8") as f:
+                    file_data = json.load(f)
+                    file_data.append(
+                        {
+                            "code": securities_code,
+                            "file_name": f"{filename}.{output.split('.')[-1]}",
+                        }
+                    )
+                    f.seek(0)
+                    json.dump(file_data, f, ensure_ascii=False, indent=4)
     else:
         print(f"Failed to fetch URLs. Status code: {response.status_code}")
-
-    # directory内のファイルをリストで取得
-    files = os.listdir(directory)
-
-    # ファイル名と拡張子を分割して DataFrame を作成
-    file_data = []
-    for file in files:
-        file_split = file.rsplit(".", 1)  # 拡張子が存在しない場合を考慮
-        if len(file_split) == 2:
-            file_name, file_ext = file_split
-        else:
-            file_name, file_ext = file_split[0], ""  # 拡張子がない場合は空文字列
-        file_data.append(
-            {
-                "code": file_name.replace("_logo", ""),
-                "file_name": file,
-            }
-        )
-    json_path = os.path.join(json_output_dir, "logo_list.json")
-    with open(json_path, "w", encoding="utf-8") as f:
-        json.dump(file_data, f, ensure_ascii=False, indent=4)
