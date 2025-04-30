@@ -10,6 +10,57 @@ from bs4 import BeautifulSoup as bs
 from requests.exceptions import ConnectTimeout, SSLError
 
 
+def save_file(
+    content,
+    type: str,
+    mode,
+    encoding=None,
+):
+    """
+    指定された拡張子でファイルを保存する
+    :param content: 保存する内容
+    :param type: 拡張子
+    :param mode: モード
+    :param encoding: エンコーディング
+    """
+    # 相対パスを絶対パスに変換
+    file_full_path = os.path.abspath(os.path.join(file_path + "." + type))
+    with open(file_full_path, mode, encoding=encoding) as f:
+        f.write(content)
+    print(f"{type}ファイルを保存しました: {filename}.{type},url: {url}")
+    return file_full_path
+
+
+def safe_get(url, timeout=10):
+    """
+    HTTPリクエストを安全に実行し、HTTPで失敗した場合にHTTPSで再試行します。
+    :param url: リクエストするURL
+    :param timeout: タイムアウト時間
+    :return: レスポンスオブジェクトまたはNone
+    """
+    try:
+        response = requests.get(url, timeout=timeout)
+        response.raise_for_status()  # ステータスコードがエラーの場合例外を発生
+        return response
+    except (ConnectTimeout, SSLError) as e:
+        print(f"HTTPでエラーが発生しました。HTTPSで再試行します: {url}")
+        if url.startswith("http://"):
+            https_url = url.replace("http://", "https://", 1)
+            try:
+                response = requests.get(https_url, timeout=timeout)
+                response.raise_for_status()
+                return response
+            except Exception as https_error:
+                print(
+                    f"HTTPSでもエラーが発生しました: {https_url}, エラー: {https_error}"
+                )
+        else:
+            print(f"HTTPSリトライができません: {url}")
+    except Exception as e:
+        print(f"リクエスト中にエラーが発生しました: {url}, エラー: {e}")
+    return None
+
+
 def download_logo(url, directory, filename) -> Optional[str]:
     """
     Download the logo from the given URL and save it to a file.
@@ -35,36 +86,10 @@ def download_logo(url, directory, filename) -> Optional[str]:
 
     file_path = os.path.join(directory, filename)
 
-    def save_file(
-        content,
-        type: str,
-        mode,
-        encoding=None,
-    ):
-        """
-        指定された拡張子でファイルを保存する
-        :param content: 保存する内容
-        :param type: 拡張子
-        :param mode: モード
-        :param encoding: エンコーディング
-        """
-        # 相対パスを絶対パスに変換
-        file_full_path = os.path.abspath(os.path.join(file_path + "." + type))
-        with open(file_full_path, mode, encoding=encoding) as f:
-            f.write(content)
-        print(f"{type}ファイルを保存しました: {filename}.{type},url: {url}")
-        return file_full_path
-
     # GETリクエストを送信してHTMLを取得
-    try:
-        response = requests.get(url)
-    except SSLError:
-        print(f"SSLエラーが発生しました: file_name: {filename}, url: {url}")
-        return None
-    except ConnectTimeout:
-        print(
-            f"接続タイムアウトエラーが発生しました: file_name: {filename}, url: {url}"
-        )
+    response = safe_get(url)
+    if not response:
+        print(f"リクエストに失敗しました: {url}")
         return None
 
     # ステータスコードが200でない場合はエラー
