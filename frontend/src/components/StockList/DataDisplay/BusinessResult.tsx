@@ -32,14 +32,13 @@ const BusinessResult: React.FC<BusinessResultProps> = ({ headItemKey }) => {
       type: dataItem.label,
       value: dataItem.curChange?.value ?? 0,
       preValue: dataItem.preChange?.value ?? 0,
-      color: (dataItem.curChange?.value ?? 0) > 0 ? "#5b9bdace" : "#ee8c8cd1",
     })) ?? [];
 
   const chart = useChart({
     data: items,
     series: [
       { name: "preValue", color: "#939393d1" },
-      { name: "value", color: "#5fa8ecff" },
+      { name: "value", color: "ui.main" },
     ],
   });
 

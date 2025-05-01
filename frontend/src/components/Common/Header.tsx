@@ -60,7 +60,7 @@ const Header: React.FC<HeaderProps> = ({ headerHeight = 12, ...props }) => {
   }, [lastScrollY]);
 
   const currentDate = format(new Date(), "yyyy-MM-dd");
-  const bgColor = "#3498db";
+  const bgColor = "ui.main";
   const menuBgColor = "#f8f9fa";
   const textColor = "#666666";
   const activeTextColor = "#333333";
@@ -123,18 +123,30 @@ const Header: React.FC<HeaderProps> = ({ headerHeight = 12, ...props }) => {
           </Flex>
 
           {/* 2段目: 検索バーと日付 */}
-          <Flex justify="space-between">
+          <Flex gap={4}>
             {/* 検索バー（左側） */}
-            <Box width="200px">
+            <Box width="250px">
               <InputGroup startElement={<BiSearch />}>
-                <Input size="xs" fontSize="16px" />
+                <Input size="sm" fontSize="16px" h="30px" />
               </InputGroup>
             </Box>
 
             {/* 日付表示（右側） */}
-            <Text color={textColor} fontSize="16px">
-              {currentDate}
-            </Text>
+            <Box
+              w={{ base: "calc(100vw - 250px)", md: "200px" }}
+              bg="gray.100"
+              px={4}
+              borderRadius="md"
+              borderBottom="1px solid"
+              borderColor="gray.200"
+              h="30px"
+            >
+              <Flex align="center" justify="center" h="100%">
+                <Text color={textColor} fontSize="16px" fontWeight="bold">
+                  {currentDate}
+                </Text>
+              </Flex>
+            </Box>
           </Flex>
         </Container>
       </Box>

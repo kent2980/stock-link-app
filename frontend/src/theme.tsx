@@ -31,7 +31,7 @@ export const system = createSystem(defaultConfig, {
     tokens: {
       colors: {
         ui: {
-          main: { value: "#ffffffff" },
+          main: { value: "#4696e1ff" },
           secondary: { value: "#d9d9d7ff" },
           dark: { value: "#333333" },
           light: { value: "#ffffff" },

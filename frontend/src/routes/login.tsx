@@ -64,6 +64,7 @@ function Login() {
         justifyContent="center"
         gap={4}
         centerContent
+        fontSize="16px"
       >
         <Image
           src={Logo}
