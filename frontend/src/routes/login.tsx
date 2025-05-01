@@ -64,7 +64,6 @@ function Login() {
         justifyContent="center"
         gap={4}
         centerContent
-        fontSize="16px"
       >
         <Image
           src={Logo}
@@ -87,6 +86,7 @@ function Login() {
               })}
               placeholder="Email"
               type="email"
+              fontSize="16px"
             />
           </InputGroup>
         </Field>
@@ -96,6 +96,7 @@ function Login() {
           {...register("password", passwordRules())}
           placeholder="Password"
           errors={errors}
+          fontSize="16px"
         />
         <RouterLink to="/recover-password" className="main-link">
           Forgot Password?
