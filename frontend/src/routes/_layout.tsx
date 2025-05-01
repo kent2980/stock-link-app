@@ -17,13 +17,13 @@ export const Route = createFileRoute("/_layout")({
   },
 });
 
-const HEADER_HEIGHT = "40px";
-const FOOTER_HEIGHT = "50px";
+const HEADER_HEIGHT = 20;
+const FOOTER_HEIGHT = "60px";
 
 function Layout() {
   return (
     <Flex direction="column">
-      <Header h={HEADER_HEIGHT} />
+      <Header headerHeight={HEADER_HEIGHT} />
       <Box
         w="100%"
         mx="auto"
