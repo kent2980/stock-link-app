@@ -29,8 +29,6 @@ const Calender = () => {
       width="100%"
       margin="0 auto"
       bg="gray.50"
-      overflow="auto"
-      h={"100vh"}
     >
       {data.data.map((item, index) => (
         <Box
