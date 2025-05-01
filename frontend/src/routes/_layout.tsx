@@ -17,8 +17,8 @@ export const Route = createFileRoute("/_layout")({
   },
 });
 
-const HEADER_HEIGHT = 20;
-const FOOTER_HEIGHT = "60px";
+const HEADER_HEIGHT = 24;
+const FOOTER_HEIGHT = 16;
 
 function Layout() {
   return (
@@ -35,7 +35,7 @@ function Layout() {
           <Outlet />
         </Box>
       </Box>
-      <Footer h={FOOTER_HEIGHT} />
+      <Footer footerHeight={FOOTER_HEIGHT} />
     </Flex>
   );
 }

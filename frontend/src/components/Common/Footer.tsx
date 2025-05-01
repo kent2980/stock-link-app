@@ -2,8 +2,13 @@ import { MenuListStore } from "@/Store/Store";
 import { Flex, FlexProps, IconButton } from "@chakra-ui/react";
 import { useNavigate } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
-import React from "react";
-const Footer: React.FC<FlexProps> = (props) => {
+import React, { useEffect, useState } from "react";
+
+interface FooterProps extends FlexProps {
+  footerHeight?: number; // ヘッダーの高さを指定するプロパティ
+}
+
+const Footer: React.FC<FooterProps> = ({ footerHeight = 12, ...props }) => {
   const { menuList } = useStore(MenuListStore, (state) => state); // ストアからデータを取得
   const navigate = useNavigate();
   const handleMenuClick = (menuUrl: string | null | undefined) => {
@@ -11,6 +16,31 @@ const Footer: React.FC<FlexProps> = (props) => {
       navigate({ to: menuUrl });
     }
   };
+
+  const [isVisible, setIsVisible] = useState(true); // ヘッダーの表示状態
+  const [lastScrollY, setLastScrollY] = useState(0); // 最後のスクロール位置
+
+  // スクロールイベントを監視
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY && currentScrollY > 50) {
+        setIsVisible(false); // 下にスクロールしている場合は隠す
+      } else {
+        setIsVisible(true); // 上にスクロールしている場合は表示
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY]);
+
   return (
     <Flex
       id="footer"
@@ -19,11 +49,11 @@ const Footer: React.FC<FlexProps> = (props) => {
       justifyContent="center"
       alignItems="center"
       position="fixed"
-      bottom={0}
+      bottom={{ base: isVisible ? 0 : `-${footerHeight * 4}px`, md: 0 }} // 隠すときは上に移動
       display={{ base: "flex", md: "none" }}
       zIndex={1000}
       boxShadow="md"
-      h="50px"
+      h={footerHeight}
       bg="gray.50"
       {...props}
     >
