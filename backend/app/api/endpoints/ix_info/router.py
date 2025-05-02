@@ -109,33 +109,8 @@ def get_document_list(
             status_code=400,
             detail="日付の形式が正しくありません。YYYY-MM-DD形式で指定してください。",
         )
-    if date_str is None and industry_17_code is None:
-        statement = (
-            select(IxHeadTitle)
-            .where(IxHeadTitle.reporting_date != None)
-            .order_by(IxHeadTitle.reporting_date.desc())
-        )
-        if report_types:
-            statement = (
-                select(IxHeadTitle)
-                .where(
-                    IxHeadTitle.report_type.in_(report_types),
-                    IxHeadTitle.current_period != None,
-                    IxHeadTitle.reporting_date != None,
-                )
-                .order_by(IxHeadTitle.reporting_date.desc())
-            )
-        print(statement)
-        results = session.exec(statement)
-        item = results.first()
-
-        if item is None:
-            raise HTTPException(status_code=404, detail="No documents found.")
-
-        reporting_date = item.reporting_date
-        date_str = reporting_date.strftime("%Y-%m-%d")
-
-    convert_date = date.fromisoformat(date_str) if date_str else None
+    if date_str:
+        convert_date = date.fromisoformat(date_str) if date_str else None
 
     statement = (
         select(IxHeadTitle)
