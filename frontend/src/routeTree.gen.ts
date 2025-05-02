@@ -18,7 +18,8 @@ import { Route as LoginImport } from './routes/login'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutCategoryImport } from './routes/_layout/category'
-import { Route as LayoutIndexIndustryIndustry17Import } from './routes/_layout/index/industry.$industry_17'
+import { Route as LayoutIndexIndustry33Industry33Import } from './routes/_layout/index/industry33.$industry_33'
+import { Route as LayoutIndexIndustry17Industry17Import } from './routes/_layout/index/industry17.$industry_17'
 import { Route as LayoutIndexDateDateStrImport } from './routes/_layout/index/date.$dateStr'
 
 // Create/Update Routes
@@ -58,9 +59,15 @@ const LayoutCategoryRoute = LayoutCategoryImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutIndexIndustryIndustry17Route =
-  LayoutIndexIndustryIndustry17Import.update({
-    path: '/index/industry/$industry_17',
+const LayoutIndexIndustry33Industry33Route =
+  LayoutIndexIndustry33Industry33Import.update({
+    path: '/index/industry33/$industry_33',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+
+const LayoutIndexIndustry17Industry17Route =
+  LayoutIndexIndustry17Industry17Import.update({
+    path: '/index/industry17/$industry_17',
     getParentRoute: () => LayoutRoute,
   } as any)
 
@@ -105,8 +112,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIndexDateDateStrImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/index/industry/$industry_17': {
-      preLoaderRoute: typeof LayoutIndexIndustryIndustry17Import
+    '/_layout/index/industry17/$industry_17': {
+      preLoaderRoute: typeof LayoutIndexIndustry17Industry17Import
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/index/industry33/$industry_33': {
+      preLoaderRoute: typeof LayoutIndexIndustry33Industry33Import
       parentRoute: typeof LayoutImport
     }
   }
@@ -119,7 +130,8 @@ export const routeTree = rootRoute.addChildren([
     LayoutCategoryRoute,
     LayoutIndexRoute,
     LayoutIndexDateDateStrRoute,
-    LayoutIndexIndustryIndustry17Route,
+    LayoutIndexIndustry17Industry17Route,
+    LayoutIndexIndustry33Industry33Route,
   ]),
   LoginRoute,
   RecoverPasswordRoute,

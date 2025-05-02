@@ -4,13 +4,13 @@ import { createFileRoute, useParams } from "@tanstack/react-router";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-export const Route = createFileRoute("/_layout/index/industry/$industry_17")({
+export const Route = createFileRoute("/_layout/index/industry17/$industry_17")({
   component: Index,
 });
 
 function Index() {
   const { industry_17 } = useParams({
-    from: "/_layout/index/industry/$industry_17",
+    from: "/_layout/index/industry17/$industry_17",
   });
 
   return (

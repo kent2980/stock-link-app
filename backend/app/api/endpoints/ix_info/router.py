@@ -101,6 +101,7 @@ def get_document_list(
     report_types: Optional[List[str]] = Query(None),
     date_str: Optional[str] = Query(None),
     industry_17_code: Optional[int] = Query(None),
+    industry_33_code: Optional[int] = Query(None),
 ) -> sc.DocumentListPublics:
 
     if date_str and not re.match(r"^\d{4}-\d{2}-\d{2}$", date_str):
@@ -152,6 +153,11 @@ def get_document_list(
     if industry_17_code:
         statement = statement.where(
             JpxStockInfo.industry_17_code == industry_17_code,
+            IxHeadTitle.securities_code != None,
+        )
+    if industry_33_code:
+        statement = statement.where(
+            JpxStockInfo.industry_33_code == industry_33_code,
             IxHeadTitle.securities_code != None,
         )
     results = session.exec(statement)

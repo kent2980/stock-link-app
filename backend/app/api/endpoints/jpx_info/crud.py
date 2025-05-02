@@ -186,33 +186,52 @@ def read_select_industries(
     return sc.IndustriesList(data=items)
 
 
-def read_industry_17_count(
-    *,
-    session: Session,
-) -> sc.industry_17_count_list:
+def read_industry_count(*, session: Session, type: int) -> sc.industry_count_list:
     """
     Get all industries.
     """
-    statement = (
-        select(
-            JpxStockInfo.industry_17_name.label("name"),
-            JpxStockInfo.industry_17_code.label("code"),
-            func.count(JpxStockInfo.code).label("count"),
+
+    if type not in [17, 33]:
+        raise ValueError("type must be 17 or 33")
+
+    if type == 17:
+        statement = (
+            select(
+                JpxStockInfo.industry_17_name.label("name"),
+                JpxStockInfo.industry_17_code.label("code"),
+                func.count(JpxStockInfo.code).label("count"),
+            )
+            .where(
+                JpxStockInfo.industry_17_name.is_not(None),
+                JpxStockInfo.industry_17_code.is_not(None),
+            )
+            .group_by(
+                JpxStockInfo.industry_17_name,
+                JpxStockInfo.industry_17_code,
+            )
+            .order_by(JpxStockInfo.industry_17_code)
         )
-        .where(
-            JpxStockInfo.industry_17_name.is_not(None),
-            JpxStockInfo.industry_17_code.is_not(None),
+    elif type == 33:
+        statement = (
+            select(
+                JpxStockInfo.industry_33_name.label("name"),
+                JpxStockInfo.industry_33_code.label("code"),
+                func.count(JpxStockInfo.code).label("count"),
+            )
+            .where(
+                JpxStockInfo.industry_33_name.is_not(None),
+                JpxStockInfo.industry_33_code.is_not(None),
+            )
+            .group_by(
+                JpxStockInfo.industry_33_name,
+                JpxStockInfo.industry_33_code,
+            )
+            .order_by(JpxStockInfo.industry_33_code)
         )
-        .group_by(
-            JpxStockInfo.industry_17_name,
-            JpxStockInfo.industry_17_code,
-        )
-        .order_by(JpxStockInfo.industry_17_code)
-    )
     result = session.exec(statement)
     items = result.all()
 
-    return sc.industry_17_count_list(data=items)
+    return sc.industry_count_list(data=items)
 
 
 def read_industry_name(

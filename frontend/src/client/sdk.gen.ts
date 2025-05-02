@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { FinancialSummaryGetOperatingResultsData, FinancialSummaryGetOperatingResultsResponse, FinancialSummaryGetOtherOperatingResultsData, FinancialSummaryGetOtherOperatingResultsResponse, FinancialSummaryGetForecastsData, FinancialSummaryGetForecastsResponse, FinancialSummaryGetFinancialPositionData, FinancialSummaryGetFinancialPositionResponse, FinancialSummaryGetCashFlowsData, FinancialSummaryGetCashFlowsResponse, FinancialSummaryGetDividendsData, FinancialSummaryGetDividendsResponse, FinancialSummaryGetForecastProgressRateData, FinancialSummaryGetForecastProgressRateResponse, InformationGetDocumentCountData, InformationGetDocumentCountResponse, InformationGetLatestDocumentTitleResponse, InformationReadIxHeadTitleItemData, InformationReadIxHeadTitleItemResponse, InformationGetDocumentListData, InformationGetDocumentListResponse, InformationReadIxHeadTitleItemsUrlListResponse, InformationGetCalendarResponse, InformationGetLatestReportingDateResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, JpxReadIndustry17CountResponse, JpxReadIndustryNameData, JpxReadIndustryNameResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, WikiGetStockWikiItemsResponse } from './types.gen';
+import type { FinancialSummaryGetOperatingResultsData, FinancialSummaryGetOperatingResultsResponse, FinancialSummaryGetOtherOperatingResultsData, FinancialSummaryGetOtherOperatingResultsResponse, FinancialSummaryGetForecastsData, FinancialSummaryGetForecastsResponse, FinancialSummaryGetFinancialPositionData, FinancialSummaryGetFinancialPositionResponse, FinancialSummaryGetCashFlowsData, FinancialSummaryGetCashFlowsResponse, FinancialSummaryGetDividendsData, FinancialSummaryGetDividendsResponse, FinancialSummaryGetForecastProgressRateData, FinancialSummaryGetForecastProgressRateResponse, InformationGetDocumentCountData, InformationGetDocumentCountResponse, InformationGetLatestDocumentTitleResponse, InformationReadIxHeadTitleItemData, InformationReadIxHeadTitleItemResponse, InformationGetDocumentListData, InformationGetDocumentListResponse, InformationReadIxHeadTitleItemsUrlListResponse, InformationGetCalendarResponse, InformationGetLatestReportingDateResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, JpxReadIndustryCountData, JpxReadIndustryCountResponse, JpxReadIndustryNameData, JpxReadIndustryNameResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, WikiGetStockWikiItemsResponse } from './types.gen';
 
 export class FinancialSummaryService {
     /**
@@ -244,6 +244,7 @@ export class InformationService {
      * @param data.reportTypes
      * @param data.dateStr
      * @param data.industry17Code
+     * @param data.industry33Code
      * @returns DocumentListPublics Successful Response
      * @throws ApiError
      */
@@ -254,7 +255,8 @@ export class InformationService {
             query: {
                 report_types: data.reportTypes,
                 date_str: data.dateStr,
-                industry_17_code: data.industry17Code
+                industry_17_code: data.industry17Code,
+                industry_33_code: data.industry33Code
             },
             errors: {
                 422: 'Validation Error'
@@ -540,15 +542,23 @@ export class JpxService {
     }
     
     /**
-     * 17業種の分類で上場銘柄数を取得
-     * Get industry_17_list.
-     * @returns industry_17_count_list Successful Response
+     * 業種別で上場銘柄数を取得
+     * Get industry_list.
+     * @param data The data for the request.
+     * @param data.type 業種品類コード
+     * @returns industry_count_list Successful Response
      * @throws ApiError
      */
-    public static readIndustry17Count(): CancelablePromise<JpxReadIndustry17CountResponse> {
+    public static readIndustryCount(data: JpxReadIndustryCountData = {}): CancelablePromise<JpxReadIndustryCountResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/jpx/stock_info/industry_17_list/'
+            url: '/api/v1/jpx/stock_info/industry_list/',
+            query: {
+                type: data.type
+            },
+            errors: {
+                422: 'Validation Error'
+            }
         });
     }
     

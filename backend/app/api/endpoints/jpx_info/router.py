@@ -159,19 +159,23 @@ def read_select_industries(
 
 
 @router.get(
-    "/industry_17_list/",
-    response_model=sc.industry_17_count_list,
-    summary="17業種の分類で上場銘柄数を取得",
+    "/industry_list/",
+    response_model=sc.industry_count_list,
+    summary="業種別で上場銘柄数を取得",
 )
-def read_industry_17_count(
+def read_industry_count(
     *,
     session: SessionDep,
-) -> sc.industry_17_count_list:
+    type: int = Query(17, description="業種品類コード"),
+) -> sc.industry_count_list:
     """
-    Get industry_17_list.
+    Get industry_list.
     """
 
-    items = crud.read_industry_17_count(session=session)
+    try:
+        items = crud.read_industry_count(session=session, type=type)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
 
     if len(items.data) == 0:
         raise HTTPException(status_code=404, detail="Items not found")

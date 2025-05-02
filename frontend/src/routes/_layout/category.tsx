@@ -1,5 +1,5 @@
 import Calender from "@/components/Category/Calender";
-import Industry17 from "@/components/Category/Industry_17";
+import Industry33 from "@/components/Category/Industry_33";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
@@ -24,7 +24,7 @@ function Category() {
         <SwiperSlide>
           <ErrorBoundary fallback={<div>表示するデータがありません。</div>}>
             <Suspense fallback={<div>Loading...</div>}>
-              <Industry17 />
+              <Industry33 />
             </Suspense>
           </ErrorBoundary>
         </SwiperSlide>

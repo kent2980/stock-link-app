@@ -121,14 +121,14 @@ export type Industry = {
     name: string;
 };
 
-export type industry_17_count = {
+export type industry_count = {
     code: number;
     name: string;
     count: number;
 };
 
-export type industry_17_count_list = {
-    data: Array<industry_17_count>;
+export type industry_count_list = {
+    data: Array<industry_count>;
 };
 
 export type ItemCreate = {
@@ -439,6 +439,7 @@ export type InformationReadIxHeadTitleItemResponse = (DocumentListPublic);
 export type InformationGetDocumentListData = {
     dateStr?: (string | null);
     industry17Code?: (number | null);
+    industry33Code?: (number | null);
     reportTypes?: (Array<(string)> | null);
 };
 
@@ -517,7 +518,14 @@ export type JpxReadSelectIndustriesData = {
 
 export type JpxReadSelectIndustriesResponse = (IndustriesList);
 
-export type JpxReadIndustry17CountResponse = (industry_17_count_list);
+export type JpxReadIndustryCountData = {
+    /**
+     * 業種品類コード
+     */
+    type?: number;
+};
+
+export type JpxReadIndustryCountResponse = (industry_count_list);
 
 export type JpxReadIndustryNameData = {
     code: number;

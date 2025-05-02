@@ -3,21 +3,21 @@ import { Badge, Box, Text } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 
-const Industry17 = () => {
+const Industry13 = () => {
   const navigate = useNavigate();
   const { data } = useSuspenseQuery({
-    queryKey: ["industry17"],
+    queryKey: ["industry33"],
     queryFn: async () => {
       return await JpxService.readIndustryCount({
-        type: 17,
+        type: 33,
       });
     },
   });
-  const handleClick = (industry_17_code: number) => {
+  const handleClick = (industry_33_code: number) => {
     navigate({
-      to: "/index/industry17/$industry_17",
+      to: "/index/industry33/$industry_33",
       params: {
-        industry_17: String(industry_17_code),
+        industry_33: String(industry_33_code),
       },
     });
   };
@@ -62,4 +62,4 @@ const Industry17 = () => {
   );
 };
 
-export default Industry17;
+export default Industry13;

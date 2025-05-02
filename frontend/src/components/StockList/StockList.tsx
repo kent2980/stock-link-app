@@ -9,20 +9,27 @@ import StockListItem from "./StockListItem";
 interface StockListProps extends BoxProps {
   dateStr?: string | null;
   industry_17_code?: number | null;
+  industry_33_code?: number | null;
 }
 
 export const StockList: React.FC<StockListProps> = ({
   dateStr = null,
   industry_17_code = null,
+  industry_33_code = null,
   ...props
 }) => {
   const { data: IndustryName } = useSuspenseQuery({
-    queryKey: ["industryName", industry_17_code],
+    queryKey: ["industryName", industry_17_code, industry_33_code],
     queryFn: async () => {
       if (industry_17_code) {
         return await JpxService.readIndustryName({
           type: 17,
           code: industry_17_code,
+        });
+      } else if (industry_33_code) {
+        return await JpxService.readIndustryName({
+          type: 33,
+          code: industry_33_code,
         });
       } else {
         return null;
@@ -45,12 +52,13 @@ export const StockList: React.FC<StockListProps> = ({
   });
 
   const { data } = useSuspenseQuery({
-    queryKey: ["stockList", dateStr, industry_17_code],
+    queryKey: ["stockList", dateStr, industry_17_code, industry_33_code],
     queryFn: async () => {
       return await InformationService.getDocumentList({
         reportTypes: ["edjp", "edif", "edus"],
         dateStr: LatestDate,
         industry17Code: industry_17_code,
+        industry33Code: industry_33_code,
       });
     },
   });
