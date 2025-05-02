@@ -54,7 +54,7 @@ const PageLinkArea: React.FC<PageLinkAreaProps> = ({ dateStr }) => {
   const handleClick = (dateStr: string) => {
     navigate({
       to: "/index/date/$dateStr",
-      search: {
+      params: {
         dateStr: dateStr,
       },
     });
