@@ -1,13 +1,7 @@
+import CustomSpinner from "@/components/Spinner/CustomSpinner";
 import StockList from "@/components/StockList/StockList";
 import { HeaderStore } from "@/Store/Store";
-import {
-  Box,
-  HStack,
-  IconButton,
-  Spinner,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, HStack, IconButton, Text } from "@chakra-ui/react";
 import {
   createFileRoute,
   useNavigate,
@@ -71,14 +65,7 @@ function Index() {
       <PageLinkArea dateStr={dateStr} />
       <Box minH="100vh">
         <ErrorBoundary fallback={<div>表示するデータがありません。</div>}>
-          <Suspense
-            fallback={
-              <VStack colorPalette="teal">
-                <Spinner color="colorPalette.600" />
-                <Text color="colorPalette.600">Loading...</Text>
-              </VStack>
-            }
-          >
+          <Suspense fallback={<CustomSpinner />}>
             <StockList dateStr={dateStr} />
           </Suspense>
         </ErrorBoundary>

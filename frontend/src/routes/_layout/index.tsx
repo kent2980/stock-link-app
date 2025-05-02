@@ -1,5 +1,6 @@
+import CustomSpinner from "@/components/Spinner/CustomSpinner";
 import StockList from "@/components/StockList/StockList";
-import { Box, Spinner, Text, VStack } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
@@ -10,16 +11,9 @@ export const Route = createFileRoute("/_layout/")({
 
 function Index() {
   return (
-    <Box>
+    <Box minH="100vh">
       <ErrorBoundary fallback={<div>表示するデータがありません。</div>}>
-        <Suspense
-          fallback={
-            <VStack colorPalette="teal">
-              <Spinner color="colorPalette.600" />
-              <Text color="colorPalette.600">Loading...</Text>
-            </VStack>
-          }
-        >
+        <Suspense fallback={<CustomSpinner />}>
           <StockList />
         </Suspense>
       </ErrorBoundary>
