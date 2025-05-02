@@ -285,6 +285,7 @@ def get_latest_reporting_date(*, session: SessionDep) -> sc.PublicLatestReportin
             IxHeadTitle.reporting_date,
             func.count(IxHeadTitle.reporting_date).label("count"),
         )
+        .where(IxHeadTitle.reporting_date != None)
         .order_by(IxHeadTitle.reporting_date.desc())
         .group_by(IxHeadTitle.reporting_date)
     )
