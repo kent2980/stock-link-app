@@ -1,6 +1,7 @@
 import { DocumentListPublic } from "@/client";
 import { Box, BoxProps, Skeleton } from "@chakra-ui/react";
 import React, { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import BusinessResult from "./Graphs/BusinessResult";
 import Header from "./Header";
 import ForecastTable from "./Tables/ForecastTable";
@@ -19,12 +20,16 @@ const StockListItem: React.FC<StockListItemProps> = ({ item, ...props }) => {
       p={2}
     >
       <Header item={item} />
-      <Suspense fallback={<Skeleton height="150px" width="100%" />}>
-        <BusinessResult headItemKey={item.head_item_key} />
-      </Suspense>
-      <Suspense fallback={<Skeleton height="150px" width="100%" />}>
-        <ForecastTable HeadItemKey={item.head_item_key} />
-      </Suspense>
+      <ErrorBoundary fallback={<Skeleton height="150px" width="100%" />}>
+        <Suspense fallback={<Skeleton height="150px" width="100%" />}>
+          <BusinessResult headItemKey={item.head_item_key} />
+        </Suspense>
+      </ErrorBoundary>
+      <ErrorBoundary fallback={<Skeleton height="150px" width="100%" />}>
+        <Suspense fallback={<Skeleton height="150px" width="100%" />}>
+          <ForecastTable HeadItemKey={item.head_item_key} />
+        </Suspense>
+      </ErrorBoundary>
     </Box>
   );
 };

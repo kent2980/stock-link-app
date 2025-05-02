@@ -2,6 +2,7 @@ import StockList from "@/components/StockList/StockList";
 import { Box } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 export const Route = createFileRoute("/_layout/")({
   component: Index,
@@ -10,9 +11,11 @@ export const Route = createFileRoute("/_layout/")({
 function Index() {
   return (
     <Box>
-      <Suspense fallback={<div>Loading...</div>}>
-        <StockList />
-      </Suspense>
+      <ErrorBoundary fallback={<div>表示するデータがありません。</div>}>
+        <Suspense fallback={<div>Loading...</div>}>
+          <StockList />
+        </Suspense>
+      </ErrorBoundary>
     </Box>
   );
 }
