@@ -31,6 +31,7 @@ class FinValueBase(SQLModel):
     value: Optional[float]
     unit: Optional[str]
     display_scale: Optional[str]
+    scale: Optional[int]
 
 
 class FinValueAbstractBase(SQLModel):

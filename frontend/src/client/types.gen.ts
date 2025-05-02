@@ -94,6 +94,7 @@ export type FinValueBase = {
     value: (number | null);
     unit: (string | null);
     display_scale: (string | null);
+    scale: (number | null);
 };
 
 export type ForecastProgressRate = {

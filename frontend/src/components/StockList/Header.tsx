@@ -35,6 +35,7 @@ const Header: React.FC<HeaderProps> = ({
   item: {
     company_name = "ファーマライズホールディングス株式会社",
     securities_code = "2796",
+    document_name = "第一四半期報告書",
   },
 }) => {
   const logo_name =
@@ -57,10 +58,18 @@ const Header: React.FC<HeaderProps> = ({
             {company_name}
           </Heading>
         </Box>
-        <Box display="flex" justifyContent="flex-start" alignItems="center">
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="flex-start"
+          alignItems="flex-start"
+        >
           <Suspense fallback={<Text>Loading...</Text>}>
             <JpxDataDisplay code={securities_code} fontSize="11.5px" />
           </Suspense>
+          <Text fontSize="11.5px" color="ui.main" mt={1} fontWeight="semibold">
+            {document_name}
+          </Text>
         </Box>
       </Box>
     </>

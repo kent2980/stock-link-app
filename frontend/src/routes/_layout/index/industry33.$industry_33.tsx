@@ -12,7 +12,7 @@ function Index() {
   const { industry_33 } = useParams({
     from: "/_layout/index/industry33/$industry_33",
   });
-  console.log("industry_33", industry_33);
+
   return (
     <Box overflow="hidden">
       {/* デスクトップ */}

@@ -53,6 +53,7 @@ def get_metric_schema_value_and_change(
                         value=item.numeric,
                         unit=item.unit_ref,
                         display_scale=item.display_scale,
+                        scale=item.scale,
                     )
                     if is_prior:
                         if item.name.startswith("tse-ed-t_ChangeIn"):
@@ -295,6 +296,7 @@ def get_struct(
                                     value=item.numeric,
                                     unit=item.unit_ref,
                                     display_scale=item.display_scale,
+                                    scale=item.scale,
                                 )
                                 is_prior = any(
                                     re.match(r"Prior.*", context)

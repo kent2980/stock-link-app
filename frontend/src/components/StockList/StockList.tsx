@@ -3,7 +3,7 @@ import { HeaderStore } from "@/Store/Store";
 import { Box, BoxProps, List } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
-import React from "react";
+import React, { useEffect } from "react";
 import StockListItem from "./StockListItem";
 
 interface StockListProps extends BoxProps {
@@ -64,11 +64,13 @@ export const StockList: React.FC<StockListProps> = ({
   });
 
   // ストアを更新
-  HeaderStore.setState((state) => ({
-    ...state,
-    SelectDateStr: LatestDate,
-    CurrentCategory: IndustryName,
-  }));
+  useEffect(() => {
+    HeaderStore.setState((state) => ({
+      ...state,
+      SelectDateStr: LatestDate,
+      CurrentCategory: IndustryName,
+    }));
+  }, [LatestDate, IndustryName]);
 
   if (!data || data.count === 0) {
     return <Box>データが見つかりません。</Box>;
