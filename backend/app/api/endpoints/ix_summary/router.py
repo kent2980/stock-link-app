@@ -59,6 +59,8 @@ def get_operating_results(
         )
     except NotDictKeyError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except HeadItemNotFound as e:
+        raise HTTPException(status_code=404, detail=str(e))
 
     result = utils.get_struct(
         items=item,
@@ -112,6 +114,8 @@ def get_other_operating_results(
         )
     except NotDictKeyError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except HeadItemNotFound as e:
+        raise HTTPException(status_code=404, detail=str(e))
 
     result = utils.get_struct(
         items=item,
@@ -164,6 +168,8 @@ def get_forecasts(
             is_change=True,
         )
     except NotDictKeyError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except HeadItemNotFound as e:
         raise HTTPException(status_code=404, detail=str(e))
 
     result = utils.get_struct(
@@ -222,6 +228,8 @@ def get_financial_position(
         )
     except NotDictKeyError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except HeadItemNotFound as e:
+        raise HTTPException(status_code=404, detail=str(e))
 
     result = utils.get_struct(
         items=item,
@@ -278,6 +286,8 @@ def get_cash_flows(
         )
     except NotDictKeyError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except HeadItemNotFound as e:
+        raise HTTPException(status_code=404, detail=str(e))
 
     result = utils.get_struct(
         items=item,
@@ -322,6 +332,8 @@ def get_dividends(
             is_change=True,
         )
     except NotDictKeyError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except HeadItemNotFound as e:
         raise HTTPException(status_code=404, detail=str(e))
 
     results = []
