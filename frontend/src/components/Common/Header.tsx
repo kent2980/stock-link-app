@@ -73,8 +73,7 @@ const Header: React.FC<HeaderProps> = ({ headerHeight = 12, ...props }) => {
         const date = new Date(SelectDateStr);
         return format(date, "yyyy.MM.dd");
       } else {
-        const date = new Date();
-        return format(date, "yyyy.MM.dd");
+        return "";
       }
     }
   };
