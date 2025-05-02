@@ -1,5 +1,5 @@
 import CustomSpinner from "@/components/Spinner/CustomSpinner";
-import StockList from "@/components/StockList/StockList";
+import DateStockList from "@/components/StockList/DateStockList";
 import { HeaderStore } from "@/Store/Store";
 import { Box, HStack, IconButton, Text } from "@chakra-ui/react";
 import {
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/_layout/index/date/$dateStr")({
 function Index() {
   // urlパラメータから日付を取得
   const { dateStr } = useParams({ from: "/_layout/index/date/$dateStr" });
-
+  console.log("dateStr", dateStr);
   // Storeを更新
   HeaderStore.setState((state) => ({
     ...state,
@@ -66,7 +66,7 @@ function Index() {
       <Box minH="100vh">
         <ErrorBoundary fallback={<div>表示するデータがありません。</div>}>
           <Suspense fallback={<CustomSpinner />}>
-            <StockList dateStr={dateStr} />
+            <DateStockList dateStr={dateStr} />
           </Suspense>
         </ErrorBoundary>
       </Box>

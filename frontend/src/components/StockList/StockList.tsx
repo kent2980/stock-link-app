@@ -1,79 +1,20 @@
-import { InformationService, JpxService } from "@/client";
-import { HeaderStore } from "@/Store/Store";
-import { Box, BoxProps, List } from "@chakra-ui/react";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { DocumentListPublics } from "@/client";
+import { Box, BoxProps, Center, List } from "@chakra-ui/react";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
-import React, { useEffect } from "react";
+import React from "react";
 import StockListItem from "./StockListItem";
 
 interface StockListProps extends BoxProps {
-  dateStr?: string | null;
-  industry_17_code?: number | null;
-  industry_33_code?: number | null;
+  data: DocumentListPublics;
 }
 
-export const StockList: React.FC<StockListProps> = ({
-  dateStr = null,
-  industry_17_code = null,
-  industry_33_code = null,
-  ...props
-}) => {
-  const { data: IndustryName } = useSuspenseQuery({
-    queryKey: ["industryName", industry_17_code, industry_33_code],
-    queryFn: async () => {
-      if (industry_17_code) {
-        return await JpxService.readIndustryName({
-          type: 17,
-          code: industry_17_code,
-        });
-      } else if (industry_33_code) {
-        return await JpxService.readIndustryName({
-          type: 33,
-          code: industry_33_code,
-        });
-      } else {
-        return null;
-      }
-    },
-  });
-
-  const { data: LatestDate } = useSuspenseQuery({
-    queryKey: ["latestDate", dateStr],
-    queryFn: async () => {
-      if (dateStr && IndustryName === null) {
-        return dateStr;
-      } else if (IndustryName === null && dateStr === null) {
-        return (await InformationService.getLatestReportingDate())
-          .reporting_date;
-      } else {
-        return null;
-      }
-    },
-  });
-
-  const { data } = useSuspenseQuery({
-    queryKey: ["stockList", dateStr, industry_17_code, industry_33_code],
-    queryFn: async () => {
-      return await InformationService.getDocumentList({
-        reportTypes: ["edjp", "edif", "edus"],
-        dateStr: LatestDate,
-        industry17Code: industry_17_code,
-        industry33Code: industry_33_code,
-      });
-    },
-  });
-
-  // ストアを更新
-  useEffect(() => {
-    HeaderStore.setState((state) => ({
-      ...state,
-      SelectDateStr: LatestDate,
-      CurrentCategory: IndustryName,
-    }));
-  }, [LatestDate, IndustryName]);
-
+export const StockList: React.FC<StockListProps> = ({ data, ...props }) => {
   if (!data || data.count === 0) {
-    return <Box>データが見つかりません。</Box>;
+    return (
+      <Box minH="100vh">
+        <Center mt={10}>データが見つかりません。</Center>
+      </Box>
+    );
   }
 
   const listRef = React.useRef<HTMLDivElement | null>(null);

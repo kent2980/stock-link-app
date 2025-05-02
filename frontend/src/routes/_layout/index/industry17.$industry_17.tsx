@@ -1,5 +1,5 @@
 import CustomSpinner from "@/components/Spinner/CustomSpinner";
-import StockList from "@/components/StockList/StockList";
+import Industry17StockList from "@/components/StockList/Industry17StockList";
 import { Box } from "@chakra-ui/react";
 import { createFileRoute, useParams } from "@tanstack/react-router";
 import { Suspense } from "react";
@@ -18,7 +18,7 @@ function Index() {
     <Box minH="100vh">
       <ErrorBoundary fallback={<div>表示するデータがありません。</div>}>
         <Suspense fallback={<CustomSpinner />}>
-          <StockList industry_17_code={Number(industry_17)} />
+          <Industry17StockList industry_17_code={Number(industry_17)} />
         </Suspense>
       </ErrorBoundary>
     </Box>
