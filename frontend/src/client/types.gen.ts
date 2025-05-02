@@ -16,12 +16,12 @@ export type DocumentListPublic = {
     securities_code: string;
     company_name: string;
     document_name: string;
-    document_short_name: string;
+    document_short_name?: (string | null);
     report_type: string;
-    url: (string | null);
-    period_index: (number | null);
-    current_period: (string | null);
-    report_date: (string | null);
+    url?: (string | null);
+    period_index?: (number | null);
+    current_period?: (string | null);
+    report_date?: (string | null);
 };
 
 export type DocumentListPublics = {
@@ -153,152 +153,6 @@ export type ItemUpdate = {
     description?: (string | null);
 };
 
-/**
- * iXBRLのヘッダー情報を表すクラス
- */
-export type IxHeadTitlePublic = {
-    /**
-     * 作成日時
-     */
-    insert_date: string;
-    /**
-     * 更新日時
-     */
-    update_date: string;
-    /**
-     * アイテムキー
-     */
-    item_key: string;
-    /**
-     * 会社名
-     */
-    company_name: (string | null);
-    /**
-     * 証券コード
-     */
-    securities_code: (string | null);
-    /**
-     * 書類名
-     */
-    document_name: (string | null);
-    /**
-     * 報告日
-     */
-    reporting_date: (string | null);
-    /**
-     * 現在の期間
-     */
-    current_period: (string | null);
-    /**
-     * 報告書タイプ
-     */
-    report_type: (string | null);
-    /**
-     * 上場市場
-     */
-    listed_market: (string | null);
-    /**
-     * 市場区分
-     */
-    market_section: (string | null);
-    /**
-     * URL
-     */
-    url: (string | null);
-    /**
-     * 貸借対照表フラグ
-     */
-    is_bs: (boolean | null);
-    /**
-     * 損益計算書フラグ
-     */
-    is_pl: (boolean | null);
-    /**
-     * キャッシュフロー計算書フラグ
-     */
-    is_cf: (boolean | null);
-    /**
-     * 包括利益計算書フラグ
-     */
-    is_ci: (boolean | null);
-    /**
-     * 株主資本等変動計算書フラグ
-     */
-    is_sce: (boolean | null);
-    /**
-     * 財政状態計算書フラグ
-     */
-    is_sfp: (boolean | null);
-    /**
-     * 会計年度末
-     */
-    fy_year_end: (string | null);
-    /**
-     * 電話番号
-     */
-    tel: (string | null);
-    /**
-     * 配当修正フラグ
-     */
-    is_div_rev: (boolean | null);
-    /**
-     * 配当収益率
-     */
-    div_inc_rt: (string | null);
-    /**
-     * 業績予測修正フラグ
-     */
-    is_fcst_rev: (boolean | null);
-    /**
-     * 予測営業利益成長率
-     */
-    fcst_oi_gr_rt: (string | null);
-    /**
-     * 営業利益進捗率
-     */
-    oi_prog_rt: (number | null);
-    /**
-     * 特定事業フラグ
-     */
-    specific_business: (boolean | null);
-    /**
-     * 連結決算フラグ
-     */
-    is_consolidated: (boolean | null);
-    /**
-     * 売上高増減率
-     */
-    change_in_net_sales: (number | null);
-    /**
-     * 経常利益増減率
-     */
-    change_in_ordinary_income: (number | null);
-    /**
-     * 当期純利益増減率
-     */
-    change_in_net_income: (number | null);
-    /**
-     * 予想売上高増減率
-     */
-    change_in_fore_net_sales: (number | null);
-    /**
-     * 予想経常利益増減率
-     */
-    change_in_fore_ordinary_income: (number | null);
-    /**
-     * 予想純利益増減率
-     */
-    change_in_fore_net_income: (number | null);
-};
-
-/**
- * iXBRLのヘッダー情報のリストを表すクラス
- */
-export type IxHeadTitlesPublic = {
-    data: Array<IxHeadTitlePublic>;
-    count: number;
-};
-
 export type JpxStockInfoPublic = {
     input_date: string;
     code: string;
@@ -346,13 +200,17 @@ export type PublicCalenders = {
 };
 
 /**
- * StockWikiCreate
+ * 最新の報告日を表すクラス
  */
-export type StockWikiCreate = {
-    code: string;
-    name: string;
-    description: (string | null);
-    url: (string | null);
+export type PublicLatestReportingDate = {
+    /**
+     * 最新の報告日
+     */
+    reporting_date: string;
+    /**
+     * 件数
+     */
+    count: number;
 };
 
 /**
@@ -452,6 +310,146 @@ export type ValidationError = {
     type: string;
 };
 
+export type FinancialSummaryGetOperatingResultsData = {
+    /**
+     * 銘柄コード
+     */
+    code?: (string | null);
+    /**
+     * head_item_key
+     */
+    headItemKey?: (string | null);
+    /**
+     * オフセット
+     */
+    offset?: number;
+    /**
+     * レポートタイプ
+     */
+    reportTypes?: (Array<(string)> | null);
+};
+
+export type FinancialSummaryGetOperatingResultsResponse = (FinResultStruct);
+
+export type FinancialSummaryGetOtherOperatingResultsData = {
+    /**
+     * 銘柄コード
+     */
+    code?: (string | null);
+    /**
+     * head_item_key
+     */
+    headItemKey?: (string | null);
+    /**
+     * オフセット
+     */
+    offset?: number;
+    /**
+     * レポートタイプ
+     */
+    reportTypes?: (Array<(string)> | null);
+};
+
+export type FinancialSummaryGetOtherOperatingResultsResponse = (FinResultStruct);
+
+export type FinancialSummaryGetForecastsData = {
+    /**
+     * 銘柄コード
+     */
+    code?: (string | null);
+    /**
+     * head_item_key
+     */
+    headItemKey?: (string | null);
+    /**
+     * オフセット
+     */
+    offset?: number;
+    /**
+     * レポートタイプ
+     */
+    reportTypes?: (Array<(string)> | null);
+};
+
+export type FinancialSummaryGetForecastsResponse = (FinForecastStruct);
+
+export type FinancialSummaryGetFinancialPositionData = {
+    /**
+     * 銘柄コード
+     */
+    code?: (string | null);
+    /**
+     * head_item_key
+     */
+    headItemKey?: (string | null);
+    /**
+     * オフセット
+     */
+    offset?: number;
+    /**
+     * レポートタイプ
+     */
+    reportTypes?: (Array<(string)> | null);
+};
+
+export type FinancialSummaryGetFinancialPositionResponse = (FinResultOnlyStruct);
+
+export type FinancialSummaryGetCashFlowsData = {
+    code: string;
+    /**
+     * オフセット
+     */
+    offset?: number;
+    /**
+     * 年度
+     */
+    year?: (string | null);
+};
+
+export type FinancialSummaryGetCashFlowsResponse = (FinResultOnlyStruct);
+
+export type FinancialSummaryGetDividendsData = {
+    code: string;
+};
+
+export type FinancialSummaryGetDividendsResponse = (FinResponseBase);
+
+export type FinancialSummaryGetForecastProgressRateData = {
+    headItemKey: string;
+    operatingResultLate?: (number | null);
+};
+
+export type FinancialSummaryGetForecastProgressRateResponse = ((ForecastProgressRateResponse | null));
+
+export type InformationGetDocumentCountData = {
+    dateStr?: (string | null);
+    reportTypes?: (Array<(string)> | null);
+};
+
+export type InformationGetDocumentCountResponse = (number);
+
+export type InformationGetLatestDocumentTitleResponse = (string);
+
+export type InformationReadIxHeadTitleItemData = {
+    headItemKey: string;
+};
+
+export type InformationReadIxHeadTitleItemResponse = (DocumentListPublic);
+
+export type InformationGetDocumentListData = {
+    dateStr?: (string | null);
+    industry17Code?: (number | null);
+    reportTypes?: (Array<(string)> | null);
+};
+
+export type InformationGetDocumentListResponse = (DocumentListPublics);
+
+export type InformationReadIxHeadTitleItemsUrlListResponse = (UrlSchemaList);
+
+export type InformationGetCalendarResponse = (PublicCalenders);
+
+export type InformationGetLatestReportingDateResponse = (PublicLatestReportingDate);
+
 export type ItemsReadItemsData = {
     limit?: number;
     skip?: number;
@@ -483,24 +481,6 @@ export type ItemsDeleteItemData = {
 };
 
 export type ItemsDeleteItemResponse = (Message);
-
-export type IxGetDocumentCountData = {
-    dateStr?: (string | null);
-};
-
-export type IxGetDocumentCountResponse = (number);
-
-export type IxGetLatestDocumentTitleResponse = (string);
-
-export type IxGetDocumentListData = {
-    dateStr?: (string | null);
-    industry17Code?: (number | null);
-    limit?: (number | null);
-    page?: (number | null);
-    reportTypes?: (Array<(string)> | null);
-};
-
-export type IxGetDocumentListResponse = (DocumentListPublics);
 
 export type JpxReadJpxStockInfoItemData = {
     code: string;
@@ -565,117 +545,6 @@ export type LoginRecoverPasswordHtmlContentData = {
 
 export type LoginRecoverPasswordHtmlContentResponse = (string);
 
-export type SummaryGetOperatingResultsData = {
-    /**
-     * 銘柄コード
-     */
-    code?: (string | null);
-    /**
-     * head_item_key
-     */
-    headItemKey?: (string | null);
-    /**
-     * オフセット
-     */
-    offset?: number;
-    /**
-     * レポートタイプ
-     */
-    reportTypes?: (Array<(string)> | null);
-};
-
-export type SummaryGetOperatingResultsResponse = (FinResultStruct);
-
-export type SummaryGetOtherOperatingResultsData = {
-    /**
-     * 銘柄コード
-     */
-    code?: (string | null);
-    /**
-     * head_item_key
-     */
-    headItemKey?: (string | null);
-    /**
-     * オフセット
-     */
-    offset?: number;
-    /**
-     * レポートタイプ
-     */
-    reportTypes?: (Array<(string)> | null);
-};
-
-export type SummaryGetOtherOperatingResultsResponse = (FinResultStruct);
-
-export type SummaryGetForecastsData = {
-    /**
-     * 銘柄コード
-     */
-    code?: (string | null);
-    /**
-     * head_item_key
-     */
-    headItemKey?: (string | null);
-    /**
-     * オフセット
-     */
-    offset?: number;
-    /**
-     * レポートタイプ
-     */
-    reportTypes?: (Array<(string)> | null);
-};
-
-export type SummaryGetForecastsResponse = (FinForecastStruct);
-
-export type SummaryGetFinancialPositionData = {
-    /**
-     * 銘柄コード
-     */
-    code?: (string | null);
-    /**
-     * head_item_key
-     */
-    headItemKey?: (string | null);
-    /**
-     * オフセット
-     */
-    offset?: number;
-    /**
-     * レポートタイプ
-     */
-    reportTypes?: (Array<(string)> | null);
-};
-
-export type SummaryGetFinancialPositionResponse = (FinResultOnlyStruct);
-
-export type SummaryGetCashFlowsData = {
-    code: string;
-    /**
-     * オフセット
-     */
-    offset?: number;
-    /**
-     * 年度
-     */
-    year?: (string | null);
-};
-
-export type SummaryGetCashFlowsResponse = (FinResultOnlyStruct);
-
-export type SummaryGetDividendsData = {
-    code: string;
-};
-
-export type SummaryGetDividendsResponse = (FinResponseBase);
-
-export type SummaryGetForecastProgressRateData = {
-    headItemKey: string;
-    operatingResultLate?: (number | null);
-};
-
-export type SummaryGetForecastProgressRateResponse = ((ForecastProgressRateResponse | null));
-
 export type UsersReadUsersData = {
     limit?: number;
     skip?: number;
@@ -738,34 +607,10 @@ export type UtilsTestEmailResponse = (Message);
 
 export type UtilsHealthCheckResponse = (boolean);
 
-export type WikiGetStockWikiItemsResponse = (StockWikisPublicList);
-
-export type WikiCreateStockWikiItemData = {
-    requestBody: StockWikiCreate;
-};
-
-export type WikiCreateStockWikiItemResponse = (StockWikiCreate);
-
 export type WikiGetStockWikiItemData = {
     code: string;
 };
 
 export type WikiGetStockWikiItemResponse = (StockWikiPublic);
 
-export type XbrlIxHeadIsIxHeadTitleItemActiveData = {
-    headItemKey: string;
-};
-
-export type XbrlIxHeadIsIxHeadTitleItemActiveResponse = (boolean);
-
-export type XbrlIxHeadReadIxHeadTitleItemData = {
-    headItemKey: string;
-};
-
-export type XbrlIxHeadReadIxHeadTitleItemResponse = (IxHeadTitlePublic);
-
-export type XbrlIxHeadReadIxHeadTitleItemsResponse = (IxHeadTitlesPublic);
-
-export type XbrlIxHeadReadIxHeadTitleItemsUrlListResponse = (UrlSchemaList);
-
-export type XbrlIxHeadGetCalendarResponse = (PublicCalenders);
+export type WikiGetStockWikiItemsResponse = (StockWikisPublicList);

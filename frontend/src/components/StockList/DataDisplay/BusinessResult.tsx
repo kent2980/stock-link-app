@@ -1,4 +1,4 @@
-import { SummaryService } from "@/client";
+import { FinancialSummaryService } from "@/client";
 import { Chart, useChart } from "@chakra-ui/charts";
 import { BoxProps, Heading } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -21,7 +21,7 @@ const BusinessResult: React.FC<BusinessResultProps> = ({ headItemKey }) => {
   const { data } = useSuspenseQuery({
     queryKey: ["BusinessResult", headItemKey],
     queryFn: async () => {
-      return await SummaryService.getOperatingResults({
+      return await FinancialSummaryService.getOperatingResults({
         headItemKey: headItemKey,
       });
     },

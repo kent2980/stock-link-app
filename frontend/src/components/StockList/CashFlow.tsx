@@ -1,4 +1,4 @@
-import { SummaryService } from "@/client";
+import { FinancialSummaryService } from "@/client";
 import { Box, Text } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {
@@ -22,7 +22,7 @@ const CashFlow: React.FC<CashFlowProps> = ({ code }) => {
   const { data } = useSuspenseQuery({
     queryKey: ["CashFlow", code],
     queryFn: async () => {
-      return await SummaryService.getCashFlows({
+      return await FinancialSummaryService.getCashFlows({
         code: code,
       });
     },

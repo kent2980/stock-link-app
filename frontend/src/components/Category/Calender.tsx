@@ -1,4 +1,4 @@
-import { XbrlIxHeadService } from "@/client";
+import { InformationService } from "@/client";
 import { Box } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
@@ -7,7 +7,7 @@ const Calender = () => {
   const { data } = useSuspenseQuery({
     queryKey: ["Calendar"],
     queryFn: async () => {
-      return await XbrlIxHeadService.getCalendar();
+      return await InformationService.getCalendar();
     },
   });
 

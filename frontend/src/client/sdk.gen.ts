@@ -3,7 +3,304 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, IxGetDocumentCountData, IxGetDocumentCountResponse, IxGetLatestDocumentTitleResponse, IxGetDocumentListData, IxGetDocumentListResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, JpxReadIndustry17CountResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, SummaryGetOperatingResultsData, SummaryGetOperatingResultsResponse, SummaryGetOtherOperatingResultsData, SummaryGetOtherOperatingResultsResponse, SummaryGetForecastsData, SummaryGetForecastsResponse, SummaryGetFinancialPositionData, SummaryGetFinancialPositionResponse, SummaryGetCashFlowsData, SummaryGetCashFlowsResponse, SummaryGetDividendsData, SummaryGetDividendsResponse, SummaryGetForecastProgressRateData, SummaryGetForecastProgressRateResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemsResponse, WikiCreateStockWikiItemData, WikiCreateStockWikiItemResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, XbrlIxHeadIsIxHeadTitleItemActiveData, XbrlIxHeadIsIxHeadTitleItemActiveResponse, XbrlIxHeadReadIxHeadTitleItemData, XbrlIxHeadReadIxHeadTitleItemResponse, XbrlIxHeadReadIxHeadTitleItemsResponse, XbrlIxHeadReadIxHeadTitleItemsUrlListResponse, XbrlIxHeadGetCalendarResponse } from './types.gen';
+import type { FinancialSummaryGetOperatingResultsData, FinancialSummaryGetOperatingResultsResponse, FinancialSummaryGetOtherOperatingResultsData, FinancialSummaryGetOtherOperatingResultsResponse, FinancialSummaryGetForecastsData, FinancialSummaryGetForecastsResponse, FinancialSummaryGetFinancialPositionData, FinancialSummaryGetFinancialPositionResponse, FinancialSummaryGetCashFlowsData, FinancialSummaryGetCashFlowsResponse, FinancialSummaryGetDividendsData, FinancialSummaryGetDividendsResponse, FinancialSummaryGetForecastProgressRateData, FinancialSummaryGetForecastProgressRateResponse, InformationGetDocumentCountData, InformationGetDocumentCountResponse, InformationGetLatestDocumentTitleResponse, InformationReadIxHeadTitleItemData, InformationReadIxHeadTitleItemResponse, InformationGetDocumentListData, InformationGetDocumentListResponse, InformationReadIxHeadTitleItemsUrlListResponse, InformationGetCalendarResponse, InformationGetLatestReportingDateResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, JpxReadIndustry17CountResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, WikiGetStockWikiItemsResponse } from './types.gen';
+
+export class FinancialSummaryService {
+    /**
+     * 経営成績情報を取得
+     * @param data The data for the request.
+     * @param data.code 銘柄コード
+     * @param data.headItemKey head_item_key
+     * @param data.reportTypes レポートタイプ
+     * @param data.offset オフセット
+     * @returns FinResultStruct Successful Response
+     * @throws ApiError
+     */
+    public static getOperatingResults(data: FinancialSummaryGetOperatingResultsData = {}): CancelablePromise<FinancialSummaryGetOperatingResultsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/summary/operating_results/income/',
+            query: {
+                code: data.code,
+                head_item_key: data.headItemKey,
+                report_types: data.reportTypes,
+                offset: data.offset
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * その他の経営成績情報を取得
+     * @param data The data for the request.
+     * @param data.code 銘柄コード
+     * @param data.headItemKey head_item_key
+     * @param data.reportTypes レポートタイプ
+     * @param data.offset オフセット
+     * @returns FinResultStruct Successful Response
+     * @throws ApiError
+     */
+    public static getOtherOperatingResults(data: FinancialSummaryGetOtherOperatingResultsData = {}): CancelablePromise<FinancialSummaryGetOtherOperatingResultsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/summary/operating_results/other/{}',
+            query: {
+                code: data.code,
+                head_item_key: data.headItemKey,
+                report_types: data.reportTypes,
+                offset: data.offset
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * 予測情報を取得
+     * @param data The data for the request.
+     * @param data.code 銘柄コード
+     * @param data.headItemKey head_item_key
+     * @param data.reportTypes レポートタイプ
+     * @param data.offset オフセット
+     * @returns FinForecastStruct Successful Response
+     * @throws ApiError
+     */
+    public static getForecasts(data: FinancialSummaryGetForecastsData = {}): CancelablePromise<FinancialSummaryGetForecastsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/summary/forecasts/',
+            query: {
+                code: data.code,
+                head_item_key: data.headItemKey,
+                report_types: data.reportTypes,
+                offset: data.offset
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * 財政状態情報を取得
+     * @param data The data for the request.
+     * @param data.code 銘柄コード
+     * @param data.headItemKey head_item_key
+     * @param data.reportTypes レポートタイプ
+     * @param data.offset オフセット
+     * @returns FinResultOnlyStruct Successful Response
+     * @throws ApiError
+     */
+    public static getFinancialPosition(data: FinancialSummaryGetFinancialPositionData = {}): CancelablePromise<FinancialSummaryGetFinancialPositionResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/summary/financial_position',
+            query: {
+                code: data.code,
+                head_item_key: data.headItemKey,
+                report_types: data.reportTypes,
+                offset: data.offset
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * キャッシュフロー情報を取得
+     * @param data The data for the request.
+     * @param data.code
+     * @param data.year 年度
+     * @param data.offset オフセット
+     * @returns FinResultOnlyStruct Successful Response
+     * @throws ApiError
+     */
+    public static getCashFlows(data: FinancialSummaryGetCashFlowsData): CancelablePromise<FinancialSummaryGetCashFlowsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/summary/cash_flows/{code}',
+            path: {
+                code: data.code
+            },
+            query: {
+                year: data.year,
+                offset: data.offset
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * 配当情報を取得
+     * @param data The data for the request.
+     * @param data.code
+     * @returns FinResponseBase Successful Response
+     * @throws ApiError
+     */
+    public static getDividends(data: FinancialSummaryGetDividendsData): CancelablePromise<FinancialSummaryGetDividendsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/summary/dividends/{code}',
+            path: {
+                code: data.code
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * 予測進捗率情報を取得
+     * @param data The data for the request.
+     * @param data.headItemKey
+     * @param data.operatingResultLate
+     * @returns unknown Successful Response
+     * @throws ApiError
+     */
+    public static getForecastProgressRate(data: FinancialSummaryGetForecastProgressRateData): CancelablePromise<FinancialSummaryGetForecastProgressRateResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/summary/forecast_progress_rate/{head_item_key}',
+            path: {
+                head_item_key: data.headItemKey
+            },
+            query: {
+                operating_result_late: data.operatingResultLate
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+}
+
+export class InformationService {
+    /**
+     * 条件を指定してXBRL文書数を取得
+     * @param data The data for the request.
+     * @param data.dateStr
+     * @param data.reportTypes
+     * @returns number Successful Response
+     * @throws ApiError
+     */
+    public static getDocumentCount(data: InformationGetDocumentCountData = {}): CancelablePromise<InformationGetDocumentCountResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/stock_info/document/count',
+            query: {
+                date_str: data.dateStr,
+                report_types: data.reportTypes
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * 最も新しいXBRL文書のタイトルを取得
+     * @returns string Successful Response
+     * @throws ApiError
+     */
+    public static getLatestDocumentTitle(): CancelablePromise<InformationGetLatestDocumentTitleResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/stock_info/document/latest/title'
+        });
+    }
+    
+    /**
+     * 指定したIDのXBRL文書の詳細を取得
+     * Get item by head_item_key.
+     * @param data The data for the request.
+     * @param data.headItemKey
+     * @returns DocumentListPublic Successful Response
+     * @throws ApiError
+     */
+    public static readIxHeadTitleItem(data: InformationReadIxHeadTitleItemData): CancelablePromise<InformationReadIxHeadTitleItemResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/stock_info/ix/head/',
+            query: {
+                head_item_key: data.headItemKey
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * 条件抽出したXBRL文書のリストを取得
+     * @param data The data for the request.
+     * @param data.reportTypes
+     * @param data.dateStr
+     * @param data.industry17Code
+     * @returns DocumentListPublics Successful Response
+     * @throws ApiError
+     */
+    public static getDocumentList(data: InformationGetDocumentListData = {}): CancelablePromise<InformationGetDocumentListResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/stock_info/document/list',
+            query: {
+                report_types: data.reportTypes,
+                date_str: data.dateStr,
+                industry_17_code: data.industry17Code
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * 企業URLのリストを取得
+     * Get items.
+     * @returns UrlSchemaList Successful Response
+     * @throws ApiError
+     */
+    public static readIxHeadTitleItemsUrlList(): CancelablePromise<InformationReadIxHeadTitleItemsUrlListResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/stock_info/url_list/'
+        });
+    }
+    
+    /**
+     * XBRLカレンダーを取得
+     * @returns PublicCalenders Successful Response
+     * @throws ApiError
+     */
+    public static getCalendar(): CancelablePromise<InformationGetCalendarResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/stock_info/calendar'
+        });
+    }
+    
+    /**
+     * 最新の報告日を取得
+     * Get latest reporting date.
+     * @returns PublicLatestReportingDate Successful Response
+     * @throws ApiError
+     */
+    public static getLatestReportingDate(): CancelablePromise<InformationGetLatestReportingDateResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/stock_info/latest_reporting_date'
+        });
+    }
+    
+}
 
 export class ItemsService {
     /**
@@ -117,72 +414,9 @@ export class ItemsService {
     
 }
 
-export class IxService {
-    /**
-     * XBRL文書数を取得
-     * @param data The data for the request.
-     * @param data.dateStr
-     * @returns number Successful Response
-     * @throws ApiError
-     */
-    public static getDocumentCount(data: IxGetDocumentCountData = {}): CancelablePromise<IxGetDocumentCountResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v1/ix/stock_info/document/count',
-            query: {
-                date_str: data.dateStr
-            },
-            errors: {
-                422: 'Validation Error'
-            }
-        });
-    }
-    
-    /**
-     * 最新XBRL文書のタイトルを取得
-     * @returns string Successful Response
-     * @throws ApiError
-     */
-    public static getLatestDocumentTitle(): CancelablePromise<IxGetLatestDocumentTitleResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v1/ix/stock_info/document/latest/title'
-        });
-    }
-    
-    /**
-     * XBRL文書のリストを取得
-     * @param data The data for the request.
-     * @param data.reportTypes
-     * @param data.dateStr
-     * @param data.industry17Code
-     * @param data.limit
-     * @param data.page
-     * @returns DocumentListPublics Successful Response
-     * @throws ApiError
-     */
-    public static getDocumentList(data: IxGetDocumentListData = {}): CancelablePromise<IxGetDocumentListResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v1/ix/stock_info/document/list',
-            query: {
-                report_types: data.reportTypes,
-                date_str: data.dateStr,
-                industry_17_code: data.industry17Code,
-                limit: data.limit,
-                page: data.page
-            },
-            errors: {
-                422: 'Validation Error'
-            }
-        });
-    }
-    
-}
-
 export class JpxService {
     /**
-     * Read Jpx Stock Info Item
+     * コードを指定してマーケット情報を取得
      * Get item by code.
      * @param data The data for the request.
      * @param data.code
@@ -203,7 +437,7 @@ export class JpxService {
     }
     
     /**
-     * Read Jpx Stock Info Items
+     * 全銘柄のマーケット情報を取得
      * Get all items.
      * @returns JpxStockInfosPublicList Successful Response
      * @throws ApiError
@@ -216,7 +450,7 @@ export class JpxService {
     }
     
     /**
-     * Read Jpx Stock Info Items Tcs
+     * 業種コードを指定してマーケット情報を取得
      * Get all items.
      * @param data The data for the request.
      * @param data.industry17Code
@@ -243,7 +477,7 @@ export class JpxService {
     }
     
     /**
-     * Read Jpx Stock Info Item Tcs
+     * 上場市場を指定してマーケット情報を取得
      * Get item by market.
      * @param data The data for the request.
      * @param data.market
@@ -264,7 +498,7 @@ export class JpxService {
     }
     
     /**
-     * Read Jpx Stock Info Industry Names
+     * [17] または [33] を入力して業種の名称とコードを取得
      * Get all industries.
      * @param data The data for the request.
      * @param data.type
@@ -285,7 +519,7 @@ export class JpxService {
     }
     
     /**
-     * Read Select Industries
+     * 17業種分類のコードを指定して33業種の名称とコードを取得
      * Get all industries.
      * @param data The data for the request.
      * @param data.industry17Code
@@ -306,7 +540,7 @@ export class JpxService {
     }
     
     /**
-     * Read Industry 17 Count
+     * 17業種の分類で上場銘柄数を取得
      * Get industry_17_list.
      * @returns industry_17_count_list Successful Response
      * @throws ApiError
@@ -409,183 +643,6 @@ export class LoginService {
             url: '/api/v1/password-recovery-html-content/{email}',
             path: {
                 email: data.email
-            },
-            errors: {
-                422: 'Validation Error'
-            }
-        });
-    }
-    
-}
-
-export class SummaryService {
-    /**
-     * 経営成績情報を取得
-     * @param data The data for the request.
-     * @param data.code 銘柄コード
-     * @param data.headItemKey head_item_key
-     * @param data.reportTypes レポートタイプ
-     * @param data.offset オフセット
-     * @returns FinResultStruct Successful Response
-     * @throws ApiError
-     */
-    public static getOperatingResults(data: SummaryGetOperatingResultsData = {}): CancelablePromise<SummaryGetOperatingResultsResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v1/ix/summary/operating_results/income/',
-            query: {
-                code: data.code,
-                head_item_key: data.headItemKey,
-                report_types: data.reportTypes,
-                offset: data.offset
-            },
-            errors: {
-                422: 'Validation Error'
-            }
-        });
-    }
-    
-    /**
-     * その他の経営成績情報を取得
-     * @param data The data for the request.
-     * @param data.code 銘柄コード
-     * @param data.headItemKey head_item_key
-     * @param data.reportTypes レポートタイプ
-     * @param data.offset オフセット
-     * @returns FinResultStruct Successful Response
-     * @throws ApiError
-     */
-    public static getOtherOperatingResults(data: SummaryGetOtherOperatingResultsData = {}): CancelablePromise<SummaryGetOtherOperatingResultsResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v1/ix/summary/operating_results/other/{}',
-            query: {
-                code: data.code,
-                head_item_key: data.headItemKey,
-                report_types: data.reportTypes,
-                offset: data.offset
-            },
-            errors: {
-                422: 'Validation Error'
-            }
-        });
-    }
-    
-    /**
-     * 予測情報を取得
-     * @param data The data for the request.
-     * @param data.code 銘柄コード
-     * @param data.headItemKey head_item_key
-     * @param data.reportTypes レポートタイプ
-     * @param data.offset オフセット
-     * @returns FinForecastStruct Successful Response
-     * @throws ApiError
-     */
-    public static getForecasts(data: SummaryGetForecastsData = {}): CancelablePromise<SummaryGetForecastsResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v1/ix/summary/forecasts/',
-            query: {
-                code: data.code,
-                head_item_key: data.headItemKey,
-                report_types: data.reportTypes,
-                offset: data.offset
-            },
-            errors: {
-                422: 'Validation Error'
-            }
-        });
-    }
-    
-    /**
-     * 財政状態情報を取得
-     * @param data The data for the request.
-     * @param data.code 銘柄コード
-     * @param data.headItemKey head_item_key
-     * @param data.reportTypes レポートタイプ
-     * @param data.offset オフセット
-     * @returns FinResultOnlyStruct Successful Response
-     * @throws ApiError
-     */
-    public static getFinancialPosition(data: SummaryGetFinancialPositionData = {}): CancelablePromise<SummaryGetFinancialPositionResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v1/ix/summary/financial_position',
-            query: {
-                code: data.code,
-                head_item_key: data.headItemKey,
-                report_types: data.reportTypes,
-                offset: data.offset
-            },
-            errors: {
-                422: 'Validation Error'
-            }
-        });
-    }
-    
-    /**
-     * キャッシュフロー情報を取得
-     * @param data The data for the request.
-     * @param data.code
-     * @param data.year 年度
-     * @param data.offset オフセット
-     * @returns FinResultOnlyStruct Successful Response
-     * @throws ApiError
-     */
-    public static getCashFlows(data: SummaryGetCashFlowsData): CancelablePromise<SummaryGetCashFlowsResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v1/ix/summary/cash_flows/{code}',
-            path: {
-                code: data.code
-            },
-            query: {
-                year: data.year,
-                offset: data.offset
-            },
-            errors: {
-                422: 'Validation Error'
-            }
-        });
-    }
-    
-    /**
-     * 配当情報を取得
-     * @param data The data for the request.
-     * @param data.code
-     * @returns FinResponseBase Successful Response
-     * @throws ApiError
-     */
-    public static getDividends(data: SummaryGetDividendsData): CancelablePromise<SummaryGetDividendsResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v1/ix/summary/dividends/{code}',
-            path: {
-                code: data.code
-            },
-            errors: {
-                422: 'Validation Error'
-            }
-        });
-    }
-    
-    /**
-     * 予測進捗率情報を取得
-     * @param data The data for the request.
-     * @param data.headItemKey
-     * @param data.operatingResultLate
-     * @returns unknown Successful Response
-     * @throws ApiError
-     */
-    public static getForecastProgressRate(data: SummaryGetForecastProgressRateData): CancelablePromise<SummaryGetForecastProgressRateResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v1/ix/summary/forecast_progress_rate/{head_item_key}',
-            path: {
-                head_item_key: data.headItemKey
-            },
-            query: {
-                operating_result_late: data.operatingResultLate
             },
             errors: {
                 422: 'Validation Error'
@@ -831,40 +888,7 @@ export class UtilsService {
 
 export class WikiService {
     /**
-     * Get Stock Wiki Items
-     * Get all items.
-     * @returns StockWikisPublicList Successful Response
-     * @throws ApiError
-     */
-    public static getStockWikiItems(): CancelablePromise<WikiGetStockWikiItemsResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v1/wiki/'
-        });
-    }
-    
-    /**
-     * Create Stock Wiki Item
-     * Create new item.
-     * @param data The data for the request.
-     * @param data.requestBody
-     * @returns StockWikiCreate Successful Response
-     * @throws ApiError
-     */
-    public static createStockWikiItem(data: WikiCreateStockWikiItemData): CancelablePromise<WikiCreateStockWikiItemResponse> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/v1/wiki/',
-            body: data.requestBody,
-            mediaType: 'application/json',
-            errors: {
-                422: 'Validation Error'
-            }
-        });
-    }
-    
-    /**
-     * Get Stock Wiki Item
+     * 銘柄コードを指定してWiki概要を取得
      * Get item.
      * @param data The data for the request.
      * @param data.code
@@ -884,86 +908,16 @@ export class WikiService {
         });
     }
     
-}
-
-export class XbrlIxHeadService {
     /**
-     * Is Ix Head Title Item Active
-     * Check if item is active.
-     * @param data The data for the request.
-     * @param data.headItemKey
-     * @returns boolean Successful Response
+     * 全銘柄のWiki概要を取得
+     * Get all items.
+     * @returns StockWikisPublicList Successful Response
      * @throws ApiError
      */
-    public static isIxHeadTitleItemActive(data: XbrlIxHeadIsIxHeadTitleItemActiveData): CancelablePromise<XbrlIxHeadIsIxHeadTitleItemActiveResponse> {
+    public static getStockWikiItems(): CancelablePromise<WikiGetStockWikiItemsResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/xbrl/ix/head/is_active/',
-            query: {
-                head_item_key: data.headItemKey
-            },
-            errors: {
-                422: 'Validation Error'
-            }
-        });
-    }
-    
-    /**
-     * Read Ix Head Title Item
-     * Get item by head_item_key.
-     * @param data The data for the request.
-     * @param data.headItemKey
-     * @returns IxHeadTitlePublic Successful Response
-     * @throws ApiError
-     */
-    public static readIxHeadTitleItem(data: XbrlIxHeadReadIxHeadTitleItemData): CancelablePromise<XbrlIxHeadReadIxHeadTitleItemResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v1/xbrl/ix/head/',
-            query: {
-                head_item_key: data.headItemKey
-            },
-            errors: {
-                422: 'Validation Error'
-            }
-        });
-    }
-    
-    /**
-     * XBRL文書のリストを取得
-     * Get items.
-     * @returns IxHeadTitlesPublic Successful Response
-     * @throws ApiError
-     */
-    public static readIxHeadTitleItems(): CancelablePromise<XbrlIxHeadReadIxHeadTitleItemsResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v1/xbrl/ix/head/list/'
-        });
-    }
-    
-    /**
-     * Read Ix Head Title Items Url List
-     * Get items.
-     * @returns UrlSchemaList Successful Response
-     * @throws ApiError
-     */
-    public static readIxHeadTitleItemsUrlList(): CancelablePromise<XbrlIxHeadReadIxHeadTitleItemsUrlListResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v1/xbrl/url_list/'
-        });
-    }
-    
-    /**
-     * XBRLカレンダーを取得
-     * @returns PublicCalenders Successful Response
-     * @throws ApiError
-     */
-    public static getCalendar(): CancelablePromise<XbrlIxHeadGetCalendarResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v1/xbrl/calendar'
+            url: '/api/v1/wiki/'
         });
     }
     

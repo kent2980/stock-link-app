@@ -1,4 +1,4 @@
-import { IxService } from "@/client";
+import { InformationService } from "@/client";
 import { Box, BoxProps, List } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
@@ -18,7 +18,7 @@ export const StockList: React.FC<StockListProps> = ({
   const { data } = useSuspenseQuery({
     queryKey: ["store", dateStr, industry_17_code],
     queryFn: async () => {
-      return await IxService.getDocumentList({
+      return await InformationService.getDocumentList({
         reportTypes: ["edjp", "edif", "edus"],
         dateStr: dateStr,
         industry17Code: industry_17_code,
