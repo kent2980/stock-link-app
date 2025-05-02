@@ -6,14 +6,14 @@ import StockList from "./StockList";
 
 const LatestStockList: React.FC = () => {
   const { data: dateStr } = useSuspenseQuery({
-    queryKey: ["dateStr"],
+    queryKey: ["LatestDate"],
     queryFn: () => {
       return InformationService.getLatestReportingDate();
     },
   });
 
   const { data } = useSuspenseQuery({
-    queryKey: ["stockList", dateStr],
+    queryKey: ["LatestStockList", dateStr],
     queryFn: () => {
       return InformationService.getDocumentList({
         reportTypes: ["edjp", "edif", "edus"],

@@ -10,7 +10,7 @@ interface DateStockListProps {
 
 const DateStockList: React.FC<DateStockListProps> = ({ dateStr }) => {
   const { data } = useSuspenseQuery({
-    queryKey: ["stockList", dateStr],
+    queryKey: ["DateStockList", dateStr],
     queryFn: () => {
       return InformationService.getDocumentList({
         reportTypes: ["edjp", "edif", "edus"],

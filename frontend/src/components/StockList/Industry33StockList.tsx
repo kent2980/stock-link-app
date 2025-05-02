@@ -12,7 +12,7 @@ const Industry33StockList: React.FC<Industry33StockListProps> = ({
   industry_33_code,
 }) => {
   const { data: IndustryName } = useSuspenseQuery({
-    queryKey: ["industryName", industry_33_code],
+    queryKey: ["industry33Name", industry_33_code],
     queryFn: () => {
       return JpxService.readIndustryName({
         type: 33,
@@ -22,7 +22,7 @@ const Industry33StockList: React.FC<Industry33StockListProps> = ({
   });
 
   const { data } = useSuspenseQuery({
-    queryKey: ["stockList", industry_33_code],
+    queryKey: ["Industry33StockList", industry_33_code],
     queryFn: () => {
       return InformationService.getDocumentList({
         reportTypes: ["edjp", "edif", "edus"],
