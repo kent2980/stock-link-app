@@ -3,19 +3,25 @@ from datetime import date
 from typing import List, Optional
 
 from fastapi import APIRouter, HTTPException, Query
-from sqlmodel import select
+from sqlmodel import func, select
 
 from app.api.deps import SessionDep
 from app.models import IxHeadTitle, JpxStockInfo
 
+from . import crud
 from . import schema as sc
 
 router = APIRouter()
 
 
-@router.get("/document/count", summary="XBRL文書数を取得", response_model=int)
+@router.get(
+    "/document/count", summary="条件を指定してXBRL文書数を取得", response_model=int
+)
 def get_document_count(
-    *, session: SessionDep, date_str: Optional[str] = Query(None)
+    *,
+    session: SessionDep,
+    date_str: Optional[str] = Query(None),
+    report_types: Optional[List[str]] = Query(None),
 ) -> int:
 
     if date_str and not re.match(r"^\d{4}-\d{2}-\d{2}$", date_str):
@@ -29,6 +35,11 @@ def get_document_count(
     statement = select(IxHeadTitle)
     if convert_date:
         statement = statement.where(IxHeadTitle.reporting_date == convert_date)
+    if report_types:
+        statement = statement.where(
+            IxHeadTitle.report_type.in_(report_types),
+            IxHeadTitle.current_period != None,
+        )
     results = session.exec(statement)
     items = results.all()
     count = len(items)
@@ -37,7 +48,9 @@ def get_document_count(
 
 
 @router.get(
-    "/document/latest/title", summary="最新XBRL文書のタイトルを取得", response_model=str
+    "/document/latest/title",
+    summary="最も新しいXBRL文書のタイトルを取得",
+    response_model=str,
 )
 def get_latest_document_title(*, session: SessionDep) -> str:
 
@@ -50,8 +63,36 @@ def get_latest_document_title(*, session: SessionDep) -> str:
 
 
 @router.get(
+    "/ix/head/",
+    response_model=sc.DocumentListPublic,
+    summary="指定したIDのXBRL文書の詳細を取得",
+)
+def read_ix_head_title_item(
+    *, session: SessionDep, head_item_key: str = Query(...)
+) -> IxHeadTitle:
+    """
+    Get item by head_item_key.
+    """
+    item = crud.read_ix_head_title_item(session=session, head_item_key=head_item_key)
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return sc.DocumentListPublic(
+        id=item.id,
+        head_item_key=item.item_key,
+        insert_date=item.insert_date,
+        securities_code=item.securities_code,
+        company_name=item.company_name,
+        document_name=item.document_name,
+        report_type=item.report_type,
+        url=item.url,
+        current_period=item.current_period,
+        report_date=item.reporting_date,
+    )
+
+
+@router.get(
     "/document/list",
-    summary="XBRL文書のリストを取得",
+    summary="条件抽出したXBRL文書のリストを取得",
     response_model=sc.DocumentListPublics,
 )
 def get_document_list(
@@ -60,8 +101,6 @@ def get_document_list(
     report_types: Optional[List[str]] = Query(None),
     date_str: Optional[str] = Query(None),
     industry_17_code: Optional[int] = Query(None),
-    limit: Optional[int] = Query(None),
-    page: Optional[int] = Query(1),
 ) -> sc.DocumentListPublics:
 
     if date_str and not re.match(r"^\d{4}-\d{2}-\d{2}$", date_str):
@@ -120,12 +159,6 @@ def get_document_list(
 
     count = len(items)
 
-    if limit and page:
-        items = items[(page - 1) * limit : page * limit]
-
-    if limit:
-        items = items[:limit]
-
     schemas = []
     report_type = {
         "edjp": "決算短信(日本基準)",
@@ -174,4 +207,94 @@ def get_document_list(
     return sc.DocumentListPublics(
         count=count,
         data=schemas,
+    )
+
+
+@router.get(
+    "/url_list/", response_model=sc.UrlSchemaList, summary="企業URLのリストを取得"
+)
+def read_ix_head_title_items_url_list(
+    *,
+    session: SessionDep,
+) -> sc.UrlSchemaList:
+    """
+    Get items.
+    """
+    statement = (
+        select(IxHeadTitle.securities_code, IxHeadTitle.url)
+        .where(IxHeadTitle.url is not None, IxHeadTitle.securities_code is not None)
+        .order_by(IxHeadTitle.securities_code.asc())
+        .distinct(IxHeadTitle.securities_code)
+    )
+    results = session.exec(statement)
+    items = results.all()
+
+    if not items:
+        raise HTTPException(status_code=404, detail="Items not found")
+
+    url_list = []
+    for item in items:
+        if item.securities_code and item.url:
+            url_list.append(
+                sc.UrlSchema(securities_code=item.securities_code, url=item.url)
+            )
+    return sc.UrlSchemaList(data=url_list, count=len(url_list))
+
+
+@router.get(
+    "/calendar", summary="XBRLカレンダーを取得", response_model=sc.PublicCalenders
+)
+def get_calendar(*, session: SessionDep) -> sc.PublicCalenders:
+
+    statement = (
+        select(
+            IxHeadTitle.reporting_date,
+            func.count(IxHeadTitle.reporting_date).label("count"),
+        )
+        .where(IxHeadTitle.securities_code != None)
+        .group_by(IxHeadTitle.reporting_date)
+        .order_by(IxHeadTitle.reporting_date.desc())
+    )
+    results = session.exec(statement)
+    items = results.all()
+
+    return sc.PublicCalenders(
+        count=len(items),
+        data=[
+            sc.PublicCalender(
+                reporting_date=item[0],
+                count=item[1],
+            )
+            for item in items
+        ],
+    )
+
+
+@router.get(
+    "/latest_reporting_date",
+    response_model=sc.PublicLatestReportingDate,
+    summary="最新の報告日を取得",
+)
+def get_latest_reporting_date(*, session: SessionDep) -> sc.PublicLatestReportingDate:
+    """
+    Get latest reporting date.
+    """
+
+    statement = (
+        select(
+            IxHeadTitle.reporting_date,
+            func.count(IxHeadTitle.reporting_date).label("count"),
+        )
+        .order_by(IxHeadTitle.reporting_date.desc())
+        .group_by(IxHeadTitle.reporting_date)
+    )
+    results = session.exec(statement)
+    item = results.first()
+
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+    return sc.PublicLatestReportingDate(
+        reporting_date=item[0],
+        count=item[1],
     )

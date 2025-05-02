@@ -9,7 +9,12 @@ from . import schema as sc
 router = APIRouter()
 
 
-@router.post("/", response_model=sc.StockWikiCreate, include_in_schema=True)
+@router.post(
+    "/",
+    response_model=sc.StockWikiCreate,
+    include_in_schema=False,
+    summary="Wiki概要を挿入する",
+)
 def create_stock_wiki_item(
     *, item_in: sc.StockWikiCreate, session: SessionDep
 ) -> sc.StockWikiCreate:
@@ -25,7 +30,11 @@ def create_stock_wiki_item(
         raise HTTPException(status_code=400, detail="Stock already exists") from e
 
 
-@router.get("/{code}", response_model=sc.StockWikiPublic)
+@router.get(
+    "/{code}",
+    response_model=sc.StockWikiPublic,
+    summary="銘柄コードを指定してWiki概要を取得",
+)
 def get_stock_wiki_item(*, code: str, session: SessionDep) -> sc.StockWikiPublic:
     """
     Get item.
@@ -43,7 +52,9 @@ def get_stock_wiki_item(*, code: str, session: SessionDep) -> sc.StockWikiPublic
         )
 
 
-@router.get("/", response_model=sc.StockWikisPublicList)
+@router.get(
+    "/", response_model=sc.StockWikisPublicList, summary="全銘柄のWiki概要を取得"
+)
 def get_stock_wiki_items(*, session: SessionDep) -> sc.StockWikisPublicList:
     """
     Get all items.

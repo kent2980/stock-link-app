@@ -40,7 +40,11 @@ def create_jpx_stock_info_items_exists(
     return items
 
 
-@router.get("/code/{code}", response_model=sc.JpxStockInfoPublic)
+@router.get(
+    "/code/{code}",
+    response_model=sc.JpxStockInfoPublic,
+    summary="コードを指定してマーケット情報を取得",
+)
 def read_jpx_stock_info_item(*, code: str, session: SessionDep) -> JpxStockInfo:
     """
     Get item by code.
@@ -51,7 +55,11 @@ def read_jpx_stock_info_item(*, code: str, session: SessionDep) -> JpxStockInfo:
     return item
 
 
-@router.get("/", response_model=sc.JpxStockInfosPublicList)
+@router.get(
+    "/",
+    response_model=sc.JpxStockInfosPublicList,
+    summary="全銘柄のマーケット情報を取得",
+)
 def read_jpx_stock_info_items(*, session: SessionDep) -> sc.JpxStockInfosPublicList:
     """
     Get all items.
@@ -62,7 +70,11 @@ def read_jpx_stock_info_items(*, session: SessionDep) -> sc.JpxStockInfosPublicL
     return items
 
 
-@router.get("/tcs", response_model=sc.JpxStockInfosPublicList)
+@router.get(
+    "/tcs",
+    response_model=sc.JpxStockInfosPublicList,
+    summary="業種コードを指定してマーケット情報を取得",
+)
 def read_jpx_stock_info_items_tcs(
     *,
     industry_17_code: Optional[int] = Query(None),
@@ -86,7 +98,11 @@ def read_jpx_stock_info_items_tcs(
     return items
 
 
-@router.get("/tcs/{market}", response_model=sc.JpxStockInfosPublicList)
+@router.get(
+    "/tcs/{market}",
+    response_model=sc.JpxStockInfosPublicList,
+    summary="上場市場を指定してマーケット情報を取得",
+)
 def read_jpx_stock_info_item_tcs(
     *, market: str, session: SessionDep
 ) -> sc.JpxStockInfosPublicList:
@@ -106,7 +122,11 @@ def read_jpx_stock_info_item_tcs(
     return sc.JpxStockInfosPublicList(data=items, count=len(items))
 
 
-@router.get("/industries/{type}", response_model=sc.IndustriesList)
+@router.get(
+    "/industries/{type}",
+    response_model=sc.IndustriesList,
+    summary="[17] または [33] を入力して業種の名称とコードを取得",
+)
 def read_jpx_stock_info_industry_names(
     *, type: int, session: SessionDep
 ) -> sc.IndustriesList:
@@ -122,6 +142,7 @@ def read_jpx_stock_info_industry_names(
 @router.get(
     "/industries",
     response_model=sc.IndustriesList,
+    summary="17業種分類のコードを指定して33業種の名称とコードを取得",
 )
 def read_select_industries(
     *, industry_17_code: Optional[int] = Query(None), session: SessionDep
@@ -137,7 +158,11 @@ def read_select_industries(
     return items
 
 
-@router.get("/industry_17_list/", response_model=sc.industry_17_count_list)
+@router.get(
+    "/industry_17_list/",
+    response_model=sc.industry_17_count_list,
+    summary="17業種の分類で上場銘柄数を取得",
+)
 def read_industry_17_count(
     *,
     session: SessionDep,

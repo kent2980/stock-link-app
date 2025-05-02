@@ -101,27 +101,3 @@ class IxReportTypeCountList(SQLModel):
 
     data: list[IxReportTypeCount]
     count: int
-
-
-class UrlSchema(SQLModel):
-    """URLを表すクラス"""
-
-    url: str = Field(description="URL")
-    securities_code: str = Field(description="証券コード")
-
-
-class UrlSchemaList(SQLModel):
-    """URLのリストを表すクラス"""
-
-    data: list[UrlSchema]
-    count: int
-
-
-class PublicCalender(SQLModel):
-    reporting_date: datetime.date
-    count: int
-
-
-class PublicCalenders(SQLModel):
-    count: int
-    data: list[PublicCalender]
