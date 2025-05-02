@@ -9,6 +9,7 @@ import {
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { GrCaretNext, GrCaretPrevious } from "react-icons/gr";
+import { useSwipeable } from "react-swipeable";
 
 export const Route = createFileRoute("/_layout/index/date/$dateStr")({
   component: Index,
@@ -25,8 +26,40 @@ function Index() {
     CurrentCategory: null,
   }));
 
+  // スワイプ操作のための関数を定義
+  const navigate = useNavigate({
+    from: "/_layout/index/date/$dateStr",
+  });
+
+  const handleClick = (dateStr: string) => {
+    navigate({
+      to: "/index/date/$dateStr",
+      params: {
+        dateStr: dateStr,
+      },
+    });
+  };
+
+  const prevDate = () => {
+    const date = new Date(dateStr);
+    date.setDate(date.getDate() - 1);
+    return date.toISOString().split("T")[0];
+  };
+
+  const nextDate = () => {
+    const date = new Date(dateStr);
+    date.setDate(date.getDate() + 1);
+    return date.toISOString().split("T")[0];
+  };
+
+  // スワイプ操作のハンドラを定義
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => handleClick(nextDate()), // 左スワイプで次の日
+    onSwipedRight: () => handleClick(prevDate()), // 右スワイプで前日
+  });
+
   return (
-    <Box overflow="hidden">
+    <Box overflow="hidden" {...swipeHandlers}>
       {/* 次の日と前日に移動するリンクを配置 */}
       <PageLinkArea dateStr={dateStr} />
       <Box display={{ base: "block", md: "none" }}>
