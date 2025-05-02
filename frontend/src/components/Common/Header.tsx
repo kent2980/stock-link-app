@@ -159,7 +159,7 @@ const Header: React.FC<HeaderProps> = ({ headerHeight = 12, ...props }) => {
               h="30px"
             >
               <Flex align="center" justify="center" h="100%">
-                <Text color={textColor} fontSize="16px" fontWeight="bold">
+                <Text color={textColor} fontSize="14px" fontWeight="bold">
                   {currentItem()}
                 </Text>
               </Flex>
