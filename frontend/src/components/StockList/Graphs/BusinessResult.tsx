@@ -1,6 +1,6 @@
 import { FinancialSummaryService } from "@/client";
 import { Chart, useChart } from "@chakra-ui/charts";
-import { BoxProps, Heading } from "@chakra-ui/react";
+import { BoxProps } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import React from "react";
 import {
@@ -44,9 +44,6 @@ const BusinessResult: React.FC<BusinessResultProps> = ({ headItemKey }) => {
 
   return (
     <>
-      <Heading as="h2" fontSize="15px" fontWeight="bold">
-        経営成績
-      </Heading>
       <Chart.Root chart={chart} h="150px" fontSize={"10px"}>
         <BarChart
           barSize={100}

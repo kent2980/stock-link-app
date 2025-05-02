@@ -3,7 +3,6 @@ import {
   Badge,
   Box,
   FormatNumber,
-  Heading,
   Stat,
   Text,
   VStack,
@@ -27,9 +26,6 @@ const ForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
   });
   return (
     <Box>
-      <Heading as="h3" fontSize="md" fontWeight="bold" mb={4}>
-        業績予想
-      </Heading>
       <Wrap>
         {data?.forecast?.data?.map((item, index) => (
           <ForecastItem
