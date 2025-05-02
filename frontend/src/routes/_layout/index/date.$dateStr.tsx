@@ -1,6 +1,13 @@
 import StockList from "@/components/StockList/StockList";
 import { HeaderStore } from "@/Store/Store";
-import { Box, HStack, IconButton, Text } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  IconButton,
+  Spinner,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import {
   createFileRoute,
   useNavigate,
@@ -54,17 +61,24 @@ function Index() {
 
   // スワイプ操作のハンドラを定義
   const swipeHandlers = useSwipeable({
-    onSwipedLeft: () => handleClick(nextDate()), // 左スワイプで次の日
-    onSwipedRight: () => handleClick(prevDate()), // 右スワイプで前日
+    onSwipedLeft: () => handleClick(prevDate()), // 左スワイプで次の日
+    onSwipedRight: () => handleClick(nextDate()), // 右スワイプで前日
   });
 
   return (
     <Box overflow="hidden" {...swipeHandlers}>
       {/* 次の日と前日に移動するリンクを配置 */}
       <PageLinkArea dateStr={dateStr} />
-      <Box display={{ base: "block", md: "none" }}>
+      <Box minH="100vh">
         <ErrorBoundary fallback={<div>表示するデータがありません。</div>}>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense
+            fallback={
+              <VStack colorPalette="teal">
+                <Spinner color="colorPalette.600" />
+                <Text color="colorPalette.600">Loading...</Text>
+              </VStack>
+            }
+          >
             <StockList dateStr={dateStr} />
           </Suspense>
         </ErrorBoundary>
