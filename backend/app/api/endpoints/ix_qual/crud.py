@@ -1,9 +1,7 @@
-from typing import List
-
 from sqlalchemy.exc import IntegrityError
-from sqlmodel import Session, select
+from sqlmodel import Session
 
-from app.models import IxHeadTitle, IxQualitative
+from app.models import IxQualitative
 
 from . import schema as sc
 

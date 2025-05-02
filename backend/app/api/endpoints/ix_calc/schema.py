@@ -1,8 +1,9 @@
 from decimal import Decimal
 from typing import List, Optional
 
-from app.models import Field, SQLModel
 from sqlalchemy import DECIMAL, Column
+
+from app.models import Field, SQLModel
 
 
 class IxCalculationLocCreate(SQLModel):

@@ -1,8 +1,6 @@
-from typing import Any, Optional
+from typing import Any
 
-from fastapi import APIRouter, HTTPException, Query
-from sqlalchemy.exc import IntegrityError
-from sqlmodel import select
+from fastapi import APIRouter
 
 from app.api.deps import SessionDep
 from app.models import IxCalculationArc, IxCalculationLoc

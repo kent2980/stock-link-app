@@ -1,14 +1,9 @@
 from typing import Any
 
-from fastapi import APIRouter, HTTPException, Query
-from sqlalchemy import case, exists, literal
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import aliased
-from sqlalchemy.sql import func
-from sqlmodel import and_, select
+from fastapi import APIRouter
 
 from app.api.deps import SessionDep
-from app.models import IxDefinitionArc, IxDefinitionLoc
+from app.models import IxDefinitionArc
 
 from . import crud
 from . import schema as sc

@@ -1,7 +1,4 @@
-from typing import Any
-
 from fastapi import APIRouter, HTTPException, Query
-from sqlmodel import Session, select
 
 from app.api.deps import SessionDep
 from app.models import (

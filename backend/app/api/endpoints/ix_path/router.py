@@ -1,7 +1,4 @@
-from typing import Any, Optional
-
-from fastapi import APIRouter, HTTPException, Query
-from sqlmodel import select
+from fastapi import APIRouter
 
 from app.api.deps import SessionDep
 from app.models import IxFilePath

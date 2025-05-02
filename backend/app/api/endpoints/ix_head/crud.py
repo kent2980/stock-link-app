@@ -1,7 +1,7 @@
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session, select
 
-from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric
+from app.models import IxHeadTitle
 
 from . import schema as sc
 

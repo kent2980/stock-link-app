@@ -1,14 +1,6 @@
-import re
-from collections import namedtuple
-from typing import List
-
-from fastapi import APIRouter, HTTPException, Query
-from sqlalchemy.exc import IntegrityError
-from sqlmodel import select
-from treelib import Node, Tree
+from fastapi import APIRouter
 
 from app.api.deps import SessionDep
-from app.models import IxHeadTitle, IxQualitative
 
 from . import crud
 from . import schema as sc

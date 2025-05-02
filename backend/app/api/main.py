@@ -20,12 +20,14 @@ from app.api.endpoints.stock_wiki import router as stock_wiki_router
 
 api_router = APIRouter()
 
-api_router.include_router(ix_info_router.router, prefix="/ix/stock_info", tags=["ix"])
 api_router.include_router(
-    jpx_info_router.router, prefix="/jpx/stock_info", tags=["jpx"]
+    ix_info_router.router, prefix="/ix/stock_info", tags=["Information"]
 )
 api_router.include_router(
-    ix_summary_router.router, prefix="/ix/summary", tags=["summary"]
+    jpx_info_router.router, prefix="/jpx/stock_info", tags=["Jpx"]
+)
+api_router.include_router(
+    ix_summary_router.router, prefix="/ix/summary", tags=["FinancialSummary"]
 )
 api_router.include_router(stock_wiki_router.router, prefix="/wiki", tags=["wiki"])
 api_router.include_router(
@@ -37,7 +39,7 @@ api_router.include_router(
 api_router.include_router(
     ix_head_router.router,
     prefix="/xbrl",
-    tags=["xbrl_ix_head"],
+    tags=["Information"],
     include_in_schema=True,
 )
 api_router.include_router(
@@ -98,3 +100,38 @@ api_router.include_router(
 api_router.include_router(
     items.router, prefix="/items", tags=["items"], include_in_schema=True
 )
+
+tags_metadata = [
+    {
+        "name": "Information",
+        "description": "インフォメーションデータに関連する操作。",
+    },
+    {
+        "name": "Jpx",
+        "description": "マーケット情報に関連する操作。",
+    },
+    {
+        "name": "FinancialSummary",
+        "description": "財務要約データに関連する操作。",
+    },
+    {
+        "name": "wiki",
+        "description": "Wikipediaから銘柄の情報を取得する操作。",
+    },
+    {
+        "name": "login",
+        "description": "ユーザーログイン操作のエンドポイント。",
+    },
+    {
+        "name": "users",
+        "description": "ユーザー管理のエンドポイント。",
+    },
+    {
+        "name": "utils",
+        "description": "さまざまな操作のためのユーティリティエンドポイント。",
+    },
+    {
+        "name": "items",
+        "description": "アイテム管理のエンドポイント。",
+    },
+]

@@ -1,8 +1,5 @@
-from typing import Any, List
-
 from fastapi import APIRouter, HTTPException
 from sqlalchemy.exc import IntegrityError
-from sqlmodel import select
 
 from app.api.deps import SessionDep
 from app.models import IxLabelArc, IxLabelLoc, IxLabelValue

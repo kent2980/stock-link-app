@@ -1,7 +1,6 @@
-from typing import Any, List, Optional
+from typing import List, Optional
 
-from fastapi import APIRouter, HTTPException, Path, Query
-from sqlmodel import select
+from fastapi import APIRouter, HTTPException, Query
 
 from app.api.deps import SessionDep
 from app.models import JpxStockInfo

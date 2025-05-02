@@ -1,8 +1,8 @@
-from typing import Any, List, Optional
+from typing import List, Optional
 
 from fastapi import Query
 from sqlalchemy.orm import aliased
-from sqlmodel import Session, and_, case, exists, func, literal, or_, select
+from sqlmodel import Session, and_, case, exists, func, literal, select
 
 from app.models import (
     IxDefinitionArc,

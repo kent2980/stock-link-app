@@ -1,14 +1,10 @@
-import datetime
-import re
-from decimal import Decimal
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from fastapi import APIRouter, HTTPException, Query
-from sqlalchemy.exc import IntegrityError
-from sqlmodel import func, select, update
+from sqlmodel import func, select
 
 from app.api.deps import SessionDep
-from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric, JpxStockInfo
+from app.models import IxHeadTitle
 
 from . import crud
 from . import schema as sc

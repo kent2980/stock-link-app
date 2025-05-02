@@ -1,10 +1,9 @@
-from datetime import datetime
 from decimal import Decimal
 from typing import List, Optional
 
 from sqlalchemy import DECIMAL, Column
 
-from app.models import Field, IxDefinitionArc, SQLModel
+from app.models import Field, SQLModel
 
 
 class IxDefinitionLocCreate(SQLModel):

@@ -5,14 +5,10 @@ Revises: d7bc55f2341a
 Create Date: 2025-02-14 21:30:56.052516
 
 """
-from alembic import op
-import sqlalchemy as sa
-import sqlmodel.sql.sqltypes
-
 
 # revision identifiers, used by Alembic.
-revision = '31d72a3139dc'
-down_revision = 'd7bc55f2341a'
+revision = "31d72a3139dc"
+down_revision = "d7bc55f2341a"
 branch_labels = None
 depends_on = None
 

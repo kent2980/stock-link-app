@@ -3,11 +3,9 @@ from datetime import date
 from typing import List, Optional
 
 from fastapi import APIRouter, HTTPException, Query
-from sqlalchemy import func
 from sqlmodel import select
 
 from app.api.deps import SessionDep
-from app.api.endpoints.jpx_info.schema import industry_17_count
 from app.models import IxHeadTitle, JpxStockInfo
 
 from . import schema as sc
