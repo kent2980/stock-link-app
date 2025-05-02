@@ -1,5 +1,5 @@
 import { JpxService } from "@/client";
-import { Badge, Box, Text } from "@chakra-ui/react";
+import { Badge, Center, Text, Wrap, WrapItem } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 
@@ -22,43 +22,40 @@ const Industry13 = () => {
     });
   };
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      width="100%"
-      maxWidth="1200px"
-      margin="0 auto"
-    >
+    <Wrap width="100%" maxWidth="1200px" gap={2} p={2}>
       {data.data.map((item, index) => (
-        <Box
-          key={index}
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          width="100%"
-          px="40px"
-          py="20px"
-          bg="white"
-          borderBottom="1px solid"
-          borderColor="gray.200"
-          onClick={() => handleClick(item.code)}
-        >
-          <Text fontWeight="bold" fontSize="md" color={"gray.600"}>
-            {item.name}
-          </Text>
-          <Badge
-            w="50px"
-            justifyContent="center"
+        <WrapItem>
+          <Center
+            key={index}
+            display="flex"
+            justifyContent="space-between"
             alignItems="center"
-            colorPalette="red"
+            w="46vw"
+            h="100px"
+            p={6}
+            bg="white"
+            borderBottom="1px solid"
+            borderColor="gray.200"
+            borderRadius={"lg"}
+            boxShadow="sm"
+            onClick={() => handleClick(item.code)}
+            gap={2}
           >
-            {item.count}
-          </Badge>
-        </Box>
+            <Text fontWeight="bold" fontSize="16px" color={"gray.600"}>
+              {item.name}
+            </Text>
+            <Badge
+              w="50px"
+              justifyContent="center"
+              alignItems="center"
+              colorPalette="red"
+            >
+              {item.count}
+            </Badge>
+          </Center>
+        </WrapItem>
       ))}
-    </Box>
+    </Wrap>
   );
 };
 
