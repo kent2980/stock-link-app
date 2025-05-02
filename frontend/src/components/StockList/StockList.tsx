@@ -59,7 +59,7 @@ export const StockList: React.FC<StockListProps> = ({
   HeaderStore.setState((state) => ({
     ...state,
     SelectDateStr: LatestDate,
-    IndustryName: IndustryName,
+    CurrentCategory: IndustryName,
   }));
 
   if (!data || data.count === 0) {
