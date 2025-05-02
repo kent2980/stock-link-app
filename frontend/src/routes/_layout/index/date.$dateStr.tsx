@@ -25,6 +25,28 @@ function Index() {
     CurrentCategory: null,
   }));
 
+  return (
+    <Box overflow="hidden">
+      {/* 次の日と前日に移動するリンクを配置 */}
+      <PageLinkArea dateStr={dateStr} />
+      <Box display={{ base: "block", md: "none" }}>
+        <ErrorBoundary fallback={<div>表示するデータがありません。</div>}>
+          <Suspense fallback={<div>Loading...</div>}>
+            <StockList dateStr={dateStr} />
+          </Suspense>
+        </ErrorBoundary>
+      </Box>
+      {/* 次の日と前日に移動するリンクを配置 */}
+      <PageLinkArea dateStr={dateStr} />
+    </Box>
+  );
+}
+
+interface PageLinkAreaProps {
+  dateStr: string;
+}
+
+const PageLinkArea: React.FC<PageLinkAreaProps> = ({ dateStr }) => {
   // 画面遷移のための関数を定義
   const navigate = useNavigate({
     from: "/_layout/index/date/$dateStr",
@@ -52,15 +74,9 @@ function Index() {
     const nextDateStr = date.toISOString().split("T")[0];
     return nextDateStr;
   };
+
   return (
-    <Box overflow="hidden">
-      <Box display={{ base: "block", md: "none" }}>
-        <ErrorBoundary fallback={<div>表示するデータがありません。</div>}>
-          <Suspense fallback={<div>Loading...</div>}>
-            <StockList dateStr={dateStr} />
-          </Suspense>
-        </ErrorBoundary>
-      </Box>
+    <>
       {/* 次の日と前日に移動するリンクを配置 */}
       <HStack justifyContent={"center"} p={4} bg="white" gap={20}>
         <HStack>
@@ -102,6 +118,6 @@ function Index() {
           </IconButton>
         </HStack>
       </HStack>
-    </Box>
+    </>
   );
-}
+};
