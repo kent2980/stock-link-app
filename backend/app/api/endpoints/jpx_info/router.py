@@ -177,3 +177,20 @@ def read_industry_17_count(
         raise HTTPException(status_code=404, detail="Items not found")
 
     return items
+
+
+@router.get(
+    "/industry_name", response_model=str, summary="業種コードを指定して業種名を取得"
+)
+def read_industry_name(
+    *, session: SessionDep, type: int = Query(...), code: int = Query(...)
+) -> str:
+    """
+    Get industry name by code.
+    """
+    try:
+        item = crud.read_industry_name(type=type, code=code, session=session)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    return item

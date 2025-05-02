@@ -519,6 +519,13 @@ export type JpxReadSelectIndustriesResponse = (IndustriesList);
 
 export type JpxReadIndustry17CountResponse = (industry_17_count_list);
 
+export type JpxReadIndustryNameData = {
+    code: number;
+    type: number;
+};
+
+export type JpxReadIndustryNameResponse = (string);
+
 export type LoginLoginAccessTokenData = {
     formData: Body_login_login_access_token;
 };

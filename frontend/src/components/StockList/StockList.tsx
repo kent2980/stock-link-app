@@ -1,4 +1,5 @@
-import { InformationService } from "@/client";
+import { InformationService, JpxService } from "@/client";
+import { HeaderStore } from "@/Store/Store";
 import { Box, BoxProps, List } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
@@ -15,16 +16,51 @@ export const StockList: React.FC<StockListProps> = ({
   industry_17_code = null,
   ...props
 }) => {
+  const { data: IndustryName } = useSuspenseQuery({
+    queryKey: ["industryName", industry_17_code],
+    queryFn: async () => {
+      if (industry_17_code) {
+        return await JpxService.readIndustryName({
+          type: 17,
+          code: industry_17_code,
+        });
+      } else {
+        return null;
+      }
+    },
+  });
+
+  const { data: LatestDate } = useSuspenseQuery({
+    queryKey: ["latestDate", dateStr],
+    queryFn: async () => {
+      if (dateStr && IndustryName === null) {
+        return dateStr;
+      } else if (IndustryName === null && dateStr === null) {
+        return (await InformationService.getLatestReportingDate())
+          .reporting_date;
+      } else {
+        return null;
+      }
+    },
+  });
+
   const { data } = useSuspenseQuery({
-    queryKey: ["store", dateStr, industry_17_code],
+    queryKey: ["stockList", dateStr, industry_17_code],
     queryFn: async () => {
       return await InformationService.getDocumentList({
         reportTypes: ["edjp", "edif", "edus"],
-        dateStr: dateStr,
+        dateStr: LatestDate,
         industry17Code: industry_17_code,
       });
     },
   });
+
+  // ストアを更新
+  HeaderStore.setState((state) => ({
+    ...state,
+    SelectDateStr: LatestDate,
+    IndustryName: IndustryName,
+  }));
 
   if (!data || data.count === 0) {
     return <Box>データが見つかりません。</Box>;

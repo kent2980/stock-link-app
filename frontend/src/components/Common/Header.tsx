@@ -1,5 +1,5 @@
 import useAuth from "@/hooks/useAuth";
-import { MenuListStore } from "@/Store/Store";
+import { HeaderStore, MenuListStore } from "@/Store/Store";
 import {
   Box,
   BoxProps,
@@ -59,7 +59,25 @@ const Header: React.FC<HeaderProps> = ({ headerHeight = 12, ...props }) => {
     };
   }, [lastScrollY]);
 
-  const currentDate = format(new Date(), "yyyy-MM-dd");
+  // ストアからPublicデータを取得
+  const { SelectDateStr, CurrentCategory } = useStore(
+    HeaderStore,
+    (state) => state
+  );
+
+  const currentItem = () => {
+    if (CurrentCategory) {
+      return CurrentCategory;
+    } else {
+      if (SelectDateStr) {
+        const date = new Date(SelectDateStr);
+        return format(date, "yyyy.MM.dd");
+      } else {
+        const date = new Date();
+        return format(date, "yyyy.MM.dd");
+      }
+    }
+  };
   const bgColor = "ui.main";
   const menuBgColor = "#f8f9fa";
   const textColor = "#666666";
@@ -143,7 +161,7 @@ const Header: React.FC<HeaderProps> = ({ headerHeight = 12, ...props }) => {
             >
               <Flex align="center" justify="center" h="100%">
                 <Text color={textColor} fontSize="16px" fontWeight="bold">
-                  {currentDate}
+                  {currentItem()}
                 </Text>
               </Flex>
             </Box>

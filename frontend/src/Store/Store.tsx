@@ -37,3 +37,13 @@ export const MenuListStore = new Store<MenuListState>({
     },
   ],
 });
+
+interface HeaderState {
+  SelectDateStr: string | null;
+  CurrentCategory: string | null;
+}
+
+export const HeaderStore = new Store<HeaderState>({
+  SelectDateStr: null,
+  CurrentCategory: null,
+});

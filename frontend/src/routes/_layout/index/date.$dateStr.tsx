@@ -1,4 +1,5 @@
 import StockList from "@/components/StockList/StockList";
+import { HeaderStore } from "@/Store/Store";
 import { Box } from "@chakra-ui/react";
 import { createFileRoute, useParams } from "@tanstack/react-router";
 import { Suspense } from "react";
@@ -10,6 +11,11 @@ export const Route = createFileRoute("/_layout/index/date/$dateStr")({
 
 function Index() {
   const { dateStr } = useParams({ from: "/_layout/index/date/$dateStr" });
+  HeaderStore.setState((state) => ({
+    ...state,
+    SelectDateStr: dateStr,
+    CurrentCategory: null,
+  }));
   return (
     <Box overflow="hidden">
       {/* デスクトップ */}

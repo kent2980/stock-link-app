@@ -213,3 +213,37 @@ def read_industry_17_count(
     items = result.all()
 
     return sc.industry_17_count_list(data=items)
+
+
+def read_industry_name(
+    *,
+    type: int,
+    code: int,
+    session: Session,
+) -> str:
+
+    if type not in [17, 33]:
+        raise ValueError("type must be 17 or 33")
+    if type == 17:
+        statement = (
+            select(JpxStockInfo.industry_17_name)
+            .where(
+                JpxStockInfo.industry_17_code == code,
+                JpxStockInfo.industry_17_name.is_not(None),
+            )
+            .order_by(JpxStockInfo.industry_17_code)
+        )
+    elif type == 33:
+        statement = (
+            select(JpxStockInfo.industry_33_name)
+            .where(
+                JpxStockInfo.industry_33_code == code,
+                JpxStockInfo.industry_33_name.is_not(None),
+            )
+            .order_by(JpxStockInfo.industry_33_code)
+        )
+    result = session.exec(statement)
+    item = result.first()
+    if item is None:
+        raise ValueError("item not found")
+    return item
