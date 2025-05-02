@@ -109,6 +109,7 @@ def get_document_list(
             status_code=400,
             detail="日付の形式が正しくありません。YYYY-MM-DD形式で指定してください。",
         )
+    convert_date = None
     if date_str:
         convert_date = date.fromisoformat(date_str) if date_str else None
 
