@@ -12,6 +12,7 @@ from app.models import (
     IxLabelLoc,
     IxLabelValue,
     IxNonFraction,
+    IxNonNumeric,
     ScLinkBaseRef,
 )
 
@@ -430,3 +431,27 @@ def get_ix_non_fraction_records(
     items = result.all()
 
     return items
+
+
+def is_change_value(
+    session: Session, head_item_key: str, names: List[str]
+) -> Optional[bool]:
+    """
+    #### 予想変更の有無を取得する
+    - **機能**: 予想変更の有無を取得する
+    - **param1**: session: Session  DBセッション
+    - **param2**: head_item_key: str ID
+    - **param3**: names: List[str] ラベル名
+    """
+
+    statement = select(IxNonNumeric).where(
+        IxNonNumeric.head_item_key == head_item_key,
+        IxNonNumeric.name.in_(names),
+    )
+    result = session.exec(statement)
+    item = result.first()
+
+    if not item:
+        return None
+
+    return bool(item.value)
