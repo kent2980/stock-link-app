@@ -129,76 +129,30 @@ const IsChangeForecast: React.FC<IsChangeForecastProps> = ({ HeadItemKey }) => {
     <Box fontSize={"xs"} m={2} p={1} textDecoration="underline">
       {data !== null ? (
         data ? (
-          <Dialog.Root
-            // size="cover"
-            placement="center"
-            motionPreset="slide-in-bottom"
+          <CustomDialog
+            buttonLabel="業績予想の修正：有り"
+            dialogTitle="修正前業績予想"
           >
-            <Dialog.Trigger asChild>
-              <Button variant="outline" size="sm">
-                業績予想の修正：有り
-              </Button>
-            </Dialog.Trigger>
-            <Portal>
-              <Dialog.Backdrop />
-              <Dialog.Positioner>
-                <Dialog.Content>
-                  <Dialog.Header>
-                    <Dialog.Title>修正前業績予想</Dialog.Title>
-                    <Dialog.CloseTrigger asChild>
-                      <CloseButton size="sm" />
-                    </Dialog.CloseTrigger>
-                  </Dialog.Header>
-                  <Dialog.Body>
-                    <ErrorBoundary
-                      fallback={<Box>表示するデータがありません。</Box>}
-                    >
-                      <Suspense fallback={<CustomSpinner />}>
-                        <PriorForecastTable HeadItemKey={HeadItemKey} />
-                      </Suspense>
-                    </ErrorBoundary>
-                  </Dialog.Body>
-                </Dialog.Content>
-              </Dialog.Positioner>
-            </Portal>
-          </Dialog.Root>
+            <ErrorBoundary fallback={<Box>表示するデータがありません。</Box>}>
+              <Suspense fallback={<CustomSpinner />}>
+                <PriorForecastTable HeadItemKey={HeadItemKey} />
+              </Suspense>
+            </ErrorBoundary>
+          </CustomDialog>
         ) : (
           <Text>業績予想の修正：無し</Text>
         )
       ) : (
-        <Dialog.Root
-          // size="cover"
-          placement="center"
-          motionPreset="slide-in-bottom"
+        <CustomDialog
+          buttonLabel="新しい業績予想が発表されました"
+          dialogTitle="修正前業績予想"
         >
-          <Dialog.Trigger asChild>
-            <Button variant="outline" size="sm">
-              新しい業績予想が発表されました
-            </Button>
-          </Dialog.Trigger>
-          <Portal>
-            <Dialog.Backdrop />
-            <Dialog.Positioner>
-              <Dialog.Content>
-                <Dialog.Header>
-                  <Dialog.Title>修正前業績予想</Dialog.Title>
-                  <Dialog.CloseTrigger asChild>
-                    <CloseButton size="sm" />
-                  </Dialog.CloseTrigger>
-                </Dialog.Header>
-                <Dialog.Body>
-                  <ErrorBoundary
-                    fallback={<Box>表示するデータがありません。</Box>}
-                  >
-                    <Suspense fallback={<CustomSpinner />}>
-                      <PriorForecastTable HeadItemKey={HeadItemKey} />
-                    </Suspense>
-                  </ErrorBoundary>
-                </Dialog.Body>
-              </Dialog.Content>
-            </Dialog.Positioner>
-          </Portal>
-        </Dialog.Root>
+          <ErrorBoundary fallback={<Box>表示するデータがありません。</Box>}>
+            <Suspense fallback={<CustomSpinner />}>
+              <PriorForecastTable HeadItemKey={HeadItemKey} />
+            </Suspense>
+          </ErrorBoundary>
+        </CustomDialog>
       )}
     </Box>
   );
@@ -230,5 +184,41 @@ const PriorForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
         ))}
       </Wrap>
     </Box>
+  );
+};
+
+interface CustomDialogProps {
+  buttonLabel: string;
+  dialogTitle: string;
+  children: React.ReactNode;
+}
+
+const CustomDialog: React.FC<CustomDialogProps> = ({
+  buttonLabel,
+  dialogTitle,
+  children,
+}) => {
+  return (
+    <Dialog.Root placement="top" motionPreset="slide-in-bottom">
+      <Dialog.Trigger asChild>
+        <Button variant="outline" size="sm">
+          {buttonLabel}
+        </Button>
+      </Dialog.Trigger>
+      <Portal>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          <Dialog.Content>
+            <Dialog.Header>
+              <Dialog.Title>{dialogTitle}</Dialog.Title>
+              <Dialog.CloseTrigger asChild>
+                <CloseButton size="sm" />
+              </Dialog.CloseTrigger>
+            </Dialog.Header>
+            <Dialog.Body>{children}</Dialog.Body>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
+    </Dialog.Root>
   );
 };
