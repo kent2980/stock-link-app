@@ -453,8 +453,8 @@ def is_change_value(
 
     if not item:
         return None
-
-    return bool(item.value)
+    print(item.value)
+    return item.value == "true"
 
 
 def get_base_head_item_key_offset_item(

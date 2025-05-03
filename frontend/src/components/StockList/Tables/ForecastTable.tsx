@@ -1,15 +1,22 @@
 import { FinancialSummaryService, FinValueBase } from "@/client";
+import CustomSpinner from "@/components/Spinner/CustomSpinner";
 import {
   Badge,
   Box,
+  Button,
+  CloseButton,
+  Dialog,
   FormatNumber,
+  Portal,
   Stat,
+  StatRootProps,
   Text,
   VStack,
   Wrap,
 } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { Suspense, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 interface ForecastTableProps {
   HeadItemKey: string;
@@ -43,7 +50,7 @@ const ForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
 };
 export default ForecastTable;
 
-interface ForecastItemProps {
+interface ForecastItemProps extends StatRootProps {
   label: string;
   value?: number | null | undefined;
   valueScale?: string | null | undefined;
@@ -54,9 +61,17 @@ const ForecastItem: React.FC<ForecastItemProps> = ({
   value,
   valueScale,
   changeValue,
+  ...props
 }) => {
   return (
-    <Stat.Root minW="40vw" borderWidth="1px" borderRadius="lg" p={4} bg="white">
+    <Stat.Root
+      minW="40vw"
+      borderWidth="1px"
+      borderRadius="lg"
+      p={4}
+      bg="white"
+      {...props}
+    >
       <Stat.Label>{label}</Stat.Label>
       <VStack>
         <Stat.ValueText>
@@ -108,6 +123,10 @@ interface IsChangeForecastProps {
 }
 
 const IsChangeForecast: React.FC<IsChangeForecastProps> = ({ HeadItemKey }) => {
+  // Popoverの状態管理
+  const [open, setOpen] = useState(false);
+
+  // 業績予想の修正を取得する
   const { data } = useSuspenseQuery({
     queryKey: ["isChangeForecast", HeadItemKey],
     queryFn: async () => {
@@ -120,13 +139,74 @@ const IsChangeForecast: React.FC<IsChangeForecastProps> = ({ HeadItemKey }) => {
     <Box fontSize={"xs"} m={2} p={1} textDecoration="underline">
       {data !== null ? (
         data ? (
-          <Text>業績予想の修正：有り</Text>
+          <Dialog.Root
+            // size="cover"
+            placement="center"
+            motionPreset="slide-in-bottom"
+          >
+            <Dialog.Trigger asChild>
+              <Button variant="outline" size="sm">
+                業績予想の修正：有り
+              </Button>
+            </Dialog.Trigger>
+            <Portal>
+              <Dialog.Backdrop />
+              <Dialog.Positioner>
+                <Dialog.Content>
+                  <Dialog.Header>
+                    <Dialog.Title>修正前業績予想</Dialog.Title>
+                    <Dialog.CloseTrigger asChild>
+                      <CloseButton size="sm" />
+                    </Dialog.CloseTrigger>
+                  </Dialog.Header>
+                  <Dialog.Body>
+                    <ErrorBoundary
+                      fallback={<Box>表示するデータがありません。</Box>}
+                    >
+                      <Suspense fallback={<CustomSpinner />}>
+                        <PriorForecastTable HeadItemKey={HeadItemKey} />
+                      </Suspense>
+                    </ErrorBoundary>
+                  </Dialog.Body>
+                </Dialog.Content>
+              </Dialog.Positioner>
+            </Portal>
+          </Dialog.Root>
         ) : (
           <Text>業績予想の修正：無し</Text>
         )
       ) : (
         <Text>新しい業績予想が発表されました</Text>
       )}
+    </Box>
+  );
+};
+
+const PriorForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
+  const { data } = useSuspenseQuery({
+    queryKey: ["priorForecastData", HeadItemKey],
+    queryFn: async () => {
+      return await FinancialSummaryService.getForecasts({
+        headItemKey: HeadItemKey,
+        offset: 1,
+        reportTypes: ["edjp", "edif", "edus"],
+      });
+    },
+    retry: false,
+  });
+  return (
+    <Box>
+      <Wrap>
+        {data?.forecast?.data?.map((item, index) => (
+          <ForecastItem
+            key={index}
+            label={item.label}
+            value={item.curValue?.value}
+            valueScale={item.curValue?.display_scale}
+            changeValue={item.curChange}
+          />
+        ))}
+      </Wrap>
     </Box>
   );
 };
