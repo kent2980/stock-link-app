@@ -367,7 +367,7 @@ def read_tree_items(
             ),
         )
         .where(IxLabelValue.xlink_role == "http://www.xbrl.org/2003/role/label")
-        .order_by(tree_h.c.id)
+        .order_by(tree_h.c.xlink_order)
     )
 
     if level:
