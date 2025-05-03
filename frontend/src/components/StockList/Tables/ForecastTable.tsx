@@ -1,4 +1,4 @@
-import { FinancialSummaryService } from "@/client";
+import { FinancialSummaryService, FinValueBase } from "@/client";
 import {
   Badge,
   Box,
@@ -33,7 +33,7 @@ const ForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
             label={item.label}
             value={item.curValue?.value}
             valueScale={item.curValue?.display_scale}
-            changeValue={item.curChange?.value}
+            changeValue={item.curChange}
           />
         ))}
       </Wrap>
@@ -46,7 +46,7 @@ interface ForecastItemProps {
   label: string;
   value?: number | null | undefined;
   valueScale?: string | null | undefined;
-  changeValue?: number | null | undefined;
+  changeValue?: FinValueBase | null | undefined;
 }
 const ForecastItem: React.FC<ForecastItemProps> = ({
   label,
@@ -66,28 +66,37 @@ const ForecastItem: React.FC<ForecastItemProps> = ({
             </>
           )}
         </Stat.ValueText>
-        {changeValue ? (
-          <>
-            <Badge colorPalette={changeValue > 0 ? "green" : "red"} gap="0">
-              {changeValue > 0 ? <Stat.UpIndicator /> : <Stat.DownIndicator />}
-              <FormatNumber
-                value={changeValue / 100}
-                style="percent"
-                maximumFractionDigits={2}
-                minimumFractionDigits={1}
-              />
+        {changeValue !== null &&
+          changeValue !== undefined &&
+          (changeValue.value !== null ? (
+            <>
+              <Badge
+                colorPalette={changeValue.value > 0 ? "green" : "red"}
+                gap="0"
+              >
+                {changeValue.value > 0 ? (
+                  <Stat.UpIndicator />
+                ) : (
+                  <Stat.DownIndicator />
+                )}
+                <FormatNumber
+                  value={changeValue.value / 100}
+                  style="percent"
+                  maximumFractionDigits={2}
+                  minimumFractionDigits={1}
+                />
+              </Badge>
+            </>
+          ) : (
+            <Badge
+              colorPalette="gray"
+              gap="0"
+              minW="50px"
+              justifyContent="center"
+            >
+              <Text fontSize="12px">-</Text>
             </Badge>
-          </>
-        ) : (
-          <Badge
-            colorPalette="gray"
-            gap="0"
-            minW="50px"
-            justifyContent="center"
-          >
-            <Text fontSize="12px">-</Text>
-          </Badge>
-        )}
+          ))}
       </VStack>
     </Stat.Root>
   );
