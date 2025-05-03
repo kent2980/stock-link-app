@@ -97,18 +97,6 @@ export type FinValueBase = {
     scale: (number | null);
 };
 
-export type ForecastProgressRate = {
-    name: string;
-    label: string;
-    value: (number | null);
-};
-
-export type ForecastProgressRateResponse = {
-    forecast: (Array<ForecastProgressRate> | null);
-    upper: (Array<ForecastProgressRate> | null);
-    lower: (Array<ForecastProgressRate> | null);
-};
-
 export type HTTPValidationError = {
     detail?: Array<ValidationError>;
 };
@@ -409,18 +397,53 @@ export type FinancialSummaryGetCashFlowsData = {
 
 export type FinancialSummaryGetCashFlowsResponse = (FinResultOnlyStruct);
 
+export type FinancialSummaryGetForecastChangeData = {
+    /**
+     * 銘柄コード
+     */
+    code?: (string | null);
+    /**
+     * head_item_key
+     */
+    headItemKey?: (string | null);
+    /**
+     * オフセット
+     */
+    offset?: number;
+    /**
+     * レポートタイプ
+     */
+    reportTypes?: (Array<(string)> | null);
+};
+
+export type FinancialSummaryGetForecastChangeResponse = ((boolean | null));
+
+export type FinancialSummaryGetDividendsChangeData = {
+    /**
+     * 銘柄コード
+     */
+    code?: (string | null);
+    /**
+     * head_item_key
+     */
+    headItemKey?: (string | null);
+    /**
+     * オフセット
+     */
+    offset?: number;
+    /**
+     * レポートタイプ
+     */
+    reportTypes?: (Array<(string)> | null);
+};
+
+export type FinancialSummaryGetDividendsChangeResponse = ((boolean | null));
+
 export type FinancialSummaryGetDividendsData = {
     code: string;
 };
 
 export type FinancialSummaryGetDividendsResponse = (FinResponseBase);
-
-export type FinancialSummaryGetForecastProgressRateData = {
-    headItemKey: string;
-    operatingResultLate?: (number | null);
-};
-
-export type FinancialSummaryGetForecastProgressRateResponse = ((ForecastProgressRateResponse | null));
 
 export type InformationGetDocumentCountData = {
     dateStr?: (string | null);

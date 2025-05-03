@@ -26,6 +26,7 @@ const ForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
   });
   return (
     <Box>
+      <IsChangeForecast HeadItemKey={HeadItemKey} />
       <Wrap>
         {data?.forecast?.data?.map((item, index) => (
           <ForecastItem
@@ -99,5 +100,33 @@ const ForecastItem: React.FC<ForecastItemProps> = ({
           ))}
       </VStack>
     </Stat.Root>
+  );
+};
+
+interface IsChangeForecastProps {
+  HeadItemKey: string;
+}
+
+const IsChangeForecast: React.FC<IsChangeForecastProps> = ({ HeadItemKey }) => {
+  const { data } = useSuspenseQuery({
+    queryKey: ["isChangeForecast", HeadItemKey],
+    queryFn: async () => {
+      return await FinancialSummaryService.getForecastChange({
+        headItemKey: HeadItemKey,
+      });
+    },
+  });
+  return (
+    <Box fontSize={"xs"} m={2} p={1} textDecoration="underline">
+      {data !== null ? (
+        data ? (
+          <Text>業績予想の修正：有り</Text>
+        ) : (
+          <Text>業績予想の修正：無し</Text>
+        )
+      ) : (
+        <Text>新しい業績予想が発表されました</Text>
+      )}
+    </Box>
   );
 };

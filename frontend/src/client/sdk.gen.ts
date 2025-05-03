@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { FinancialSummaryGetOperatingResultsData, FinancialSummaryGetOperatingResultsResponse, FinancialSummaryGetOtherOperatingResultsData, FinancialSummaryGetOtherOperatingResultsResponse, FinancialSummaryGetForecastsData, FinancialSummaryGetForecastsResponse, FinancialSummaryGetFinancialPositionData, FinancialSummaryGetFinancialPositionResponse, FinancialSummaryGetCashFlowsData, FinancialSummaryGetCashFlowsResponse, FinancialSummaryGetDividendsData, FinancialSummaryGetDividendsResponse, FinancialSummaryGetForecastProgressRateData, FinancialSummaryGetForecastProgressRateResponse, InformationGetDocumentCountData, InformationGetDocumentCountResponse, InformationGetLatestDocumentTitleResponse, InformationReadIxHeadTitleItemData, InformationReadIxHeadTitleItemResponse, InformationGetDocumentListData, InformationGetDocumentListResponse, InformationReadIxHeadTitleItemsUrlListResponse, InformationGetCalendarResponse, InformationGetLatestReportingDateResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, JpxReadIndustryCountData, JpxReadIndustryCountResponse, JpxReadIndustryNameData, JpxReadIndustryNameResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, WikiGetStockWikiItemsResponse } from './types.gen';
+import type { FinancialSummaryGetOperatingResultsData, FinancialSummaryGetOperatingResultsResponse, FinancialSummaryGetOtherOperatingResultsData, FinancialSummaryGetOtherOperatingResultsResponse, FinancialSummaryGetForecastsData, FinancialSummaryGetForecastsResponse, FinancialSummaryGetFinancialPositionData, FinancialSummaryGetFinancialPositionResponse, FinancialSummaryGetCashFlowsData, FinancialSummaryGetCashFlowsResponse, FinancialSummaryGetForecastChangeData, FinancialSummaryGetForecastChangeResponse, FinancialSummaryGetDividendsChangeData, FinancialSummaryGetDividendsChangeResponse, FinancialSummaryGetDividendsData, FinancialSummaryGetDividendsResponse, InformationGetDocumentCountData, InformationGetDocumentCountResponse, InformationGetLatestDocumentTitleResponse, InformationReadIxHeadTitleItemData, InformationReadIxHeadTitleItemResponse, InformationGetDocumentListData, InformationGetDocumentListResponse, InformationReadIxHeadTitleItemsUrlListResponse, InformationGetCalendarResponse, InformationGetLatestReportingDateResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, JpxReadIndustryCountData, JpxReadIndustryCountResponse, JpxReadIndustryNameData, JpxReadIndustryNameResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, WikiGetStockWikiItemsResponse } from './types.gen';
 
 export class FinancialSummaryService {
     /**
@@ -137,6 +137,58 @@ export class FinancialSummaryService {
     }
     
     /**
+     * 業績予想の変更情報を取得
+     * @param data The data for the request.
+     * @param data.headItemKey head_item_key
+     * @param data.code 銘柄コード
+     * @param data.reportTypes レポートタイプ
+     * @param data.offset オフセット
+     * @returns unknown Successful Response
+     * @throws ApiError
+     */
+    public static getForecastChange(data: FinancialSummaryGetForecastChangeData = {}): CancelablePromise<FinancialSummaryGetForecastChangeResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/summary/forecasts/change/',
+            query: {
+                head_item_key: data.headItemKey,
+                code: data.code,
+                report_types: data.reportTypes,
+                offset: data.offset
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * 配当予想の変更情報を取得
+     * @param data The data for the request.
+     * @param data.headItemKey head_item_key
+     * @param data.code 銘柄コード
+     * @param data.reportTypes レポートタイプ
+     * @param data.offset オフセット
+     * @returns unknown Successful Response
+     * @throws ApiError
+     */
+    public static getDividendsChange(data: FinancialSummaryGetDividendsChangeData = {}): CancelablePromise<FinancialSummaryGetDividendsChangeResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/summary/dividends/change/',
+            query: {
+                head_item_key: data.headItemKey,
+                code: data.code,
+                report_types: data.reportTypes,
+                offset: data.offset
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
      * 配当情報を取得
      * @param data The data for the request.
      * @param data.code
@@ -149,30 +201,6 @@ export class FinancialSummaryService {
             url: '/api/v1/ix/summary/dividends/{code}',
             path: {
                 code: data.code
-            },
-            errors: {
-                422: 'Validation Error'
-            }
-        });
-    }
-    
-    /**
-     * 予測進捗率情報を取得
-     * @param data The data for the request.
-     * @param data.headItemKey
-     * @param data.operatingResultLate
-     * @returns unknown Successful Response
-     * @throws ApiError
-     */
-    public static getForecastProgressRate(data: FinancialSummaryGetForecastProgressRateData): CancelablePromise<FinancialSummaryGetForecastProgressRateResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v1/ix/summary/forecast_progress_rate/{head_item_key}',
-            path: {
-                head_item_key: data.headItemKey
-            },
-            query: {
-                operating_result_late: data.operatingResultLate
             },
             errors: {
                 422: 'Validation Error'
