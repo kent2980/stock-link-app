@@ -4,6 +4,7 @@ from typing import Dict, List, Optional
 
 from sqlmodel import Session
 
+from app.api.endpoints.ix_summary.crud import get_base_head_item_key_offset_item
 from app.models import IxHeadTitle, IxNonFraction
 
 from . import crud
@@ -413,3 +414,23 @@ def get_head_item_key(
         raise HeadItemNotFound("head item not found.")
 
     return headItems.item_key
+
+
+def get_base_head_item_key_offset(
+    session: Session,
+    headItemKey: str,
+    report_types: Optional[List[str]] = None,
+    offset: int = 0,
+) -> str:
+
+    try:
+        item = crud.get_base_head_item_key_offset_item(
+            session=session,
+            headItemKey=headItemKey,
+            report_types=report_types,
+            offset=offset,
+        )
+    except ValueError as e:
+        raise HeadItemNotFound(f"head item not found.{str(e)}")
+
+    return item

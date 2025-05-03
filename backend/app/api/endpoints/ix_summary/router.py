@@ -49,6 +49,17 @@ def get_operating_results(
             )
         except HeadItemNotFound as e:
             raise HTTPException(status_code=404, detail=str(e))
+    else:
+        if offset > 0:
+            try:
+                head_item_key = utils.get_base_head_item_key_offset(
+                    session=session,
+                    headItemKey=head_item_key,
+                    report_types=report_types,
+                    offset=offset,
+                )
+            except HeadItemNotFound as e:
+                raise HTTPException(status_code=404, detail=str(e))
 
     try:
         item = utils.get_summary_items(
@@ -104,6 +115,17 @@ def get_other_operating_results(
             )
         except HeadItemNotFound as e:
             raise HTTPException(status_code=404, detail=str(e))
+    else:
+        if offset > 0:
+            try:
+                head_item_key = utils.get_base_head_item_key_offset(
+                    session=session,
+                    headItemKey=head_item_key,
+                    report_types=report_types,
+                    offset=offset,
+                )
+            except HeadItemNotFound as e:
+                raise HTTPException(status_code=404, detail=str(e))
 
     try:
         item = utils.get_summary_items(
@@ -159,6 +181,17 @@ def get_forecasts(
             )
         except HeadItemNotFound as e:
             raise HTTPException(status_code=404, detail=str(e))
+    else:
+        if offset > 0:
+            try:
+                head_item_key = utils.get_base_head_item_key_offset(
+                    session=session,
+                    headItemKey=head_item_key,
+                    report_types=report_types,
+                    offset=offset,
+                )
+            except HeadItemNotFound as e:
+                raise HTTPException(status_code=404, detail=str(e))
 
     try:
         item = utils.get_summary_items(
@@ -218,6 +251,17 @@ def get_financial_position(
             )
         except HeadItemNotFound as e:
             raise HTTPException(status_code=404, detail=str(e))
+    else:
+        if offset > 0:
+            try:
+                head_item_key = utils.get_base_head_item_key_offset(
+                    session=session,
+                    headItemKey=head_item_key,
+                    report_types=report_types,
+                    offset=offset,
+                )
+            except HeadItemNotFound as e:
+                raise HTTPException(status_code=404, detail=str(e))
 
     try:
         item = utils.get_summary_items(
@@ -319,6 +363,17 @@ def get_forecast_change(
             )
         except HeadItemNotFound as e:
             raise HTTPException(status_code=404, detail=str(e))
+    else:
+        if offset > 0:
+            try:
+                head_item_key = utils.get_base_head_item_key_offset(
+                    session=session,
+                    headItemKey=head_item_key,
+                    report_types=report_types,
+                    offset=offset,
+                )
+            except HeadItemNotFound as e:
+                raise HTTPException(status_code=404, detail=str(e))
 
     names = [
         "tse-ed-t_CorrectionOfConsolidatedFinancialForecastInThisQuarter",
@@ -353,6 +408,17 @@ def get_dividends_change(
             )
         except HeadItemNotFound as e:
             raise HTTPException(status_code=404, detail=str(e))
+    else:
+        if offset > 0:
+            try:
+                head_item_key = utils.get_base_head_item_key_offset(
+                    session=session,
+                    headItemKey=head_item_key,
+                    report_types=report_types,
+                    offset=offset,
+                )
+            except HeadItemNotFound as e:
+                raise HTTPException(status_code=404, detail=str(e))
 
     names = ["tse-ed-t_CorrectionOfDividendForecastInThisQuarter"]
 

@@ -455,3 +455,49 @@ def is_change_value(
         return None
 
     return bool(item.value)
+
+
+def get_base_head_item_key_offset_item(
+    session: Session,
+    headItemKey: str,
+    report_types: Optional[List[str]] = None,
+    offset: int = 0,
+) -> str:
+
+    statement = select(IxHeadTitle).where(
+        IxHeadTitle.item_key == headItemKey,
+    )
+    result = session.exec(statement)
+    item = result.first()
+    reporting_date = item.reporting_date
+    code = item.securities_code
+
+    if reporting_date is None and code is None:
+        raise ValueError("Base reporting_date and Code not found")
+    elif reporting_date is None:
+        raise ValueError("Base reporting_date not found")
+    elif code is None:
+        raise ValueError("Code not found")
+
+    statement = (
+        select(IxHeadTitle)
+        .where(
+            IxHeadTitle.reporting_date < reporting_date,
+            IxHeadTitle.securities_code == code,
+        )
+        .order_by(
+            IxHeadTitle.reporting_date.desc(),
+        )
+    )
+
+    if report_types:
+        statement = statement.where(
+            IxHeadTitle.report_type.in_(report_types),
+        )
+
+    statement = statement.offset(offset - 1)
+    result = session.exec(statement)
+    item = result.first()
+    if item is None:
+        raise ValueError("No previous item found")
+    return item.item_key
