@@ -15,7 +15,7 @@ import {
   Wrap,
 } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import React, { Suspense, useState } from "react";
+import React, { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 interface ForecastTableProps {
@@ -64,14 +64,7 @@ const ForecastItem: React.FC<ForecastItemProps> = ({
   ...props
 }) => {
   return (
-    <Stat.Root
-      minW="40vw"
-      borderWidth="1px"
-      borderRadius="lg"
-      p={4}
-      bg="white"
-      {...props}
-    >
+    <Stat.Root borderWidth="1px" borderRadius="lg" p={4} bg="white" {...props}>
       <Stat.Label>{label}</Stat.Label>
       <VStack>
         <Stat.ValueText>
@@ -123,9 +116,6 @@ interface IsChangeForecastProps {
 }
 
 const IsChangeForecast: React.FC<IsChangeForecastProps> = ({ HeadItemKey }) => {
-  // Popoverの状態管理
-  const [open, setOpen] = useState(false);
-
   // 業績予想の修正を取得する
   const { data } = useSuspenseQuery({
     queryKey: ["isChangeForecast", HeadItemKey],
@@ -176,7 +166,39 @@ const IsChangeForecast: React.FC<IsChangeForecastProps> = ({ HeadItemKey }) => {
           <Text>業績予想の修正：無し</Text>
         )
       ) : (
-        <Text>新しい業績予想が発表されました</Text>
+        <Dialog.Root
+          // size="cover"
+          placement="center"
+          motionPreset="slide-in-bottom"
+        >
+          <Dialog.Trigger asChild>
+            <Button variant="outline" size="sm">
+              新しい業績予想が発表されました
+            </Button>
+          </Dialog.Trigger>
+          <Portal>
+            <Dialog.Backdrop />
+            <Dialog.Positioner>
+              <Dialog.Content>
+                <Dialog.Header>
+                  <Dialog.Title>修正前業績予想</Dialog.Title>
+                  <Dialog.CloseTrigger asChild>
+                    <CloseButton size="sm" />
+                  </Dialog.CloseTrigger>
+                </Dialog.Header>
+                <Dialog.Body>
+                  <ErrorBoundary
+                    fallback={<Box>表示するデータがありません。</Box>}
+                  >
+                    <Suspense fallback={<CustomSpinner />}>
+                      <PriorForecastTable HeadItemKey={HeadItemKey} />
+                    </Suspense>
+                  </ErrorBoundary>
+                </Dialog.Body>
+              </Dialog.Content>
+            </Dialog.Positioner>
+          </Portal>
+        </Dialog.Root>
       )}
     </Box>
   );
