@@ -471,6 +471,8 @@ def get_base_head_item_key_offset_item(
     item = result.first()
     reporting_date = item.reporting_date
     code = item.securities_code
+    current_period = item.current_period
+    fy_year_end = item.fy_year_end
 
     if reporting_date is None and code is None:
         raise ValueError("Base reporting_date and Code not found")
@@ -484,6 +486,8 @@ def get_base_head_item_key_offset_item(
         .where(
             IxHeadTitle.reporting_date < reporting_date,
             IxHeadTitle.securities_code == code,
+            IxHeadTitle.current_period != current_period,
+            IxHeadTitle.fy_year_end != fy_year_end,
         )
         .order_by(
             IxHeadTitle.reporting_date.desc(),
