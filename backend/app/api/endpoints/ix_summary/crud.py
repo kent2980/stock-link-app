@@ -486,8 +486,10 @@ def get_base_head_item_key_offset_item(
         .where(
             IxHeadTitle.reporting_date < reporting_date,
             IxHeadTitle.securities_code == code,
-            IxHeadTitle.current_period != current_period,
-            IxHeadTitle.fy_year_end != fy_year_end,
+            and_(
+                IxHeadTitle.current_period != current_period,
+                IxHeadTitle.fy_year_end != fy_year_end,
+            ),
         )
         .order_by(
             IxHeadTitle.reporting_date.desc(),
