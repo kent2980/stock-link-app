@@ -126,33 +126,31 @@ const IsChangeForecast: React.FC<IsChangeForecastProps> = ({ HeadItemKey }) => {
     },
   });
   return (
-    <Box fontSize={"xs"} m={2} p={1} textDecoration="underline">
+    <Box
+      display="flex"
+      flexDir="row"
+      fontSize={"xs"}
+      m={2}
+      p={1}
+      textDecoration="underline"
+    >
       {data !== null ? (
         data ? (
-          <CustomDialog
-            buttonLabel="業績予想の修正：有り"
-            dialogTitle="修正前業績予想"
-          >
-            <ErrorBoundary fallback={<Box>表示するデータがありません。</Box>}>
-              <Suspense fallback={<CustomSpinner />}>
-                <PriorForecastTable HeadItemKey={HeadItemKey} />
-              </Suspense>
-            </ErrorBoundary>
-          </CustomDialog>
+          <>
+            <Text>"業績予想の修正：有り"</Text>
+            <CustomDialog buttonLabel="修正前" dialogTitle="修正前業績予想">
+              <ErrorBoundary fallback={<Box>表示するデータがありません。</Box>}>
+                <Suspense fallback={<CustomSpinner />}>
+                  <PriorForecastTable HeadItemKey={HeadItemKey} />
+                </Suspense>
+              </ErrorBoundary>
+            </CustomDialog>
+          </>
         ) : (
           <Text>業績予想の修正：無し</Text>
         )
       ) : (
-        <CustomDialog
-          buttonLabel="新しい業績予想が発表されました"
-          dialogTitle="修正前業績予想"
-        >
-          <ErrorBoundary fallback={<Box>表示するデータがありません。</Box>}>
-            <Suspense fallback={<CustomSpinner />}>
-              <PriorForecastTable HeadItemKey={HeadItemKey} />
-            </Suspense>
-          </ErrorBoundary>
-        </CustomDialog>
+        <Text>新しい業績予想が発表されました</Text>
       )}
     </Box>
   );

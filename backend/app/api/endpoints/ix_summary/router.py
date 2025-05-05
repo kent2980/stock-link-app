@@ -378,6 +378,7 @@ def get_forecast_change(
     names = [
         "tse-ed-t_CorrectionOfConsolidatedFinancialForecastInThisQuarter",
         "tse-ed-t_CorrectionOfNonConsolidatedFinancialForecastInThisQuarter",
+        "tse-ed-t_CorrectionOfFinancialForecastInThisQuarter",
     ]
 
     item = crud.is_change_value(
