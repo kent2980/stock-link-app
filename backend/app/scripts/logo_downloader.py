@@ -191,7 +191,10 @@ if __name__ == "__main__":
 
     api_url = "http://157.7.78.166/api/v1/xbrl/url_list/"
     directory = "../frontend/public/assets/images/stock_logo/"
-    json_output_dir = "../frontend/src/logo/"
+    parrentDir = os.path.dirname(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    )
+    json_output_dir = f"{parrentDir}/frontend/src/logo/"
     json_path = os.path.join(json_output_dir, "logo_list.json")
 
     # 処理の開始時に logo_list.json を初期化

@@ -27,8 +27,8 @@ const StockListItem: React.FC<StockListItemProps> = ({ item, ...props }) => {
       </Heading>
       <ErrorBoundary fallback={<Box>表示するデータがありません。</Box>}>
         <Suspense fallback={<Skeleton height="300px" width="100%" />}>
-          <BusinessResultTable HeadItemKey={item.head_item_key} />
           <BusinessResult headItemKey={item.head_item_key} />
+          <BusinessResultTable HeadItemKey={item.head_item_key} />
         </Suspense>
       </ErrorBoundary>
       {/* 業績予想 */}
