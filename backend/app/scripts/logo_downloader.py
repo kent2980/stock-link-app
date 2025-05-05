@@ -193,9 +193,9 @@ if __name__ == "__main__":
         # コマンドライン引数が指定された場合
         api_base = os.sys.argv[1]
 
-    api_url = f"{api_base}/api/v1/xbrl/url_list/"
+    api_url = f"{api_base}/api/v1/ix/stock_info/url_list/"
     directory = "../frontend/public/assets/images/stock_logo/"
-    parrentDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    parrentDir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
     json_output_dir = f"{parrentDir}/frontend/src/logo/"
     json_path = os.path.join(json_output_dir, "logo_list.json")
 
