@@ -14,15 +14,17 @@ import React, { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import FinStructWrapItem from "./FinStructTable";
 
-interface ForecastTableProps {
+interface BusinessResultTableProps {
   HeadItemKey: string;
 }
 
-const ForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
+const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
+  HeadItemKey,
+}) => {
   const { data } = useSuspenseQuery({
-    queryKey: ["forecastData", HeadItemKey],
+    queryKey: ["BusinessResult", HeadItemKey],
     queryFn: async () => {
-      return await FinancialSummaryService.getForecasts({
+      return await FinancialSummaryService.getOperatingResults({
         headItemKey: HeadItemKey,
       });
     },
@@ -31,7 +33,7 @@ const ForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
     <Box>
       <IsChangeForecast HeadItemKey={HeadItemKey} />
       <Wrap>
-        {data?.forecast?.data?.map((item, index) => (
+        {data?.result?.data?.map((item, index) => (
           <FinStructWrapItem
             key={index}
             label={item.label}
@@ -44,7 +46,7 @@ const ForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
     </Box>
   );
 };
-export default ForecastTable;
+export default BusinessResultTable;
 
 interface IsChangeForecastProps {
   HeadItemKey: string;
@@ -72,7 +74,7 @@ const IsChangeForecast: React.FC<IsChangeForecastProps> = ({ HeadItemKey }) => {
             >
               <ErrorBoundary fallback={<Box>表示するデータがありません。</Box>}>
                 <Suspense fallback={<CustomSpinner />}>
-                  <PriorForecastTable HeadItemKey={HeadItemKey} />
+                  <PriorBusinessResultTable HeadItemKey={HeadItemKey} />
                 </Suspense>
               </ErrorBoundary>
             </CustomDialog>
@@ -87,7 +89,9 @@ const IsChangeForecast: React.FC<IsChangeForecastProps> = ({ HeadItemKey }) => {
   );
 };
 
-const PriorForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
+const PriorBusinessResultTable: React.FC<BusinessResultTableProps> = ({
+  HeadItemKey,
+}) => {
   const { data } = useSuspenseQuery({
     queryKey: ["priorForecastData", HeadItemKey],
     queryFn: async () => {
