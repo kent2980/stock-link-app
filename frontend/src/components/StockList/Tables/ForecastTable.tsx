@@ -126,19 +126,15 @@ const IsChangeForecast: React.FC<IsChangeForecastProps> = ({ HeadItemKey }) => {
     },
   });
   return (
-    <Box
-      display="flex"
-      flexDir="row"
-      fontSize={"xs"}
-      m={2}
-      p={1}
-      textDecoration="underline"
-    >
+    <Box display="flex" flexDir="row" fontSize={"xs"} m={2} p={1}>
       {data !== null ? (
         data ? (
           <>
-            <Text>"業績予想の修正：有り"</Text>
-            <CustomDialog buttonLabel="修正前" dialogTitle="修正前業績予想">
+            <Text alignSelf="center">業績予想の修正：有り</Text>
+            <CustomDialog
+              buttonLabel="→ 修正前はこちら"
+              dialogTitle="修正前業績予想"
+            >
               <ErrorBoundary fallback={<Box>表示するデータがありません。</Box>}>
                 <Suspense fallback={<CustomSpinner />}>
                   <PriorForecastTable HeadItemKey={HeadItemKey} />
@@ -203,7 +199,12 @@ const CustomDialog: React.FC<CustomDialogProps> = ({
       preventScroll={false}
     >
       <Dialog.Trigger asChild>
-        <Button variant="outline" size="sm">
+        <Button
+          variant="plain"
+          size="sm"
+          fontSize={"xs"}
+          textDecoration="underline"
+        >
           {buttonLabel}
         </Button>
       </Dialog.Trigger>
