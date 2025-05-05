@@ -199,7 +199,11 @@ const CustomDialog: React.FC<CustomDialogProps> = ({
   children,
 }) => {
   return (
-    <Dialog.Root placement="top">
+    <Dialog.Root
+      placement="top"
+      motionPreset="slide-in-left"
+      preventScroll={false}
+    >
       <Dialog.Trigger asChild>
         <Button variant="outline" size="sm">
           {buttonLabel}
