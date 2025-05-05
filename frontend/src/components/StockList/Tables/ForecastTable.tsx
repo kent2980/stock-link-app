@@ -199,7 +199,7 @@ const CustomDialog: React.FC<CustomDialogProps> = ({
   children,
 }) => {
   return (
-    <Dialog.Root placement="center" motionPreset="slide-in-bottom">
+    <Dialog.Root placement="top">
       <Dialog.Trigger asChild>
         <Button variant="outline" size="sm">
           {buttonLabel}
