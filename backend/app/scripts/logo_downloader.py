@@ -189,7 +189,11 @@ def download_logo(url, directory, filename) -> Optional[str]:
 
 if __name__ == "__main__":
 
-    api_url = "http://157.7.78.166/api/v1/xbrl/url_list/"
+    if len(os.sys.argv) > 1:
+        # コマンドライン引数が指定された場合
+        api_base = os.sys.argv[1]
+
+    api_url = f"{api_base}/api/v1/xbrl/url_list/"
     directory = "../frontend/public/assets/images/stock_logo/"
     parrentDir = os.path.dirname(
         os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
