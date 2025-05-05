@@ -1,17 +1,7 @@
 import { FinancialSummaryService } from "@/client";
-import CustomSpinner from "@/components/Spinner/CustomSpinner";
-import {
-  Box,
-  Button,
-  CloseButton,
-  Dialog,
-  Portal,
-  Text,
-  Wrap,
-} from "@chakra-ui/react";
+import { Box, Wrap } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import React, { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import React from "react";
 import FinStructWrapItem from "./FinStructTable";
 
 interface BusinessResultTableProps {
@@ -31,7 +21,6 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
   });
   return (
     <Box>
-      <IsChangeForecast HeadItemKey={HeadItemKey} />
       <Wrap>
         {data?.result?.data?.map((item, index) => (
           <FinStructWrapItem
@@ -47,120 +36,3 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
   );
 };
 export default BusinessResultTable;
-
-interface IsChangeForecastProps {
-  HeadItemKey: string;
-}
-
-const IsChangeForecast: React.FC<IsChangeForecastProps> = ({ HeadItemKey }) => {
-  // 業績予想の修正を取得する
-  const { data } = useSuspenseQuery({
-    queryKey: ["isChangeForecast", HeadItemKey],
-    queryFn: async () => {
-      return await FinancialSummaryService.getForecastChange({
-        headItemKey: HeadItemKey,
-      });
-    },
-  });
-  return (
-    <Box display="flex" flexDir="row" fontSize={"xs"} m={2} p={1}>
-      {data !== null ? (
-        data ? (
-          <>
-            <Text alignSelf="center">業績予想の修正：有り</Text>
-            <CustomDialog
-              buttonLabel="→ 修正前はこちら"
-              dialogTitle="修正前業績予想"
-            >
-              <ErrorBoundary fallback={<Box>表示するデータがありません。</Box>}>
-                <Suspense fallback={<CustomSpinner />}>
-                  <PriorBusinessResultTable HeadItemKey={HeadItemKey} />
-                </Suspense>
-              </ErrorBoundary>
-            </CustomDialog>
-          </>
-        ) : (
-          <Text>業績予想の修正：無し</Text>
-        )
-      ) : (
-        <Text>新しい業績予想が発表されました</Text>
-      )}
-    </Box>
-  );
-};
-
-const PriorBusinessResultTable: React.FC<BusinessResultTableProps> = ({
-  HeadItemKey,
-}) => {
-  const { data } = useSuspenseQuery({
-    queryKey: ["priorForecastData", HeadItemKey],
-    queryFn: async () => {
-      return await FinancialSummaryService.getForecasts({
-        headItemKey: HeadItemKey,
-        offset: 1,
-        reportTypes: ["edjp", "edif", "edus"],
-      });
-    },
-    retry: false,
-  });
-  return (
-    <Box>
-      <Wrap>
-        {data?.forecast?.data?.map((item, index) => (
-          <FinStructWrapItem
-            key={index}
-            label={item.label}
-            value={item.curValue?.value}
-            valueScale={item.curValue?.display_scale}
-            changeValue={item.curChange}
-          />
-        ))}
-      </Wrap>
-    </Box>
-  );
-};
-
-interface CustomDialogProps {
-  buttonLabel: string;
-  dialogTitle: string;
-  children: React.ReactNode;
-}
-
-const CustomDialog: React.FC<CustomDialogProps> = ({
-  buttonLabel,
-  dialogTitle,
-  children,
-}) => {
-  return (
-    <Dialog.Root
-      placement="top"
-      motionPreset="slide-in-left"
-      preventScroll={false}
-    >
-      <Dialog.Trigger asChild>
-        <Button
-          variant="plain"
-          size="sm"
-          fontSize={"xs"}
-          textDecoration="underline"
-        >
-          {buttonLabel}
-        </Button>
-      </Dialog.Trigger>
-      <Portal>
-        <Dialog.Backdrop />
-        <Dialog.Positioner>
-          <Dialog.Content>
-            <Dialog.Header>
-              <Dialog.Title>{dialogTitle}</Dialog.Title>
-              <Dialog.CloseTrigger asChild>
-                <CloseButton size="sm" />
-              </Dialog.CloseTrigger>
-            </Dialog.Header>
-            <Dialog.Body>{children}</Dialog.Body>
-          </Dialog.Content>
-        </Dialog.Positioner>
-      </Portal>
-    </Dialog.Root>
-  );
-};

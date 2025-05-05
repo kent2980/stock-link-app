@@ -22,7 +22,7 @@ export const StockList: React.FC<StockListProps> = ({ data, ...props }) => {
   const virtualizer = useWindowVirtualizer({
     count: data.count,
     estimateSize: () => 400,
-    overscan: 5,
+    overscan: 3,
     scrollMargin: listRef.current?.offsetTop ?? 0,
   });
 
