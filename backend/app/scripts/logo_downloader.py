@@ -195,9 +195,7 @@ if __name__ == "__main__":
 
     api_url = f"{api_base}/api/v1/xbrl/url_list/"
     directory = "../frontend/public/assets/images/stock_logo/"
-    parrentDir = os.path.dirname(
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    )
+    parrentDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     json_output_dir = f"{parrentDir}/frontend/src/logo/"
     json_path = os.path.join(json_output_dir, "logo_list.json")
 
