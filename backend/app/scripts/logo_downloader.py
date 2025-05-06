@@ -194,9 +194,11 @@ if __name__ == "__main__":
         api_base = os.sys.argv[1]
 
     api_url = f"{api_base}/api/v1/ix/stock_info/url_list/"
-    directory = "../frontend/public/assets/images/stock_logo/"
-    parrentDir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+    parrentDir = os.path.dirname(
+        os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    )
     json_output_dir = f"{parrentDir}/frontend/src/logo/"
+    directory = f"{parrentDir}/frontend/public/assets/images/stock_logo/"
     json_path = os.path.join(json_output_dir, "logo_list.json")
 
     # 処理の開始時に logo_list.json を初期化
