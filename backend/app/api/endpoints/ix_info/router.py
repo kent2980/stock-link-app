@@ -239,7 +239,7 @@ def get_calendar(*, session: SessionDep) -> sc.PublicCalenders:
     )
     results = session.exec(statement)
     items = results.all()
-
+    print(statement)
     return sc.PublicCalenders(
         count=len(items),
         data=[

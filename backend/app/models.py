@@ -388,6 +388,7 @@ class IxHeadTitle(XbrlBase, table=True):
         Index("idx_ix_head_title_current_period", "current_period"),
         Index("idx_ix_head_specific_business", "specific_business"),
         Index("idx_ix_head_title_is_consolidated", "is_consolidated"),
+        Index("idx_ix_head_title_seccode_date", "securities_code", "reporting_date"),
     )
 
 
