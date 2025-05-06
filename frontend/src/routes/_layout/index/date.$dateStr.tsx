@@ -7,7 +7,7 @@ import {
   useNavigate,
   useParams,
 } from "@tanstack/react-router";
-import { Suspense } from "react";
+import { Suspense, useEffect, useLayoutEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { GrCaretNext, GrCaretPrevious } from "react-icons/gr";
 import { useSwipeable } from "react-swipeable";
@@ -58,6 +58,32 @@ function Index() {
     onSwipedLeft: () => handleClick(prevDate()), // 左スワイプで次の日
     onSwipedRight: () => handleClick(nextDate()), // 右スワイプで前日
   });
+
+  // スクロール位置の復元と永続化
+  // スクロール位置のキーを日付ごとに分ける
+  const scrollKey = `scroll-position-${dateStr}`;
+
+  // ページ読み込み時にスクロール位置を復元
+  useLayoutEffect(() => {
+    const saved = localStorage.getItem(scrollKey);
+    if (saved) {
+      window.scrollTo(0, Number(saved));
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [scrollKey]);
+
+  // ページ離脱時にスクロール位置を保存
+  useEffect(() => {
+    const saveScroll = () => {
+      localStorage.setItem(scrollKey, String(window.scrollY));
+    };
+    window.addEventListener("beforeunload", saveScroll);
+    return () => {
+      saveScroll();
+      window.removeEventListener("beforeunload", saveScroll);
+    };
+  }, [scrollKey]);
 
   return (
     <Box overflow="hidden" {...swipeHandlers}>
