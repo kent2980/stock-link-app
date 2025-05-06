@@ -156,7 +156,7 @@ def download_logo(url, directory, filename) -> Optional[str]:
             logo_url = urljoin(url, logo_url)
 
         # 画像をダウンロード
-        logo_response = requests.get(logo_url)
+        logo_response = safe_get(logo_url)
         print(f"logo_url: {logo_url}")
 
         # ステータスコードが200でない場合はエラー
