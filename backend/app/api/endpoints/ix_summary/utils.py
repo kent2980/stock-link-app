@@ -274,24 +274,35 @@ def get_struct(
     ix_non_fractions = items.get_ix_non_fractions()
 
     for item in tree_items.data:
+        # from_nameと一致するxlink_fromを持つitemのみ処理
         if item.xlink_from == from_name:
+            # structの全フィールドに対してループ
             for key in struct.__fields__.keys():
                 field = getattr(struct, key)
+                # フィールドがFinItemsBase型の場合のみ処理
                 if isinstance(field, sc.FinItemsBase):
-                    if item.xlink_from == from_name:
-                        field.data.append(create_metric_parent_schema(item))
+                    # item情報をもとにFinValueAbstractBaseを生成しdataリストに追加
+                    field.data.append(create_metric_parent_schema(item))
 
     if isinstance(struct, sc.FinStructBase):
+        # ix_non_fractionsの各itemについて処理
         for item in ix_non_fractions:
+            # structの各フィールドごとに処理
             for key in struct.__fields__.keys():
                 struct_default = getattr(struct, key)
+                # フィールドがFinItemsBase型の場合のみ処理
                 if isinstance(struct_default, sc.FinItemsBase):
                     context = struct_default.context
+                    # itemのcontextにstruct_defaultのcontextが含まれている場合のみ処理
                     if context in item.context:
+                        # struct_default.data内の各struct_itemについて処理
                         for struct_item in struct_default.data:
+                            # struct_item.nameとchild_items[item.name]が一致する場合のみ処理
                             if struct_item.name == child_items[item.name]:
+                                # item.numericがNoneでなければis_activeをTrueに
                                 if item.numeric is not None:
                                     struct_default.is_active = True
+                                # itemの値からFinValueBaseインスタンスを生成
                                 metric_schema = sc.FinValueBase(
                                     name=item.name,
                                     value=item.numeric,
@@ -299,10 +310,12 @@ def get_struct(
                                     display_scale=item.display_scale,
                                     scale=item.scale,
                                 )
+                                # contextに"Prior"で始まるものが含まれているか判定
                                 is_prior = any(
                                     re.match(r"Prior.*", context)
                                     for context in item.context
                                 )
+                                # is_priorの値とitem.nameのプレフィックスで代入先を分岐
                                 if is_prior:
                                     if item.name.startswith("tse-ed-t_ChangeIn"):
                                         struct_item.preChange = metric_schema
@@ -313,7 +326,6 @@ def get_struct(
                                         struct_item.curChange = metric_schema
                                     else:
                                         struct_item.curValue = metric_schema
-
     period = sc.PeriodSchemaBase(  # periodを設定
         accountingStandard=head_item.report_type,
         fiscalYear=head_item.fy_year_end,
