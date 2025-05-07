@@ -1,4 +1,4 @@
-import { FinancialSummaryService } from "@/client";
+import { FinancialSummary2Service } from "@/client";
 import CustomSpinner from "@/components/Spinner/CustomSpinner";
 import {
   Box,
@@ -22,7 +22,7 @@ const ForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
   const { data } = useSuspenseQuery({
     queryKey: ["forecastData", HeadItemKey],
     queryFn: async () => {
-      return await FinancialSummaryService.getForecasts({
+      return await FinancialSummary2Service.getForecasts({
         headItemKey: HeadItemKey,
       });
     },
@@ -55,7 +55,7 @@ const IsChangeForecast: React.FC<IsChangeForecastProps> = ({ HeadItemKey }) => {
   const { data } = useSuspenseQuery({
     queryKey: ["isChangeForecast", HeadItemKey],
     queryFn: async () => {
-      return await FinancialSummaryService.getForecastChange({
+      return await FinancialSummary2Service.getForecastChange({
         headItemKey: HeadItemKey,
       });
     },
@@ -91,7 +91,7 @@ const PriorForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
   const { data } = useSuspenseQuery({
     queryKey: ["priorForecastData", HeadItemKey],
     queryFn: async () => {
-      return await FinancialSummaryService.getForecasts({
+      return await FinancialSummary2Service.getForecasts({
         headItemKey: HeadItemKey,
         offset: 1,
         reportTypes: ["edjp", "edif", "edus"],

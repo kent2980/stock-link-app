@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { FinancialSummaryGetOperatingResultsData, FinancialSummaryGetOperatingResultsResponse, FinancialSummaryGetOtherOperatingResultsData, FinancialSummaryGetOtherOperatingResultsResponse, FinancialSummaryGetForecastsData, FinancialSummaryGetForecastsResponse, FinancialSummaryGetFinancialPositionData, FinancialSummaryGetFinancialPositionResponse, FinancialSummaryGetCashFlowsData, FinancialSummaryGetCashFlowsResponse, FinancialSummaryGetForecastChangeData, FinancialSummaryGetForecastChangeResponse, FinancialSummaryGetDividendsChangeData, FinancialSummaryGetDividendsChangeResponse, FinancialSummaryGetDividendsData, FinancialSummaryGetDividendsResponse, InformationGetDocumentCountData, InformationGetDocumentCountResponse, InformationGetLatestDocumentTitleResponse, InformationReadIxHeadTitleItemData, InformationReadIxHeadTitleItemResponse, InformationGetDocumentListData, InformationGetDocumentListResponse, InformationReadIxHeadTitleItemsUrlListResponse, InformationGetCalendarResponse, InformationGetLatestReportingDateResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, JpxReadIndustryCountData, JpxReadIndustryCountResponse, JpxReadIndustryNameData, JpxReadIndustryNameResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, WikiGetStockWikiItemsResponse } from './types.gen';
+import type { FinancialSummaryGetOperatingResultsData, FinancialSummaryGetOperatingResultsResponse, FinancialSummaryGetOtherOperatingResultsData, FinancialSummaryGetOtherOperatingResultsResponse, FinancialSummaryGetForecastsData, FinancialSummaryGetForecastsResponse, FinancialSummaryGetFinancialPositionData, FinancialSummaryGetFinancialPositionResponse, FinancialSummaryGetCashFlowsData, FinancialSummaryGetCashFlowsResponse, FinancialSummaryGetForecastChangeData, FinancialSummaryGetForecastChangeResponse, FinancialSummaryGetDividendsChangeData, FinancialSummaryGetDividendsChangeResponse, FinancialSummary2GetOperatingResultsData, FinancialSummary2GetOperatingResultsResponse, FinancialSummary2GetOtherOperatingResultsData, FinancialSummary2GetOtherOperatingResultsResponse, FinancialSummary2GetForecastsData, FinancialSummary2GetForecastsResponse, FinancialSummary2GetFinancialPositionData, FinancialSummary2GetFinancialPositionResponse, FinancialSummary2GetCashFlowsData, FinancialSummary2GetCashFlowsResponse, FinancialSummary2GetForecastChangeData, FinancialSummary2GetForecastChangeResponse, FinancialSummary2GetDividendsChangeData, FinancialSummary2GetDividendsChangeResponse, FinancialSummary2GetDividendsData, FinancialSummary2GetDividendsResponse, InformationGetDocumentCountData, InformationGetDocumentCountResponse, InformationGetLatestDocumentTitleResponse, InformationReadIxHeadTitleItemData, InformationReadIxHeadTitleItemResponse, InformationGetDocumentListData, InformationGetDocumentListResponse, InformationReadIxHeadTitleItemsUrlListResponse, InformationGetCalendarResponse, InformationGetLatestReportingDateResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, JpxReadIndustryCountData, JpxReadIndustryCountResponse, JpxReadIndustryNameData, JpxReadIndustryNameResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, WikiGetStockWikiItemsResponse } from './types.gen';
 
 export class FinancialSummaryService {
     /**
@@ -13,7 +13,7 @@ export class FinancialSummaryService {
      * @param data.headItemKey head_item_key
      * @param data.reportTypes レポートタイプ
      * @param data.offset オフセット
-     * @returns FinResultStruct Successful Response
+     * @returns FinItemsResponse Successful Response
      * @throws ApiError
      */
     public static getOperatingResults(data: FinancialSummaryGetOperatingResultsData = {}): CancelablePromise<FinancialSummaryGetOperatingResultsResponse> {
@@ -39,7 +39,7 @@ export class FinancialSummaryService {
      * @param data.headItemKey head_item_key
      * @param data.reportTypes レポートタイプ
      * @param data.offset オフセット
-     * @returns FinResultStruct Successful Response
+     * @returns FinItemsResponse Successful Response
      * @throws ApiError
      */
     public static getOtherOperatingResults(data: FinancialSummaryGetOtherOperatingResultsData = {}): CancelablePromise<FinancialSummaryGetOtherOperatingResultsResponse> {
@@ -65,7 +65,7 @@ export class FinancialSummaryService {
      * @param data.headItemKey head_item_key
      * @param data.reportTypes レポートタイプ
      * @param data.offset オフセット
-     * @returns FinForecastStruct Successful Response
+     * @returns FinItemsResponse Successful Response
      * @throws ApiError
      */
     public static getForecasts(data: FinancialSummaryGetForecastsData = {}): CancelablePromise<FinancialSummaryGetForecastsResponse> {
@@ -91,7 +91,7 @@ export class FinancialSummaryService {
      * @param data.headItemKey head_item_key
      * @param data.reportTypes レポートタイプ
      * @param data.offset オフセット
-     * @returns FinResultOnlyStruct Successful Response
+     * @returns FinItemsResponse Successful Response
      * @throws ApiError
      */
     public static getFinancialPosition(data: FinancialSummaryGetFinancialPositionData = {}): CancelablePromise<FinancialSummaryGetFinancialPositionResponse> {
@@ -116,7 +116,7 @@ export class FinancialSummaryService {
      * @param data.code
      * @param data.year 年度
      * @param data.offset オフセット
-     * @returns FinResultOnlyStruct Successful Response
+     * @returns FinItemsResponse Successful Response
      * @throws ApiError
      */
     public static getCashFlows(data: FinancialSummaryGetCashFlowsData): CancelablePromise<FinancialSummaryGetCashFlowsResponse> {
@@ -188,6 +188,191 @@ export class FinancialSummaryService {
         });
     }
     
+}
+
+export class FinancialSummary2Service {
+    /**
+     * 経営成績情報を取得
+     * @param data The data for the request.
+     * @param data.code 銘柄コード
+     * @param data.headItemKey head_item_key
+     * @param data.reportTypes レポートタイプ
+     * @param data.offset オフセット
+     * @returns FinResultStruct Successful Response
+     * @throws ApiError
+     */
+    public static getOperatingResults(data: FinancialSummary2GetOperatingResultsData = {}): CancelablePromise<FinancialSummary2GetOperatingResultsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/summary2/operating_results/income/',
+            query: {
+                code: data.code,
+                head_item_key: data.headItemKey,
+                report_types: data.reportTypes,
+                offset: data.offset
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * その他の経営成績情報を取得
+     * @param data The data for the request.
+     * @param data.code 銘柄コード
+     * @param data.headItemKey head_item_key
+     * @param data.reportTypes レポートタイプ
+     * @param data.offset オフセット
+     * @returns FinResultStruct Successful Response
+     * @throws ApiError
+     */
+    public static getOtherOperatingResults(data: FinancialSummary2GetOtherOperatingResultsData = {}): CancelablePromise<FinancialSummary2GetOtherOperatingResultsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/summary2/operating_results/other/{}',
+            query: {
+                code: data.code,
+                head_item_key: data.headItemKey,
+                report_types: data.reportTypes,
+                offset: data.offset
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * 予測情報を取得
+     * @param data The data for the request.
+     * @param data.code 銘柄コード
+     * @param data.headItemKey head_item_key
+     * @param data.reportTypes レポートタイプ
+     * @param data.offset オフセット
+     * @returns FinForecastStruct Successful Response
+     * @throws ApiError
+     */
+    public static getForecasts(data: FinancialSummary2GetForecastsData = {}): CancelablePromise<FinancialSummary2GetForecastsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/summary2/forecasts/',
+            query: {
+                code: data.code,
+                head_item_key: data.headItemKey,
+                report_types: data.reportTypes,
+                offset: data.offset
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * 財政状態情報を取得
+     * @param data The data for the request.
+     * @param data.code 銘柄コード
+     * @param data.headItemKey head_item_key
+     * @param data.reportTypes レポートタイプ
+     * @param data.offset オフセット
+     * @returns FinResultOnlyStruct Successful Response
+     * @throws ApiError
+     */
+    public static getFinancialPosition(data: FinancialSummary2GetFinancialPositionData = {}): CancelablePromise<FinancialSummary2GetFinancialPositionResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/summary2/financial_position',
+            query: {
+                code: data.code,
+                head_item_key: data.headItemKey,
+                report_types: data.reportTypes,
+                offset: data.offset
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * キャッシュフロー情報を取得
+     * @param data The data for the request.
+     * @param data.code
+     * @param data.year 年度
+     * @param data.offset オフセット
+     * @returns FinResultOnlyStruct Successful Response
+     * @throws ApiError
+     */
+    public static getCashFlows(data: FinancialSummary2GetCashFlowsData): CancelablePromise<FinancialSummary2GetCashFlowsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/summary2/cash_flows/{code}',
+            path: {
+                code: data.code
+            },
+            query: {
+                year: data.year,
+                offset: data.offset
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * 業績予想の変更情報を取得
+     * @param data The data for the request.
+     * @param data.headItemKey head_item_key
+     * @param data.code 銘柄コード
+     * @param data.reportTypes レポートタイプ
+     * @param data.offset オフセット
+     * @returns unknown Successful Response
+     * @throws ApiError
+     */
+    public static getForecastChange(data: FinancialSummary2GetForecastChangeData = {}): CancelablePromise<FinancialSummary2GetForecastChangeResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/summary2/forecasts/change/',
+            query: {
+                head_item_key: data.headItemKey,
+                code: data.code,
+                report_types: data.reportTypes,
+                offset: data.offset
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * 配当予想の変更情報を取得
+     * @param data The data for the request.
+     * @param data.headItemKey head_item_key
+     * @param data.code 銘柄コード
+     * @param data.reportTypes レポートタイプ
+     * @param data.offset オフセット
+     * @returns unknown Successful Response
+     * @throws ApiError
+     */
+    public static getDividendsChange(data: FinancialSummary2GetDividendsChangeData = {}): CancelablePromise<FinancialSummary2GetDividendsChangeResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/summary2/dividends/change/',
+            query: {
+                head_item_key: data.headItemKey,
+                code: data.code,
+                report_types: data.reportTypes,
+                offset: data.offset
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
     /**
      * 配当情報を取得
      * @param data The data for the request.
@@ -195,10 +380,10 @@ export class FinancialSummaryService {
      * @returns FinResponseBase Successful Response
      * @throws ApiError
      */
-    public static getDividends(data: FinancialSummaryGetDividendsData): CancelablePromise<FinancialSummaryGetDividendsResponse> {
+    public static getDividends(data: FinancialSummary2GetDividendsData): CancelablePromise<FinancialSummary2GetDividendsResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v1/ix/summary/dividends/{code}',
+            url: '/api/v1/ix/summary2/dividends/{code}',
             path: {
                 code: data.code
             },

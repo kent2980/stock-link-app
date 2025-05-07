@@ -15,7 +15,7 @@ router = APIRouter()
 @router.get(
     "/operating_results/income/",
     summary="経営成績情報を取得",
-    response_model=sc.FinResultStruct,
+    response_model=sc.FinItemsResponse,
 )
 def get_operating_results(
     *,
@@ -24,7 +24,7 @@ def get_operating_results(
     head_item_key: Optional[str] = Query(None, description="head_item_key"),
     report_types: Optional[List[str]] = Query(None, description="レポートタイプ"),
     offset: int = Query(0, description="オフセット"),
-) -> sc.FinResultStruct:
+) -> sc.FinItemsResponse:
 
     if code and head_item_key:
         raise HTTPException(
@@ -76,7 +76,7 @@ def get_operating_results(
 
     result = utils.get_struct(
         items=item,
-        struct=sc.FinResultStruct(),
+        struct=sc.FinItemsResponse(),
     )
 
     return result
@@ -90,7 +90,7 @@ def get_other_operating_results(
     head_item_key: Optional[str] = Query(None, description="head_item_key"),
     report_types: Optional[List[str]] = Query(None, description="レポートタイプ"),
     offset: int = Query(0, description="オフセット"),
-) -> sc.FinResultStruct:
+) -> sc.FinItemsResponse:
 
     if code and head_item_key:
         raise HTTPException(
@@ -142,7 +142,7 @@ def get_other_operating_results(
 
     result = utils.get_struct(
         items=item,
-        struct=sc.FinResultStruct(),
+        struct=sc.FinItemsResponse(),
     )
 
     return result
@@ -156,7 +156,7 @@ def get_forecasts(
     head_item_key: Optional[str] = Query(None, description="head_item_key"),
     report_types: Optional[List[str]] = Query(None, description="レポートタイプ"),
     offset: int = Query(0, description="オフセット"),
-) -> sc.FinForecastStruct:
+) -> sc.FinItemsResponse:
 
     if code and head_item_key:
         raise HTTPException(
@@ -208,7 +208,7 @@ def get_forecasts(
 
     result = utils.get_struct(
         items=item,
-        struct=sc.FinForecastStruct(),
+        struct=sc.FinItemsResponse(),
     )
 
     return result
@@ -217,7 +217,7 @@ def get_forecasts(
 @router.get(
     "/financial_position",
     summary="財政状態情報を取得",
-    response_model=sc.FinResultOnlyStruct,
+    response_model=sc.FinItemsResponse,
 )
 def get_financial_position(
     *,
@@ -226,7 +226,7 @@ def get_financial_position(
     head_item_key: Optional[str] = Query(None, description="head_item_key"),
     report_types: Optional[List[str]] = Query(None, description="レポートタイプ"),
     offset: int = Query(0, description="オフセット"),
-) -> sc.FinResultOnlyStruct:
+) -> sc.FinItemsResponse:
 
     if code and head_item_key:
         raise HTTPException(
@@ -278,7 +278,7 @@ def get_financial_position(
 
     result = utils.get_struct(
         items=item,
-        struct=sc.FinResultOnlyStruct(),
+        struct=sc.FinItemsResponse(),
     )
 
     return result
@@ -287,7 +287,7 @@ def get_financial_position(
 @router.get(
     "/cash_flows/{code}",
     summary="キャッシュフロー情報を取得",
-    response_model=sc.FinResultOnlyStruct,
+    response_model=sc.FinItemsResponse,
 )
 def get_cash_flows(
     *,
@@ -295,7 +295,7 @@ def get_cash_flows(
     code: str,
     year: Optional[str] = Query(None, description="年度"),
     offset: int = Query(0, description="オフセット"),
-) -> sc.FinResultOnlyStruct:
+) -> sc.FinItemsResponse:
 
     attr_value_dict = {
         "FY": "BusinessResultsCashFlows",
@@ -336,7 +336,7 @@ def get_cash_flows(
 
     result = utils.get_struct(
         items=item,
-        struct=sc.FinResultOnlyStruct(),
+        struct=sc.FinItemsResponse(),
     )
 
     return result
@@ -428,32 +428,3 @@ def get_dividends_change(
     )
 
     return item
-
-
-@router.get(
-    "/dividends/{code}",
-    summary="配当情報を取得",
-    response_model=sc.FinResponseBase,
-)
-def get_dividends(
-    *,
-    session: SessionDep,
-    code: str,
-) -> sc.FinResponseBase:
-
-    attr_value_dict = {
-        "FY": "Dividends",
-        "QU": "QuarterlyDividends",
-    }
-
-    from_name_dict = {
-        "consolidated": "tse-ed-t_DividendsAbstract",
-        "non_consolidated": "tse-ed-t_DividendsAbstract",
-    }
-
-    try:
-        head_item_keys = utils.get_head_item_key(session=session, code=code)
-    except HeadItemNotFound as e:
-        raise HTTPException(status_code=404, detail=str(e))
-
-    pass
