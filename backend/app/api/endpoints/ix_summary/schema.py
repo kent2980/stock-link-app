@@ -34,22 +34,24 @@ class FinValueBase(SQLModel):
     scale: Optional[int]
 
 
-class FinValueAbstractBase(SQLModel):
-    """メトリック親情報を表すクラス"""
+class FinValueWithChange(SQLModel):
 
-    name: str
-    order: float
-    label: str
     curValue: Optional[FinValueBase] = Field(default=None)
     curChange: Optional[FinValueBase] = Field(default=None)
     preValue: Optional[FinValueBase] = Field(default=None)
     preChange: Optional[FinValueBase] = Field(default=None)
 
 
-class FinValueWithProgressRate(FinValueAbstractBase):
+class FinValueAbstractBase(SQLModel):
     """メトリック親情報を表すクラス"""
 
-    progress_rate: Optional[float]
+    name: str
+    order: float
+    label: str
+    result: Optional[FinValueWithChange] = Field(default=None)
+    forecast: Optional[FinValueWithChange] = Field(default=None)
+    upper: Optional[FinValueWithChange] = Field(default=None)
+    lower: Optional[FinValueWithChange] = Field(default=None)
 
 
 class PeriodSchemaBase(SQLModel):
@@ -60,14 +62,6 @@ class PeriodSchemaBase(SQLModel):
     period: str
 
 
-class FinItemsBase(SQLModel):
-    """メトリック情報のリストを表すクラス"""
-
-    is_active: bool = Field(default=False)
-    data: Optional[List[FinValueAbstractBase]] = Field(default=[])
-    context: Optional[str] = Field(default=None)
-
-
 class FinStructBase(SQLModel):
     """ファイナンシャルレスポンス情報を表すクラス"""
 
@@ -75,78 +69,8 @@ class FinStructBase(SQLModel):
     head_item_key: Optional[str] = Field(default=None)
 
 
-class FinUpperAndLower(FinStructBase):
-    """メトリックの上下限情報を表すクラス"""
+class FinItemsResponse(FinStructBase):
+    """メトリック情報のリストを表すクラス"""
 
-    upper: Optional[FinItemsBase] = Field(default=FinItemsBase(context="UpperMember"))
-    lower: Optional[FinItemsBase] = Field(default=FinItemsBase(context="LowerMember"))
-
-
-class FinResultStruct(FinUpperAndLower):
-
-    result: Optional[FinItemsBase] = Field(default=FinItemsBase(context="ResultMember"))
-
-
-class FinResultOnlyStruct(FinStructBase):
-
-    result: Optional[FinItemsBase] = Field(default=FinItemsBase(context="ResultMember"))
-
-
-class FinForecastStruct(FinUpperAndLower):
-
-    forecast: Optional[FinItemsBase] = Field(
-        default=FinItemsBase(context="ForecastMember")
-    )
-
-
-class LabelBase(SQLModel):
-
-    label: str
-
-
-class FinResponseBase(SQLModel):
-
-    count: int
-    # labels: List[LabelBase]
-    data: List[FinStructBase]
-
-
-class FinResultResponse(FinResponseBase):
-
-    data: List[FinResultStruct]
-
-
-class FinResultOnlyResponse(FinResponseBase):
-
-    data: List[FinResultOnlyStruct]
-
-
-class FinForecastResponse(FinResponseBase):
-
-    data: List[FinForecastStruct]
-
-
-class ForecastProgressRate(SQLModel):
-
-    name: str
-    label: str
-    value: Optional[float]
-
-
-class ForecastProgressRateResponse(SQLModel):
-
-    forecast: Optional[List[ForecastProgressRate]]
-    upper: Optional[List[ForecastProgressRate]]
-    lower: Optional[List[ForecastProgressRate]]
-
-
-class ForecastAndProgressRate(ForecastProgressRate):
-
-    data: Optional[List[FinValueAbstractBase]]
-
-
-class ForecastAndProgressRateResponse(SQLModel):
-
-    forecast: Optional[List[ForecastAndProgressRate]]
-    lower: Optional[List[ForecastAndProgressRate]]
-    upper: Optional[List[ForecastAndProgressRate]]
+    context: Optional[str] = Field(default=None)
+    data: Optional[List[FinValueAbstractBase]] = Field(default=[])

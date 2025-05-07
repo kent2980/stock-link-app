@@ -254,17 +254,17 @@ def get_summary_items(
 
 def get_struct(
     items: SummaryItems,
-    struct: sc.FinStructBase,
-) -> sc.FinStructBase:
+    struct: sc.FinItemsResponse,
+) -> sc.FinItemsResponse:
     """
     #### この関数は、FinStructBaseを取得する関数です。
     - **機能**:FinStructBaseを取得します。
     - **引数**:head_item: Any, tree_items: sc.TreeItemsList, ix_non_fractions: List[IxNonFraction], from_name: str, child_items: Dict[str, str]
-    - **戻り値**:sc.FinStructBase
+    - **戻り値**:sc.FinItemsResponse
     """
 
     # structがsc.FinStructBaseまたはその継承クラスでない場合、例外を発生させる
-    if not isinstance(struct, sc.FinStructBase):
+    if not isinstance(struct, sc.FinItemsResponse):
         raise TypeError("struct must be sc.FinStructBase or its subclass.")
 
     head_item = items.get_head_item()
@@ -277,15 +277,16 @@ def get_struct(
         if item.xlink_from == from_name:
             for key in struct.__fields__.keys():
                 field = getattr(struct, key)
-                if isinstance(field, sc.FinItemsBase):
+                print(f"field: {field}")
+                if isinstance(field, sc.FinItemsResponse):
                     if item.xlink_from == from_name:
                         field.data.append(create_metric_parent_schema(item))
 
-    if isinstance(struct, sc.FinStructBase):
+    if isinstance(struct, sc.FinItemsResponse):
         for item in ix_non_fractions:
             for key in struct.__fields__.keys():
                 struct_default = getattr(struct, key)
-                if isinstance(struct_default, sc.FinItemsBase):
+                if isinstance(struct_default, sc.FinItemsResponse):
                     context = struct_default.context
                     if context in item.context:
                         for struct_item in struct_default.data:
@@ -324,28 +325,6 @@ def get_struct(
     struct.head_item_key = head_item.item_key
 
     return struct
-
-
-def get_header_labels(items: List[sc.FinStructBase]) -> List[sc.LabelBase]:
-    """
-    #### この関数は、ヘッダーラベルを取得する関数です。
-    - **機能**:ヘッダーラベルを取得します。
-    - **引数**:items: List[sc.FinStructBase]
-    - **戻り値**:List[sc.LabelBase]
-    """
-
-    labels = []
-    for item in items:
-        for key in item.__fields__.keys():
-            field = getattr(item, key)
-            if isinstance(field, sc.FinItemsBase):
-                for result in field.data:
-                    labels.append(sc.LabelBase(label=result.label))
-
-    # labelsから重複を削除
-    labels = list({label.label: label for label in labels}.values())
-
-    return labels
 
 
 def get_summary_items_list(
