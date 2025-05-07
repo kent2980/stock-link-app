@@ -1,5 +1,6 @@
 import Calender from "@/components/Category/Calender";
 import Industry33 from "@/components/Category/Industry_33";
+import CustomSpinner from "@/components/Spinner/CustomSpinner";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
@@ -16,14 +17,14 @@ function Category() {
       <Swiper loop={true}>
         <SwiperSlide>
           <ErrorBoundary fallback={<div>表示するデータがありません。</div>}>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<CustomSpinner />}>
               <Calender />
             </Suspense>
           </ErrorBoundary>
         </SwiperSlide>
         <SwiperSlide>
           <ErrorBoundary fallback={<div>表示するデータがありません。</div>}>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<CustomSpinner />}>
               <Industry33 />
             </Suspense>
           </ErrorBoundary>
