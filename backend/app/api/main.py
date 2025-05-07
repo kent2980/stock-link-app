@@ -14,6 +14,7 @@ from app.api.endpoints.ix_qual import router as ix_qual_router
 from app.api.endpoints.ix_schema import router as ix_schema_router
 from app.api.endpoints.ix_source import router as ix_source_router
 from app.api.endpoints.ix_summary import router as ix_summary_router
+from app.api.endpoints.ix_summary2 import router as ix_summary2_router
 from app.api.endpoints.jpx_info import router as jpx_info_router
 from app.api.endpoints.manager.router import items, login, users, utils
 from app.api.endpoints.stock_wiki import router as stock_wiki_router
@@ -28,6 +29,9 @@ api_router.include_router(
 )
 api_router.include_router(
     ix_summary_router.router, prefix="/ix/summary", tags=["FinancialSummary"]
+)
+api_router.include_router(
+    ix_summary2_router.router, prefix="/ix/summary2", tags=["FinancialSummary2"]
 )
 api_router.include_router(stock_wiki_router.router, prefix="/wiki", tags=["wiki"])
 api_router.include_router(
