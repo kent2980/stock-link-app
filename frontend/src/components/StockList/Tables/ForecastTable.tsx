@@ -13,6 +13,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import React, { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import FinStructWrapItem from "./FinStructTable";
+import FinStructUpperAndLowerWrapItem from "./FinStructUpperAndLowerTable";
 
 interface ForecastTableProps {
   HeadItemKey: string;
@@ -102,15 +103,33 @@ const PriorForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
   return (
     <Box>
       <Wrap>
-        {data?.data?.map((item, index) => (
-          <FinStructWrapItem
-            key={index}
-            label={item.label}
-            value={item.forecast?.curValue?.value}
-            valueScale={item.forecast?.curValue?.display_scale}
-            changeValue={item.forecast?.curChange}
-          />
-        ))}
+        {data?.data?.map((item, index) => {
+          return (
+            <>
+              {item.forecast?.isActive && (
+                <FinStructWrapItem
+                  key={index}
+                  label={item.label}
+                  value={item.forecast?.curValue?.value}
+                  valueScale={item.forecast?.curValue?.display_scale}
+                  changeValue={item.forecast?.curChange}
+                />
+              )}
+              {item.lower?.isActive && item.upper?.isActive && (
+                <FinStructUpperAndLowerWrapItem
+                  key={index}
+                  label={item.label}
+                  downValue={item.lower?.curValue?.value}
+                  downValueScale={item.lower?.curValue?.display_scale}
+                  downChangeValue={item.lower?.curChange}
+                  upValue={item.upper?.curValue?.value}
+                  upValueScale={item.upper?.curValue?.display_scale}
+                  upChangeValue={item.upper?.curChange}
+                />
+              )}
+            </>
+          );
+        })}
       </Wrap>
     </Box>
   );
