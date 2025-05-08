@@ -37,7 +37,7 @@ const FinStructUpperAndLowerWrapItem: React.FC<
       <VStack>
         <Stat.ValueText>
           {upValue && upValueScale && downValue && (
-            <VStack gap={0} fontSize="12px">
+            <VStack gap={0} fontSize="18px">
               <FormatNumber value={downValue} style="currency" currency="JPY" />
               <Text>〜</Text>
               <FormatNumber value={upValue} style="currency" currency="JPY" />
