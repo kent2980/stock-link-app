@@ -23,7 +23,7 @@ const FinStructWrapItem: React.FC<FinStructWrapItemProps> = ({
   ...props
 }) => {
   return (
-    <Stat.Root borderWidth="1px" borderRadius="lg" p={4} bg="white" {...props}>
+    <Stat.Root borderWidth="1px" borderRadius="lg" p={2} bg="white" {...props}>
       <Stat.Label>{label}</Stat.Label>
       <VStack>
         <Stat.ValueText>
