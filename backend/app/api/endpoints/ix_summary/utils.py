@@ -2,6 +2,7 @@ import re
 from collections import defaultdict
 from typing import Dict, List, Optional
 
+import alembic
 from sqlmodel import Session
 
 from app.models import IxHeadTitle, IxNonFraction
@@ -271,22 +272,16 @@ def set_result_value(struct_item_result, item, value_type):
     setattr(struct_item_result, value_type, value)
 
 
-def set_with_change_value(target, item):
-    """
-    target（forecast/upper/lower）にFinValueWithChangeをセットしisActiveをTrueにする共通関数
-    """
-    value = sc.FinValueWithChange(
-        curValue=create_fin_value_base(item),
-    )
-    value.isActive = True
-    return value
-
-
 def set_struct_item_value(struct_item_part, item):
     """
     struct_item_part（result/forecast/upper/lower）にitemの値をセットしisActiveをTrueにする共通関数
     """
-    if any(ctx.startswith("Current") for ctx in item.context):
+    if any(ctx.startswith("Next") for ctx in item.context):
+        if item.name.startswith("tse-ed-t_ChangeIn"):
+            set_result_value(struct_item_part, item, "curChange")
+        else:
+            set_result_value(struct_item_part, item, "curValue")
+    elif any(ctx.startswith("Current") for ctx in item.context):
         if item.name.startswith("tse-ed-t_ChangeIn"):
             set_result_value(struct_item_part, item, "curChange")
         else:
@@ -336,7 +331,9 @@ def get_struct(
         # ix_non_fractionsの各itemについて処理
         for item in ix_non_fractions:
             # structの各フィールドごとに処理
+            # print(child_items[item.name])
             for structItem in struct.data:
+                # print(f"structItem.name: {structItem.name}")
                 if structItem.name == child_items[item.name]:
                     if structItem.result.context in item.context:
                         set_struct_item_value(structItem.result, item)
