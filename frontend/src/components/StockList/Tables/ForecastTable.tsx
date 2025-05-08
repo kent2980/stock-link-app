@@ -1,4 +1,4 @@
-import { FinancialSummary2Service } from "@/client";
+import { FinancialSummaryService } from "@/client";
 import CustomSpinner from "@/components/Spinner/CustomSpinner";
 import {
   Box,
@@ -22,7 +22,7 @@ const ForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
   const { data } = useSuspenseQuery({
     queryKey: ["forecastData", HeadItemKey],
     queryFn: async () => {
-      return await FinancialSummary2Service.getForecasts({
+      return await FinancialSummaryService.getForecasts({
         headItemKey: HeadItemKey,
       });
     },
@@ -31,13 +31,13 @@ const ForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
     <Box>
       <IsChangeForecast HeadItemKey={HeadItemKey} />
       <Wrap>
-        {data?.forecast?.data?.map((item, index) => (
+        {data?.data?.map((item, index) => (
           <FinStructWrapItem
             key={index}
             label={item.label}
-            value={item.curValue?.value}
-            valueScale={item.curValue?.display_scale}
-            changeValue={item.curChange}
+            value={item.forecast?.curValue?.value}
+            valueScale={item.forecast?.curValue?.display_scale}
+            changeValue={item.forecast?.curChange}
           />
         ))}
       </Wrap>
@@ -55,7 +55,7 @@ const IsChangeForecast: React.FC<IsChangeForecastProps> = ({ HeadItemKey }) => {
   const { data } = useSuspenseQuery({
     queryKey: ["isChangeForecast", HeadItemKey],
     queryFn: async () => {
-      return await FinancialSummary2Service.getForecastChange({
+      return await FinancialSummaryService.getForecastChange({
         headItemKey: HeadItemKey,
       });
     },
@@ -91,7 +91,7 @@ const PriorForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
   const { data } = useSuspenseQuery({
     queryKey: ["priorForecastData", HeadItemKey],
     queryFn: async () => {
-      return await FinancialSummary2Service.getForecasts({
+      return await FinancialSummaryService.getForecasts({
         headItemKey: HeadItemKey,
         offset: 1,
         reportTypes: ["edjp", "edif", "edus"],
@@ -102,13 +102,13 @@ const PriorForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
   return (
     <Box>
       <Wrap>
-        {data?.forecast?.data?.map((item, index) => (
+        {data?.data?.map((item, index) => (
           <FinStructWrapItem
             key={index}
             label={item.label}
-            value={item.curValue?.value}
-            valueScale={item.curValue?.display_scale}
-            changeValue={item.curChange}
+            value={item.forecast?.curValue?.value}
+            valueScale={item.forecast?.curValue?.display_scale}
+            changeValue={item.forecast?.curChange}
           />
         ))}
       </Wrap>

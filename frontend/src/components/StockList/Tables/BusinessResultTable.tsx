@@ -1,4 +1,4 @@
-import { FinancialSummary2Service } from "@/client";
+import { FinancialSummaryService } from "@/client";
 import { Box, Wrap } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import React from "react";
@@ -14,7 +14,7 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
   const { data } = useSuspenseQuery({
     queryKey: ["BusinessResult", HeadItemKey],
     queryFn: async () => {
-      return await FinancialSummary2Service.getOperatingResults({
+      return await FinancialSummaryService.getOperatingResults({
         headItemKey: HeadItemKey,
       });
     },
@@ -22,13 +22,13 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
   return (
     <Box>
       <Wrap>
-        {data?.result?.data?.map((item, index) => (
+        {data?.data?.map((item, index) => (
           <FinStructWrapItem
             key={index}
             label={item.label}
-            value={item.curValue?.value}
-            valueScale={item.curValue?.display_scale}
-            changeValue={item.curChange}
+            value={item.result?.curValue?.value}
+            valueScale={item.result?.curValue?.display_scale}
+            changeValue={item.result?.curChange}
           />
         ))}
       </Wrap>

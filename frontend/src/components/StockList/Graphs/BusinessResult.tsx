@@ -1,4 +1,4 @@
-import { FinancialSummary2Service } from "@/client";
+import { FinancialSummaryService } from "@/client";
 import { Chart, useChart } from "@chakra-ui/charts";
 import { BoxProps } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -21,17 +21,17 @@ const BusinessResult: React.FC<BusinessResultProps> = ({ headItemKey }) => {
   const { data } = useSuspenseQuery({
     queryKey: ["BusinessResult", headItemKey],
     queryFn: async () => {
-      return await FinancialSummary2Service.getOperatingResults({
+      return await FinancialSummaryService.getOperatingResults({
         headItemKey: headItemKey,
       });
     },
   });
 
   const items =
-    data.result?.data?.map((dataItem) => ({
+    data?.data?.map((dataItem) => ({
       type: dataItem.label,
-      value: dataItem.curChange?.value ?? 0,
-      preValue: dataItem.preChange?.value ?? 0,
+      value: dataItem.result?.curChange?.value ?? 0,
+      preValue: dataItem.result?.preChange?.value ?? 0,
     })) ?? [];
 
   const chart = useChart({

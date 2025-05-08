@@ -30,7 +30,7 @@ const CashFlow: React.FC<CashFlowProps> = ({ code }) => {
   });
 
   const chartData = {
-    labels: data.result?.data?.map((dataItem) =>
+    labels: data?.data?.map((dataItem) =>
       dataItem.label
         .replace("によるキャッシュ・フロー", "CS")
         .replace("現金及び現金同等物期末残高", "現金")
@@ -38,8 +38,8 @@ const CashFlow: React.FC<CashFlowProps> = ({ code }) => {
     datasets: [
       {
         label: "金額",
-        data: data.result?.data?.map(
-          (dataItem) => dataItem.curValue?.value ?? 0
+        data: data?.data?.map(
+          (dataItem) => dataItem.result?.curValue?.value ?? 0
         ),
         backgroundColor: (context: any) =>
           context.raw >= 0 ? "rgba(54, 162, 235, 1)" : "rgba(255, 99, 132, 1)", // プラスは青、マイナスは赤
@@ -59,7 +59,7 @@ const CashFlow: React.FC<CashFlowProps> = ({ code }) => {
       tooltip: {
         callbacks: {
           label: (context: any) =>
-            `${context.raw.toLocaleString()} ${data?.result?.data?.[context.dataIndex]?.curValue?.display_scale ?? ""}`,
+            `${context.raw.toLocaleString()} ${data?.data?.[context.dataIndex]?.result?.curValue?.display_scale ?? ""}`,
         },
       },
     },

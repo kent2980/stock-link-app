@@ -251,6 +251,54 @@ def get_summary_items(
     return items
 
 
+def create_fin_value_base(item):
+    """itemからsc.FinValueBaseを生成する共通関数"""
+    return sc.FinValueBase(
+        name=item.name,
+        value=item.numeric,
+        unit=item.unit_ref,
+        display_scale=item.display_scale,
+        scale=item.scale,
+    )
+
+
+def set_result_value(struct_item_result, item, value_type):
+    """
+    struct_item_resultのcurValue/curChange/preValue/preChangeに値をセットする共通関数
+    value_type: 'curValue', 'curChange', 'preValue', 'preChange'
+    """
+    value = create_fin_value_base(item)
+    setattr(struct_item_result, value_type, value)
+
+
+def set_with_change_value(target, item):
+    """
+    target（forecast/upper/lower）にFinValueWithChangeをセットしisActiveをTrueにする共通関数
+    """
+    value = sc.FinValueWithChange(
+        curValue=create_fin_value_base(item),
+    )
+    value.isActive = True
+    return value
+
+
+def set_struct_item_value(struct_item_part, item):
+    """
+    struct_item_part（result/forecast/upper/lower）にitemの値をセットしisActiveをTrueにする共通関数
+    """
+    if any(ctx.startswith("Current") for ctx in item.context):
+        if item.name.startswith("tse-ed-t_ChangeIn"):
+            set_result_value(struct_item_part, item, "curChange")
+        else:
+            set_result_value(struct_item_part, item, "curValue")
+    elif any(ctx.startswith("Prior") for ctx in item.context):
+        if item.name.startswith("tse-ed-t_ChangeIn"):
+            set_result_value(struct_item_part, item, "preChange")
+        else:
+            set_result_value(struct_item_part, item, "preValue")
+    struct_item_part.isActive = True
+
+
 def get_struct(
     items: SummaryItems,
     struct: sc.FinItemsResponse,
@@ -277,54 +325,27 @@ def get_struct(
         if item.xlink_from == from_name:
             # structの全フィールドに対してループ
             for key in struct.__fields__.keys():
+                # フィールドの値を取得
                 field = getattr(struct, key)
                 # フィールドがFinItemsBase型の場合のみ処理
-                if isinstance(field, sc.FinItemsBase):
+                if isinstance(field, List):
                     # item情報をもとにFinValueAbstractBaseを生成しdataリストに追加
-                    field.data.append(create_metric_parent_schema(item))
+                    field.append(create_metric_parent_schema(item))
 
-    if isinstance(struct, sc.FinStructBase):
+    if isinstance(struct, sc.FinItemsResponse):
         # ix_non_fractionsの各itemについて処理
         for item in ix_non_fractions:
             # structの各フィールドごとに処理
-            for key in struct.__fields__.keys():
-                struct_default = getattr(struct, key)
-                # フィールドがFinItemsBase型の場合のみ処理
-                if isinstance(struct_default, sc.FinItemsBase):
-                    context = struct_default.context
-                    # itemのcontextにstruct_defaultのcontextが含まれている場合のみ処理
-                    if context in item.context:
-                        # struct_default.data内の各struct_itemについて処理
-                        for struct_item in struct_default.data:
-                            # struct_item.nameとchild_items[item.name]が一致する場合のみ処理
-                            if struct_item.name == child_items[item.name]:
-                                # item.numericがNoneでなければis_activeをTrueに
-                                if item.numeric is not None:
-                                    struct_default.is_active = True
-                                # itemの値からFinValueBaseインスタンスを生成
-                                metric_schema = sc.FinValueBase(
-                                    name=item.name,
-                                    value=item.numeric,
-                                    unit=item.unit_ref,
-                                    display_scale=item.display_scale,
-                                    scale=item.scale,
-                                )
-                                # contextに"Prior"で始まるものが含まれているか判定
-                                is_prior = any(
-                                    re.match(r"Prior.*", context)
-                                    for context in item.context
-                                )
-                                # is_priorの値とitem.nameのプレフィックスで代入先を分岐
-                                if is_prior:
-                                    if item.name.startswith("tse-ed-t_ChangeIn"):
-                                        struct_item.preChange = metric_schema
-                                    else:
-                                        struct_item.preValue = metric_schema
-                                else:
-                                    if item.name.startswith("tse-ed-t_ChangeIn"):
-                                        struct_item.curChange = metric_schema
-                                    else:
-                                        struct_item.curValue = metric_schema
+            for structItem in struct.data:
+                if structItem.name == child_items[item.name]:
+                    if structItem.result.context in item.context:
+                        set_struct_item_value(structItem.result, item)
+                    elif structItem.forecast.context in item.context:
+                        set_struct_item_value(structItem.forecast, item)
+                    elif structItem.upper.context in item.context:
+                        set_struct_item_value(structItem.upper, item)
+                    elif structItem.lower.context in item.context:
+                        set_struct_item_value(structItem.lower, item)
 
     period = sc.PeriodSchemaBase(  # periodを設定
         accountingStandard=head_item.report_type,

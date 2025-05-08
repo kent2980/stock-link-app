@@ -36,10 +36,12 @@ class FinValueBase(SQLModel):
 
 class FinValueWithChange(SQLModel):
 
+    isActive: Optional[bool] = Field(default=False)
     curValue: Optional[FinValueBase] = Field(default=None)
     curChange: Optional[FinValueBase] = Field(default=None)
     preValue: Optional[FinValueBase] = Field(default=None)
     preChange: Optional[FinValueBase] = Field(default=None)
+    context: Optional[str] = Field(default=None)
 
 
 class FinValueAbstractBase(SQLModel):
@@ -48,10 +50,18 @@ class FinValueAbstractBase(SQLModel):
     name: str
     order: float
     label: str
-    result: Optional[FinValueWithChange] = Field(default=None)
-    forecast: Optional[FinValueWithChange] = Field(default=None)
-    upper: Optional[FinValueWithChange] = Field(default=None)
-    lower: Optional[FinValueWithChange] = Field(default=None)
+    result: Optional[FinValueWithChange] = Field(
+        default=FinValueWithChange(context="ResultMember")
+    )
+    forecast: Optional[FinValueWithChange] = Field(
+        default=FinValueWithChange(context="ForecastMember")
+    )
+    upper: Optional[FinValueWithChange] = Field(
+        default=FinValueWithChange(context="UpperMember")
+    )
+    lower: Optional[FinValueWithChange] = Field(
+        default=FinValueWithChange(context="LowerMember")
+    )
 
 
 class PeriodSchemaBase(SQLModel):
@@ -72,5 +82,4 @@ class FinStructBase(SQLModel):
 class FinItemsResponse(FinStructBase):
     """メトリック情報のリストを表すクラス"""
 
-    context: Optional[str] = Field(default=None)
     data: Optional[List[FinValueAbstractBase]] = Field(default=[])
