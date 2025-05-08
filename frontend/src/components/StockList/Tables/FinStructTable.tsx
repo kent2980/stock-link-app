@@ -28,10 +28,12 @@ const FinStructWrapItem: React.FC<FinStructWrapItemProps> = ({
       <VStack>
         <Stat.ValueText>
           {value && valueScale && (
-            <>
+            <VStack gap={0} fontSize="12px">
               <FormatNumber value={value} style="currency" currency="JPY" />
-              <Text fontSize="12px">{valueScale}</Text>
-            </>
+              <Text fontSize="10px" color="gray.500">
+                {valueScale}
+              </Text>
+            </VStack>
           )}
         </Stat.ValueText>
         {changeValue !== null &&
