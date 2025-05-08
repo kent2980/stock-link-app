@@ -270,6 +270,8 @@ def set_result_value(struct_item_result, item, value_type):
     """
     value = create_fin_value_base(item)
     setattr(struct_item_result, value_type, value)
+    if value.value is not None:
+        struct_item_result.isActive = True
 
 
 def set_struct_item_value(struct_item_part, item):
@@ -291,7 +293,6 @@ def set_struct_item_value(struct_item_part, item):
             set_result_value(struct_item_part, item, "preChange")
         else:
             set_result_value(struct_item_part, item, "preValue")
-    struct_item_part.isActive = True
 
 
 def get_struct(

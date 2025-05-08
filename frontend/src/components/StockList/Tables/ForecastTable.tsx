@@ -33,13 +33,29 @@ const ForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
       <IsChangeForecast HeadItemKey={HeadItemKey} />
       <Wrap>
         {data?.data?.map((item, index) => (
-          <FinStructWrapItem
-            key={index}
-            label={item.label}
-            value={item.forecast?.curValue?.value}
-            valueScale={item.forecast?.curValue?.display_scale}
-            changeValue={item.forecast?.curChange}
-          />
+          <>
+            {item.forecast?.isActive == true && (
+              <FinStructWrapItem
+                key={index}
+                label={item.label}
+                value={item.forecast?.curValue?.value}
+                valueScale={item.forecast?.curValue?.display_scale}
+                changeValue={item.forecast?.curChange}
+              />
+            )}
+            {item.lower?.isActive == true && item.upper?.isActive == true && (
+              <FinStructUpperAndLowerWrapItem
+                key={index}
+                label={item.label}
+                downValue={item.lower?.curValue?.value}
+                downValueScale={item.lower?.curValue?.display_scale}
+                downChangeValue={item.lower?.curChange}
+                upValue={item.upper?.curValue?.value}
+                upValueScale={item.upper?.curValue?.display_scale}
+                upChangeValue={item.upper?.curChange}
+              />
+            )}
+          </>
         ))}
       </Wrap>
     </Box>
@@ -106,7 +122,7 @@ const PriorForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
         {data?.data?.map((item, index) => {
           return (
             <>
-              {item.forecast?.isActive && (
+              {item.forecast?.isActive == true && (
                 <FinStructWrapItem
                   key={index}
                   label={item.label}
@@ -115,7 +131,7 @@ const PriorForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
                   changeValue={item.forecast?.curChange}
                 />
               )}
-              {item.lower?.isActive && item.upper?.isActive && (
+              {item.lower?.isActive == true && item.upper?.isActive == true && (
                 <FinStructUpperAndLowerWrapItem
                   key={index}
                   label={item.label}
