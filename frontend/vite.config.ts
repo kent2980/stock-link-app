@@ -18,7 +18,7 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["public/assets/images/favicon.png"],
       manifest: {
-        name: "My Awesome App",
+        name: "Closio",
         short_name: "Closio",
         start_url: "/",
         display: "standalone",
