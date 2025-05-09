@@ -1,5 +1,5 @@
 import { DocumentListPublic } from "@/client";
-import { Box, BoxProps, Heading, Skeleton } from "@chakra-ui/react";
+import { Box, BoxProps, Heading, Skeleton, VStack } from "@chakra-ui/react";
 import React, { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import BusinessResult from "./Graphs/BusinessResult";
@@ -27,8 +27,10 @@ const StockListItem: React.FC<StockListItemProps> = ({ item, ...props }) => {
       </Heading>
       <ErrorBoundary fallback={<Box>表示するデータがありません。</Box>}>
         <Suspense fallback={<Skeleton height="300px" width="100%" />}>
-          <BusinessResult headItemKey={item.head_item_key} />
-          <BusinessResultTable HeadItemKey={item.head_item_key} />
+          <VStack gap={3}>
+            <BusinessResult headItemKey={item.head_item_key} />
+            <BusinessResultTable HeadItemKey={item.head_item_key} />
+          </VStack>
         </Suspense>
       </ErrorBoundary>
       {/* 業績予想 */}

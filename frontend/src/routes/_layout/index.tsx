@@ -11,7 +11,7 @@ export const Route = createFileRoute("/_layout/")({
 
 function Index() {
   return (
-    <Box minH="100vh">
+    <Box h="100vh">
       <ErrorBoundary fallback={<div>表示するデータがありません。</div>}>
         <Suspense fallback={<CustomSpinner />}>
           <LatestStockList />

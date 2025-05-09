@@ -44,7 +44,13 @@ const BusinessResult: React.FC<BusinessResultProps> = ({ headItemKey }) => {
 
   return (
     <>
-      <Chart.Root chart={chart} h="150px" fontSize={"10px"}>
+      <Chart.Root
+        chart={chart}
+        h="150px"
+        fontSize={"10px"}
+        bg="#b2b2b221"
+        boxShadow="sm"
+      >
         <BarChart
           barSize={100}
           data={chart.data}
