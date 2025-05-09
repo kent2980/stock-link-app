@@ -77,7 +77,6 @@ const Header: React.FC<HeaderProps> = ({ headerHeight = 12, ...props }) => {
       }
     }
   };
-  const menuBgColor = "#f8f9fa";
   const textColor = "#666666";
   const activeTextColor = "#333333";
   const logoutColor = "#e74c3c";
@@ -108,7 +107,7 @@ const Header: React.FC<HeaderProps> = ({ headerHeight = 12, ...props }) => {
       </Box>
 
       {/* 下段: ナビゲーションメニュー */}
-      <Box bg={menuBgColor} id="secondary-header">
+      <Box bg="white" id="secondary-header">
         <Container maxW="container.xl">
           {/* 1段目: ナビゲーションメニュー */}
           <Flex justify="space-between" py={2}>
