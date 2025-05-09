@@ -38,27 +38,6 @@ const Header: React.FC<HeaderProps> = ({ headerHeight = 12, ...props }) => {
     }
   };
 
-  // スクロールイベントを監視
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        setIsVisible(false); // 下にスクロールしている場合は隠す
-      } else {
-        setIsVisible(true); // 上にスクロールしている場合は表示
-      }
-
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [lastScrollY]);
-
   // ストアからPublicデータを取得
   const { SelectDateStr, CurrentCategory } = useStore(
     HeaderStore,
