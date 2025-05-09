@@ -33,15 +33,15 @@ const FinStructUpperAndLowerWrapItem: React.FC<
 }) => {
   return (
     <Stat.Root borderWidth="1px" borderRadius="lg" p={2} bg="white" {...props}>
-      <Stat.Label>{label}</Stat.Label>
+      <Stat.Label fontSize={10}>{label}</Stat.Label>
       <VStack>
         <Stat.ValueText>
           {upValue && upValueScale && downValue && (
-            <VStack gap={0} fontSize="18px">
+            <VStack gap={0} fontSize={18}>
               <FormatNumber value={downValue} style="currency" currency="JPY" />
               <Text>〜</Text>
               <FormatNumber value={upValue} style="currency" currency="JPY" />
-              <Text fontSize="10px">{upValueScale}</Text>
+              <Text fontSize={10}>{upValueScale}</Text>
             </VStack>
           )}
         </Stat.ValueText>

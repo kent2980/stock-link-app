@@ -24,13 +24,13 @@ const FinStructWrapItem: React.FC<FinStructWrapItemProps> = ({
 }) => {
   return (
     <Stat.Root borderWidth="1px" borderRadius="lg" p={2} bg="white" {...props}>
-      <Stat.Label>{label}</Stat.Label>
+      <Stat.Label fontSize={9}>{label}</Stat.Label>
       <VStack>
         <Stat.ValueText>
           {value && valueScale && (
-            <VStack gap={0} fontSize="18px">
+            <VStack gap={0} fontSize={18}>
               <FormatNumber value={value} style="currency" currency="JPY" />
-              <Text fontSize="10px" color="gray.500">
+              <Text fontSize={9} color="gray.500">
                 {valueScale}
               </Text>
             </VStack>
