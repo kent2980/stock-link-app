@@ -77,7 +77,6 @@ const Header: React.FC<HeaderProps> = ({ headerHeight = 12, ...props }) => {
       }
     }
   };
-  const bgColor = "ui.main";
   const menuBgColor = "#f8f9fa";
   const textColor = "#666666";
   const activeTextColor = "#333333";
