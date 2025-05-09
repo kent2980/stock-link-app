@@ -36,6 +36,8 @@ export const StockList: React.FC<StockListProps> = ({ data, ...props }) => {
         width={{ base: "100%", md: "1024px" }}
         scrollSnapType="y mandatory"
         scrollBehavior="smooth"
+        overflowY="auto" // ← 追加
+        maxHeight="100vh" // ← 必要に応じて追加（高さ制限）
       >
         <List.Root
           height={virtualizer.getTotalSize()}
