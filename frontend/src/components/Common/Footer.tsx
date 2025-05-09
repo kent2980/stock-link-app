@@ -25,7 +25,7 @@ const Footer: React.FC<FooterProps> = ({ footerHeight = 12, ...props }) => {
       justifyContent="center"
       alignItems="center"
       position="fixed"
-      bottom={{ base: `-${footerHeight * 4}px`, md: 0 }} // 隠すときは上に移動
+      bottom={0} // 隠すときは上に移動
       display={{ base: "flex", md: "none" }}
       zIndex={1000}
       boxShadow="md"

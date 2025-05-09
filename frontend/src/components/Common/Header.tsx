@@ -63,7 +63,7 @@ const Header: React.FC<HeaderProps> = ({ headerHeight = 12, ...props }) => {
       bg="white"
       position="fixed"
       boxShadow="xs" // BoxShadowを薄く変更
-      top={{ base: `-${headerHeight * 4}px`, md: 0 }} // 隠すときは上に移動
+      top={0} // 隠すときは上に移動
       left={0}
       id="header"
       w="100vw"

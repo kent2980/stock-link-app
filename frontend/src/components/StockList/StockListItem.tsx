@@ -14,6 +14,7 @@ interface StockListItemProps extends BoxProps {
 const StockListItem: React.FC<StockListItemProps> = ({ item, ...props }) => {
   return (
     <Box
+      className="stock-list-item"
       {...props}
       px={4}
       borderBottom="solid 1px"
