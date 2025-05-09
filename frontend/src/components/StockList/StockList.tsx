@@ -1,6 +1,6 @@
 import { DocumentListPublics } from "@/client";
 import { Box, BoxProps, Center, List } from "@chakra-ui/react";
-import { useWindowVirtualizer } from "@tanstack/react-virtual";
+import { useVirtualizer } from "@tanstack/react-virtual";
 import React from "react";
 import StockListItem from "./StockListItem";
 
@@ -17,19 +17,20 @@ export const StockList: React.FC<StockListProps> = ({ data, ...props }) => {
     );
   }
 
-  const listRef = React.useRef<HTMLDivElement | null>(null);
+  const parentRef = React.useRef<HTMLDivElement>(null);
 
-  const virtualizer = useWindowVirtualizer({
+  const virtualizer = useVirtualizer({
     count: data.count,
+    getScrollElement: () => parentRef.current,
     estimateSize: () => 400,
-    overscan: 3,
-    scrollMargin: listRef.current?.offsetTop ?? 0,
+    overscan: 5,
+    // scrollMargin: listRef.current?.offsetTop ?? 0,
   });
 
   return (
     <>
       <Box
-        ref={listRef}
+        ref={parentRef}
         className="List"
         {...props}
         m={{ base: 0, md: 4 }}
