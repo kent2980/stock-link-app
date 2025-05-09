@@ -20,8 +20,6 @@ const StockListItem: React.FC<StockListItemProps> = ({ item, ...props }) => {
       borderBottom="solid 1px"
       borderColor="gray.200"
       p={2}
-      overflow="auto"
-      h="80vh"
     >
       <Header item={item} />
       {/* 経営成績 */}
