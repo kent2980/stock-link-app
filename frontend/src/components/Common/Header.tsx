@@ -13,7 +13,7 @@ import {
 import { useNavigate } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import { format } from "date-fns";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BiSearch } from "react-icons/bi";
 
 interface HeaderProps extends BoxProps {
