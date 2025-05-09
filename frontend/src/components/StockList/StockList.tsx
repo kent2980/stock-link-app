@@ -35,7 +35,7 @@ export const StockList: React.FC<StockListProps> = ({ data, ...props }) => {
         {...props}
         m={{ base: 0, md: 4 }}
         width={{ base: "100%", md: "1024px" }}
-        scrollSnapType="y mandatory"
+        scrollSnapType="y proximity"
         scrollBehavior="smooth"
         overflowY="auto" // ← 追加
         maxHeight="100vh" // ← 必要に応じて追加（高さ制限）
