@@ -2,7 +2,7 @@ import { MenuListStore } from "@/Store/Store";
 import { Flex, FlexProps, IconButton } from "@chakra-ui/react";
 import { useNavigate } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
-import React, { useState } from "react";
+import React from "react";
 
 interface FooterProps extends FlexProps {
   footerHeight?: number; // ヘッダーの高さを指定するプロパティ
