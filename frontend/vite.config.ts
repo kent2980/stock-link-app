@@ -26,7 +26,7 @@ export default defineConfig({
         theme_color: "#ffffff",
         icons: [
           {
-            src: "public/assets/images/closio_icon.png",
+            src: "/assets/images/closio_icon.png",
             sizes: "192x192",
             type: "image/png",
           },
