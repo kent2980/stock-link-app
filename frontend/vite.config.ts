@@ -16,7 +16,7 @@ export default defineConfig({
     TanStackRouterVite(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["public/assets/images/favicon.png"],
+      includeAssets: ["public/assets/images/closio_icon.png"],
       manifest: {
         name: "Closio",
         short_name: "Closio",
@@ -26,14 +26,9 @@ export default defineConfig({
         theme_color: "#ffffff",
         icons: [
           {
-            src: "icon-192x192.png",
+            src: "closio_icon.png",
             sizes: "192x192",
-            type: "image/i_192.png",
-          },
-          {
-            src: "icon-512x512.png",
-            sizes: "512x512",
-            type: "image/i_512.png",
+            type: "image/closio_icon.png",
           },
         ],
       },
