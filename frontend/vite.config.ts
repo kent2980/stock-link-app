@@ -19,7 +19,7 @@ export default defineConfig({
       includeAssets: ["public/assets/images/favicon.png"],
       manifest: {
         name: "My Awesome App",
-        short_name: "MyApp",
+        short_name: "Closio",
         start_url: "/",
         display: "standalone",
         background_color: "#ffffff",
