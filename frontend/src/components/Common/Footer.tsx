@@ -2,7 +2,7 @@ import { MenuListStore } from "@/Store/Store";
 import { Flex, FlexProps, IconButton } from "@chakra-ui/react";
 import { useNavigate } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 interface FooterProps extends FlexProps {
   footerHeight?: number; // ヘッダーの高さを指定するプロパティ
@@ -19,27 +19,6 @@ const Footer: React.FC<FooterProps> = ({ footerHeight = 12, ...props }) => {
 
   const [isVisible, setIsVisible] = useState(true); // ヘッダーの表示状態
   const [lastScrollY, setLastScrollY] = useState(0); // 最後のスクロール位置
-
-  // スクロールイベントを監視
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        setIsVisible(false); // 下にスクロールしている場合は隠す
-      } else {
-        setIsVisible(true); // 上にスクロールしている場合は表示
-      }
-
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [lastScrollY]);
 
   return (
     <Flex
