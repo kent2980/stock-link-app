@@ -17,9 +17,6 @@ const Footer: React.FC<FooterProps> = ({ footerHeight = 12, ...props }) => {
     }
   };
 
-  const [isVisible, setIsVisible] = useState(true); // ヘッダーの表示状態
-  const [lastScrollY, setLastScrollY] = useState(0); // 最後のスクロール位置
-
   return (
     <Flex
       id="footer"
