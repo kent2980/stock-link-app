@@ -87,8 +87,6 @@ function Index() {
 
   return (
     <Box overflow="hidden" {...swipeHandlers}>
-      {/* 次の日と前日に移動するリンクを配置 */}
-      <PageLinkArea dateStr={dateStr} />
       <Box minH="100vh">
         <ErrorBoundary fallback={<div>表示するデータがありません。</div>}>
           <Suspense fallback={<CustomSpinner />}>
