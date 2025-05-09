@@ -13,7 +13,7 @@ import {
 import { useNavigate } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import { format } from "date-fns";
-import React, { useState } from "react";
+import React from "react";
 import { BiSearch } from "react-icons/bi";
 
 interface HeaderProps extends BoxProps {
@@ -24,9 +24,6 @@ const Header: React.FC<HeaderProps> = ({ headerHeight = 12, ...props }) => {
   const { logout } = useAuth();
   const navigate = useNavigate();
   const { menuList } = useStore(MenuListStore, (state) => state); // ストアからデータを取得
-
-  const [isVisible, setIsVisible] = useState(true); // ヘッダーの表示状態
-  const [lastScrollY, setLastScrollY] = useState(0); // 最後のスクロール位置
 
   const handleLogout = () => {
     logout();
