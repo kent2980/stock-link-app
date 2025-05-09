@@ -86,7 +86,7 @@ const Header: React.FC<HeaderProps> = ({ headerHeight = 12, ...props }) => {
   return (
     <Box
       as="header"
-      bg="gray.50"
+      bg="white"
       position="fixed"
       boxShadow="xs" // BoxShadowを薄く変更
       top={{ base: isVisible ? 0 : `-${headerHeight * 4}px`, md: 0 }} // 隠すときは上に移動
@@ -98,10 +98,10 @@ const Header: React.FC<HeaderProps> = ({ headerHeight = 12, ...props }) => {
       {...props}
     >
       {/* 上段: メインヘッダー */}
-      <Box bg={bgColor}>
+      <Box id="main-header">
         <Container maxW="container.xl">
           <Flex align="center" height="100%">
-            <Text color="white" fontWeight="600" fontSize="14px">
+            <Text fontWeight="600" fontSize="14px">
               Closio
             </Text>
           </Flex>
@@ -151,7 +151,6 @@ const Header: React.FC<HeaderProps> = ({ headerHeight = 12, ...props }) => {
             {/* 日付表示（右側） */}
             <Box
               w={{ base: "calc(100vw - 250px)", md: "200px" }}
-              bg="gray.100"
               px={4}
               borderRadius="md"
               borderBottom="1px solid"
