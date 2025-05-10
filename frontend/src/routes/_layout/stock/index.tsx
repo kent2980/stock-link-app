@@ -11,7 +11,13 @@ export const Route = createFileRoute("/_layout/stock/")({
 
 function Timeline() {
   return (
-    <Box h="100vh">
+    <Box
+      h="100vh"
+      data-state="open"
+      _open={{
+        animation: "fade-in 1s ease-out",
+      }}
+    >
       <ErrorBoundary fallback={<div>表示するデータがありません。</div>}>
         <Suspense fallback={<CustomSpinner />}>
           <LatestStockList />

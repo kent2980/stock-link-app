@@ -24,7 +24,16 @@ function Index() {
     });
   };
   return (
-    <VStack h="100%" bg="ui.background" p={6} gap={10}>
+    <VStack
+      h="100%"
+      bg="ui.background"
+      p={6}
+      gap={10}
+      data-state="open"
+      _open={{
+        animation: "fade-in 1s ease-out",
+      }}
+    >
       <Box mx="auto" mb={4}>
         <Heading as="h1" size="5xl" textAlign="center">
           C

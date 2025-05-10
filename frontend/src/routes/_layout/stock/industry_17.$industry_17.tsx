@@ -17,7 +17,12 @@ function Timeline() {
   });
 
   return (
-    <Box>
+    <Box
+      data-state="open"
+      _open={{
+        animation: "fade-in 1s ease-out",
+      }}
+    >
       <ErrorBoundary fallback={<div>表示するデータがありません。</div>}>
         <Suspense fallback={<CustomSpinner />}>
           <Industry17StockList industry_17_code={Number(industry_17)} />

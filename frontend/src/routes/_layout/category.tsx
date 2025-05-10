@@ -1,6 +1,7 @@
 import Calender from "@/components/Category/Calender";
 import Industry33 from "@/components/Category/Industry_33";
 import CustomSpinner from "@/components/Spinner/CustomSpinner";
+import { Box } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
@@ -13,7 +14,12 @@ export const Route = createFileRoute("/_layout/category")({
 
 function Category() {
   return (
-    <>
+    <Box
+      data-state="open"
+      _open={{
+        animation: "fade-in 500ms ease-out",
+      }}
+    >
       <Swiper loop={true}>
         <SwiperSlide>
           <ErrorBoundary fallback={<div>表示するデータがありません。</div>}>
@@ -30,6 +36,6 @@ function Category() {
           </ErrorBoundary>
         </SwiperSlide>
       </Swiper>
-    </>
+    </Box>
   );
 }

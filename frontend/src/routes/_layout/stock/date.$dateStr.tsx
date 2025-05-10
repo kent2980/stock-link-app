@@ -87,7 +87,14 @@ function Timeline() {
   }, [scrollKey]);
 
   return (
-    <Box overflow="hidden" {...swipeHandlers}>
+    <Box
+      overflow="hidden"
+      {...swipeHandlers}
+      data-state="open"
+      _open={{
+        animation: "fade-in 1s ease-out",
+      }}
+    >
       <Box minH="100vh">
         <ErrorBoundary fallback={<div>表示するデータがありません。</div>}>
           <Suspense fallback={<CustomSpinner />}>
