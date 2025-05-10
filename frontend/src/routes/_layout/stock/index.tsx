@@ -5,7 +5,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-export const Route = createFileRoute("/_layout/timeline")({
+export const Route = createFileRoute("/_layout/stock/")({
   component: Timeline,
 });
 

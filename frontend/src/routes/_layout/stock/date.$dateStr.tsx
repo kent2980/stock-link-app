@@ -12,29 +12,30 @@ import { ErrorBoundary } from "react-error-boundary";
 import { GrCaretNext, GrCaretPrevious } from "react-icons/gr";
 import { useSwipeable } from "react-swipeable";
 
-export const Route = createFileRoute("/_layout/timeline/date/$dateStr")({
+export const Route = createFileRoute("/_layout/stock/date/$dateStr")({
   component: Timeline,
 });
 
 function Timeline() {
   // urlパラメータから日付を取得
-  const { dateStr } = useParams({ from: "/_layout/timeline/date/$dateStr" });
-  console.log("dateStr", dateStr);
+  const { dateStr } = useParams({ from: "/_layout/stock/date/$dateStr" });
   // Storeを更新
-  HeaderStore.setState((state) => ({
-    ...state,
-    SelectDateStr: dateStr,
-    CurrentCategory: null,
-  }));
+  useEffect(() => {
+    HeaderStore.setState((state) => ({
+      ...state,
+      SelectDateStr: dateStr,
+      CurrentCategory: null,
+    }));
+  }, [dateStr]);
 
   // スワイプ操作のための関数を定義
   const navigate = useNavigate({
-    from: "/_layout/timeline/date/$dateStr",
+    from: "/_layout/stock/$dateStr",
   });
 
   const handleClick = (dateStr: string) => {
     navigate({
-      to: "/timeline/date/$dateStr",
+      to: "/stock/date/$dateStr",
       params: {
         dateStr: dateStr,
       },
@@ -107,11 +108,11 @@ interface PageLinkAreaProps {
 const PageLinkArea: React.FC<PageLinkAreaProps> = ({ dateStr }) => {
   // 画面遷移のための関数を定義
   const navigate = useNavigate({
-    from: "/_layout/index/date/$dateStr",
+    from: "/_layout/stock/date/$dateStr",
   });
   const handleClick = (dateStr: string) => {
     navigate({
-      to: "/timeline/date/$dateStr",
+      to: "/stock/date/$dateStr",
       params: {
         dateStr: dateStr,
       },

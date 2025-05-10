@@ -17,11 +17,11 @@ import { Route as RecoverPasswordImport } from './routes/recover-password'
 import { Route as LoginImport } from './routes/login'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
-import { Route as LayoutTimelineImport } from './routes/_layout/timeline'
 import { Route as LayoutCategoryImport } from './routes/_layout/category'
-import { Route as LayoutTimelineIndustry33Industry33Import } from './routes/_layout/timeline/industry33.$industry_33'
-import { Route as LayoutTimelineIndustry17Industry17Import } from './routes/_layout/timeline/industry17.$industry_17'
-import { Route as LayoutTimelineDateDateStrImport } from './routes/_layout/timeline/date.$dateStr'
+import { Route as LayoutStockIndexImport } from './routes/_layout/stock/index'
+import { Route as LayoutStockIndustry33Industry33Import } from './routes/_layout/stock/industry_33.$industry_33'
+import { Route as LayoutStockIndustry17Industry17Import } from './routes/_layout/stock/industry_17.$industry_17'
+import { Route as LayoutStockDateDateStrImport } from './routes/_layout/stock/date.$dateStr'
 
 // Create/Update Routes
 
@@ -55,31 +55,31 @@ const LayoutIndexRoute = LayoutIndexImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutTimelineRoute = LayoutTimelineImport.update({
-  path: '/timeline',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
 const LayoutCategoryRoute = LayoutCategoryImport.update({
   path: '/category',
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutTimelineIndustry33Industry33Route =
-  LayoutTimelineIndustry33Industry33Import.update({
-    path: '/industry33/$industry_33',
-    getParentRoute: () => LayoutTimelineRoute,
+const LayoutStockIndexRoute = LayoutStockIndexImport.update({
+  path: '/stock/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutStockIndustry33Industry33Route =
+  LayoutStockIndustry33Industry33Import.update({
+    path: '/stock/industry_33/$industry_33',
+    getParentRoute: () => LayoutRoute,
   } as any)
 
-const LayoutTimelineIndustry17Industry17Route =
-  LayoutTimelineIndustry17Industry17Import.update({
-    path: '/industry17/$industry_17',
-    getParentRoute: () => LayoutTimelineRoute,
+const LayoutStockIndustry17Industry17Route =
+  LayoutStockIndustry17Industry17Import.update({
+    path: '/stock/industry_17/$industry_17',
+    getParentRoute: () => LayoutRoute,
   } as any)
 
-const LayoutTimelineDateDateStrRoute = LayoutTimelineDateDateStrImport.update({
-  path: '/date/$dateStr',
-  getParentRoute: () => LayoutTimelineRoute,
+const LayoutStockDateDateStrRoute = LayoutStockDateDateStrImport.update({
+  path: '/stock/date/$dateStr',
+  getParentRoute: () => LayoutRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -110,25 +110,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCategoryImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/timeline': {
-      preLoaderRoute: typeof LayoutTimelineImport
-      parentRoute: typeof LayoutImport
-    }
     '/_layout/': {
       preLoaderRoute: typeof LayoutIndexImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/timeline/date/$dateStr': {
-      preLoaderRoute: typeof LayoutTimelineDateDateStrImport
-      parentRoute: typeof LayoutTimelineImport
+    '/_layout/stock/': {
+      preLoaderRoute: typeof LayoutStockIndexImport
+      parentRoute: typeof LayoutImport
     }
-    '/_layout/timeline/industry17/$industry_17': {
-      preLoaderRoute: typeof LayoutTimelineIndustry17Industry17Import
-      parentRoute: typeof LayoutTimelineImport
+    '/_layout/stock/date/$dateStr': {
+      preLoaderRoute: typeof LayoutStockDateDateStrImport
+      parentRoute: typeof LayoutImport
     }
-    '/_layout/timeline/industry33/$industry_33': {
-      preLoaderRoute: typeof LayoutTimelineIndustry33Industry33Import
-      parentRoute: typeof LayoutTimelineImport
+    '/_layout/stock/industry_17/$industry_17': {
+      preLoaderRoute: typeof LayoutStockIndustry17Industry17Import
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/stock/industry_33/$industry_33': {
+      preLoaderRoute: typeof LayoutStockIndustry33Industry33Import
+      parentRoute: typeof LayoutImport
     }
   }
 }
@@ -138,12 +138,11 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren([
   LayoutRoute.addChildren([
     LayoutCategoryRoute,
-    LayoutTimelineRoute.addChildren([
-      LayoutTimelineDateDateStrRoute,
-      LayoutTimelineIndustry17Industry17Route,
-      LayoutTimelineIndustry33Industry33Route,
-    ]),
     LayoutIndexRoute,
+    LayoutStockIndexRoute,
+    LayoutStockDateDateStrRoute,
+    LayoutStockIndustry17Industry17Route,
+    LayoutStockIndustry33Industry33Route,
   ]),
   LoginRoute,
   RecoverPasswordRoute,

@@ -5,15 +5,15 @@ import { createFileRoute, useParams } from "@tanstack/react-router";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-export const Route = createFileRoute(
-  "/_layout/timeline/industry33/$industry_33"
-)({
-  component: Timeline,
-});
+export const Route = createFileRoute("/_layout/stock/industry_33/$industry_33")(
+  {
+    component: Timeline,
+  }
+);
 
 function Timeline() {
   const { industry_33 } = useParams({
-    from: "/_layout/timeline/industry33/$industry_33",
+    from: "/_layout/stock/industry_33/$industry_33",
   });
 
   return (

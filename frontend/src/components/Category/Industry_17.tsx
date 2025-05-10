@@ -15,7 +15,7 @@ const Industry17 = () => {
   });
   const handleClick = (industry_17_code: number) => {
     navigate({
-      to: "/timeline/industry17/$industry_17",
+      to: "/stock/industry_17/$industry_17",
       params: {
         industry_17: String(industry_17_code),
       },
