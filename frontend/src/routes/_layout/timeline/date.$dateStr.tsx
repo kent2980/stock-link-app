@@ -13,10 +13,10 @@ import { GrCaretNext, GrCaretPrevious } from "react-icons/gr";
 import { useSwipeable } from "react-swipeable";
 
 export const Route = createFileRoute("/_layout/timeline/date/$dateStr")({
-  component: Index,
+  component: Timeline,
 });
 
-function Index() {
+function Timeline() {
   // urlパラメータから日付を取得
   const { dateStr } = useParams({ from: "/_layout/timeline/date/$dateStr" });
   console.log("dateStr", dateStr);
@@ -29,7 +29,7 @@ function Index() {
 
   // スワイプ操作のための関数を定義
   const navigate = useNavigate({
-    from: "/_layout/index/date/$dateStr",
+    from: "/_layout/timeline/date/$dateStr",
   });
 
   const handleClick = (dateStr: string) => {

@@ -32,8 +32,9 @@ function Index() {
         </Heading>
       </Box>
       <VStack gap={4}>
-        {menuItems.map((item) => (
+        {menuItems.map((item, key) => (
           <Box
+            key={key}
             w={300}
             borderBottomWidth={1}
             borderBottomStyle="solid"

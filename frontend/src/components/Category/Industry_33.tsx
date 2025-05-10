@@ -24,9 +24,8 @@ const Industry13 = () => {
   return (
     <Wrap width="100%" maxWidth="1200px" gap={2} p={2}>
       {data.data.map((item, index) => (
-        <WrapItem>
+        <WrapItem key={index}>
           <Center
-            key={index}
             display="flex"
             justifyContent="space-between"
             alignItems="center"

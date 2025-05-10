@@ -8,10 +8,10 @@ import { ErrorBoundary } from "react-error-boundary";
 export const Route = createFileRoute(
   "/_layout/timeline/industry17/$industry_17"
 )({
-  component: Index,
+  component: Timeline,
 });
 
-function Index() {
+function Timeline() {
   const { industry_17 } = useParams({
     from: "/_layout/timeline/industry17/$industry_17",
   });

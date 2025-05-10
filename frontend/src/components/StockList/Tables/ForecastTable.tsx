@@ -33,7 +33,7 @@ const ForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
       <IsChangeForecast HeadItemKey={HeadItemKey} />
       <Wrap>
         {data?.data?.map((item, index) => (
-          <>
+          <Box key={index}>
             {item.forecast?.isActive == true && (
               <FinStructWrapItem
                 key={index}
@@ -55,7 +55,7 @@ const ForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
                 upChangeValue={item.upper?.curChange}
               />
             )}
-          </>
+          </Box>
         ))}
       </Wrap>
     </Box>
