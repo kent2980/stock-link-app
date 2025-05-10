@@ -1,9 +1,8 @@
 import useAuth from "@/hooks/useAuth";
-import { HeaderStore, MenuListStore } from "@/Store/Store";
+import { MenuListStore } from "@/Store/Store";
 import { Box, BoxProps, Container, Flex, HStack, Text } from "@chakra-ui/react";
 import { useNavigate } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
-import { format } from "date-fns";
 import React from "react";
 
 interface HeaderProps extends BoxProps {
@@ -25,24 +24,6 @@ const Header: React.FC<HeaderProps> = ({ headerHeight = 12, ...props }) => {
     }
   };
 
-  // ストアからPublicデータを取得
-  const { SelectDateStr, CurrentCategory } = useStore(
-    HeaderStore,
-    (state) => state
-  );
-
-  const currentItem = () => {
-    if (CurrentCategory) {
-      return CurrentCategory;
-    } else {
-      if (SelectDateStr) {
-        const date = new Date(SelectDateStr);
-        return format(date, "yyyy.MM.dd");
-      } else {
-        return "";
-      }
-    }
-  };
   const textColor = "#666666";
   const activeTextColor = "#333333";
   const logoutColor = "#e74c3c";
