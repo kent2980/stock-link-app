@@ -17,8 +17,8 @@ export const Route = createFileRoute("/_layout")({
   },
 });
 
-const HEADER_HEIGHT = "96px";
-const FOOTER_HEIGHT = "64px";
+const HEADER_HEIGHT = "40px";
+const FOOTER_HEIGHT = "60px";
 
 function Layout() {
   return (
@@ -35,7 +35,7 @@ function Layout() {
           ml={{ base: 0, md: "16" }}
           bg="gray.50"
           h={{
-            base: "calc(100vh - 160px)",
+            base: "calc(100vh - 64px)",
             md: "calc(100vh - 96px)", // デスクトップはフッタ分を引かない
           }}
         >

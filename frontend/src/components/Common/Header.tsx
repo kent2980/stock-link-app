@@ -1,20 +1,10 @@
 import useAuth from "@/hooks/useAuth";
 import { HeaderStore, MenuListStore } from "@/Store/Store";
-import {
-  Box,
-  BoxProps,
-  Container,
-  Flex,
-  HStack,
-  Input,
-  InputGroup,
-  Text,
-} from "@chakra-ui/react";
+import { Box, BoxProps, Container, Flex, HStack, Text } from "@chakra-ui/react";
 import { useNavigate } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import { format } from "date-fns";
 import React from "react";
-import { BiSearch } from "react-icons/bi";
 
 interface HeaderProps extends BoxProps {
   headerHeight?: number | string; // ヘッダーの高さを指定するプロパティ
@@ -71,17 +61,6 @@ const Header: React.FC<HeaderProps> = ({ headerHeight = 12, ...props }) => {
       h={headerHeight}
       {...props}
     >
-      {/* 上段: メインヘッダー */}
-      <Box id="main-header">
-        <Container maxW="container.xl">
-          <Flex align="center" height="100%">
-            <Text fontWeight="600" fontSize="14px">
-              Closio
-            </Text>
-          </Flex>
-        </Container>
-      </Box>
-
       {/* 下段: ナビゲーションメニュー */}
       <Box bg="white" id="secondary-header">
         <Container maxW="container.xl">
@@ -111,32 +90,6 @@ const Header: React.FC<HeaderProps> = ({ headerHeight = 12, ...props }) => {
                 ログアウト
               </Text>
             </Flex>
-          </Flex>
-
-          {/* 2段目: 検索バーと日付 */}
-          <Flex gap={4}>
-            {/* 検索バー（左側） */}
-            <Box width="250px">
-              <InputGroup startElement={<BiSearch />}>
-                <Input size="sm" fontSize="16px" h="30px" />
-              </InputGroup>
-            </Box>
-
-            {/* 日付表示（右側） */}
-            <Box
-              w={{ base: "calc(100vw - 250px)", md: "200px" }}
-              px={4}
-              borderRadius="md"
-              borderBottom="1px solid"
-              borderColor="gray.200"
-              h="30px"
-            >
-              <Flex align="center" justify="center" h="100%">
-                <Text color={textColor} fontSize="14px" fontWeight="bold">
-                  {currentItem()}
-                </Text>
-              </Flex>
-            </Box>
           </Flex>
         </Container>
       </Box>
