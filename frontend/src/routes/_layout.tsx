@@ -17,9 +17,8 @@ export const Route = createFileRoute("/_layout")({
   },
 });
 
-const HEADER_HEIGHT = "40px";
-const FOOTER_HEIGHT = "60px";
-
+const HEADER_HEIGHT = 10;
+const FOOTER_HEIGHT = 16;
 function Layout() {
   return (
     <Flex direction="column">
@@ -27,16 +26,16 @@ function Layout() {
       <Box
         w="100%"
         mx="auto"
-        pt={HEADER_HEIGHT}
-        pb={{ base: FOOTER_HEIGHT, md: 0 }}
+        mt={HEADER_HEIGHT}
+        mb={{ base: FOOTER_HEIGHT, md: 0 }}
       >
         <AppSidebar />
         <Box
-          ml={{ base: 0, md: "16" }}
+          ml={{ base: 0, md: 60 }}
           bg="gray.50"
           h={{
-            base: "calc(100vh - 100px)",
-            md: "calc(100vh - 40px)", // デスクトップはフッタ分を引かない
+            base: window.innerHeight - (HEADER_HEIGHT * 4 + FOOTER_HEIGHT * 4),
+            md: window.innerHeight - HEADER_HEIGHT * 4,
           }}
         >
           <Outlet />
