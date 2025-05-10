@@ -17,8 +17,8 @@ export const Route = createFileRoute("/_layout")({
   },
 });
 
-const HEADER_HEIGHT = 24;
-const FOOTER_HEIGHT = 16;
+const HEADER_HEIGHT = "96px";
+const FOOTER_HEIGHT = "64px";
 
 function Layout() {
   return (
@@ -27,15 +27,25 @@ function Layout() {
       <Box
         w="100%"
         mx="auto"
-        mt={HEADER_HEIGHT}
-        mb={{ base: FOOTER_HEIGHT, md: 0 }}
+        pt={HEADER_HEIGHT}
+        pb={{ base: FOOTER_HEIGHT, md: 0 }}
       >
         <AppSidebar />
-        <Box ml={{ base: 0, md: "60" }} bg="gray.50">
+        <Box
+          ml={{ base: 0, md: "16" }}
+          bg="gray.50"
+          h={{
+            base: "calc(100vh - 160px)",
+            md: "calc(100vh - 96px)", // デスクトップはフッタ分を引かない
+          }}
+        >
           <Outlet />
         </Box>
       </Box>
-      <Footer footerHeight={FOOTER_HEIGHT} />
+      {/* フッターはモバイルのみ表示 */}
+      <Box display={{ base: "block", md: "none" }}>
+        <Footer footerHeight={FOOTER_HEIGHT} />
+      </Box>
     </Flex>
   );
 }

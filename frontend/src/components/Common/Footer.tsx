@@ -5,7 +5,7 @@ import { useStore } from "@tanstack/react-store";
 import React from "react";
 
 interface FooterProps extends FlexProps {
-  footerHeight?: number; // ヘッダーの高さを指定するプロパティ
+  footerHeight?: number | string; // ヘッダーの高さを指定するプロパティ
 }
 
 const Footer: React.FC<FooterProps> = ({ footerHeight = 12, ...props }) => {

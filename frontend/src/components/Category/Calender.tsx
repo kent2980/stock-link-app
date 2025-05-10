@@ -14,7 +14,7 @@ const Calender = () => {
   const navigate = useNavigate();
   const handleClick = (dateStr: string) => {
     navigate({
-      to: "/index/date/$dateStr",
+      to: "/timeline/date/$dateStr",
       params: {
         dateStr: dateStr,
       },

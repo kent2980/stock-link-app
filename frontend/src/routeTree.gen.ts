@@ -17,10 +17,11 @@ import { Route as RecoverPasswordImport } from './routes/recover-password'
 import { Route as LoginImport } from './routes/login'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
+import { Route as LayoutTimelineImport } from './routes/_layout/timeline'
 import { Route as LayoutCategoryImport } from './routes/_layout/category'
-import { Route as LayoutIndexIndustry33Industry33Import } from './routes/_layout/index/industry33.$industry_33'
-import { Route as LayoutIndexIndustry17Industry17Import } from './routes/_layout/index/industry17.$industry_17'
-import { Route as LayoutIndexDateDateStrImport } from './routes/_layout/index/date.$dateStr'
+import { Route as LayoutTimelineIndustry33Industry33Import } from './routes/_layout/timeline/industry33.$industry_33'
+import { Route as LayoutTimelineIndustry17Industry17Import } from './routes/_layout/timeline/industry17.$industry_17'
+import { Route as LayoutTimelineDateDateStrImport } from './routes/_layout/timeline/date.$dateStr'
 
 // Create/Update Routes
 
@@ -54,26 +55,31 @@ const LayoutIndexRoute = LayoutIndexImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutTimelineRoute = LayoutTimelineImport.update({
+  path: '/timeline',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 const LayoutCategoryRoute = LayoutCategoryImport.update({
   path: '/category',
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutIndexIndustry33Industry33Route =
-  LayoutIndexIndustry33Industry33Import.update({
-    path: '/index/industry33/$industry_33',
-    getParentRoute: () => LayoutRoute,
+const LayoutTimelineIndustry33Industry33Route =
+  LayoutTimelineIndustry33Industry33Import.update({
+    path: '/industry33/$industry_33',
+    getParentRoute: () => LayoutTimelineRoute,
   } as any)
 
-const LayoutIndexIndustry17Industry17Route =
-  LayoutIndexIndustry17Industry17Import.update({
-    path: '/index/industry17/$industry_17',
-    getParentRoute: () => LayoutRoute,
+const LayoutTimelineIndustry17Industry17Route =
+  LayoutTimelineIndustry17Industry17Import.update({
+    path: '/industry17/$industry_17',
+    getParentRoute: () => LayoutTimelineRoute,
   } as any)
 
-const LayoutIndexDateDateStrRoute = LayoutIndexDateDateStrImport.update({
-  path: '/index/date/$dateStr',
-  getParentRoute: () => LayoutRoute,
+const LayoutTimelineDateDateStrRoute = LayoutTimelineDateDateStrImport.update({
+  path: '/date/$dateStr',
+  getParentRoute: () => LayoutTimelineRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -104,21 +110,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCategoryImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/timeline': {
+      preLoaderRoute: typeof LayoutTimelineImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/': {
       preLoaderRoute: typeof LayoutIndexImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/index/date/$dateStr': {
-      preLoaderRoute: typeof LayoutIndexDateDateStrImport
-      parentRoute: typeof LayoutImport
+    '/_layout/timeline/date/$dateStr': {
+      preLoaderRoute: typeof LayoutTimelineDateDateStrImport
+      parentRoute: typeof LayoutTimelineImport
     }
-    '/_layout/index/industry17/$industry_17': {
-      preLoaderRoute: typeof LayoutIndexIndustry17Industry17Import
-      parentRoute: typeof LayoutImport
+    '/_layout/timeline/industry17/$industry_17': {
+      preLoaderRoute: typeof LayoutTimelineIndustry17Industry17Import
+      parentRoute: typeof LayoutTimelineImport
     }
-    '/_layout/index/industry33/$industry_33': {
-      preLoaderRoute: typeof LayoutIndexIndustry33Industry33Import
-      parentRoute: typeof LayoutImport
+    '/_layout/timeline/industry33/$industry_33': {
+      preLoaderRoute: typeof LayoutTimelineIndustry33Industry33Import
+      parentRoute: typeof LayoutTimelineImport
     }
   }
 }
@@ -128,10 +138,12 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren([
   LayoutRoute.addChildren([
     LayoutCategoryRoute,
+    LayoutTimelineRoute.addChildren([
+      LayoutTimelineDateDateStrRoute,
+      LayoutTimelineIndustry17Industry17Route,
+      LayoutTimelineIndustry33Industry33Route,
+    ]),
     LayoutIndexRoute,
-    LayoutIndexDateDateStrRoute,
-    LayoutIndexIndustry17Industry17Route,
-    LayoutIndexIndustry33Industry33Route,
   ]),
   LoginRoute,
   RecoverPasswordRoute,

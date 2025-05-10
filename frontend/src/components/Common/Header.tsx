@@ -17,7 +17,7 @@ import React from "react";
 import { BiSearch } from "react-icons/bi";
 
 interface HeaderProps extends BoxProps {
-  headerHeight?: number; // ヘッダーの高さを指定するプロパティ
+  headerHeight?: number | string; // ヘッダーの高さを指定するプロパティ
 }
 
 const Header: React.FC<HeaderProps> = ({ headerHeight = 12, ...props }) => {

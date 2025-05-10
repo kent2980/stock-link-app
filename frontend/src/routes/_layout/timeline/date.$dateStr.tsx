@@ -12,13 +12,13 @@ import { ErrorBoundary } from "react-error-boundary";
 import { GrCaretNext, GrCaretPrevious } from "react-icons/gr";
 import { useSwipeable } from "react-swipeable";
 
-export const Route = createFileRoute("/_layout/index/date/$dateStr")({
+export const Route = createFileRoute("/_layout/timeline/date/$dateStr")({
   component: Index,
 });
 
 function Index() {
   // urlパラメータから日付を取得
-  const { dateStr } = useParams({ from: "/_layout/index/date/$dateStr" });
+  const { dateStr } = useParams({ from: "/_layout/timeline/date/$dateStr" });
   console.log("dateStr", dateStr);
   // Storeを更新
   HeaderStore.setState((state) => ({
@@ -34,7 +34,7 @@ function Index() {
 
   const handleClick = (dateStr: string) => {
     navigate({
-      to: "/index/date/$dateStr",
+      to: "/timeline/date/$dateStr",
       params: {
         dateStr: dateStr,
       },
@@ -111,7 +111,7 @@ const PageLinkArea: React.FC<PageLinkAreaProps> = ({ dateStr }) => {
   });
   const handleClick = (dateStr: string) => {
     navigate({
-      to: "/index/date/$dateStr",
+      to: "/timeline/date/$dateStr",
       params: {
         dateStr: dateStr,
       },
