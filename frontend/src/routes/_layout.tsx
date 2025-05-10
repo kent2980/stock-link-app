@@ -35,8 +35,8 @@ function Layout() {
           ml={{ base: 0, md: "16" }}
           bg="gray.50"
           h={{
-            base: "calc(100vh - 64px)",
-            md: "calc(100vh - 96px)", // デスクトップはフッタ分を引かない
+            base: "calc(100vh - 100px)",
+            md: "calc(100vh - 40px)", // デスクトップはフッタ分を引かない
           }}
         >
           <Outlet />
