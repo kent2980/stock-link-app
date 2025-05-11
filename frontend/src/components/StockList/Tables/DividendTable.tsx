@@ -144,6 +144,20 @@ const DividendTable: React.FC<DividendTableProps> = ({ HeadItemKey }) => {
                 昨年実績
               </Table.Cell>
               <Table.Cell textAlign="center" width="16.66%">
+                {getFormatValue(total?.result?.preValue)}
+              </Table.Cell>
+              <Table.Cell textAlign="center" width="16.66%">
+                {getFormatValue(payRatio?.result?.preValue)}
+              </Table.Cell>
+              <Table.Cell textAlign="center" width="16.66%">
+                {getFormatValue(netAssetDividendRate?.result?.preValue)}
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell textAlign="center" width="16.66%">
+                今期実績
+              </Table.Cell>
+              <Table.Cell textAlign="center" width="16.66%">
                 {getFormatValue(total?.result?.curValue)}
               </Table.Cell>
               <Table.Cell textAlign="center" width="16.66%">
@@ -151,6 +165,20 @@ const DividendTable: React.FC<DividendTableProps> = ({ HeadItemKey }) => {
               </Table.Cell>
               <Table.Cell textAlign="center" width="16.66%">
                 {getFormatValue(netAssetDividendRate?.result?.curValue)}
+              </Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell textAlign="center" width="16.66%">
+                {period === "FY" ? "来期予想" : "今期予想"}
+              </Table.Cell>
+              <Table.Cell textAlign="center" width="16.66%">
+                {getFormatValue(total?.forecast?.curValue)}
+              </Table.Cell>
+              <Table.Cell textAlign="center" width="16.66%">
+                {getFormatValue(payRatio?.forecast?.curValue)}
+              </Table.Cell>
+              <Table.Cell textAlign="center" width="16.66%">
+                {getFormatValue(netAssetDividendRate?.forecast?.curValue)}
               </Table.Cell>
             </Table.Row>
           </Table.Body>
