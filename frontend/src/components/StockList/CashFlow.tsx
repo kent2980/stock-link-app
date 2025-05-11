@@ -30,10 +30,12 @@ const CashFlow: React.FC<CashFlowProps> = ({ code }) => {
   });
 
   const chartData = {
-    labels: data?.data?.map((dataItem) =>
-      dataItem.label
-        .replace("によるキャッシュ・フロー", "CS")
-        .replace("現金及び現金同等物期末残高", "現金")
+    labels: data?.data?.map(
+      (dataItem) =>
+        dataItem.label ??
+        ""
+          .replace("によるキャッシュ・フロー", "CS")
+          .replace("現金及び現金同等物期末残高", "現金")
     ),
     datasets: [
       {
