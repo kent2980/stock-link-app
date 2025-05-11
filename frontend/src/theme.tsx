@@ -18,13 +18,16 @@ export const system = createSystem(defaultConfig, {
       fontWeight: "bold",
     },
     th: {
-      backgroundColor: "ui.main",
+      backgroundColor: "#dee8eb",
       color: "gray.800",
-      fontWeight: "800 !important",
+      fontSize: "10px",
+      textAlign: "center",
     },
     td: {
       backgroundColor: "white",
-      color: "ui.dark",
+      color: "var(--chakra-colors-ui-dark)",
+      fontSize: "10px",
+      textAlign: "center",
     },
   },
   theme: {
