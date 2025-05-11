@@ -1,5 +1,6 @@
 from typing import List, Optional
 
+import alembic
 from sqlmodel import Field, SQLModel
 
 
@@ -50,6 +51,11 @@ class FinValueAbstractBase(SQLModel):
     name: str
     order: float
     label: str
+
+
+class FinValueFinance(FinValueAbstractBase):
+    """メトリック親情報を表すクラス"""
+
     result: Optional[FinValueWithChange] = Field(
         default=FinValueWithChange(context="ResultMember")
     )
@@ -61,6 +67,48 @@ class FinValueAbstractBase(SQLModel):
     )
     lower: Optional[FinValueWithChange] = Field(
         default=FinValueWithChange(context="LowerMember")
+    )
+
+
+class FinValueWithDividends(SQLModel):
+    """配当のメトリック情報を表すクラス"""
+
+    isActive: Optional[bool] = Field(default=False)
+    label: Optional[str] = Field(default=None)
+    result: Optional[FinValueWithChange] = Field(
+        default=FinValueWithChange(context="ResultMember")
+    )
+    forecast: Optional[FinValueWithChange] = Field(
+        default=FinValueWithChange(context="ForecastMember")
+    )
+    upper: Optional[FinValueWithChange] = Field(
+        default=FinValueWithChange(context="UpperMember")
+    )
+    lower: Optional[FinValueWithChange] = Field(
+        default=FinValueWithChange(context="LowerMember")
+    )
+    context: Optional[str] = Field(default=None)
+
+
+class FinValueDividends(FinValueAbstractBase):
+    """配当の期間情報を表すクラス"""
+
+    FirstQuarterMember: Optional[FinValueWithDividends] = Field(
+        default=FinValueWithDividends(context="FirstQuarterMember", label="第1四半期末")
+    )
+    SecondQuarterMember: Optional[FinValueWithDividends] = Field(
+        default=FinValueWithDividends(
+            context="SecondQuarterMember", label="第2四半期末"
+        )
+    )
+    ThirdQuarterMember: Optional[FinValueWithDividends] = Field(
+        default=FinValueWithDividends(context="ThirdQuarterMember", label="第3四半期末")
+    )
+    YearEndMember: Optional[FinValueWithDividends] = Field(
+        default=FinValueWithDividends(context="YearEndMember", label="期末")
+    )
+    AnnualMember: Optional[FinValueWithDividends] = Field(
+        default=FinValueWithDividends(context="AnnualMember", label="合計")
     )
 
 
@@ -82,4 +130,10 @@ class FinStructBase(SQLModel):
 class FinItemsResponse(FinStructBase):
     """メトリック情報のリストを表すクラス"""
 
-    data: Optional[List[FinValueAbstractBase]] = Field(default=[])
+    data: Optional[List[FinValueFinance]] = Field(default=[])
+
+
+class FinItemsDividendsResponse(FinStructBase):
+    """配当のメトリック情報のリストを表すクラス"""
+
+    data: Optional[FinValueDividends] = Field(default=None)

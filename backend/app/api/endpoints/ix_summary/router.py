@@ -428,3 +428,73 @@ def get_dividends_change(
     )
 
     return item
+
+
+@router.get(
+    "/dividends/",
+    summary="配当情報を取得",
+    response_model=sc.FinItemsDividendsResponse,
+)
+def get_dividends(
+    *,
+    session: SessionDep,
+    code: Optional[str] = Query(None, description="銘柄コード"),
+    head_item_key: Optional[str] = Query(None, description="head_item_key"),
+    report_types: Optional[List[str]] = Query(None, description="レポートタイプ"),
+    offset: int = Query(0, description="オフセット"),
+) -> sc.FinItemsDividendsResponse:
+
+    if code and head_item_key:
+        raise HTTPException(
+            status_code=404,
+            detail="銘柄コードかhead_item_keyどちらかを指定してください",
+        )
+
+    attr_value_dict = {
+        "FY": "Dividends",
+        "QU": "QuarterlyDividends",
+    }
+
+    from_name_dict = {
+        "consolidated": "tse-ed-t_DividendPerShareAbstract",
+        "non_consolidated": "tse-ed-t_DividendPerShareAbstract",
+    }
+
+    if head_item_key is None:
+        try:
+            head_item_key = utils.get_head_item_key(
+                session=session, code=code, report_types=report_types, offset=offset
+            )
+        except HeadItemNotFound as e:
+            raise HTTPException(status_code=404, detail=str(e))
+    else:
+        if offset > 0:
+            try:
+                head_item_key = utils.get_base_head_item_key_offset(
+                    session=session,
+                    headItemKey=head_item_key,
+                    report_types=report_types,
+                    offset=offset,
+                )
+            except HeadItemNotFound as e:
+                raise HTTPException(status_code=404, detail=str(e))
+
+    try:
+        item = utils.get_summary_items(
+            session=session,
+            head_item_key=head_item_key,
+            attr_value_dict=attr_value_dict,
+            from_name_dict=from_name_dict,
+            is_change=False,
+        )
+    except NotDictKeyError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except HeadItemNotFound as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    result = utils.get_dividends_struct(
+        items=item,
+        struct=sc.FinItemsDividendsResponse(),
+    )
+
+    return result

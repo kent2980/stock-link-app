@@ -2,7 +2,6 @@ import re
 from collections import defaultdict
 from typing import Dict, List, Optional
 
-import alembic
 from sqlmodel import Session
 
 from app.models import IxHeadTitle, IxNonFraction
@@ -28,8 +27,8 @@ def get_context_list(items: sc.TreeItemsList, attr_value: str) -> List[List[str]
     return list(from_dict.values())
 
 
-def create_metric_parent_schema(item) -> sc.FinValueAbstractBase:
-    return sc.FinValueAbstractBase(
+def create_metric_parent_schema(item) -> sc.FinValueFinance:
+    return sc.FinValueFinance(
         name=item.xlink_to,
         order=item.xlink_order,
         label=item.to_label,
@@ -38,7 +37,7 @@ def create_metric_parent_schema(item) -> sc.FinValueAbstractBase:
 
 def get_metric_schema_value_and_change(
     items: List[IxNonFraction],
-    schema_items: list[sc.FinValueAbstractBase],
+    schema_items: list[sc.FinValueFinance],
     child_items: Dict[str, str],
     metric_contexts: List[str],
 ):
@@ -308,7 +307,7 @@ def get_struct(
 
     # structがsc.FinItemsResponseまたはその継承クラスでない場合、例外を発生させる
     if not isinstance(struct, sc.FinItemsResponse):
-        raise TypeError("struct must be sc.FinStructBase or its subclass.")
+        raise TypeError("struct must be sc.FinItemsResponse or its subclass.")
 
     head_item = items.get_head_item()
     tree_items = items.get_tree_items()
@@ -325,8 +324,14 @@ def get_struct(
                 field = getattr(struct, key)
                 # フィールドがFinItemsBase型の場合のみ処理
                 if isinstance(field, List):
-                    # item情報をもとにFinValueAbstractBaseを生成しdataリストに追加
-                    field.append(create_metric_parent_schema(item))
+                    # item情報をもとにFinValueFinanceを生成しdataリストに追加
+                    field.append(
+                        sc.FinValueFinance(
+                            name=item.xlink_to,
+                            order=item.xlink_order,
+                            label=item.to_label,
+                        )
+                    )
 
     if isinstance(struct, sc.FinItemsResponse):
         # ix_non_fractionsの各itemについて処理
@@ -357,26 +362,90 @@ def get_struct(
     return struct
 
 
-# def get_header_labels(items: List[sc.FinStructBase]) -> List[sc.LabelBase]:
-#     """
-#     #### この関数は、ヘッダーラベルを取得する関数です。
-#     - **機能**:ヘッダーラベルを取得します。
-#     - **引数**:items: List[sc.FinStructBase]
-#     - **戻り値**:List[sc.LabelBase]
-#     """
+def get_metric_schema(
+    structItem: sc.FinValueWithDividends,
+    item: IxNonFraction,
+) -> sc.FinValueWithDividends:
+    """
+    #### この関数は、FinValueWithDividendsを取得する関数です。
+    - **機能**:FinValueWithDividendsを取得します。
+    - **引数**:head_item: Any, tree_items: sc.TreeItemsList, ix_non_fractions: List[IxNonFraction], from_name: str, child_items: Dict[str, str]
+    - **戻り値**:sc.FinValueWithDividends
+    """
+    # structがsc.FinItemsResponseまたはその継承クラスでない場合、例外を発生させる
+    if not isinstance(structItem, sc.FinValueWithDividends):
+        raise TypeError("struct must be sc.FinStructBase or its subclass.")
 
-#     labels = []
-#     for item in items:
-#         for key in item.__fields__.keys():
-#             field = getattr(item, key)
-#             if isinstance(field, sc.FinItemsBase):
-#                 for result in field.data:
-#                     labels.append(sc.LabelBase(label=result.label))
+    if structItem.result.context in item.context:
+        set_struct_item_value(structItem.result, item)
+    if structItem.forecast.context in item.context:
+        set_struct_item_value(structItem.forecast, item)
+    if structItem.upper.context in item.context:
+        set_struct_item_value(structItem.upper, item)
+    if structItem.lower.context in item.context:
+        set_struct_item_value(structItem.lower, item)
 
-#     # labelsから重複を削除
-#     labels = list({label.label: label for label in labels}.values())
+    return structItem
 
-#     return labels
+
+def get_dividends_struct(
+    items: SummaryItems,
+    struct: sc.FinItemsDividendsResponse,
+) -> sc.FinItemsDividendsResponse:
+    """
+    #### この関数は、FinValueDividendsを取得する関数です。
+    - **機能**:FinValueDividendsを取得します。
+    - **引数**:head_item: Any, tree_items: sc.TreeItemsList, ix_non_fractions: List[IxNonFraction], from_name: str, child_items: Dict[str, str]
+    - **戻り値**:sc.FinValueDividends
+    """
+
+    # structがsc.FinItemsResponseまたはその継承クラスでない場合、例外を発生させる
+    if not isinstance(struct, sc.FinItemsDividendsResponse):
+        raise TypeError("struct must be sc.FinStructBase or its subclass.")
+
+    head_item = items.get_head_item()
+    tree_items = items.get_tree_items()
+    from_name = items.get_from_name()
+    child_items = items.get_child_items()
+    ix_non_fractions = items.get_ix_non_fractions()
+
+    for item in tree_items.data:
+        # from_nameと一致するxlink_fromを持つitemのみ処理
+        if item.xlink_from == from_name:
+            # structの全フィールドに対してループ
+            # item情報をもとにFinValueDividendsを生成しdataリストに追加
+            struct.data = sc.FinValueDividends(
+                name=item.xlink_to,
+                order=item.xlink_order,
+                label=item.to_label,
+            )
+
+    if isinstance(struct, sc.FinItemsDividendsResponse):
+        # ix_non_fractionsの各itemについて処理
+        for item in ix_non_fractions:
+            # structの各フィールドごとに処理
+            if struct.data.name == child_items[item.name]:
+                if struct.data.FirstQuarterMember.context in item.context:
+                    get_metric_schema(struct.data.FirstQuarterMember, item)
+                elif struct.data.SecondQuarterMember.context in item.context:
+                    get_metric_schema(struct.data.SecondQuarterMember, item)
+                elif struct.data.ThirdQuarterMember.context in item.context:
+                    get_metric_schema(struct.data.ThirdQuarterMember, item)
+                elif struct.data.YearEndMember.context in item.context:
+                    get_metric_schema(struct.data.YearEndMember, item)
+                elif struct.data.AnnualMember.context in item.context:
+                    get_metric_schema(struct.data.AnnualMember, item)
+
+    period = sc.PeriodSchemaBase(  # periodを設定
+        accountingStandard=head_item.report_type,
+        fiscalYear=head_item.fy_year_end,
+        period=head_item.current_period,
+    )
+
+    struct.period = period
+    struct.head_item_key = head_item.item_key
+
+    return struct
 
 
 def get_summary_items_list(

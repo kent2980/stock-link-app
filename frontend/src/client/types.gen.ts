@@ -30,25 +30,21 @@ export type DocumentListPublics = {
 };
 
 /**
+ * 配当のメトリック情報のリストを表すクラス
+ */
+export type FinItemsDividendsResponse = {
+    period?: (PeriodSchemaBase | null);
+    head_item_key?: (string | null);
+    data?: (FinValueDividends | null);
+};
+
+/**
  * メトリック情報のリストを表すクラス
  */
 export type FinItemsResponse = {
     period?: (PeriodSchemaBase | null);
     head_item_key?: (string | null);
-    data?: (Array<FinValueAbstractBase> | null);
-};
-
-/**
- * メトリック親情報を表すクラス
- */
-export type FinValueAbstractBase = {
-    name: string;
-    order: number;
-    label: string;
-    result?: (FinValueWithChange | null);
-    forecast?: (FinValueWithChange | null);
-    upper?: (FinValueWithChange | null);
-    lower?: (FinValueWithChange | null);
+    data?: (Array<FinValueFinance> | null);
 };
 
 /**
@@ -62,12 +58,52 @@ export type FinValueBase = {
     scale: (number | null);
 };
 
+/**
+ * 配当の期間情報を表すクラス
+ */
+export type FinValueDividends = {
+    name: string;
+    order: number;
+    label: string;
+    FirstQuarterMember?: (FinValueWithDividends | null);
+    SecondQuarterMember?: (FinValueWithDividends | null);
+    ThirdQuarterMember?: (FinValueWithDividends | null);
+    YearEndMember?: (FinValueWithDividends | null);
+    AnnualMember?: (FinValueWithDividends | null);
+};
+
+/**
+ * メトリック親情報を表すクラス
+ */
+export type FinValueFinance = {
+    name: string;
+    order: number;
+    label: string;
+    result?: (FinValueWithChange | null);
+    forecast?: (FinValueWithChange | null);
+    upper?: (FinValueWithChange | null);
+    lower?: (FinValueWithChange | null);
+};
+
 export type FinValueWithChange = {
     isActive?: (boolean | null);
     curValue?: (FinValueBase | null);
     curChange?: (FinValueBase | null);
     preValue?: (FinValueBase | null);
     preChange?: (FinValueBase | null);
+    context?: (string | null);
+};
+
+/**
+ * 配当のメトリック情報を表すクラス
+ */
+export type FinValueWithDividends = {
+    isActive?: (boolean | null);
+    label?: (string | null);
+    result?: (FinValueWithChange | null);
+    forecast?: (FinValueWithChange | null);
+    upper?: (FinValueWithChange | null);
+    lower?: (FinValueWithChange | null);
     context?: (string | null);
 };
 
@@ -412,6 +448,27 @@ export type FinancialSummaryGetDividendsChangeData = {
 };
 
 export type FinancialSummaryGetDividendsChangeResponse = ((boolean | null));
+
+export type FinancialSummaryGetDividendsData = {
+    /**
+     * 銘柄コード
+     */
+    code?: (string | null);
+    /**
+     * head_item_key
+     */
+    headItemKey?: (string | null);
+    /**
+     * オフセット
+     */
+    offset?: number;
+    /**
+     * レポートタイプ
+     */
+    reportTypes?: (Array<(string)> | null);
+};
+
+export type FinancialSummaryGetDividendsResponse = (FinItemsDividendsResponse);
 
 export type InformationGetDocumentCountData = {
     dateStr?: (string | null);
