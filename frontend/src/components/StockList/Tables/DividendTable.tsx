@@ -15,6 +15,8 @@ const DividendTable: React.FC<DividendTableProps> = ({ HeadItemKey }) => {
       });
     },
   });
+
+  const period = data.period?.period;
   const value = data.data;
   const first = value?.FirstQuarterMember;
   const second = value?.SecondQuarterMember;
@@ -59,7 +61,7 @@ const DividendTable: React.FC<DividendTableProps> = ({ HeadItemKey }) => {
         <Table.Body>
           <Table.Row>
             <Table.Cell textAlign="center" width="16.66%">
-              昨年度
+              昨年度実績
             </Table.Cell>
             <Table.Cell textAlign="center" width="16.66%">
               {getFormatValue(first?.result?.preValue)}
@@ -99,7 +101,7 @@ const DividendTable: React.FC<DividendTableProps> = ({ HeadItemKey }) => {
           </Table.Row>
           <Table.Row>
             <Table.Cell textAlign="center" width="16.66%">
-              今期予想
+              {period === "FY" ? "来季予想" : "今期予想"}
             </Table.Cell>
             <Table.Cell textAlign="center" width="16.66%">
               {getFormatValue(first?.forecast?.curValue)}
