@@ -10,7 +10,7 @@ import {
 import React from "react";
 
 interface FinStructWrapItemProps extends StatRootProps {
-  label: string;
+  label: string | null | undefined;
   value?: number | null | undefined;
   valueScale?: string | null | undefined;
   changeValue?: FinValueBase | null | undefined;

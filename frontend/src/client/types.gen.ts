@@ -64,12 +64,15 @@ export type FinValueBase = {
 export type FinValueDividends = {
     name: string;
     order: number;
-    label: string;
+    label?: (string | null);
     FirstQuarterMember?: (FinValueWithDividends | null);
     SecondQuarterMember?: (FinValueWithDividends | null);
     ThirdQuarterMember?: (FinValueWithDividends | null);
     YearEndMember?: (FinValueWithDividends | null);
     AnnualMember?: (FinValueWithDividends | null);
+    TotalDividendPaidAnnual?: (FinValueWithDividends | null);
+    PayoutRatio?: (FinValueWithDividends | null);
+    RatioTotalAmountOfDividendTotalNetAssets?: (FinValueWithDividends | null);
 };
 
 /**
@@ -78,7 +81,7 @@ export type FinValueDividends = {
 export type FinValueFinance = {
     name: string;
     order: number;
-    label: string;
+    label?: (string | null);
     result?: (FinValueWithChange | null);
     forecast?: (FinValueWithChange | null);
     upper?: (FinValueWithChange | null);

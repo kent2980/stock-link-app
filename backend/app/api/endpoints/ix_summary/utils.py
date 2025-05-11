@@ -83,7 +83,7 @@ def get_attr_value(head_item: IxHeadTitle, attr_value_dict: Dict[str, str]) -> s
     return attr_value
 
 
-def get_from_name(from_name_dict: Dict[str, str], tree_items: sc.TreeItemsList) -> str:
+def get_from_name(from_names: Dict[str, str], tree_items: sc.TreeItemsList) -> str:
 
     # region is_consolidatedの設定
     is_consolidated = any(  # is_consolidatedを取得
@@ -91,17 +91,17 @@ def get_from_name(from_name_dict: Dict[str, str], tree_items: sc.TreeItemsList) 
     )
 
     if is_consolidated:  # is_consolidatedがTrueの場合、from_nameを"consolidated"に設定
-        from_name = from_name_dict["consolidated"]
+        from_name = from_names["consolidated"]
     else:  # is_consolidatedがFalseの場合、from_nameを"non_consolidated"に設定
-        from_name = from_name_dict["non_consolidated"]
+        from_name = from_names["non_consolidated"]
     # endregion
 
     return from_name
 
 
-def get_parent_items(tree_items: sc.TreeItemsList, from_name: str) -> List[str]:
+def get_parent_items(tree_items: sc.TreeItemsList, from_name: List[str]) -> List[str]:
     parent_items = [
-        item.xlink_to for item in tree_items.data if item.xlink_from == from_name
+        item.xlink_to for item in tree_items.data if item.xlink_from in from_name
     ]
 
     return parent_items
@@ -109,7 +109,7 @@ def get_parent_items(tree_items: sc.TreeItemsList, from_name: str) -> List[str]:
 
 def get_child_items(
     tree_items: sc.TreeItemsList,
-    from_name: str,
+    from_names: List[str],
     is_change: bool,
     parent_items: List[str],
 ) -> Dict[str, str]:
@@ -124,7 +124,7 @@ def get_child_items(
         child_items = {
             item.xlink_to: item.xlink_to
             for item in tree_items.data
-            if item.xlink_from == from_name
+            if item.xlink_from in from_names
         }
     # endregion
 
@@ -135,7 +135,7 @@ def var_init(
     session: Session,
     head_item_key: str,
     attr_value_dict: Dict[str, str],
-    from_name_dict: Dict[str, str],
+    from_names: List[str],
     is_change: bool = True,
 ):
 
@@ -145,12 +145,6 @@ def var_init(
         ["FY", "QU"]
     ):  # attr_value_dictのキーがFY, QUでない場合、例外を発生させる
         raise NotDictKeyError("not dict keys error. keys must be 'FY' or 'QU'.")
-    if not list(from_name_dict.keys()).__eq__(
-        ["consolidated", "non_consolidated"]
-    ):  # from_name_dictのキーがconsolidated, non_consolidatedでない場合、例外を発生させる
-        raise NotDictKeyError(
-            "not dict keys error. keys must be 'consolidated' or 'non_consolidated'."
-        )
     # endregion
 
     # region head_itemの取得
@@ -167,16 +161,12 @@ def var_init(
         xbrl_type="sm",
     )
 
-    # print(tree_items)
-
-    from_name = get_from_name(from_name_dict, tree_items)
-
     # region parent_itemsの取得
-    parent_items = get_parent_items(tree_items, from_name)
+    parent_items = get_parent_items(tree_items, from_names)
 
     child_items = get_child_items(
         tree_items=tree_items,
-        from_name=from_name,
+        from_names=from_names,
         is_change=is_change,
         parent_items=parent_items,
     )
@@ -188,7 +178,6 @@ def var_init(
         head_item,
         attr_value,
         tree_items,
-        from_name,
         parent_items,
         child_items,
         context_list,
@@ -199,13 +188,13 @@ def get_summary_items(
     session: Session,
     head_item_key: str,
     attr_value_dict: Dict[str, str],
-    from_name_dict: Dict[str, str],
+    from_names: List[str],
     is_change: bool = True,
 ) -> SummaryItems:
     """
     #### この関数は、指定された条件に一致するiXBRLの非分数情報を取得する関数です。
     - **機能**:指定された条件に一致するiXBRLの非分数情報を取得します。
-    - **引数**:session: Session, head_item_key: str, attr_value_dict: Dict[str, str], from_name_dict: Dict[str, str]
+    - **引数**:session: Session, head_item_key: str, attr_value_dict: Dict[str, str], from_names: List[str]
     - **戻り値**:sc.FinStructBase
     - **例外**:NotDictKeyError, HeadItem
     """
@@ -214,7 +203,6 @@ def get_summary_items(
         head_item,
         attr_value,
         tree_items,
-        from_name,
         parent_items,
         child_items,
         context_list,
@@ -222,7 +210,7 @@ def get_summary_items(
         session=session,
         head_item_key=head_item_key,
         attr_value_dict=attr_value_dict,
-        from_name_dict=from_name_dict,
+        from_names=from_names,
         is_change=is_change,
     )
 
@@ -241,7 +229,7 @@ def get_summary_items(
         head_item=head_item,
         attr_value=attr_value,
         tree_items=tree_items,
-        from_name=from_name,
+        from_names=from_names,
         parent_items=parent_items,
         child_items=child_items,
         context_list=context_list,
@@ -311,13 +299,13 @@ def get_struct(
 
     head_item = items.get_head_item()
     tree_items = items.get_tree_items()
-    from_name = items.get_from_name()
+    from_names = items.get_from_names()
     child_items = items.get_child_items()
     ix_non_fractions = items.get_ix_non_fractions()
 
     for item in tree_items.data:
         # from_nameと一致するxlink_fromを持つitemのみ処理
-        if item.xlink_from == from_name:
+        if item.xlink_from in from_names:
             # structの全フィールドに対してループ
             for key in struct.__fields__.keys():
                 # フィールドの値を取得
@@ -337,9 +325,7 @@ def get_struct(
         # ix_non_fractionsの各itemについて処理
         for item in ix_non_fractions:
             # structの各フィールドごとに処理
-            # print(child_items[item.name])
             for structItem in struct.data:
-                # print(f"structItem.name: {structItem.name}")
                 if structItem.name == child_items[item.name]:
                     if structItem.result.context in item.context:
                         set_struct_item_value(structItem.result, item)
@@ -388,6 +374,53 @@ def get_metric_schema(
     return structItem
 
 
+def set_dividends_other(
+    structItem: sc.FinItemsDividendsResponse,
+    items: List[IxNonFraction],
+) -> sc.FinItemsDividendsResponse:
+    """
+    #### この関数は、FinItemsDividendsResponseを取得する関数です。
+    - **機能**:FinItemsDividendsResponseを取得します。
+    - **引数**:head_item: Any, tree_items: sc.TreeItemsList, ix_non_fractions: List[IxNonFraction], from_name: str, child_items: Dict[str, str]
+    - **戻り値**:sc.FinItemsDividendsResponse
+    """
+    # structがsc.FinItemsResponseまたはその継承クラスでない場合、例外を発生させる
+    if not isinstance(structItem, sc.FinItemsDividendsResponse):
+        raise TypeError("struct must be sc.FinItemsDividendsResponse or its subclass.")
+
+    names = [
+        "tse-ed-t_TotalDividendPaidAnnual",
+        "tse-ed-t_PayoutRatio",
+        "tse-ed-t_RatioTotalAmountOfDividendTotalNetAssets",
+        "tse-ed-t_RatioOfTotalAmountOfDividendsToNetAssets",
+    ]
+
+    for item in items:
+        # structの各フィールドごとに処理
+        if names[0] == item.name:
+            if structItem.data.TotalDividendPaidAnnual.context in item.context:
+                get_metric_schema(structItem.data.TotalDividendPaidAnnual, item)
+        elif names[1] == item.name:
+            if structItem.data.PayoutRatio.context in item.context:
+                get_metric_schema(structItem.data.PayoutRatio, item)
+        elif names[2] == item.name:
+            if (
+                structItem.data.RatioTotalAmountOfDividendTotalNetAssets.context
+                in item.context
+            ):
+                get_metric_schema(
+                    structItem.data.RatioTotalAmountOfDividendTotalNetAssets, item
+                )
+        elif names[3] == item.name:
+            if (
+                structItem.data.RatioTotalAmountOfDividendTotalNetAssets.context
+                in item.context
+            ):
+                get_metric_schema(
+                    structItem.data.RatioTotalAmountOfDividendTotalNetAssets, item
+                )
+
+
 def get_dividends_struct(
     items: SummaryItems,
     struct: sc.FinItemsDividendsResponse,
@@ -405,26 +438,26 @@ def get_dividends_struct(
 
     head_item = items.get_head_item()
     tree_items = items.get_tree_items()
-    from_name = items.get_from_name()
+    from_names = items.get_from_names()
     child_items = items.get_child_items()
     ix_non_fractions = items.get_ix_non_fractions()
 
     for item in tree_items.data:
         # from_nameと一致するxlink_fromを持つitemのみ処理
-        if item.xlink_from == from_name:
+        if item.xlink_from in from_names:
             # structの全フィールドに対してループ
             # item情報をもとにFinValueDividendsを生成しdataリストに追加
             struct.data = sc.FinValueDividends(
                 name=item.xlink_to,
                 order=item.xlink_order,
-                label=item.to_label,
             )
 
     if isinstance(struct, sc.FinItemsDividendsResponse):
         # ix_non_fractionsの各itemについて処理
         for item in ix_non_fractions:
             # structの各フィールドごとに処理
-            if struct.data.name == child_items[item.name]:
+            if item.name == "tse-ed-t_DividendPerShare":
+                # if struct.data.name == child_items[item.name]:
                 if struct.data.FirstQuarterMember.context in item.context:
                     get_metric_schema(struct.data.FirstQuarterMember, item)
                 elif struct.data.SecondQuarterMember.context in item.context:
@@ -435,6 +468,8 @@ def get_dividends_struct(
                     get_metric_schema(struct.data.YearEndMember, item)
                 elif struct.data.AnnualMember.context in item.context:
                     get_metric_schema(struct.data.AnnualMember, item)
+
+    set_dividends_other(struct, ix_non_fractions)
 
     period = sc.PeriodSchemaBase(  # periodを設定
         accountingStandard=head_item.report_type,
@@ -452,7 +487,7 @@ def get_summary_items_list(
     head_item_keys: List[str],
     session: Session,
     attr_value_dict: Dict[str, str],
-    from_name_dict: Dict[str, str],
+    from_names: Dict[str, str],
     is_change: bool = True,
 ) -> List[SummaryItems]:
     """
@@ -470,7 +505,7 @@ def get_summary_items_list(
                 session=session,
                 head_item_key=head_item_key,
                 attr_value_dict=attr_value_dict,
-                from_name_dict=from_name_dict,
+                from_names=from_names,
                 is_change=is_change,
             )
             items_list.append(items)

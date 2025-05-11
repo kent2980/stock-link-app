@@ -12,7 +12,7 @@ class SummaryItems:
         head_item: Optional[IxHeadTitle] = None,
         attr_value: Optional[str] = None,
         tree_items: Optional[sc.TreeItemsList] = None,
-        from_name: Optional[str] = None,
+        from_names: List[str] = None,
         parent_items: Optional[List[str]] = None,
         child_items: Optional[Dict[str, str]] = None,
         context_list: Optional[List[List[str]]] = None,
@@ -22,7 +22,7 @@ class SummaryItems:
         self.head_item = head_item
         self.attr_value = attr_value
         self.tree_items = tree_items
-        self.from_name = from_name
+        self.from_names = from_names
         self.parent_items = parent_items
         self.child_items = child_items
         self.context_list = context_list
@@ -47,11 +47,11 @@ class SummaryItems:
     def get_tree_items(self) -> Optional[sc.TreeItemsList]:
         return self.tree_items
 
-    def set_from_name(self, from_name: str):
-        self.from_name = from_name
+    def set_from_names(self, from_names: List[str]):
+        self.from_names = from_names
 
-    def get_from_name(self) -> Optional[str]:
-        return self.from_name
+    def get_from_names(self) -> Optional[List[str]]:
+        return self.from_names
 
     def set_parent_items(self, parent_items: List[str]):
         self.parent_items = parent_items

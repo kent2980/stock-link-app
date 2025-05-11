@@ -11,7 +11,7 @@ import {
 import React from "react";
 
 interface FinStructUpperAndLowerWrapItemProps extends StatRootProps {
-  label: string;
+  label: string | null | undefined;
   downValue?: number | null | undefined;
   downValueScale?: string | null | undefined;
   downChangeValue?: FinValueBase | null | undefined;

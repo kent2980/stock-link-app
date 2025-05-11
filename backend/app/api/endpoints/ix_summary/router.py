@@ -37,10 +37,10 @@ def get_operating_results(
         "QU": "BusinessResultsQuarterlyOperatingResults",
     }
 
-    from_name_dict = {
-        "consolidated": "tse-ed-t_ConsolidatedIncomeStatementsInformationAbstract",
-        "non_consolidated": "tse-ed-t_IncomeStatementsInformationAbstract",
-    }
+    from_names = [
+        "tse-ed-t_ConsolidatedIncomeStatementsInformationAbstract",
+        "tse-ed-t_IncomeStatementsInformationAbstract",
+    ]
 
     if head_item_key is None:
         try:
@@ -66,7 +66,7 @@ def get_operating_results(
             session=session,
             head_item_key=head_item_key,
             attr_value_dict=attr_value_dict,
-            from_name_dict=from_name_dict,
+            from_names=from_names,
             is_change=True,
         )
     except NotDictKeyError as e:
@@ -103,10 +103,10 @@ def get_other_operating_results(
         "QU": "BusinessResultsQuarterlyOperatingResults",
     }
 
-    from_name_dict = {
-        "consolidated": "tse-ed-t_OtherConsolidatedOperatingResultsAbstract",
-        "non_consolidated": "tse-ed-t_OtherOperatingResultsAbstract",
-    }
+    from_names = [
+        "tse-ed-t_OtherConsolidatedOperatingResultsAbstract",
+        "tse-ed-t_OtherOperatingResultsAbstract",
+    ]
 
     if head_item_key is None:
         try:
@@ -132,7 +132,7 @@ def get_other_operating_results(
             session=session,
             head_item_key=head_item_key,
             attr_value_dict=attr_value_dict,
-            from_name_dict=from_name_dict,
+            from_names=from_names,
             is_change=False,
         )
     except NotDictKeyError as e:
@@ -169,10 +169,10 @@ def get_forecasts(
         "QU": "QuarterlyForecasts",
     }
 
-    from_name_dict = {
-        "consolidated": "tse-ed-t_MainTableOfConsolidatedForecastsAbstract",
-        "non_consolidated": "tse-ed-t_MainTableOfForecastsAbstract",
-    }
+    from_names = [
+        "tse-ed-t_MainTableOfConsolidatedForecastsAbstract",
+        "tse-ed-t_MainTableOfForecastsAbstract",
+    ]
 
     if head_item_key is None:
         try:
@@ -198,7 +198,7 @@ def get_forecasts(
             session=session,
             head_item_key=head_item_key,
             attr_value_dict=attr_value_dict,
-            from_name_dict=from_name_dict,
+            from_names=from_names,
             is_change=True,
         )
     except NotDictKeyError as e:
@@ -239,10 +239,10 @@ def get_financial_position(
         "QU": "BusinessResultsQuarterlyFinancialPositions",
     }
 
-    from_name_dict = {
-        "consolidated": "tse-ed-t_ConsolidatedFinancialPositionsAbstract",
-        "non_consolidated": "tse-ed-t_FinancialPositionsAbstract",
-    }
+    from_names = [
+        "tse-ed-t_ConsolidatedFinancialPositionsAbstract",
+        "tse-ed-t_FinancialPositionsAbstract",
+    ]
 
     if head_item_key is None:
         try:
@@ -268,7 +268,7 @@ def get_financial_position(
             session=session,
             head_item_key=head_item_key,
             attr_value_dict=attr_value_dict,
-            from_name_dict=from_name_dict,
+            from_names=from_names,
             is_change=False,
         )
     except NotDictKeyError as e:
@@ -302,10 +302,10 @@ def get_cash_flows(
         "QU": "BusinessResultsQuarterlyCashFlows",
     }
 
-    from_name_dict = {
-        "consolidated": "tse-ed-t_ConsolidatedCashFlowsAbstract",
-        "non_consolidated": "tse-ed-t_CashFlowsAbstract",
-    }
+    from_names = [
+        "tse-ed-t_ConsolidatedCashFlowsAbstract",
+        "tse-ed-t_CashFlowsAbstract",
+    ]
 
     try:
         head_item_key = utils.get_head_item_key(
@@ -326,7 +326,7 @@ def get_cash_flows(
             session=session,
             head_item_key=head_item_key,
             attr_value_dict=attr_value_dict,
-            from_name_dict=from_name_dict,
+            from_names=from_names,
             is_change=False,
         )
     except NotDictKeyError as e:
@@ -455,10 +455,13 @@ def get_dividends(
         "QU": "QuarterlyDividends",
     }
 
-    from_name_dict = {
-        "consolidated": "tse-ed-t_DividendPerShareAbstract",
-        "non_consolidated": "tse-ed-t_DividendPerShareAbstract",
-    }
+    from_names = [
+        "tse-ed-t_DividendPerShareAbstract",
+        "tse-ed-t_TotalDividendPaidAnnualAbstract",
+        "tse-ed-t_PayoutRatioConsolidatedAbstract",
+        "tse-ed-t_RatioOfTotalAmountOfDividendsToNetAssetsAbstract",
+        "tse-ed-t_RatioOfTotalAmountOfDividendsToNetAssetsConsolidatedAbstract",
+    ]
 
     if head_item_key is None:
         try:
@@ -484,7 +487,7 @@ def get_dividends(
             session=session,
             head_item_key=head_item_key,
             attr_value_dict=attr_value_dict,
-            from_name_dict=from_name_dict,
+            from_names=from_names,
             is_change=False,
         )
     except NotDictKeyError as e:

@@ -50,7 +50,7 @@ class FinValueAbstractBase(SQLModel):
 
     name: str
     order: float
-    label: str
+    label: Optional[str] = Field(default=None)
 
 
 class FinValueFinance(FinValueAbstractBase):
@@ -109,6 +109,15 @@ class FinValueDividends(FinValueAbstractBase):
     )
     AnnualMember: Optional[FinValueWithDividends] = Field(
         default=FinValueWithDividends(context="AnnualMember", label="合計")
+    )
+    TotalDividendPaidAnnual: Optional[FinValueWithDividends] = Field(
+        default=FinValueWithDividends(context="AnnualMember", label="年間配当金総額")
+    )
+    PayoutRatio: Optional[FinValueWithDividends] = Field(
+        default=FinValueWithDividends(context="AnnualMember", label="配当性向")
+    )
+    RatioTotalAmountOfDividendTotalNetAssets: Optional[FinValueWithDividends] = Field(
+        default=FinValueWithDividends(context="AnnualMember", label="純資産配当率")
     )
 
 
