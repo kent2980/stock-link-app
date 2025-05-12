@@ -31,6 +31,10 @@ const Industry17StockList: React.FC<Industry17StockListProps> = ({
     },
   });
 
+  const sortData = data.data.slice().sort((a, b) => {
+    return a.securities_code.localeCompare(b.securities_code);
+  });
+
   // ストアを更新
   useEffect(() => {
     HeaderStore.setState((state) => ({
@@ -41,7 +45,7 @@ const Industry17StockList: React.FC<Industry17StockListProps> = ({
   }, [IndustryName]);
   return (
     <>
-      <StockList data={data} />
+      <StockList data={sortData} count={sortData.length} />
     </>
   );
 };
