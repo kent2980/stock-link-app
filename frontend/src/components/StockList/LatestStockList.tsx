@@ -24,7 +24,13 @@ const LatestStockList: React.FC = () => {
 
   // データを新しい順にソート
   const sortData = data.data.slice().sort((a, b) => {
-    return b.insert_date.localeCompare(a.insert_date);
+    const aDate = new Date(a.insert_date);
+    const bDate = new Date(b.insert_date);
+    if (aDate.getTime() === bDate.getTime()) {
+      return a.securities_code.localeCompare(b.securities_code);
+    }
+    // 日付が同じ場合は証券コードでソート
+    return bDate.getTime() - aDate.getTime();
   });
 
   // ストアを更新
