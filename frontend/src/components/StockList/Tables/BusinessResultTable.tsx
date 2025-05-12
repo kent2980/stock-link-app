@@ -26,6 +26,7 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
           <Table.Row>
             <Table.ColumnHeader textAlign="center">期間</Table.ColumnHeader>
             {data.data?.map((item, key) => {
+              if (key > 3) return null;
               return (
                 <Table.ColumnHeader
                   key={key}
@@ -43,6 +44,7 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
           <Table.Row>
             <Table.ColumnHeader textAlign="center">今期実績</Table.ColumnHeader>
             {data.data?.map((item, key) => {
+              if (key > 3) return null;
               return (
                 <>
                   <Table.Cell
@@ -66,6 +68,7 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
           <Table.Row>
             <Table.ColumnHeader textAlign="center">前期実績</Table.ColumnHeader>
             {data.data?.map((item, key) => {
+              if (key > 3) return null;
               return (
                 <>
                   <Table.Cell
