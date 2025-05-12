@@ -1,5 +1,5 @@
 import { FinancialSummaryService } from "@/client";
-import { Box, Table } from "@chakra-ui/react";
+import { Table } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import React from "react";
 
@@ -20,8 +20,8 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
   });
   const count = data.data?.length ?? 0;
   return (
-    <Box>
-      <Table.Root size="sm" minW="90vw" maxW={"90vw"}>
+    <>
+      <Table.Root size="sm" minW="100%" maxW={"100%"}>
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeader textAlign="center" minW="70px">
@@ -74,7 +74,7 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
           </Table.Row>
         </Table.Body>
       </Table.Root>
-    </Box>
+    </>
   );
 };
 export default BusinessResultTable;
