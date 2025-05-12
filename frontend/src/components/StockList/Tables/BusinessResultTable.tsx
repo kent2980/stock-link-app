@@ -1,5 +1,12 @@
 import { FinancialSummaryService } from "@/client";
-import { Box, FormatNumber, HStack, Table, Text } from "@chakra-ui/react";
+import {
+  Box,
+  FormatNumber,
+  Stack,
+  Table,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import React from "react";
 
@@ -25,10 +32,14 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
       return <Text>-</Text>;
     }
     return (
-      <HStack>
+      <Stack
+        gap={{ base: 0, md: 2 }}
+        direction={{ base: "column", md: "row" }}
+        alignItems="center"
+      >
         <FormatNumber value={value} />
         <Text fontSize={"8px"}>{scale ? ` ${scale}` : ""}</Text>
-      </HStack>
+      </Stack>
     );
   };
   return (
@@ -58,26 +69,28 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
               if (key > 3) return null;
               return (
                 <Table.Cell w="22%">
-                  <Box
-                    key={key}
-                    textAlign="center"
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    {FormatValue(item.result?.curValue)}
-                  </Box>
-                  <Box
-                    key={key}
-                    textAlign="center"
-                    display="flex"
-                    flexDirection="column"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    {FormatValue(item.result?.curChange)}
-                  </Box>
+                  <VStack>
+                    <Box
+                      key={key}
+                      textAlign="center"
+                      display="flex"
+                      flexDirection="column"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      {FormatValue(item.result?.curValue)}
+                    </Box>
+                    <Box
+                      key={key}
+                      textAlign="center"
+                      display="flex"
+                      flexDirection="column"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      {FormatValue(item.result?.curChange)}
+                    </Box>
+                  </VStack>
                 </Table.Cell>
               );
             })}
