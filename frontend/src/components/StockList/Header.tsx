@@ -2,6 +2,7 @@ import { DocumentListPublic, JpxService } from "@/client";
 import { Box, Heading, Image, Text, TextProps } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import React, { Suspense } from "react";
+import { CiClock2 } from "react-icons/ci";
 import logo_list from "../../logo/logo_list.json";
 
 interface HeaderProps {
@@ -36,12 +37,23 @@ const Header: React.FC<HeaderProps> = ({
     company_name = "ファーマライズホールディングス株式会社",
     securities_code = "2796",
     document_name = "第一四半期報告書",
+    insert_date = "2025-04-17T14:00:43.854091",
   },
 }) => {
   const logo_name =
     logo_list.find((item) => item.code === securities_code)?.file_name || ""; // デフォルトロゴURLを設定
   const logo_url = `/assets/images/stock_logo/${logo_name}`; // 画像のURLを生成
 
+  const dateStr = new Date(insert_date).toLocaleDateString("ja-JP", {
+    //insertDateを日本語の形式で表示
+    timeZone: "Asia/Tokyo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
   return (
     <>
       <Box
@@ -49,6 +61,17 @@ const Header: React.FC<HeaderProps> = ({
         flexDirection={{ base: "column", md: "row" }}
         gap={{ base: 1, md: 2 }}
       >
+        <Box
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="center"
+          gap={1}
+        >
+          <CiClock2 />
+          <Text fontSize="12px" color="gray.500">
+            {dateStr}
+          </Text>
+        </Box>
         <Box display="flex" alignItems="center" gap={2}>
           <LogoDisplay logoUrl={logo_url} />
           <Text fontSize="13px" color="gray.500">

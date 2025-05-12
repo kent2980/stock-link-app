@@ -48,8 +48,10 @@ const BusinessResult: React.FC<BusinessResultProps> = ({ headItemKey }) => {
         chart={chart}
         h="150px"
         fontSize={"10px"}
-        bg="#b2b2b221"
-        boxShadow="sm"
+        bg="#ffffffff"
+        borderWidth="1px"
+        borderStyle={"solid"}
+        borderColor={chart.color("border")}
       >
         <BarChart
           barSize={100}

@@ -10,13 +10,17 @@ interface DateStockListProps {
 
 const DateStockList: React.FC<DateStockListProps> = ({ dateStr }) => {
   const { data } = useSuspenseQuery({
-    queryKey: ["DateStockList", dateStr],
+    queryKey: ["StockList", dateStr],
     queryFn: () => {
       return InformationService.getDocumentList({
         reportTypes: ["edjp", "edif", "edus"],
         dateStr: dateStr,
       });
     },
+  });
+
+  const sortData = data.data.slice().sort((a, b) => {
+    return a.securities_code.localeCompare(b.securities_code);
   });
 
   // ストアを更新
@@ -29,7 +33,7 @@ const DateStockList: React.FC<DateStockListProps> = ({ dateStr }) => {
   }, [dateStr]);
   return (
     <>
-      <StockList data={data} />
+      <StockList data={sortData} count={sortData.length} />
     </>
   );
 };

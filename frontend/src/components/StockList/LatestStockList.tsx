@@ -13,13 +13,18 @@ const LatestStockList: React.FC = () => {
   });
 
   const { data } = useSuspenseQuery({
-    queryKey: ["LatestStockList", dateStr],
+    queryKey: ["StockList", dateStr],
     queryFn: () => {
       return InformationService.getDocumentList({
         reportTypes: ["edjp", "edif", "edus"],
         dateStr: dateStr.reporting_date,
       });
     },
+  });
+
+  // データを新しい順にソート
+  const sortData = data.data.slice().sort((a, b) => {
+    return b.insert_date.localeCompare(a.insert_date);
   });
 
   // ストアを更新
@@ -32,7 +37,7 @@ const LatestStockList: React.FC = () => {
   }, [dateStr]);
   return (
     <>
-      <StockList data={data} />
+      <StockList data={sortData} count={sortData.length} />
     </>
   );
 };
