@@ -18,21 +18,19 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
       });
     },
   });
-  const count = data.data?.length ?? 0;
+  // const count = data.data?.length ?? 0;
   return (
     <>
-      <Table.Root size={{ base: "sm", md: "md" }} minW="100%" maxW={"100%"}>
+      <Table.Root size={{ base: "sm", md: "md" }}>
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeader textAlign="center" minW="70px">
-              期間
-            </Table.ColumnHeader>
+            <Table.ColumnHeader textAlign="center">期間</Table.ColumnHeader>
             {data.data?.map((item, key) => {
               return (
                 <Table.ColumnHeader
                   key={key}
                   textAlign="center"
-                  w={`${100 / count + 1}%`}
+                  // w={`${100 / count + 1}%`}
                   colSpan={2}
                 >
                   {item.label}
