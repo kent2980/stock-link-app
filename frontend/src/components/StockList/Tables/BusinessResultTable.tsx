@@ -21,7 +21,7 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
   const count = data.data?.length ?? 0;
   return (
     <Box>
-      <Table.Root size="sm" minW="90vw">
+      <Table.Root size="sm" minW="90vw" maxW={"90vw"}>
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeader textAlign="center" minW="70px">
