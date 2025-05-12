@@ -1,19 +1,49 @@
-import { FinancialSummaryService } from "@/client";
+import { FinancialSummaryService, FinValueFinance } from "@/client";
 import CustomSpinner from "@/components/Spinner/CustomSpinner";
 import {
   Box,
   Button,
   CloseButton,
   Dialog,
+  FormatNumber,
   Portal,
+  Stack,
+  Table,
   Text,
-  Wrap,
 } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { StackDirection } from "node_modules/@chakra-ui/react/dist/types/components/stack/get-separator-style";
 import React, { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import FinStructWrapItem from "./FinStructTable";
-import FinStructUpperAndLowerWrapItem from "./FinStructUpperAndLowerTable";
+
+const getDisplayValue = (item: FinValueFinance, direction: StackDirection) => {
+  if (item.forecast?.isActive == true) {
+    return (
+      <Stack direction={direction} alignItems="center" gap={0}>
+        <FormatNumber value={item.forecast.curValue?.value ?? 0} />
+        <Text fontSize={"8px"}>
+          {item.forecast.curValue?.display_scale ?? ""}
+        </Text>
+      </Stack>
+    );
+  } else if (item.upper?.isActive == true && item.lower?.isActive == true) {
+    return (
+      <Stack direction={direction} alignItems="center" gap={0}>
+        <FormatNumber value={item.lower?.curValue?.value ?? 0} />
+        <Text fontSize={"8px"}>
+          {item.lower?.curValue?.display_scale ?? ""}
+        </Text>
+        <Text fontSize={"8px"}>~</Text>
+        <FormatNumber value={item.upper?.curValue?.value ?? 0} />
+        <Text fontSize={"8px"}>
+          {item.upper?.curValue?.display_scale ?? ""}
+        </Text>
+      </Stack>
+    );
+  } else {
+    return <Text>-</Text>;
+  }
+};
 
 interface ForecastTableProps {
   HeadItemKey: string;
@@ -28,36 +58,44 @@ const ForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
       });
     },
   });
+
   return (
     <Box>
       <IsChangeForecast HeadItemKey={HeadItemKey} />
-      <Wrap>
-        {data?.data?.map((item, index) => (
-          <Box key={index}>
-            {item.forecast?.isActive == true && (
-              <FinStructWrapItem
-                key={index}
-                label={item.label}
-                value={item.forecast?.curValue?.value}
-                valueScale={item.forecast?.curValue?.display_scale}
-                changeValue={item.forecast?.curChange}
-              />
-            )}
-            {item.lower?.isActive == true && item.upper?.isActive == true && (
-              <FinStructUpperAndLowerWrapItem
-                key={index}
-                label={item.label}
-                downValue={item.lower?.curValue?.value}
-                downValueScale={item.lower?.curValue?.display_scale}
-                downChangeValue={item.lower?.curChange}
-                upValue={item.upper?.curValue?.value}
-                upValueScale={item.upper?.curValue?.display_scale}
-                upChangeValue={item.upper?.curChange}
-              />
-            )}
-          </Box>
-        ))}
-      </Wrap>
+      <Table.Root size={{ base: "sm", md: "md" }}>
+        <Table.ColumnGroup>
+          <Table.Column htmlWidth="5%" />
+          {Array(0, 4).map((index) => {
+            return <Table.Column key={index} htmlWidth="20%" />;
+          })}
+        </Table.ColumnGroup>
+        <Table.Header>
+          <Table.Row>
+            <Table.ColumnHeader textAlign="center">期間</Table.ColumnHeader>
+            {data.data?.map((item, key) => {
+              if (key > 4) return null;
+              return (
+                <Table.ColumnHeader key={key} textAlign="center">
+                  {item.label}
+                </Table.ColumnHeader>
+              );
+            })}
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          <Table.Row>
+            <Table.ColumnHeader>通期</Table.ColumnHeader>
+            {data.data?.map((item, key) => {
+              if (key > 4) return null;
+              return (
+                <Table.Cell key={key} textAlign="center">
+                  {getDisplayValue(item, "column")}
+                </Table.Cell>
+              );
+            })}
+          </Table.Row>
+        </Table.Body>
+      </Table.Root>
     </Box>
   );
 };
@@ -118,35 +156,40 @@ const PriorForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
   });
   return (
     <Box>
-      <Wrap>
-        {data?.data?.map((item, index) => {
-          return (
-            <>
-              {item.forecast?.isActive == true && (
-                <FinStructWrapItem
-                  key={index}
-                  label={item.label}
-                  value={item.forecast?.curValue?.value}
-                  valueScale={item.forecast?.curValue?.display_scale}
-                  changeValue={item.forecast?.curChange}
-                />
-              )}
-              {item.lower?.isActive == true && item.upper?.isActive == true && (
-                <FinStructUpperAndLowerWrapItem
-                  key={index}
-                  label={item.label}
-                  downValue={item.lower?.curValue?.value}
-                  downValueScale={item.lower?.curValue?.display_scale}
-                  downChangeValue={item.lower?.curChange}
-                  upValue={item.upper?.curValue?.value}
-                  upValueScale={item.upper?.curValue?.display_scale}
-                  upChangeValue={item.upper?.curChange}
-                />
-              )}
-            </>
-          );
-        })}
-      </Wrap>
+      <Table.Root size={{ base: "sm", md: "md" }}>
+        <Table.ColumnGroup>
+          <Table.Column htmlWidth="5%" />
+          {Array(0, 4).map((index) => {
+            return <Table.Column key={index} htmlWidth="20%" />;
+          })}
+        </Table.ColumnGroup>
+        <Table.Header>
+          <Table.Row>
+            <Table.ColumnHeader textAlign="center">期間</Table.ColumnHeader>
+            {data.data?.map((item, key) => {
+              if (key > 4) return null;
+              return (
+                <Table.ColumnHeader key={key} textAlign="center">
+                  {item.label}
+                </Table.ColumnHeader>
+              );
+            })}
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          <Table.Row>
+            <Table.ColumnHeader>通期</Table.ColumnHeader>
+            {data.data?.map((item, key) => {
+              if (key > 4) return null;
+              return (
+                <Table.Cell key={key} textAlign="center">
+                  {getDisplayValue(item, "column")}
+                </Table.Cell>
+              );
+            })}
+          </Table.Row>
+        </Table.Body>
+      </Table.Root>
     </Box>
   );
 };

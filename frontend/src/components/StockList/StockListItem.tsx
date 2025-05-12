@@ -30,8 +30,8 @@ const StockListItem: React.FC<StockListItemProps> = ({ item, ...props }) => {
             経営成績
           </Heading>
           <VStack gap={3}>
-            <BusinessResult headItemKey={item.head_item_key} />
             <BusinessResultTable HeadItemKey={item.head_item_key} />
+            <BusinessResult headItemKey={item.head_item_key} />
           </VStack>
           {/* 業績予想 */}
           <Heading as="h3" fontSize="md" fontWeight="bold">
