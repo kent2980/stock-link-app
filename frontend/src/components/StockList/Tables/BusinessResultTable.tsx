@@ -8,6 +8,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { StackDirection } from "node_modules/@chakra-ui/react/dist/types/components/stack/get-separator-style";
 import React from "react";
 
 interface BusinessResultTableProps {
@@ -25,18 +26,14 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
       });
     },
   });
-  const FormatValue = (item: any) => {
+  const FormatValue = (item: any, direction: StackDirection | undefined) => {
     const value = item?.value;
     const scale = item?.display_scale;
     if (value === null || value === undefined) {
       return <Text>-</Text>;
     }
     return (
-      <Stack
-        gap={{ base: 0, md: 2 }}
-        direction={{ base: "column", md: "row" }}
-        alignItems="center"
-      >
+      <Stack gap={{ base: 0, md: 2 }} direction={direction} alignItems="center">
         <FormatNumber value={value} />
         <Text fontSize={"8px"}>{scale ? ` ${scale}` : ""}</Text>
       </Stack>
@@ -78,7 +75,7 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
                       alignItems="center"
                       justifyContent="center"
                     >
-                      {FormatValue(item.result?.curValue)}
+                      {FormatValue(item.result?.curValue, "column")}
                     </Box>
                     <Box
                       key={key}
@@ -88,7 +85,7 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
                       alignItems="center"
                       justifyContent="center"
                     >
-                      {FormatValue(item.result?.curChange)}
+                      {FormatValue(item.result?.curChange, "row")}
                     </Box>
                   </VStack>
                 </Table.Cell>
@@ -109,7 +106,7 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
                     alignItems="center"
                     justifyContent="center"
                   >
-                    {FormatValue(item.result?.preValue)}
+                    {FormatValue(item.result?.preValue, "column")}
                   </Box>
                   <Box
                     key={key}
@@ -119,7 +116,7 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
                     alignItems="center"
                     justifyContent="center"
                   >
-                    {FormatValue(item.result?.preChange)}
+                    {FormatValue(item.result?.preChange, "row")}
                   </Box>
                 </Table.Cell>
               );
