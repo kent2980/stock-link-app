@@ -21,7 +21,7 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
   const count = data.data?.length ?? 0;
   return (
     <>
-      <Table.Root size="sm" minW="100%" maxW={"100%"}>
+      <Table.Root size={{ base: "sm", md: "md" }} minW="100%" maxW={"100%"}>
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeader textAlign="center" minW="70px">
@@ -43,14 +43,22 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
         </Table.Header>
         <Table.Body>
           <Table.Row>
-            <Table.Cell>今期実績</Table.Cell>
+            <Table.ColumnHeader textAlign="center">今期実績</Table.ColumnHeader>
             {data.data?.map((item, key) => {
               return (
                 <>
-                  <Table.Cell key={key} textAlign="center">
+                  <Table.Cell
+                    key={key}
+                    textAlign="center"
+                    fontSize={{ base: "12px", md: "14px" }}
+                  >
                     {item.result?.curValue?.value}
                   </Table.Cell>
-                  <Table.Cell key={key} textAlign="center">
+                  <Table.Cell
+                    key={key}
+                    textAlign="center"
+                    fontSize={{ base: "12px", md: "14px" }}
+                  >
                     {item.result?.curChange?.value}
                   </Table.Cell>
                 </>
@@ -58,14 +66,22 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
             })}
           </Table.Row>
           <Table.Row>
-            <Table.Cell>前期実績</Table.Cell>
+            <Table.ColumnHeader textAlign="center">前期実績</Table.ColumnHeader>
             {data.data?.map((item, key) => {
               return (
                 <>
-                  <Table.Cell key={key} textAlign="center">
+                  <Table.Cell
+                    key={key}
+                    textAlign="center"
+                    fontSize={{ base: "12px", md: "14px" }}
+                  >
                     {item.result?.preValue?.value}
                   </Table.Cell>
-                  <Table.Cell key={key} textAlign="center">
+                  <Table.Cell
+                    key={key}
+                    textAlign="center"
+                    fontSize={{ base: "12px", md: "14px" }}
+                  >
                     {item.result?.preChange?.value}
                   </Table.Cell>
                 </>

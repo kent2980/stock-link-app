@@ -20,13 +20,13 @@ export const system = createSystem(defaultConfig, {
     th: {
       backgroundColor: "#dee8eb",
       color: "gray.800",
-      fontSize: "10px",
+      fontSize: "10.5px",
       textAlign: "center",
     },
     td: {
       backgroundColor: "white",
       color: "var(--chakra-colors-ui-dark)",
-      fontSize: "10px",
+      fontSize: "12px",
       textAlign: "center",
     },
   },
