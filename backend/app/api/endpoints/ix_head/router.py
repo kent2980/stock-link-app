@@ -1,10 +1,9 @@
 from typing import Any
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Query
 from sqlmodel import func, select
 
 from app.api.deps import SessionDep
-from app.models import IxHeadTitle
 
 from . import crud
 from . import schema as sc

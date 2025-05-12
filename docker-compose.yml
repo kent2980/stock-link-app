@@ -79,8 +79,8 @@ services:
 
   backend:
     image: '${DOCKER_IMAGE_BACKEND?Variable not set}:${TAG-latest}'
-    volumes:
-      - ./alembic/versions:/app/app/alembic/versions
+    # volumes:
+    #   - ./alembic/versions:/app/app/alembic/versions
     restart: always
     networks:
       - traefik-public
