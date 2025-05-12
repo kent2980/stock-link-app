@@ -42,6 +42,12 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
   return (
     <>
       <Table.Root size={{ base: "sm", md: "md" }}>
+        <Table.ColumnGroup>
+          <Table.Column htmlWidth="5%" />
+          {Array(0, 4).map((index) => {
+            return <Table.Column key={index} htmlWidth="20%" />;
+          })}
+        </Table.ColumnGroup>
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeader textAlign="center">期間</Table.ColumnHeader>

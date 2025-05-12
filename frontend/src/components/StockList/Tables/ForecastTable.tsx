@@ -10,6 +10,7 @@ import {
   Stack,
   Table,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { StackDirection } from "node_modules/@chakra-ui/react/dist/types/components/stack/get-separator-style";
@@ -19,12 +20,19 @@ import { ErrorBoundary } from "react-error-boundary";
 const getDisplayValue = (item: FinValueFinance, direction: StackDirection) => {
   if (item.forecast?.isActive == true) {
     return (
-      <Stack direction={direction} alignItems="center" gap={0}>
-        <FormatNumber value={item.forecast.curValue?.value ?? 0} />
-        <Text fontSize={"8px"}>
-          {item.forecast.curValue?.display_scale ?? ""}
+      <VStack>
+        <Stack direction={direction} alignItems="center" gap={0}>
+          <FormatNumber value={item.forecast.curValue?.value ?? 0} />
+          <Text fontSize={"8px"}>
+            {item.forecast.curValue?.display_scale ?? ""}
+          </Text>
+        </Stack>
+        <Text>
+          {item.forecast.curChange?.value
+            ? item.forecast.curChange.value + "%"
+            : "-"}
         </Text>
-      </Stack>
+      </VStack>
     );
   } else if (item.upper?.isActive == true && item.lower?.isActive == true) {
     return (
