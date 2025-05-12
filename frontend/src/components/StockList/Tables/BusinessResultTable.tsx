@@ -1,5 +1,5 @@
 import { FinancialSummaryService } from "@/client";
-import { Table } from "@chakra-ui/react";
+import { Box, FormatNumber, HStack, Table, Text } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import React from "react";
 
@@ -18,7 +18,19 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
       });
     },
   });
-  // const count = data.data?.length ?? 0;
+  const FormatValue = (item: any) => {
+    const value = item?.value;
+    const scale = item?.display_scale;
+    if (value === null || value === undefined) {
+      return <Text>-</Text>;
+    }
+    return (
+      <HStack>
+        <FormatNumber value={value} />
+        <Text fontSize={"8px"}>{scale ? ` ${scale}` : ""}</Text>
+      </HStack>
+    );
+  };
   return (
     <>
       <Table.Root size={{ base: "sm", md: "md" }}>
@@ -32,7 +44,6 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
                   key={key}
                   textAlign="center"
                   // w={`${100 / count + 1}%`}
-                  colSpan={2}
                 >
                   {item.label}
                 </Table.ColumnHeader>
@@ -46,22 +57,28 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
             {data.data?.map((item, key) => {
               if (key > 3) return null;
               return (
-                <>
-                  <Table.Cell
+                <Table.Cell w="22%">
+                  <Box
                     key={key}
                     textAlign="center"
-                    fontSize={{ base: "12px", md: "14px" }}
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    justifyContent="center"
                   >
-                    {item.result?.curValue?.value}
-                  </Table.Cell>
-                  <Table.Cell
+                    {FormatValue(item.result?.curValue)}
+                  </Box>
+                  <Box
                     key={key}
                     textAlign="center"
-                    fontSize={{ base: "12px", md: "14px" }}
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    justifyContent="center"
                   >
-                    {item.result?.curChange?.value}
-                  </Table.Cell>
-                </>
+                    {FormatValue(item.result?.curChange)}
+                  </Box>
+                </Table.Cell>
               );
             })}
           </Table.Row>
@@ -70,22 +87,28 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
             {data.data?.map((item, key) => {
               if (key > 3) return null;
               return (
-                <>
-                  <Table.Cell
+                <Table.Cell>
+                  <Box
                     key={key}
                     textAlign="center"
-                    fontSize={{ base: "12px", md: "14px" }}
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    justifyContent="center"
                   >
-                    {item.result?.preValue?.value}
-                  </Table.Cell>
-                  <Table.Cell
+                    {FormatValue(item.result?.preValue)}
+                  </Box>
+                  <Box
                     key={key}
                     textAlign="center"
-                    fontSize={{ base: "12px", md: "14px" }}
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    justifyContent="center"
                   >
-                    {item.result?.preChange?.value}
-                  </Table.Cell>
-                </>
+                    {FormatValue(item.result?.preChange)}
+                  </Box>
+                </Table.Cell>
               );
             })}
           </Table.Row>
