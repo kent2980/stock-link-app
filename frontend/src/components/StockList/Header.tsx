@@ -123,6 +123,8 @@ const JpxDataDisplay: React.FC<SelectCodeProps> = ({ code, ...props }) => {
         };
       }
     },
+    gcTime: 30 * 24 * 60 * 60 * 1000, // 30 days
+    staleTime: 30 * 24 * 60 * 60 * 1000, // 30 days
   });
 
   if (
