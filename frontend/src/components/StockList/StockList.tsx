@@ -35,6 +35,8 @@ export const StockList: React.FC<StockListProps> = ({
   return (
     <>
       <Box
+        display="flex"
+        flexDirection="column-reverse"
         ref={parentRef}
         className="List"
         {...props}
