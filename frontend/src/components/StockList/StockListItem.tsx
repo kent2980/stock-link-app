@@ -26,28 +26,42 @@ const StockListItem: React.FC<StockListItemProps> = ({ item, ...props }) => {
       gap={2}
     >
       <Header item={item} />
-      <ErrorBoundary fallback={<Box>表示するデータがありません。</Box>}>
-        <Suspense fallback={<Skeleton height="600px" width="100%" />}>
-          {/* 経営成績 */}
-          <Heading as="h3" fontSize="md" fontWeight="bold">
-            経営成績
-          </Heading>
-          <VStack gap={2}>
+      <Suspense fallback={<Skeleton height="600px" width="100%" />}>
+        {/* 経営成績 */}
+        <Heading as="h3" fontSize="md" fontWeight="bold">
+          経営成績
+        </Heading>
+        <VStack gap={2}>
+          <ErrorBoundary
+            FallbackComponent={() => <Box>データが見つかりません。</Box>}
+          >
             <BusinessResult headItemKey={item.head_item_key} />
+          </ErrorBoundary>
+          <ErrorBoundary
+            FallbackComponent={() => <Box>データが見つかりません。</Box>}
+          >
             <BusinessResultTable HeadItemKey={item.head_item_key} />
-          </VStack>
-          {/* 業績予想 */}
-          <Heading as="h3" fontSize="md" fontWeight="bold">
-            業績予想
-          </Heading>
+          </ErrorBoundary>
+        </VStack>
+        {/* 業績予想 */}
+        <Heading as="h3" fontSize="md" fontWeight="bold">
+          業績予想
+        </Heading>
+        <ErrorBoundary
+          FallbackComponent={() => <Box>データが見つかりません。</Box>}
+        >
           <ForecastTable HeadItemKey={item.head_item_key} />
-          {/* 配当 */}
-          <Heading as="h3" fontSize="md" fontWeight="bold">
-            配当
-          </Heading>
+        </ErrorBoundary>
+        {/* 配当 */}
+        <Heading as="h3" fontSize="md" fontWeight="bold">
+          配当
+        </Heading>
+        <ErrorBoundary
+          FallbackComponent={() => <Box>データが見つかりません。</Box>}
+        >
           <DividendTable HeadItemKey={item.head_item_key} />
-        </Suspense>
-      </ErrorBoundary>
+        </ErrorBoundary>
+      </Suspense>
     </Box>
   );
 };
