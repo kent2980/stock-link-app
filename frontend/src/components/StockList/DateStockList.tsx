@@ -10,7 +10,10 @@ interface DateStockListProps {
 
 const DateStockList: React.FC<DateStockListProps> = ({ dateStr }) => {
   const cashTime = () => {
-    if (dateStr === new Date().toISOString().slice(0, 10)) {
+    const date = new Date();
+    // dateStrからDateオブジェクトを作成
+    const dateObj = new Date(dateStr ?? "");
+    if (date.getTime() === dateObj.getTime()) {
       return 0;
     } else {
       return 30 * 60 * 1000 * 24 * 60 * 60; // 30 days

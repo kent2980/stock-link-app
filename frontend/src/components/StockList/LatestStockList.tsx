@@ -10,6 +10,8 @@ const LatestStockList: React.FC = () => {
     queryFn: () => {
       return InformationService.getLatestReportingDate();
     },
+    gcTime: 0,
+    staleTime: 0,
   });
 
   const { data } = useSuspenseQuery({

@@ -28,7 +28,7 @@ export const StockList: React.FC<StockListProps> = ({
     count: count,
     getScrollElement: () => parentRef.current,
     estimateSize: () => 400,
-    overscan: 5,
+    overscan: 3,
     // scrollMargin: listRef.current?.offsetTop ?? 0,
   });
 

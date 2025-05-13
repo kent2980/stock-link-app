@@ -56,11 +56,7 @@ const Header: React.FC<HeaderProps> = ({
   });
   return (
     <>
-      <Box
-        display="flex"
-        flexDirection={{ base: "column", md: "row" }}
-        gap={{ base: 1, md: 2 }}
-      >
+      <Box display="flex" flexDirection="column" gap={{ base: 1, md: 2 }}>
         <Box
           display="flex"
           justifyContent="flex-end"

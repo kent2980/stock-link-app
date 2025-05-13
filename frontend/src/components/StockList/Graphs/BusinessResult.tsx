@@ -87,9 +87,9 @@ const BusinessResult: React.FC<BusinessResultProps> = ({ headItemKey }) => {
               return <span>{translatedName}</span>; // 値に単位「%」を追加
             }}
           />
-          {chart.series.map((item) => (
+          {chart.series.map((item, index) => (
             <Bar
-              key={item.name}
+              key={index}
               dataKey={chart.key(item.name)}
               fill={chart.color(item.color)}
               isAnimationActive={false}

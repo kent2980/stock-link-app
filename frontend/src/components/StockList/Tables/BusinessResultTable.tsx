@@ -46,18 +46,18 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
       <Table.Root size={{ base: "sm", md: "md" }}>
         <Table.ColumnGroup>
           <Table.Column htmlWidth="5%" />
-          {Array(0, 4).map((index) => {
-            return <Table.Column key={index} htmlWidth="20%" />;
+          {Array.from({ length: 4 }, (_, index) => {
+            return <Table.Column key={`column-${index}`} htmlWidth="20%" />;
           })}
         </Table.ColumnGroup>
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeader textAlign="center">期間</Table.ColumnHeader>
-            {data.data?.map((item, key) => {
-              if (key > 3) return null;
+            {data.data?.map((item, index) => {
+              if (index > 3) return null;
               return (
                 <Table.ColumnHeader
-                  key={key}
+                  key={`header-${index}`}
                   textAlign="center"
                   // w={`${100 / count + 1}%`}
                 >
@@ -73,10 +73,10 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
             {data.data?.map((item, key) => {
               if (key > 3) return null;
               return (
-                <Table.Cell w="22%">
+                <Table.Cell w="22%" key={`cell-${key}`}>
                   <VStack>
                     <Box
-                      key={key}
+                      key={`curValue-${key}`}
                       textAlign="center"
                       display="flex"
                       flexDirection="column"
@@ -86,7 +86,7 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
                       {FormatValue(item.result?.curValue, "column")}
                     </Box>
                     <Box
-                      key={key}
+                      key={`result3-${key}`}
                       textAlign="center"
                       display="flex"
                       flexDirection="column"
@@ -102,12 +102,12 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
           </Table.Row>
           <Table.Row>
             <Table.ColumnHeader textAlign="center">前期実績</Table.ColumnHeader>
-            {data.data?.map((item, key) => {
-              if (key > 3) return null;
+            {data.data?.map((item, index) => {
+              if (index > 3) return null;
               return (
-                <Table.Cell>
+                <Table.Cell key={`cell3-${index}`}>
                   <Box
-                    key={key}
+                    key={`result3-${index}`}
                     textAlign="center"
                     display="flex"
                     flexDirection="column"
@@ -117,7 +117,7 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
                     {FormatValue(item.result?.preValue, "column")}
                   </Box>
                   <Box
-                    key={key}
+                    key={`result4-${index}`}
                     textAlign="center"
                     display="flex"
                     flexDirection="column"

@@ -82,10 +82,10 @@ const ForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeader textAlign="center">期間</Table.ColumnHeader>
-            {data.data?.map((item, key) => {
-              if (key > 4) return null;
+            {data.data?.map((item, index) => {
+              if (index > 4) return null;
               return (
-                <Table.ColumnHeader key={key} textAlign="center">
+                <Table.ColumnHeader key={`header-${index}`} textAlign="center">
                   {item.label}
                 </Table.ColumnHeader>
               );
@@ -95,10 +95,10 @@ const ForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
         <Table.Body>
           <Table.Row>
             <Table.ColumnHeader>通期</Table.ColumnHeader>
-            {data.data?.map((item, key) => {
-              if (key > 4) return null;
+            {data.data?.map((item, index) => {
+              if (index > 4) return null;
               return (
-                <Table.Cell key={key} textAlign="center">
+                <Table.Cell key={`cell-${index}`} textAlign="center">
                   {getDisplayValue(item, "column")}
                 </Table.Cell>
               );
@@ -172,8 +172,8 @@ const PriorForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
       <Table.Root size={{ base: "sm", md: "md" }}>
         <Table.ColumnGroup>
           <Table.Column htmlWidth="5%" />
-          {Array(0, 4).map((index) => {
-            return <Table.Column key={index} htmlWidth="20%" />;
+          {Array.from({ length: 4 }, (_, index) => {
+            return <Table.Column key={`column1-${index}`} htmlWidth="20%" />;
           })}
         </Table.ColumnGroup>
         <Table.Header>
@@ -182,7 +182,7 @@ const PriorForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
             {data.data?.map((item, key) => {
               if (key > 4) return null;
               return (
-                <Table.ColumnHeader key={key} textAlign="center">
+                <Table.ColumnHeader key={`header-${key}`} textAlign="center">
                   {item.label}
                 </Table.ColumnHeader>
               );
