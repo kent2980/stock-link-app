@@ -2,6 +2,7 @@ import uuid
 from datetime import date, datetime
 from decimal import Decimal
 from typing import List, Optional
+from zoneinfo import ZoneInfo
 
 from pydantic import EmailStr
 from sqlmodel import (
@@ -158,11 +159,12 @@ class XbrlBase(SQLModel):
         sa_column_kwargs={"comment": "ItemKey"},
     )
     insert_date: datetime = Field(
-        default=datetime.now(),
+        # timezone Asia/Tokyo
+        default_factory=lambda: datetime.now(ZoneInfo("Asia/Tokyo")),
         sa_column_kwargs={"comment": "作成日時"},
     )
     update_date: datetime = Field(
-        default=datetime.now(),
+        default_factory=lambda: datetime.now(ZoneInfo("Asia/Tokyo")),
         sa_column_kwargs={"comment": "更新日時"},
     )
 
