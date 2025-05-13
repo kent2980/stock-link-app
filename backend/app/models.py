@@ -158,11 +158,11 @@ class XbrlBase(SQLModel):
         sa_column_kwargs={"comment": "ItemKey"},
     )
     insert_date: datetime = Field(
-        default_factory=lambda: datetime.now().astimezone().replace(tzinfo=None),
+        default=datetime.now(),
         sa_column_kwargs={"comment": "作成日時"},
     )
     update_date: datetime = Field(
-        default_factory=lambda: datetime.now().astimezone().replace(tzinfo=None),
+        default=datetime.now(),
         sa_column_kwargs={"comment": "更新日時"},
     )
 
