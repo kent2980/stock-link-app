@@ -35,8 +35,6 @@ export const StockList: React.FC<StockListProps> = ({
   return (
     <>
       <Box
-        display="flex"
-        flexDirection="column-reverse"
         ref={parentRef}
         className="List"
         {...props}
@@ -45,7 +43,7 @@ export const StockList: React.FC<StockListProps> = ({
         scrollSnapType={{ base: "y proximity", md: "none" }}
         scrollBehavior={{ base: "smooth", md: "auto" }}
         overflowY="auto" // ← 追加
-        maxHeight="100vh" // ← 必要に応じて追加（高さ制限）
+        maxHeight="867px" // ← 必要に応じて追加（高さ制限）
       >
         <List.Root
           height={virtualizer.getTotalSize()}

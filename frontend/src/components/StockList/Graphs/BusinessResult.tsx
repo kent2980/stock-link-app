@@ -25,6 +25,8 @@ const BusinessResult: React.FC<BusinessResultProps> = ({ headItemKey }) => {
         headItemKey: headItemKey,
       });
     },
+    gcTime: 30 * 24 * 60 * 60 * 1000, // 30 days
+    staleTime: 30 * 24 * 60 * 60 * 1000, // 30 days
   });
 
   const items =

@@ -14,6 +14,8 @@ const DividendTable: React.FC<DividendTableProps> = ({ HeadItemKey }) => {
         headItemKey: HeadItemKey,
       });
     },
+    gcTime: 30 * 24 * 60 * 60 * 1000, // 30 days
+    staleTime: 30 * 24 * 60 * 60 * 1000, // 30 days
   });
 
   const period = data.period?.period;

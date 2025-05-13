@@ -19,6 +19,8 @@ const Industry17StockList: React.FC<Industry17StockListProps> = ({
         code: industry_17_code,
       });
     },
+    gcTime: 0,
+    staleTime: 0,
   });
 
   const { data } = useSuspenseQuery({

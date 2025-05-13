@@ -115,7 +115,6 @@ def get_document_list(
 
     statement = (
         select(IxHeadTitle)
-        .join(JpxStockInfo, IxHeadTitle.securities_code == JpxStockInfo.code)
         .where(IxHeadTitle.securities_code != None)
         .order_by(IxHeadTitle.id)
     )

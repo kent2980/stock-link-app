@@ -25,6 +25,8 @@ const BusinessResultTable: React.FC<BusinessResultTableProps> = ({
         headItemKey: HeadItemKey,
       });
     },
+    gcTime: 30 * 24 * 60 * 60 * 1000, // 30 days
+    staleTime: 30 * 24 * 60 * 60 * 1000, // 30 days
   });
   const FormatValue = (item: any, direction: StackDirection | undefined) => {
     const value = item?.value;

@@ -29,6 +29,8 @@ const Industry33StockList: React.FC<Industry33StockListProps> = ({
         industry33Code: industry_33_code,
       });
     },
+    gcTime: 0,
+    staleTime: 0,
   });
 
   const sortData = data.data.slice().sort((a, b) => {

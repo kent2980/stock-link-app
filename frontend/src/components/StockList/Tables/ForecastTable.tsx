@@ -65,6 +65,8 @@ const ForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
         headItemKey: HeadItemKey,
       });
     },
+    gcTime: 30 * 24 * 60 * 60 * 1000, // 30 days
+    staleTime: 30 * 24 * 60 * 60 * 1000, // 30 days
   });
 
   return (
@@ -122,6 +124,8 @@ const IsChangeForecast: React.FC<IsChangeForecastProps> = ({ HeadItemKey }) => {
         headItemKey: HeadItemKey,
       });
     },
+    gcTime: 30 * 24 * 60 * 60 * 1000, // 30 days
+    staleTime: 30 * 24 * 60 * 60 * 1000, // 30 days
   });
   return (
     <Box display="flex" flexDir="row" fontSize={"xs"} m={2} p={1}>
@@ -160,7 +164,8 @@ const PriorForecastTable: React.FC<ForecastTableProps> = ({ HeadItemKey }) => {
         reportTypes: ["edjp", "edif", "edus"],
       });
     },
-    retry: false,
+    gcTime: 30 * 24 * 60 * 60 * 1000, // 30 days
+    staleTime: 30 * 24 * 60 * 60 * 1000, // 30 days
   });
   return (
     <Box>

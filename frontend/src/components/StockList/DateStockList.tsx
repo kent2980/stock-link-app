@@ -9,6 +9,14 @@ interface DateStockListProps {
 }
 
 const DateStockList: React.FC<DateStockListProps> = ({ dateStr }) => {
+  const cashTime = () => {
+    if (dateStr === new Date().toISOString().slice(0, 10)) {
+      return 0;
+    } else {
+      return 30 * 60 * 1000 * 24 * 60 * 60; // 30 days
+    }
+  };
+
   const { data } = useSuspenseQuery({
     queryKey: ["StockList", dateStr],
     queryFn: () => {
@@ -17,6 +25,8 @@ const DateStockList: React.FC<DateStockListProps> = ({ dateStr }) => {
         dateStr: dateStr,
       });
     },
+    gcTime: cashTime(),
+    staleTime: cashTime(),
   });
 
   const sortData = data.data.slice().sort((a, b) => {

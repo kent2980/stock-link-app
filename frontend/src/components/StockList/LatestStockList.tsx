@@ -20,6 +20,8 @@ const LatestStockList: React.FC = () => {
         dateStr: dateStr.reporting_date,
       });
     },
+    gcTime: 0,
+    staleTime: 0,
   });
 
   // データを新しい順にソート
