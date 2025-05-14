@@ -10,9 +10,16 @@ import ForecastTable from "./Tables/ForecastTable";
 
 interface StockListItemProps extends BoxProps {
   item: DocumentListPublic;
+  itemIndex: number;
+  itemCount: number;
 }
 
-const StockListItem: React.FC<StockListItemProps> = ({ item, ...props }) => {
+const StockListItem: React.FC<StockListItemProps> = ({
+  item,
+  itemIndex,
+  itemCount,
+  ...props
+}) => {
   return (
     <Box
       display="flex"
@@ -25,7 +32,7 @@ const StockListItem: React.FC<StockListItemProps> = ({ item, ...props }) => {
       p={2}
       gap={2}
     >
-      <Header item={item} />
+      <Header item={item} itemIndex={itemIndex} itemCount={itemCount} />
       <Suspense fallback={<Skeleton height="600px" width="100%" />}>
         {/* 経営成績 */}
         <Heading as="h3" fontSize="md" fontWeight="bold">
