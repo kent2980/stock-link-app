@@ -73,7 +73,11 @@ export const StockList: React.FC<StockListProps> = ({
                 listStyle={"none"}
                 scrollSnapAlign="start"
               >
-                <StockListItem item={item} />
+                <StockListItem
+                  item={item}
+                  itemIndex={virtualRow.index}
+                  itemCount={count}
+                />
               </List.Item>
             );
           })}

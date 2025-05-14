@@ -1,5 +1,5 @@
 import { DocumentListPublic, JpxService } from "@/client";
-import { Box, Heading, Image, Text, TextProps } from "@chakra-ui/react";
+import { Box, Heading, HStack, Image, Text, TextProps } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import React, { Suspense } from "react";
 import { CiClock2 } from "react-icons/ci";
@@ -7,6 +7,8 @@ import logo_list from "../../logo/logo_list.json";
 
 interface HeaderProps {
   item: DocumentListPublic;
+  itemIndex: number;
+  itemCount: number;
 }
 
 const LogoDisplay: React.FC<{ logoUrl: string }> = ({ logoUrl }) => {
@@ -39,6 +41,8 @@ const Header: React.FC<HeaderProps> = ({
     document_name = "第一四半期報告書",
     insert_date = "2025-04-17T14:00:43.854091",
   },
+  itemIndex,
+  itemCount,
 }) => {
   const logo_name =
     logo_list.find((item) => item.code === securities_code)?.file_name || ""; // デフォルトロゴURLを設定
@@ -57,17 +61,24 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <>
       <Box display="flex" flexDirection="column" gap={{ base: 1, md: 2 }}>
-        <Box
-          display="flex"
-          justifyContent="flex-end"
-          alignItems="center"
-          gap={1}
-        >
-          <CiClock2 />
-          <Text fontSize="12px" color="gray.500">
-            {dateStr}
-          </Text>
-        </Box>
+        <HStack display="flex" justifyContent="flex-end">
+          <Box>
+            <Text fontSize="12px" color="gray.500">
+              {itemIndex + 1} / {itemCount}件
+            </Text>
+          </Box>
+          <Box
+            display="flex"
+            justifyContent="flex-end"
+            alignItems="center"
+            gap={1}
+          >
+            <CiClock2 />
+            <Text fontSize="12px" color="gray.500">
+              {dateStr}
+            </Text>
+          </Box>
+        </HStack>
         <Box display="flex" alignItems="center" gap={2}>
           <LogoDisplay logoUrl={logo_url} />
           <Text fontSize="13px" color="gray.500">
