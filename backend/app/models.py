@@ -789,10 +789,12 @@ class JpxStockInfoBase(SQLModel, table=False):
         default=None, primary_key=True, sa_column_kwargs={"comment": "ID"}
     )
     insert_date: datetime = Field(
-        default_factory=datetime.now, sa_column_kwargs={"comment": "作成日時"}
+        default_factory=lambda: datetime.now(ZoneInfo("Asia/Tokyo")),
+        sa_column_kwargs={"comment": "作成日時"},
     )
     update_date: datetime = Field(
-        default_factory=datetime.now, sa_column_kwargs={"comment": "更新日時"}
+        default_factory=lambda: datetime.now(ZoneInfo("Asia/Tokyo")),
+        sa_column_kwargs={"comment": "更新日時"},
     )
 
 
