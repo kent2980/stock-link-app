@@ -27,9 +27,9 @@ export const StockList: React.FC<StockListProps> = ({
   const virtualizer = useVirtualizer({
     count: count,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 400,
+    estimateSize: () => 1192.5,
     overscan: 3,
-    // scrollMargin: listRef.current?.offsetTop ?? 0,
+    gap: 2,
   });
 
   return (
@@ -40,8 +40,6 @@ export const StockList: React.FC<StockListProps> = ({
         {...props}
         m={{ base: 0, md: 4 }}
         width={{ base: "100%", md: "1024px" }}
-        // scrollSnapType={{ base: "y proximity", md: "none" }}
-        // scrollBehavior={{ base: "smooth", md: "auto" }}
         overflowY="auto" // ← 追加
         maxHeight="100vh" // ← 必要に応じて追加（高さ制限）
       >
