@@ -34,7 +34,7 @@ const StockListItem: React.FC<StockListItemProps> = ({
       h="1192.5px"
     >
       <Header item={item} itemIndex={itemIndex} itemCount={itemCount} />
-      <Suspense fallback={<Skeleton height="1192.5px" width="100%" />}>
+      <Suspense fallback={<Skeleton height="100%" width="100%" />}>
         {/* 経営成績 */}
         <Heading as="h3" fontSize="md" fontWeight="bold">
           経営成績
