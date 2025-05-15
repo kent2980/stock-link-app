@@ -9,7 +9,7 @@ from app.core.security import verify_password
 from app.models import UserCreate
 from app.tests.utils.user import user_authentication_headers
 from app.tests.utils.utils import random_email, random_lower_string
-from app.utils import generate_password_reset_token
+from app.utils.utils import generate_password_reset_token
 
 
 def test_get_access_token(client: TestClient) -> None:
