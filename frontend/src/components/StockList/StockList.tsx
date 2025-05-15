@@ -27,7 +27,7 @@ export const StockList: React.FC<StockListProps> = ({
   const virtualizer = useVirtualizer({
     count: count,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 1192.5,
+    estimateSize: () => 1300,
     overscan: 3,
     gap: 2,
   });
