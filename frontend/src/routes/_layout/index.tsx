@@ -13,7 +13,6 @@ function Index() {
     { label: "銘柄別", path: "/stock" },
     { label: "設定", path: "/settings" },
     { label: "ヘルプ", path: "/help" },
-    { label: "ログアウト", path: "/logout" },
   ];
 
   const navigate = useNavigate({
