@@ -1,5 +1,5 @@
 import sentry_sdk
-from fastapi import FastAPI, Request, status
+from fastapi import FastAPI, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from fastapi.routing import APIRoute
@@ -38,6 +38,6 @@ app.include_router(api_router, prefix=settings.API_V1_STR)
 
 
 @app.exception_handler(RequestValidationError)
-async def handler(request: Request, exc: RequestValidationError):
+async def handler(exc: RequestValidationError):
     print(exc)
     return JSONResponse(content={}, status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)

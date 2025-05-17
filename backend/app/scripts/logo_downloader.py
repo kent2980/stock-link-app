@@ -1,8 +1,8 @@
+import base64
 import json
 import os
 import re
 from time import sleep
-from typing import Optional
 from urllib.parse import urljoin
 
 import requests
@@ -43,7 +43,7 @@ def safe_get(url, timeout=10):
         response = requests.get(url, timeout=timeout)
         response.raise_for_status()  # ステータスコードがエラーの場合例外を発生
         return response
-    except (ConnectTimeout, SSLError) as e:
+    except (ConnectTimeout, SSLError):
         print(f"HTTPでエラーが発生しました。HTTPSで再試行します: {url}")
         if url.startswith("http://"):
             https_url = url.replace("http://", "https://", 1)
@@ -62,7 +62,7 @@ def safe_get(url, timeout=10):
     return None
 
 
-def download_logo(url, directory, filename) -> Optional[str]:
+def download_logo(url, directory, filename) -> str | None:
     """
     Download the logo from the given URL and save it to a file.
     """

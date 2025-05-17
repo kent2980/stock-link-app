@@ -1,12 +1,9 @@
-from typing import List, Optional
-
 from fastapi import APIRouter, HTTPException, Query
 
 from app.api.deps import SessionDep
 
-from . import crud
+from . import crud, utils
 from . import schema as sc
-from . import utils
 from .exceptions import HeadItemNotFound, NotDictKeyError
 
 router = APIRouter()
@@ -20,9 +17,9 @@ router = APIRouter()
 def get_operating_results(
     *,
     session: SessionDep,
-    code: Optional[str] = Query(None, description="銘柄コード"),
-    head_item_key: Optional[str] = Query(None, description="head_item_key"),
-    report_types: Optional[List[str]] = Query(None, description="レポートタイプ"),
+    code: str | None = Query(None, description="銘柄コード"),
+    head_item_key: str | None = Query(None, description="head_item_key"),
+    report_types: list[str] | None = Query(None, description="レポートタイプ"),
     offset: int = Query(0, description="オフセット"),
 ) -> sc.FinItemsResponse:
 
@@ -86,9 +83,9 @@ def get_operating_results(
 def get_other_operating_results(
     *,
     session: SessionDep,
-    code: Optional[str] = Query(None, description="銘柄コード"),
-    head_item_key: Optional[str] = Query(None, description="head_item_key"),
-    report_types: Optional[List[str]] = Query(None, description="レポートタイプ"),
+    code: str | None = Query(None, description="銘柄コード"),
+    head_item_key: str | None = Query(None, description="head_item_key"),
+    report_types: list[str] | None = Query(None, description="レポートタイプ"),
     offset: int = Query(0, description="オフセット"),
 ) -> sc.FinItemsResponse:
 
@@ -152,9 +149,9 @@ def get_other_operating_results(
 def get_forecasts(
     *,
     session: SessionDep,
-    code: Optional[str] = Query(None, description="銘柄コード"),
-    head_item_key: Optional[str] = Query(None, description="head_item_key"),
-    report_types: Optional[List[str]] = Query(None, description="レポートタイプ"),
+    code: str | None = Query(None, description="銘柄コード"),
+    head_item_key: str | None = Query(None, description="head_item_key"),
+    report_types: list[str] | None = Query(None, description="レポートタイプ"),
     offset: int = Query(0, description="オフセット"),
 ) -> sc.FinItemsResponse:
 
@@ -222,9 +219,9 @@ def get_forecasts(
 def get_financial_position(
     *,
     session: SessionDep,
-    code: Optional[str] = Query(None, description="銘柄コード"),
-    head_item_key: Optional[str] = Query(None, description="head_item_key"),
-    report_types: Optional[List[str]] = Query(None, description="レポートタイプ"),
+    code: str | None = Query(None, description="銘柄コード"),
+    head_item_key: str | None = Query(None, description="head_item_key"),
+    report_types: list[str] | None = Query(None, description="レポートタイプ"),
     offset: int = Query(0, description="オフセット"),
 ) -> sc.FinItemsResponse:
 
@@ -293,7 +290,7 @@ def get_cash_flows(
     *,
     session: SessionDep,
     code: str,
-    year: Optional[str] = Query(None, description="年度"),
+    year: str | None = Query(None, description="年度"),
     offset: int = Query(0, description="オフセット"),
 ) -> sc.FinItemsResponse:
 
@@ -345,16 +342,16 @@ def get_cash_flows(
 @router.get(
     "/forecasts/change/",
     summary="業績予想の変更情報を取得",
-    response_model=Optional[bool],
+    response_model=bool | None,
 )
 def get_forecast_change(
     *,
     session: SessionDep,
-    head_item_key: Optional[str] = Query(None, description="head_item_key"),
-    code: Optional[str] = Query(None, description="銘柄コード"),
-    report_types: Optional[List[str]] = Query(None, description="レポートタイプ"),
+    head_item_key: str | None = Query(None, description="head_item_key"),
+    code: str | None = Query(None, description="銘柄コード"),
+    report_types: list[str] | None = Query(None, description="レポートタイプ"),
     offset: int = Query(0, description="オフセット"),
-) -> Optional[bool]:
+) -> bool | None:
 
     if head_item_key is None:
         try:
@@ -389,18 +386,16 @@ def get_forecast_change(
 
 
 @router.get(
-    "/dividends/change/",
-    summary="配当予想の変更情報を取得",
-    response_model=Optional[bool],
+    "/dividends/change/", summary="配当予想の変更情報を取得", response_model=bool | None
 )
 def get_dividends_change(
     *,
     session: SessionDep,
-    head_item_key: Optional[str] = Query(None, description="head_item_key"),
-    code: Optional[str] = Query(None, description="銘柄コード"),
-    report_types: Optional[List[str]] = Query(None, description="レポートタイプ"),
+    head_item_key: str | None = Query(None, description="head_item_key"),
+    code: str | None = Query(None, description="銘柄コード"),
+    report_types: list[str] | None = Query(None, description="レポートタイプ"),
     offset: int = Query(0, description="オフセット"),
-) -> Optional[bool]:
+) -> bool | None:
 
     if head_item_key is None:
         try:
@@ -438,9 +433,9 @@ def get_dividends_change(
 def get_dividends(
     *,
     session: SessionDep,
-    code: Optional[str] = Query(None, description="銘柄コード"),
-    head_item_key: Optional[str] = Query(None, description="head_item_key"),
-    report_types: Optional[List[str]] = Query(None, description="レポートタイプ"),
+    code: str | None = Query(None, description="銘柄コード"),
+    head_item_key: str | None = Query(None, description="head_item_key"),
+    report_types: list[str] | None = Query(None, description="レポートタイプ"),
     offset: int = Query(0, description="オフセット"),
 ) -> sc.FinItemsDividendsResponse:
 

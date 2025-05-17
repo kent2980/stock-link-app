@@ -1,6 +1,5 @@
 import re
 from collections import defaultdict
-from typing import Dict, List, Optional
 
 from sqlmodel import Session
 
@@ -12,7 +11,7 @@ from .exceptions import HeadItemNotFound, NotDictKeyError
 from .summaryItems import SummaryItems
 
 
-def get_context_list(items: sc.TreeItemsList, attr_value: str) -> List[List[str]]:
+def get_context_list(items: sc.TreeItemsList, attr_value: str) -> list[list[str]]:
     """
     #### この関数は、TreeItemsListからcontextのリストを取得する関数です。
     - **機能**:TreeItemsListからcontextのリストを取得します。
@@ -36,10 +35,10 @@ def create_metric_parent_schema(item) -> sc.FinValueFinance:
 
 
 def get_metric_schema_value_and_change(
-    items: List[IxNonFraction],
+    items: list[IxNonFraction],
     schema_items: list[sc.FinValueFinance],
-    child_items: Dict[str, str],
-    metric_contexts: List[str],
+    child_items: dict[str, str],
+    metric_contexts: list[str],
 ):
     for item in items:
         for schema_item in schema_items:
@@ -67,7 +66,7 @@ def get_metric_schema_value_and_change(
                             schema_item.curValue = valueBase
 
 
-def get_attr_value(head_item: IxHeadTitle, attr_value_dict: Dict[str, str]) -> str:
+def get_attr_value(head_item: IxHeadTitle, attr_value_dict: dict[str, str]) -> str:
 
     # region attr_valueの設定
     if head_item.current_period is None:  # head_itemが存在しない場合、例外を発生させる
@@ -83,7 +82,7 @@ def get_attr_value(head_item: IxHeadTitle, attr_value_dict: Dict[str, str]) -> s
     return attr_value
 
 
-def get_from_name(from_names: Dict[str, str], tree_items: sc.TreeItemsList) -> str:
+def get_from_name(from_names: dict[str, str], tree_items: sc.TreeItemsList) -> str:
 
     # region is_consolidatedの設定
     is_consolidated = any(  # is_consolidatedを取得
@@ -99,7 +98,7 @@ def get_from_name(from_names: Dict[str, str], tree_items: sc.TreeItemsList) -> s
     return from_name
 
 
-def get_parent_items(tree_items: sc.TreeItemsList, from_name: List[str]) -> List[str]:
+def get_parent_items(tree_items: sc.TreeItemsList, from_name: list[str]) -> list[str]:
     parent_items = [
         item.xlink_to for item in tree_items.data if item.xlink_from in from_name
     ]
@@ -109,10 +108,10 @@ def get_parent_items(tree_items: sc.TreeItemsList, from_name: List[str]) -> List
 
 def get_child_items(
     tree_items: sc.TreeItemsList,
-    from_names: List[str],
+    from_names: list[str],
     is_change: bool,
-    parent_items: List[str],
-) -> Dict[str, str]:
+    parent_items: list[str],
+) -> dict[str, str]:
     # region child_itemsの取得
     if is_change:  # is_changeがTrueの場合、child_itemsを取得
         child_items = {
@@ -134,8 +133,8 @@ def get_child_items(
 def var_init(
     session: Session,
     head_item_key: str,
-    attr_value_dict: Dict[str, str],
-    from_names: List[str],
+    attr_value_dict: dict[str, str],
+    from_names: list[str],
     is_change: bool = True,
 ):
 
@@ -187,8 +186,8 @@ def var_init(
 def get_summary_items(
     session: Session,
     head_item_key: str,
-    attr_value_dict: Dict[str, str],
-    from_names: List[str],
+    attr_value_dict: dict[str, str],
+    from_names: list[str],
     is_change: bool = True,
 ) -> SummaryItems:
     """
@@ -311,7 +310,7 @@ def get_struct(
                 # フィールドの値を取得
                 field = getattr(struct, key)
                 # フィールドがFinItemsBase型の場合のみ処理
-                if isinstance(field, List):
+                if isinstance(field, list):
                     # item情報をもとにFinValueFinanceを生成しdataリストに追加
                     field.append(
                         sc.FinValueFinance(
@@ -376,7 +375,7 @@ def get_metric_schema(
 
 def set_dividends_other(
     structItem: sc.FinItemsDividendsResponse,
-    items: List[IxNonFraction],
+    items: list[IxNonFraction],
 ) -> sc.FinItemsDividendsResponse:
     """
     #### この関数は、FinItemsDividendsResponseを取得する関数です。
@@ -439,7 +438,6 @@ def get_dividends_struct(
     head_item = items.get_head_item()
     tree_items = items.get_tree_items()
     from_names = items.get_from_names()
-    child_items = items.get_child_items()
     ix_non_fractions = items.get_ix_non_fractions()
 
     for item in tree_items.data:
@@ -484,12 +482,12 @@ def get_dividends_struct(
 
 
 def get_summary_items_list(
-    head_item_keys: List[str],
+    head_item_keys: list[str],
     session: Session,
-    attr_value_dict: Dict[str, str],
-    from_names: Dict[str, str],
+    attr_value_dict: dict[str, str],
+    from_names: dict[str, str],
     is_change: bool = True,
-) -> List[SummaryItems]:
+) -> list[SummaryItems]:
     """
     #### この関数は、FinResponseBaseを取得する関数です。
     - **機能**:FinResponseBaseを取得します。
@@ -509,7 +507,7 @@ def get_summary_items_list(
                 is_change=is_change,
             )
             items_list.append(items)
-        except HeadItemNotFound as e:
+        except HeadItemNotFound:
             continue
         except NotDictKeyError as e:
             raise NotDictKeyError(str(e))
@@ -520,9 +518,9 @@ def get_summary_items_list(
 def get_head_item_key(
     session: Session,
     code: str,
-    report_types: Optional[List[str]],
-    current_period: Optional[str] = None,
-    year: Optional[str] = None,
+    report_types: list[str] | None,
+    current_period: str | None = None,
+    year: str | None = None,
     offset: int = 0,
 ) -> str:
     """
@@ -554,7 +552,7 @@ def get_head_item_key(
 def get_base_head_item_key_offset(
     session: Session,
     headItemKey: str,
-    report_types: Optional[List[str]] = None,
+    report_types: list[str] | None = None,
     offset: int = 0,
 ) -> str:
 

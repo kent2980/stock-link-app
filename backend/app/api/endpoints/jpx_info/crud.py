@@ -1,4 +1,3 @@
-from typing import List, Optional
 
 from sqlalchemy import func
 from sqlmodel import Session, select
@@ -24,7 +23,7 @@ def create_jpx_stock_info_item(
 
 def create_jpx_stock_info_items_exists(
     *, items_in: sc.JpxStockInfosCreateList, session: Session
-) -> List[JpxStockInfo]:
+) -> list[JpxStockInfo]:
     """
     Create new items.(Insert Select ... Not Exists)
     """
@@ -34,7 +33,7 @@ def create_jpx_stock_info_items_exists(
     try:
         session.bulk_save_objects(new_items)
         session.commit()
-    except Exception as e:
+    except Exception:
         session.rollback()
         new_items = []
         for item in items_in.data:
@@ -47,7 +46,7 @@ def create_jpx_stock_info_items_exists(
     return new_items
 
 
-def read_jpx_stock_info_item(*, code: str, session: Session) -> Optional[JpxStockInfo]:
+def read_jpx_stock_info_item(*, code: str, session: Session) -> JpxStockInfo | None:
     """
     Get item by code.
     """
@@ -70,8 +69,8 @@ def read_jpx_stock_info_items(*, session: Session) -> sc.JpxStockInfosPublicList
 
 def read_jpx_stock_info_items_tcs(
     *,
-    industry_17_code: Optional[int],
-    industry_33_code: Optional[List[int]],
+    industry_17_code: int | None,
+    industry_33_code: list[int] | None,
     isItems: bool = True,
     session: Session,
     limit: int = 100,
@@ -101,7 +100,7 @@ def read_jpx_stock_info_items_tcs(
 
 def read_jpx_stock_info_item_tcs(
     *, market: str, session: Session
-) -> List[JpxStockInfo]:
+) -> list[JpxStockInfo]:
     """
     Get item by market.
     """
@@ -160,7 +159,7 @@ def read_jpx_stock_info_industry_names(
 
 
 def read_select_industries(
-    *, industry_17_code: Optional[int], session: Session
+    *, industry_17_code: int | None, session: Session
 ) -> sc.IndustriesList:
     """
     Get all industries.

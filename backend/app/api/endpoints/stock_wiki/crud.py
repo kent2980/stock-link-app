@@ -1,4 +1,3 @@
-from typing import Optional
 
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session, select
@@ -27,7 +26,7 @@ def create_stock_wiki_item(
         raise IntegrityError(statement=e.statement, orig=e.orig, params=e.params) from e
 
 
-def get_stock_wiki_item(*, code: str, session: Session) -> Optional[StockWiki]:
+def get_stock_wiki_item(*, code: str, session: Session) -> StockWiki | None:
     """
     Get item.
     """

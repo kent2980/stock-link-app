@@ -1,6 +1,5 @@
 import re
 from datetime import date
-from typing import List, Optional
 
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import desc, func, select
@@ -20,8 +19,8 @@ router = APIRouter()
 def get_document_count(
     *,
     session: SessionDep,
-    date_str: Optional[str] = Query(None),
-    report_types: Optional[List[str]] = Query(None),
+    date_str: str | None = Query(None),
+    report_types: list[str] | None = Query(None),
 ) -> int:
 
     if date_str and not re.match(r"^\d{4}-\d{2}-\d{2}$", date_str):
@@ -38,7 +37,7 @@ def get_document_count(
     if report_types:
         statement = statement.where(
             IxHeadTitle.report_type.in_(report_types),
-            IxHeadTitle.current_period != None,
+            IxHeadTitle.current_period is not None,
         )
     results = session.exec(statement)
     items = results.all()
@@ -98,10 +97,10 @@ def read_ix_head_title_item(
 def get_document_list(
     *,
     session: SessionDep,
-    report_types: Optional[List[str]] = Query(None),
-    date_str: Optional[str] = Query(None),
-    industry_17_code: Optional[int] = Query(None),
-    industry_33_code: Optional[int] = Query(None),
+    report_types: list[str] | None = Query(None),
+    date_str: str | None = Query(None),
+    industry_17_code: int | None = Query(None),
+    industry_33_code: int | None = Query(None),
 ) -> sc.DocumentListPublics:
 
     if date_str and not re.match(r"^\d{4}-\d{2}-\d{2}$", date_str):
@@ -115,25 +114,25 @@ def get_document_list(
 
     statement = (
         select(IxHeadTitle)
-        .where(IxHeadTitle.securities_code != None)
+        .where(IxHeadTitle.securities_code is not None)
         .order_by(IxHeadTitle.id)
     )
     if report_types:
         statement = statement.where(
             IxHeadTitle.report_type.in_(report_types),
-            IxHeadTitle.current_period != None,
+            IxHeadTitle.current_period is not None,
         )
     if convert_date:
         statement = statement.where(IxHeadTitle.reporting_date == convert_date)
     if industry_17_code:
         statement = statement.where(
             JpxStockInfo.industry_17_code == industry_17_code,
-            IxHeadTitle.securities_code != None,
+            IxHeadTitle.securities_code is not None,
         )
     if industry_33_code:
         statement = statement.where(
             JpxStockInfo.industry_33_code == industry_33_code,
-            IxHeadTitle.securities_code != None,
+            IxHeadTitle.securities_code is not None,
         )
     results = session.exec(statement)
     items = results.all()
@@ -232,7 +231,7 @@ def get_calendar(*, session: SessionDep) -> sc.PublicCalenders:
             IxHeadTitle.reporting_date,
             func.count(IxHeadTitle.reporting_date).label("count"),
         )
-        .where(IxHeadTitle.securities_code != None)
+        .where(IxHeadTitle.securities_code is not None)
         .group_by(IxHeadTitle.reporting_date)
         .order_by(desc(IxHeadTitle.reporting_date))
     )
@@ -266,7 +265,7 @@ def get_latest_reporting_date(*, session: SessionDep) -> sc.PublicLatestReportin
             IxHeadTitle.reporting_date,
             func.count(IxHeadTitle.reporting_date).label("count"),
         )
-        .where(IxHeadTitle.reporting_date != None)
+        .where(IxHeadTitle.reporting_date is not None)
         .order_by(desc(IxHeadTitle.reporting_date))
         .group_by(IxHeadTitle.reporting_date)
     )

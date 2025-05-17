@@ -1,7 +1,6 @@
 from typing import Any
 
 from fastapi import APIRouter, Query
-from sqlmodel import func, select
 
 from app.api.deps import SessionDep
 

@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 from fastapi import Query
 from sqlalchemy.orm import aliased
 from sqlmodel import Session, and_, case, desc, exists, func, literal, select
@@ -19,60 +17,9 @@ from app.models import (
 from . import schema as sc
 
 
-def get_ix_head_title(
-    session: Session,
-    code: str,
-    year: Optional[str] = None,
-    period: Optional[str] = None,
-) -> Optional[IxHeadTitle]:
-    if year and period:
-        statement = (
-            select(IxHeadTitle)
-            .where(
-                IxHeadTitle.securities_code == code,
-                IxHeadTitle.fy_year_end.startswith(year),
-                IxHeadTitle.current_period == period,
-            )
-            .order_by(desc(IxHeadTitle.report_type), desc(IxHeadTitle.current_period))
-        )
-    elif year:
-        statement = (
-            select(IxHeadTitle)
-            .where(
-                IxHeadTitle.securities_code == code,
-                IxHeadTitle.fy_year_end.startswith(year),
-                IxHeadTitle.current_period is not None,
-            )
-            .order_by(desc(IxHeadTitle.report_type), desc(IxHeadTitle.current_period))
-        )
-    elif period:
-        statement = (
-            select(IxHeadTitle)
-            .where(
-                IxHeadTitle.securities_code == code,
-                IxHeadTitle.current_period == period,
-                IxHeadTitle.fy_year_end is not None,
-            )
-            .order_by(desc(IxHeadTitle.report_type), desc(IxHeadTitle.current_period))
-        )
-    else:
-        statement = (
-            select(IxHeadTitle)
-            .where(
-                IxHeadTitle.securities_code == code,
-                IxHeadTitle.current_period is not None,
-            )
-            .order_by(desc(IxHeadTitle.report_type), desc(IxHeadTitle.current_period))
-        )
-    result = session.exec(statement)
-    item = result.first()
-
-    return item
-
-
 def get_ix_head_title_by_item_key(
     session: Session, item_key: str
-) -> Optional[IxHeadTitle]:
+) -> IxHeadTitle | None:
     """
     #### IxHeadTitleテーブルからIDに紐づくレコードを取得する
     - **機能**: IDに紐づくIxHeadTitleテーブルのレコードを取得する
@@ -85,7 +32,7 @@ def get_ix_head_title_by_item_key(
     return item
 
 
-def get_ix_head_title_by_code(session: Session, code: str) -> List[IxHeadTitle]:
+def get_ix_head_title_by_code(session: Session, code: str) -> list[IxHeadTitle]:
     """
     #### IxHeadTitleテーブルから証券コードに紐づくレコードを取得する
     - **機能**: 証券コードに紐づくIxHeadTitleテーブルのレコードを取得する
@@ -101,11 +48,11 @@ def get_ix_head_title_by_code(session: Session, code: str) -> List[IxHeadTitle]:
 def get_ix_head_title(
     session: Session,
     code: str,
-    report_types: Optional[List[str]] = Query(None),
-    current_period: Optional[str] = None,
-    year: Optional[str] = None,
+    report_types: list[str] | None = Query(None),
+    current_period: str | None = None,
+    year: str | None = None,
     offset: int = 0,
-) -> Optional[IxHeadTitle]:
+) -> IxHeadTitle | None:
     """
     #### IxHeadTitleテーブルから証券コードに紐づくレコードを取得する
     - **機能**: 証券コードに紐づくIxHeadTitleテーブルのレコードを取得する
@@ -141,8 +88,8 @@ def get_ix_head_title(
 
 
 def get_attr_value(
-    session: Session, head_item_key: str, attr_values: List[str]
-) -> Optional[str]:
+    session: Session, head_item_key: str, attr_values: list[str]
+) -> str | None:
     """
     #### HeadItemKeyに紐づくattr_valueを取得する
     - **機能**: HeadItemKeyに紐づくattr_valueを取得する
@@ -165,10 +112,10 @@ def get_attr_value(
 def read_tree_items(
     *,
     head_item_key: str,
-    attr_value: Optional[str] = None,
-    level: Optional[int] = None,
-    has_children: Optional[bool] = None,
-    xlink_arcrole: Optional[str] = None,
+    attr_value: str | None = None,
+    level: int | None = None,
+    has_children: bool | None = None,
+    xlink_arcrole: str | None = None,
     xbrl_type: str = "sm",
     session: Session,
 ) -> sc.TreeItemsList:
@@ -398,9 +345,9 @@ def read_tree_items(
 def get_ix_non_fraction_records(
     session: Session,
     head_item_key: str,
-    names: List[str],
-    contexts: List[str] | List[List[str]],
-) -> List[IxNonFraction]:
+    names: list[str],
+    contexts: list[str] | list[list[str]],
+) -> list[IxNonFraction]:
     """
     #### IxNonFractionテーブルから条件に紐づくレコードを取得する
     - **機能**: 条件に紐づくIxNonFractionテーブルのレコードを取得する
@@ -417,11 +364,11 @@ def get_ix_non_fraction_records(
     )
 
     if contexts:
-        if type(contexts[0]) == str:
+        if isinstance(contexts[0], str):
             statement = statement.where(
                 IxNonFraction.context.op("@>")(contexts),
             )
-        elif type(contexts[0]) == list:
+        elif isinstance(contexts[0], list):
             or_conditions = [
                 IxNonFraction.context.op("&&")(context) for context in contexts
             ]
@@ -434,8 +381,8 @@ def get_ix_non_fraction_records(
 
 
 def is_change_value(
-    session: Session, head_item_key: str, names: List[str]
-) -> Optional[bool]:
+    session: Session, head_item_key: str, names: list[str]
+) -> bool | None:
     """
     #### 予想変更の有無を取得する
     - **機能**: 予想変更の有無を取得する
@@ -460,7 +407,7 @@ def is_change_value(
 def get_base_head_item_key_offset_item(
     session: Session,
     headItemKey: str,
-    report_types: Optional[List[str]] = None,
+    report_types: list[str] | None = None,
     offset: int = 0,
 ) -> str:
 
