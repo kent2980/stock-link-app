@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from fastapi import Query
 from sqlalchemy.orm import aliased
-from sqlmodel import Session, and_, case, exists, func, literal, select
+from sqlmodel import Session, and_, case, desc, exists, func, literal, select
 
 from app.models import (
     IxDefinitionArc,
@@ -33,7 +33,7 @@ def get_ix_head_title(
                 IxHeadTitle.fy_year_end.startswith(year),
                 IxHeadTitle.current_period == period,
             )
-            .order_by(IxHeadTitle.report_type.desc(), IxHeadTitle.current_period.desc())
+            .order_by(desc(IxHeadTitle.report_type), desc(IxHeadTitle.current_period))
         )
     elif year:
         statement = (
@@ -43,7 +43,7 @@ def get_ix_head_title(
                 IxHeadTitle.fy_year_end.startswith(year),
                 IxHeadTitle.current_period is not None,
             )
-            .order_by(IxHeadTitle.report_type.desc(), IxHeadTitle.current_period.desc())
+            .order_by(desc(IxHeadTitle.report_type), desc(IxHeadTitle.current_period))
         )
     elif period:
         statement = (
@@ -53,7 +53,7 @@ def get_ix_head_title(
                 IxHeadTitle.current_period == period,
                 IxHeadTitle.fy_year_end is not None,
             )
-            .order_by(IxHeadTitle.report_type.desc(), IxHeadTitle.current_period.desc())
+            .order_by(desc(IxHeadTitle.report_type), desc(IxHeadTitle.current_period))
         )
     else:
         statement = (
@@ -62,7 +62,7 @@ def get_ix_head_title(
                 IxHeadTitle.securities_code == code,
                 IxHeadTitle.current_period is not None,
             )
-            .order_by(IxHeadTitle.report_type.desc(), IxHeadTitle.current_period.desc())
+            .order_by(desc(IxHeadTitle.report_type), desc(IxHeadTitle.current_period))
         )
     result = session.exec(statement)
     item = result.first()
@@ -131,7 +131,7 @@ def get_ix_head_title(
             IxHeadTitle.fy_year_end.startswith(year),
         )
     statement = statement.order_by(
-        IxHeadTitle.id.desc(),
+        desc(IxHeadTitle.id),
     )
     statement = statement.offset(offset)
     result = session.exec(statement)
@@ -490,7 +490,7 @@ def get_base_head_item_key_offset_item(
             != (current_period, fy_year_end),
         )
         .order_by(
-            IxHeadTitle.reporting_date.desc(),
+            desc(IxHeadTitle.reporting_date),
         )
     )
 

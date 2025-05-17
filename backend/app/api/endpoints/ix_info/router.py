@@ -3,7 +3,7 @@ from datetime import date
 from typing import List, Optional
 
 from fastapi import APIRouter, HTTPException, Query
-from sqlmodel import func, select
+from sqlmodel import desc, func, select
 
 from app.api.deps import SessionDep
 from app.models import IxHeadTitle, JpxStockInfo
@@ -54,7 +54,7 @@ def get_document_count(
 )
 def get_latest_document_title(*, session: SessionDep) -> str:
 
-    statement = select(IxHeadTitle).order_by(IxHeadTitle.insert_date.desc())
+    statement = select(IxHeadTitle).order_by(desc(IxHeadTitle.insert_date))
     results = session.exec(statement)
     item = results.first()
     latest_title = f"{item.securities_code} {item.company_name} {item.document_name}"
@@ -234,7 +234,7 @@ def get_calendar(*, session: SessionDep) -> sc.PublicCalenders:
         )
         .where(IxHeadTitle.securities_code != None)
         .group_by(IxHeadTitle.reporting_date)
-        .order_by(IxHeadTitle.reporting_date.desc())
+        .order_by(desc(IxHeadTitle.reporting_date))
     )
     results = session.exec(statement)
     items = results.all()
@@ -267,7 +267,7 @@ def get_latest_reporting_date(*, session: SessionDep) -> sc.PublicLatestReportin
             func.count(IxHeadTitle.reporting_date).label("count"),
         )
         .where(IxHeadTitle.reporting_date != None)
-        .order_by(IxHeadTitle.reporting_date.desc())
+        .order_by(desc(IxHeadTitle.reporting_date))
         .group_by(IxHeadTitle.reporting_date)
     )
     results = session.exec(statement)
