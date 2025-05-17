@@ -1,3 +1,5 @@
+from collections.abc import Sequence
+
 from fastapi import Query
 from sqlalchemy.orm import aliased
 from sqlmodel import Session, and_, case, desc, exists, func, literal, select
@@ -347,7 +349,7 @@ def get_ix_non_fraction_records(
     head_item_key: str,
     names: list[str],
     contexts: list[str] | list[list[str]],
-) -> list[IxNonFraction]:
+) -> Sequence[IxNonFraction]:
     """
     #### IxNonFractionテーブルから条件に紐づくレコードを取得する
     - **機能**: 条件に紐づくIxNonFractionテーブルのレコードを取得する
@@ -416,10 +418,20 @@ def get_base_head_item_key_offset_item(
     )
     result = session.exec(statement)
     item = result.first()
+
+    # itemがNoneの場合は、エラーを返す
+    if item is None:
+        raise ValueError("Item not found")
+
     reporting_date = item.reporting_date
     code = item.securities_code
     current_period = item.current_period
     fy_year_end = item.fy_year_end
+
+    if current_period is None:
+        raise ValueError("Current period not found")
+    if fy_year_end is None:
+        raise ValueError("FY year end not found")
 
     if reporting_date is None and code is None:
         raise ValueError("Base reporting_date and Code not found")
@@ -428,16 +440,22 @@ def get_base_head_item_key_offset_item(
     elif code is None:
         raise ValueError("Code not found")
 
+    statement = select(IxHeadTitle).where(
+        IxHeadTitle.reporting_date is not None,
+        (IxHeadTitle.current_period, IxHeadTitle.fy_year_end)
+        != (current_period, fy_year_end),
+    )
+
     statement = (
-        select(IxHeadTitle)
+        select(statement)
         .where(
-            IxHeadTitle.reporting_date < reporting_date,
-            IxHeadTitle.securities_code == code,
-            (IxHeadTitle.current_period, IxHeadTitle.fy_year_end)
-            != (current_period, fy_year_end),
+            and_(
+                statement.c.reporting_date < reporting_date,
+                statement.c.securities_code == code,
+            )
         )
         .order_by(
-            desc(IxHeadTitle.reporting_date),
+            desc(statement.c.reporting_date),
         )
     )
 

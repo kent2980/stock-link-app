@@ -26,20 +26,12 @@ def get_context_list(items: sc.TreeItemsList, attr_value: str) -> list[list[str]
     return list(from_dict.values())
 
 
-def create_metric_parent_schema(item) -> sc.FinValueFinance:
-    return sc.FinValueFinance(
-        name=item.xlink_to,
-        order=item.xlink_order,
-        label=item.to_label,
-    )
-
-
 def get_metric_schema_value_and_change(
     items: list[IxNonFraction],
     schema_items: list[sc.FinValueFinance],
     child_items: dict[str, str],
     metric_contexts: list[str],
-):
+) -> None:
     for item in items:
         for schema_item in schema_items:
             if schema_item.name == child_items[item.name]:

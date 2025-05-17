@@ -435,12 +435,8 @@ class IxCalculationArc(IxArcsBase, table=True):
 
     head_item_key: str = Field(default=None, max_length=36)
     attr_value: str | None = Field(max_length=255)
-    xlink_order: Decimal | None = Field(
-        default=None, sa_column=Column(DECIMAL(5, 2))
-    )
-    xlink_weight: Decimal | None = Field(
-        default=None, sa_column=Column(DECIMAL(5, 2))
-    )
+    xlink_order: Decimal | None = Field(default=None, sa_column=Column(DECIMAL(5, 2)))
+    xlink_weight: Decimal | None = Field(default=None, sa_column=Column(DECIMAL(5, 2)))
     source_file_id: str | None = Field(max_length=36)
 
     __table_args__ = (
@@ -490,9 +486,7 @@ class IxDefinitionArc(IxArcsBase, table=True):
     xlink_from: str = Field(max_length=255)
     attr_value: str | None = Field(max_length=255)
     xlink_order: Decimal = Field(sa_column=Column(DECIMAL(5, 2)))
-    xlink_weight: Decimal | None = Field(
-        default=None, sa_column=Column(DECIMAL(5, 2))
-    )
+    xlink_weight: Decimal | None = Field(default=None, sa_column=Column(DECIMAL(5, 2)))
     source_file_id: str | None = Field(max_length=36)
 
     __table_args__ = (
@@ -703,12 +697,8 @@ class IxPresentationArc(IxArcsBase, table=True):
 
     head_item_key: str = Field(default=None, max_length=36)
     attr_value: str | None = Field(max_length=255)
-    xlink_order: Decimal | None = Field(
-        default=None, sa_column=Column(DECIMAL(5, 2))
-    )
-    xlink_weight: Decimal | None = Field(
-        default=None, sa_column=Column(DECIMAL(5, 2))
-    )
+    xlink_order: Decimal | None = Field(default=None, sa_column=Column(DECIMAL(5, 2)))
+    xlink_weight: Decimal | None = Field(default=None, sa_column=Column(DECIMAL(5, 2)))
     source_file_id: str | None = Field(max_length=36)
 
     __table_args__ = (
