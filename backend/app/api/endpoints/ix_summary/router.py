@@ -22,7 +22,6 @@ def get_operating_results(
     report_types: list[str] | None = Query(None, description="レポートタイプ"),
     offset: int = Query(0, description="オフセット"),
 ) -> sc.FinItemsResponse:
-
     if code and head_item_key:
         raise HTTPException(
             status_code=404,
@@ -88,7 +87,6 @@ def get_other_operating_results(
     report_types: list[str] | None = Query(None, description="レポートタイプ"),
     offset: int = Query(0, description="オフセット"),
 ) -> sc.FinItemsResponse:
-
     if code and head_item_key:
         raise HTTPException(
             status_code=404,
@@ -154,7 +152,6 @@ def get_forecasts(
     report_types: list[str] | None = Query(None, description="レポートタイプ"),
     offset: int = Query(0, description="オフセット"),
 ) -> sc.FinItemsResponse:
-
     if code and head_item_key:
         raise HTTPException(
             status_code=404,
@@ -224,7 +221,6 @@ def get_financial_position(
     report_types: list[str] | None = Query(None, description="レポートタイプ"),
     offset: int = Query(0, description="オフセット"),
 ) -> sc.FinItemsResponse:
-
     if code and head_item_key:
         raise HTTPException(
             status_code=404,
@@ -293,7 +289,6 @@ def get_cash_flows(
     year: str | None = Query(None, description="年度"),
     offset: int = Query(0, description="オフセット"),
 ) -> sc.FinItemsResponse:
-
     attr_value_dict = {
         "FY": "BusinessResultsCashFlows",
         "QU": "BusinessResultsQuarterlyCashFlows",
@@ -352,7 +347,6 @@ def get_forecast_change(
     report_types: list[str] | None = Query(None, description="レポートタイプ"),
     offset: int = Query(0, description="オフセット"),
 ) -> bool | None:
-
     if head_item_key is None:
         try:
             head_item_key = utils.get_head_item_key(
@@ -396,7 +390,6 @@ def get_dividends_change(
     report_types: list[str] | None = Query(None, description="レポートタイプ"),
     offset: int = Query(0, description="オフセット"),
 ) -> bool | None:
-
     if head_item_key is None:
         try:
             head_item_key = utils.get_head_item_key(
@@ -438,7 +431,6 @@ def get_dividends(
     report_types: list[str] | None = Query(None, description="レポートタイプ"),
     offset: int = Query(0, description="オフセット"),
 ) -> sc.FinItemsDividendsResponse:
-
     if code and head_item_key:
         raise HTTPException(
             status_code=404,

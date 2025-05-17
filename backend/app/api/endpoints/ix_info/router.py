@@ -22,7 +22,6 @@ def get_document_count(
     date_str: str | None = Query(None),
     report_types: list[str] | None = Query(None),
 ) -> int:
-
     if date_str and not re.match(r"^\d{4}-\d{2}-\d{2}$", date_str):
         raise HTTPException(
             status_code=400,
@@ -52,7 +51,6 @@ def get_document_count(
     response_model=str,
 )
 def get_latest_document_title(*, session: SessionDep) -> str:
-
     statement = select(IxHeadTitle).order_by(desc(IxHeadTitle.insert_date))
     results = session.exec(statement)
     item = results.first()
@@ -102,7 +100,6 @@ def get_document_list(
     industry_17_code: int | None = Query(None),
     industry_33_code: int | None = Query(None),
 ) -> sc.DocumentListPublics:
-
     if date_str and not re.match(r"^\d{4}-\d{2}-\d{2}$", date_str):
         raise HTTPException(
             status_code=400,
@@ -225,7 +222,6 @@ def read_ix_head_title_items_url_list(
     "/calendar", summary="XBRLカレンダーを取得", response_model=sc.PublicCalenders
 )
 def get_calendar(*, session: SessionDep) -> sc.PublicCalenders:
-
     statement = (
         select(
             IxHeadTitle.reporting_date,

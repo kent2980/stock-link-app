@@ -1,4 +1,3 @@
-
 from sqlalchemy import func
 from sqlmodel import Session, select
 
@@ -239,7 +238,6 @@ def read_industry_name(
     code: int,
     session: Session,
 ) -> str:
-
     if type not in [17, 33]:
         raise ValueError("type must be 17 or 33")
     if type == 17:

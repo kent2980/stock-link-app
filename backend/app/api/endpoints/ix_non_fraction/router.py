@@ -30,7 +30,6 @@ def create_ix_non_fraction_item(
 def create_ix_non_fraction_items(
     *, session: SessionDep, items_in: sc.IxNonFractionCreateList
 ) -> str:
-
     msg = crud.create_ix_non_fraction_items(session=session, items_in=items_in)
 
     return msg

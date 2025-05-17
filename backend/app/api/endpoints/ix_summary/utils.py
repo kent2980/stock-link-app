@@ -59,7 +59,6 @@ def get_metric_schema_value_and_change(
 
 
 def get_attr_value(head_item: IxHeadTitle, attr_value_dict: dict[str, str]) -> str:
-
     # region attr_valueの設定
     if head_item.current_period is None:  # head_itemが存在しない場合、例外を発生させる
         raise HeadItemNotFound("head item not found.")
@@ -75,7 +74,6 @@ def get_attr_value(head_item: IxHeadTitle, attr_value_dict: dict[str, str]) -> s
 
 
 def get_from_name(from_names: dict[str, str], tree_items: sc.TreeItemsList) -> str:
-
     # region is_consolidatedの設定
     is_consolidated = any(  # is_consolidatedを取得
         item.xlink_to == "tse-ed-t_ConsolidatedMember" for item in tree_items.data
@@ -129,7 +127,6 @@ def var_init(
     from_names: list[str],
     is_change: bool = True,
 ):
-
     # region 引数のバリデーション
     # キーのバリデーションを行い、エラーがあれば例外を発生させる
     if not list(attr_value_dict.keys()).__eq__(
@@ -547,7 +544,6 @@ def get_base_head_item_key_offset(
     report_types: list[str] | None = None,
     offset: int = 0,
 ) -> str:
-
     try:
         item = crud.get_base_head_item_key_offset_item(
             session=session,

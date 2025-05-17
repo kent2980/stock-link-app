@@ -1,4 +1,3 @@
-
 from app.models import Field, SQLModel
 
 
@@ -55,6 +54,5 @@ class IxNonNumericAddLabelItemPublic(IxNonNumericPublic):
 
 
 class IxNonNumericAddLabelItemsPublic(SQLModel):
-
     count: int
     data: list[IxNonNumericAddLabelItemPublic]

@@ -38,7 +38,6 @@ def create_ix_head_title_items(
 def update_is_active_ix_head_title_item(
     *, session: SessionDep, head_item_key: str = Query(...)
 ) -> bool:
-
     is_active = crud.update_is_active_ix_head_title_item(
         session=session, head_item_key=head_item_key
     )

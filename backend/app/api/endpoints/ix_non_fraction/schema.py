@@ -72,6 +72,5 @@ class IxNonFractionAddLabelItemPublic(IxNonFractionPublic):
 
 
 class IxNonFractionAddLabelItemsPublic(SQLModel):
-
     count: int
     data: list[IxNonFractionAddLabelItemPublic]

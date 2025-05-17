@@ -1,11 +1,9 @@
-
 from app.models import IxHeadTitle, IxNonFraction, IxNonNumeric
 
 from . import schema as sc
 
 
 class SummaryItems:
-
     def __init__(
         self,
         head_item: IxHeadTitle | None = None,

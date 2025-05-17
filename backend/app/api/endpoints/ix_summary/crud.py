@@ -412,7 +412,6 @@ def get_base_head_item_key_offset_item(
     report_types: list[str] | None = None,
     offset: int = 0,
 ) -> str:
-
     statement = select(IxHeadTitle).where(
         IxHeadTitle.item_key == headItemKey,
     )

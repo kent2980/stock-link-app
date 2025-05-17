@@ -1,4 +1,3 @@
-
 from sqlmodel import Field, SQLModel
 
 
@@ -34,7 +33,6 @@ class FinValueBase(SQLModel):
 
 
 class FinValueWithChange(SQLModel):
-
     isActive: bool | None = Field(default=False)
     curValue: FinValueBase | None = Field(default=None)
     curChange: FinValueBase | None = Field(default=None)

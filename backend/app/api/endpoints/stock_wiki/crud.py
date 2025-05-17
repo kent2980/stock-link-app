@@ -1,4 +1,3 @@
-
 from sqlalchemy.exc import IntegrityError
 from sqlmodel import Session, select
 

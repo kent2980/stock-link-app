@@ -188,7 +188,6 @@ def download_logo(url: str, directory: str, filename: str) -> str | None:
 
 
 if __name__ == "__main__":
-
     if len(os.sys.argv) > 1:
         # コマンドライン引数が指定された場合
         api_base = os.sys.argv[1]
