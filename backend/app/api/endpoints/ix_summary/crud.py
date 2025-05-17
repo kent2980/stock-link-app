@@ -440,7 +440,7 @@ def get_base_head_item_key_offset_item(
         raise ValueError("Code not found")
 
     statement = select(IxHeadTitle).where(
-        IxHeadTitle.reporting_date is not None,
+        IxHeadTitle.reporting_date.isnot(None),
         (IxHeadTitle.current_period, IxHeadTitle.fy_year_end)
         != (current_period, fy_year_end),
     )

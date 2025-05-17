@@ -36,7 +36,7 @@ def get_document_count(
     if report_types:
         statement = statement.where(
             IxHeadTitle.report_type.in_(report_types),
-            IxHeadTitle.current_period is not None,
+            IxHeadTitle.current_period.isnot(None),
         )
     results = session.exec(statement)
     items = results.all()
@@ -111,25 +111,25 @@ def get_document_list(
 
     statement = (
         select(IxHeadTitle)
-        .where(IxHeadTitle.securities_code is not None)
+        .where(IxHeadTitle.securities_code.isnot(None))
         .order_by(IxHeadTitle.id)
     )
     if report_types:
         statement = statement.where(
             IxHeadTitle.report_type.in_(report_types),
-            IxHeadTitle.current_period is not None,
+            IxHeadTitle.current_period.isnot(None),
         )
     if convert_date:
         statement = statement.where(IxHeadTitle.reporting_date == convert_date)
     if industry_17_code:
         statement = statement.where(
             JpxStockInfo.industry_17_code == industry_17_code,
-            IxHeadTitle.securities_code is not None,
+            IxHeadTitle.securities_code.isnot(None),
         )
     if industry_33_code:
         statement = statement.where(
             JpxStockInfo.industry_33_code == industry_33_code,
-            IxHeadTitle.securities_code is not None,
+            IxHeadTitle.securities_code.isnot(None),
         )
     results = session.exec(statement)
     items = results.all()
@@ -199,7 +199,7 @@ def read_ix_head_title_items_url_list(
     """
     statement = (
         select(IxHeadTitle.securities_code, IxHeadTitle.url)
-        .where(IxHeadTitle.url is not None, IxHeadTitle.securities_code is not None)
+        .where(IxHeadTitle.url.isnot(None), IxHeadTitle.securities_code.isnot(None))
         .order_by(IxHeadTitle.securities_code.asc())
         .distinct(IxHeadTitle.securities_code)
     )
@@ -227,7 +227,10 @@ def get_calendar(*, session: SessionDep) -> sc.PublicCalenders:
             IxHeadTitle.reporting_date,
             func.count(IxHeadTitle.reporting_date).label("count"),
         )
-        .where(IxHeadTitle.securities_code is not None)
+        .where(
+            IxHeadTitle.securities_code.isnot(None),
+            IxHeadTitle.reporting_date.isnot(None),
+        )
         .group_by(IxHeadTitle.reporting_date)
         .order_by(desc(IxHeadTitle.reporting_date))
     )
@@ -261,7 +264,7 @@ def get_latest_reporting_date(*, session: SessionDep) -> sc.PublicLatestReportin
             IxHeadTitle.reporting_date,
             func.count(IxHeadTitle.reporting_date).label("count"),
         )
-        .where(IxHeadTitle.reporting_date is not None)
+        .where(IxHeadTitle.reporting_date.isnot(None))
         .order_by(desc(IxHeadTitle.reporting_date))
         .group_by(IxHeadTitle.reporting_date)
     )
