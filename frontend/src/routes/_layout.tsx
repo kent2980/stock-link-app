@@ -30,14 +30,7 @@ function Layout() {
         mb={{ base: FOOTER_HEIGHT, md: 0 }}
       >
         <AppSidebar />
-        <Box
-          ml={{ base: 0, md: 60 }}
-          bg="gray.50"
-          h={{
-            base: window.innerHeight - (HEADER_HEIGHT * 4 + FOOTER_HEIGHT * 4),
-            md: window.innerHeight - HEADER_HEIGHT * 4,
-          }}
-        >
+        <Box ml={{ base: 0, md: 60 }} bg="gray.50">
           <Outlet />
         </Box>
       </Box>
