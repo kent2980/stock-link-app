@@ -400,14 +400,14 @@ class IxSourceFile(XbrlBase, table=True):
 
     __tablename__ = "ix_source_file"
 
-    id: str | None = Field(max_length=36, primary_key=True)
+    source_file_id: str | None = Field(max_length=36, unique=True)
     name: str | None = Field(max_length=255)
     type: str | None = Field(max_length=255)
     head_item_key: str | None = Field(max_length=36)
     url: str | None = Field(max_length=255)
 
     __table_args__ = (
-        Index("idx_ix_source_file_id", "id"),
+        Index("idx_ix_source_file_id", "source_file_id"),
         ForeignKeyConstraint(["head_item_key"], ["ix_head_title.item_key"]),
     )
 
@@ -424,7 +424,7 @@ class IxCalculationLoc(IxLocsBase, table=True):
 
     __table_args__ = (
         ForeignKeyConstraint(["head_item_key"], ["ix_head_title.item_key"]),
-        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.id"]),
+        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.source_file_id"]),
     )
 
 
@@ -441,7 +441,7 @@ class IxCalculationArc(IxArcsBase, table=True):
 
     __table_args__ = (
         ForeignKeyConstraint(["head_item_key"], ["ix_head_title.item_key"]),
-        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.id"]),
+        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.source_file_id"]),
     )
 
 
@@ -472,7 +472,7 @@ class IxDefinitionLoc(IxLocsBase, table=True):
         #     name="ix_definition_loc_uc",
         # ),
         ForeignKeyConstraint(["head_item_key"], ["ix_head_title.item_key"]),
-        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.id"]),
+        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.source_file_id"]),
     )
 
 
@@ -516,7 +516,7 @@ class IxDefinitionArc(IxArcsBase, table=True):
             name="ix_definition_arc_uc",
         ),
         ForeignKeyConstraint(["head_item_key"], ["ix_head_title.item_key"]),
-        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.id"]),
+        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.source_file_id"]),
         # ForeignKeyConstraint(
         #     ["head_item_key", "source_file_id", "attr_value", "xlink_to"],
         #     [
@@ -558,7 +558,7 @@ class IxLabelLoc(IxLocsBase, table=True):
             "source_file_id",
             "xlink_label",
         ),
-        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.id"]),
+        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.source_file_id"]),
     )
 
 
@@ -584,7 +584,7 @@ class IxLabelArc(IxArcsBase, table=True):
         Index("idx_ix_label_arc_source_file_id_xlink_to", "source_file_id", "xlink_to"),
         Index("idx_ix_label_arc_xlink_from", "xlink_from"),
         Index("idx_ix_label_arc_xlink_to", "xlink_to"),
-        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.id"]),
+        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.source_file_id"]),
     )
 
 
@@ -605,7 +605,7 @@ class IxLabelValue(XbrlBase, table=True):
         Index("idx_ix_label_value_source_file_id", "source_file_id"),
         Index("idx_ix_label_value_xlink_label", "xlink_label"),
         Index("idx_ix_label_value_xlink_role", "xlink_role"),
-        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.id"]),
+        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.source_file_id"]),
     )
 
 
@@ -638,7 +638,7 @@ class IxNonFraction(XbrlBase, table=True):
         Index("idx_ix_non_fraction_context", "context"),
         Index("idx_ix_non_fraction_report_type", "report_type"),
         ForeignKeyConstraint(["head_item_key"], ["ix_head_title.item_key"]),
-        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.id"]),
+        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.source_file_id"]),
     )
 
     __str__ = "ix_non_fraction"
@@ -668,7 +668,7 @@ class IxNonNumeric(XbrlBase, table=True):
         Index("idx_ix_non_numeric_context", "context"),
         Index("idx_ix_non_numeric_report_type", "report_type"),
         ForeignKeyConstraint(["head_item_key"], ["ix_head_title.item_key"]),
-        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.id"]),
+        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.source_file_id"]),
     )
 
     __str__ = "ix_non_numeric"
@@ -686,7 +686,7 @@ class IxPresentationLoc(IxLocsBase, table=True):
 
     __table_args__ = (
         ForeignKeyConstraint(["head_item_key"], ["ix_head_title.item_key"]),
-        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.id"]),
+        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.source_file_id"]),
     )
 
 
@@ -703,7 +703,7 @@ class IxPresentationArc(IxArcsBase, table=True):
 
     __table_args__ = (
         ForeignKeyConstraint(["head_item_key"], ["ix_head_title.item_key"]),
-        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.id"]),
+        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.source_file_id"]),
     )
 
 
@@ -731,7 +731,7 @@ class ScLinkBaseRef(XbrlBase, table=True):
         ),
         Index("idx_ix_schema_linkbase_href_source_file_id", "href_source_file_id"),
         ForeignKeyConstraint(["head_item_key"], ["ix_head_title.item_key"]),
-        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.id"]),
+        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.source_file_id"]),
     )
 
 
@@ -755,7 +755,7 @@ class IxQualitative(XbrlBase, table=True):
         Index("idx_ix_qualitative_head_item_key", "head_item_key"),
         Index("idx_ix_qualitative_content", "content"),
         ForeignKeyConstraint(["head_item_key"], ["ix_head_title.item_key"]),
-        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.id"]),
+        ForeignKeyConstraint(["source_file_id"], ["ix_source_file.source_file_id"]),
     )
 
 
