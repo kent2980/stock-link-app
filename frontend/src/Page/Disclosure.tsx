@@ -20,7 +20,6 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useNavigate } from "@tanstack/react-router";
 import { Bell, Calendar, Filter, Search } from "lucide-react";
 
 // モックデータ - 実際のアプリでは API から取得
@@ -177,11 +176,6 @@ const DisclosureCard = ({ item }: { item: (typeof disclosureData)[0] }) => {
 };
 
 export default function DisclosurePage() {
-  const navigate = useNavigate({ from: "/disclosure" });
-  const handleClick = (url: string) => {
-    navigate({ to: url });
-  };
-
   const frameworks = createListCollection({
     items: [
       { value: "all", label: "すべて" },
