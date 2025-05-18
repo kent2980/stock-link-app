@@ -51,7 +51,9 @@ def get_ix_source_file_item(*, session: Session, source_file_id: str) -> bool:
     """
     Get item.
     """
-    statement = select(IxSourceFile).where(IxSourceFile.id == source_file_id)
+    statement = select(IxSourceFile).where(
+        IxSourceFile.source_file_id == source_file_id
+    )
     result = session.exec(statement)
     item_exists = result.first()
 

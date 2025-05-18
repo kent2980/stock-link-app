@@ -1,5 +1,3 @@
-from fastapi import APIRouter
-
 from app.api.endpoints.ix_calc import router as ix_calc_router
 from app.api.endpoints.ix_check import router as ix_check_router
 from app.api.endpoints.ix_def import router as ix_def_router
@@ -15,8 +13,9 @@ from app.api.endpoints.ix_schema import router as ix_schema_router
 from app.api.endpoints.ix_source import router as ix_source_router
 from app.api.endpoints.ix_summary import router as ix_summary_router
 from app.api.endpoints.jpx_info import router as jpx_info_router
-from app.api.endpoints.manager.router import items, login, users, utils
+from app.api.endpoints.manager.router import items, login, private, users, utils
 from app.api.endpoints.stock_wiki import router as stock_wiki_router
+from fastapi import APIRouter
 
 api_router = APIRouter()
 
@@ -70,7 +69,7 @@ api_router.include_router(
     ix_source_router.router,
     prefix="/xbrl",
     tags=["xbrl_source"],
-    include_in_schema=False,
+    include_in_schema=True,
 )
 api_router.include_router(
     ix_schema_router.router,
@@ -99,6 +98,9 @@ api_router.include_router(
 )
 api_router.include_router(
     items.router, prefix="/items", tags=["items"], include_in_schema=True
+)
+api_router.include_router(
+    private.router, prefix="/private", tags=["private"], include_in_schema=True
 )
 
 tags_metadata = [
@@ -133,5 +135,9 @@ tags_metadata = [
     {
         "name": "items",
         "description": "アイテム管理のエンドポイント。",
+    },
+    {
+        "name": "private",
+        "description": "プライベートエンドポイント。",
     },
 ]

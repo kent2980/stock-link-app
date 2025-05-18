@@ -1,7 +1,6 @@
 from typing import Any
 
 from fastapi import APIRouter, Query
-from sqlmodel import func, select
 
 from app.api.deps import SessionDep
 
@@ -39,7 +38,6 @@ def create_ix_head_title_items(
 def update_is_active_ix_head_title_item(
     *, session: SessionDep, head_item_key: str = Query(...)
 ) -> bool:
-
     is_active = crud.update_is_active_ix_head_title_item(
         session=session, head_item_key=head_item_key
     )

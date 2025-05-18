@@ -1,5 +1,4 @@
 import datetime
-from typing import Optional
 
 from sqlmodel import Field, SQLModel
 
@@ -11,12 +10,12 @@ class DocumentListPublic(SQLModel):
     securities_code: str
     company_name: str
     document_name: str
-    document_short_name: Optional[str] = Field(default=None)
+    document_short_name: str | None = Field(default=None)
     report_type: str
-    url: Optional[str] = Field(default=None)
-    period_index: Optional[int] = Field(default=None)
-    current_period: Optional[str] = Field(default=None)
-    report_date: Optional[datetime.date] = Field(default=None)
+    url: str | None = Field(default=None)
+    period_index: int | None = Field(default=None)
+    current_period: str | None = Field(default=None)
+    report_date: datetime.date | None = Field(default=None)
 
 
 class DocumentListPublics(SQLModel):

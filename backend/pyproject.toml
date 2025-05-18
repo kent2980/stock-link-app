@@ -33,6 +33,7 @@ dependencies = [
     "autoflake>=2.3.1",
     "isort>=6.0.1",
     "black>=25.1.0",
+    "types-requests>=2.32.0.20250515",
 ]
 
 [tool.uv]

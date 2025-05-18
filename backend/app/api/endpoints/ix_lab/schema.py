@@ -1,12 +1,10 @@
-from typing import List, Optional
-
 from app.models import Field, SQLModel
 
 
 class IxLabelLocCreate(SQLModel):
     """iXBRLのラベルロケーション情報を作成するためのクラス"""
 
-    item_key: Optional[str] = Field(max_length=36, min_length=36)
+    item_key: str | None = Field(max_length=36, min_length=36)
     xlink_href: str = Field(default=None)
     xlink_label: str = Field(default=None)
     xlink_type: str = Field(max_length=255)
@@ -33,7 +31,7 @@ class IxLabelLocsPublic(SQLModel):
 class IxLabelArcCreate(SQLModel):
     """iXBRLのラベルアーク情報を作成するためのクラス"""
 
-    item_key: Optional[str] = Field(max_length=36, min_length=36)
+    item_key: str | None = Field(max_length=36, min_length=36)
     xlink_type: str = Field(max_length=255)
     xlink_arcrole: str = Field(max_length=255)
     xlink_from: str = Field(default=None)
@@ -44,7 +42,7 @@ class IxLabelArcCreate(SQLModel):
 class IxLabelArcCreateList(SQLModel):
     """iXBRLのラベルアーク情報を作成するためのクラス"""
 
-    data: List[IxLabelArcCreate]
+    data: list[IxLabelArcCreate]
 
 
 class IxLabelArcPublic(SQLModel):
@@ -66,7 +64,7 @@ class IxLabelArcsPublic(SQLModel):
 class IxLabelValueCreate(SQLModel):
     """iXBRLのラベルリンク情報を作成するためのクラス"""
 
-    item_key: Optional[str] = Field(max_length=36, min_length=36)
+    item_key: str | None = Field(max_length=36, min_length=36)
     xlink_type: str = Field(max_length=255)
     xlink_label: str = Field(default=None)
     xlink_role: str = Field(max_length=255)
@@ -78,7 +76,7 @@ class IxLabelValueCreate(SQLModel):
 class IxLabelValueCreateList(SQLModel):
     """iXBRLのラベルリンク情報を作成するためのクラス"""
 
-    data: List[IxLabelValueCreate]
+    data: list[IxLabelValueCreate]
 
 
 class IxLabelValuePublic(SQLModel):
@@ -101,16 +99,10 @@ class IxLabelValuesPublic(SQLModel):
 class IxLabelLocCreateList(SQLModel):
     """iXBRLのラベルロケーション情報を作成するためのクラス"""
 
-    data: List[IxLabelLocCreate]
+    data: list[IxLabelLocCreate]
 
 
 class IxLabelValuesCreateList(SQLModel):
     """iXBRLのラベルリンク情報を作成するためのクラス"""
 
-    data: List[IxLabelValueCreate]
-
-
-class IxLabelArcCreateList(SQLModel):
-    """iXBRLの計算アーク情報を作成するためのクラス"""
-
-    data: List[IxLabelArcCreate]
+    data: list[IxLabelValueCreate]

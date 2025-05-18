@@ -1,8 +1,8 @@
+import base64
 import json
 import os
 import re
 from time import sleep
-from typing import Optional
 from urllib.parse import urljoin
 
 import requests
@@ -12,11 +12,11 @@ from requests.exceptions import ConnectTimeout, SSLError
 
 def save_file(
     file_path: str,
-    content,
+    content: str,
     type: str,
-    mode,
-    encoding=None,
-):
+    mode: str = "w",
+    encoding: str | None = None,
+) -> str:
     """
     指定された拡張子でファイルを保存する
     :param content: 保存する内容
@@ -32,7 +32,7 @@ def save_file(
     return file_full_path
 
 
-def safe_get(url, timeout=10):
+def safe_get(url: str, timeout: int = 10) -> requests.Response | None:
     """
     HTTPリクエストを安全に実行し、HTTPで失敗した場合にHTTPSで再試行します。
     :param url: リクエストするURL
@@ -43,7 +43,7 @@ def safe_get(url, timeout=10):
         response = requests.get(url, timeout=timeout)
         response.raise_for_status()  # ステータスコードがエラーの場合例外を発生
         return response
-    except (ConnectTimeout, SSLError) as e:
+    except (ConnectTimeout, SSLError):
         print(f"HTTPでエラーが発生しました。HTTPSで再試行します: {url}")
         if url.startswith("http://"):
             https_url = url.replace("http://", "https://", 1)
@@ -62,7 +62,7 @@ def safe_get(url, timeout=10):
     return None
 
 
-def download_logo(url, directory, filename) -> Optional[str]:
+def download_logo(url: str, directory: str, filename: str) -> str | None:
     """
     Download the logo from the given URL and save it to a file.
     """
@@ -105,13 +105,13 @@ def download_logo(url, directory, filename) -> Optional[str]:
     logo_class = bs_obj.find(class_=re.compile(".*logo.*"))
     logo = None
     if logo_class:
-        logo = logo_class.find("img")
+        logo = bs_obj.find(name="img", class_=re.compile(".*logo.*"))
         print("logo_classからimgを取得")
     else:
         logo_class = bs_obj.find("header")
         # headerタグ内のimgタグを探す
         if logo_class:
-            logo = logo_class.find("img")
+            logo = bs_obj.find("img", class_=re.compile(".*logo.*"))
             print("headerからimgを取得")
     if not logo:
         svg = bs_obj.find(
@@ -188,7 +188,6 @@ def download_logo(url, directory, filename) -> Optional[str]:
 
 
 if __name__ == "__main__":
-
     if len(os.sys.argv) > 1:
         # コマンドライン引数が指定された場合
         api_base = os.sys.argv[1]

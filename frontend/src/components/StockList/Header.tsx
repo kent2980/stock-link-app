@@ -45,7 +45,8 @@ const Header: React.FC<HeaderProps> = ({
   itemCount,
 }) => {
   const logo_name =
-    logo_list.find((item) => item.code === securities_code)?.file_name || ""; // デフォルトロゴURLを設定
+    logo_list.find((item: any) => item.code === securities_code)?.file_name ||
+    ""; // デフォルトロゴURLを設定
   const logo_url = `/assets/images/stock_logo/${logo_name}`; // 画像のURLを生成
 
   const dateStr = new Date(insert_date).toLocaleDateString("ja-JP", {

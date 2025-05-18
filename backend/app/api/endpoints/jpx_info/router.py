@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 from fastapi import APIRouter, HTTPException, Query
 
 from app.api.deps import SessionDep
@@ -30,7 +28,7 @@ def create_jpx_stock_info_item(
 )
 def create_jpx_stock_info_items_exists(
     *, items_in: sc.JpxStockInfosCreateList, session: SessionDep
-) -> List[JpxStockInfo]:
+) -> list[JpxStockInfo]:
     """
     Create new items.(Insert Select ... Not Exists)
     """
@@ -77,8 +75,8 @@ def read_jpx_stock_info_items(*, session: SessionDep) -> sc.JpxStockInfosPublicL
 )
 def read_jpx_stock_info_items_tcs(
     *,
-    industry_17_code: Optional[int] = Query(None),
-    industry_33_code: Optional[List[int]] = Query(None),
+    industry_17_code: int | None = Query(None),
+    industry_33_code: list[int] | None = Query(None),
     isItems: bool = Query(True),
     session: SessionDep,
     limit: int = Query(100),
@@ -145,7 +143,7 @@ def read_jpx_stock_info_industry_names(
     summary="17業種分類のコードを指定して33業種の名称とコードを取得",
 )
 def read_select_industries(
-    *, industry_17_code: Optional[int] = Query(None), session: SessionDep
+    *, industry_17_code: int | None = Query(None), session: SessionDep
 ) -> sc.IndustriesList:
     """
     Get all industries.

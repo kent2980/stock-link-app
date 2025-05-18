@@ -8,5 +8,4 @@ node_modules/
 .DS_Store
 **/*.DS_Store
 /frontend/public/assets/images/stock_logo/**
-frontend/src/logo/logo_list.json
 backend/app/scripts/logo_downloader.py
