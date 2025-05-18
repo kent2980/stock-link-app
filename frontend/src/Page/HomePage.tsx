@@ -87,14 +87,14 @@ export default function HomePage() {
 
   return (
     <Box minH="100vh" bg="gray.50">
-      <Container as="main" maxW="container.lg" py={8}>
+      <Container as="main" maxW="container.lg" py={8} px={0}>
         <Grid
           templateColumns={{
             base: "repeat(2, 1fr)",
             md: "repeat(2, 1fr)",
             lg: "repeat(3, 1fr)",
           }}
-          gap={6}
+          gap={3}
         >
           {menuItems.map((item, index) => (
             <ChakraLink

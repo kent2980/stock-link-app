@@ -1,20 +1,20 @@
 import { Box, Flex } from "@chakra-ui/react";
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 import Footer from "@/components/Common/Footer";
 import Header from "@/components/Common/Header";
 import AppSidebar from "@/components/Common/Sidebar";
-import { isLoggedIn } from "@/hooks/useAuth";
 
 export const Route = createFileRoute("/_layout")({
   component: Layout,
-  beforeLoad: async () => {
-    if (!isLoggedIn()) {
-      throw redirect({
-        to: "/login",
-      });
-    }
-  },
+  // リダイレクト設定は必要に応じて行う
+  // beforeLoad: async () => {
+  //   if (!isLoggedIn()) {
+  //     throw redirect({
+  //       to: "/login",
+  //     });
+  //   }
+  // },
 });
 
 const HEADER_HEIGHT = 10;

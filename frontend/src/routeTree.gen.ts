@@ -19,6 +19,7 @@ import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutCategoryImport } from './routes/_layout/category'
 import { Route as LayoutStockIndexImport } from './routes/_layout/stock/index'
+import { Route as LayoutDisclosureIndexImport } from './routes/_layout/disclosure/index'
 import { Route as LayoutStockIndustry33Industry33Import } from './routes/_layout/stock/industry_33.$industry_33'
 import { Route as LayoutStockIndustry17Industry17Import } from './routes/_layout/stock/industry_17.$industry_17'
 import { Route as LayoutStockDateDateStrImport } from './routes/_layout/stock/date.$dateStr'
@@ -62,6 +63,11 @@ const LayoutCategoryRoute = LayoutCategoryImport.update({
 
 const LayoutStockIndexRoute = LayoutStockIndexImport.update({
   path: '/stock/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutDisclosureIndexRoute = LayoutDisclosureIndexImport.update({
+  path: '/disclosure/',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -114,6 +120,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIndexImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/disclosure/': {
+      preLoaderRoute: typeof LayoutDisclosureIndexImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/stock/': {
       preLoaderRoute: typeof LayoutStockIndexImport
       parentRoute: typeof LayoutImport
@@ -139,6 +149,7 @@ export const routeTree = rootRoute.addChildren([
   LayoutRoute.addChildren([
     LayoutCategoryRoute,
     LayoutIndexRoute,
+    LayoutDisclosureIndexRoute,
     LayoutStockIndexRoute,
     LayoutStockDateDateStrRoute,
     LayoutStockIndustry17Industry17Route,
