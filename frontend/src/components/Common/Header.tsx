@@ -3,7 +3,6 @@
 import {
   Badge,
   Box,
-  Button,
   Menu as ChakraMenu,
   Drawer,
   DrawerBody,
@@ -201,18 +200,12 @@ export function Header() {
               key={item.href}
               href={item.href}
               style={{ textDecoration: "none" }}
+              fontWeight="medium"
+              fontSize="sm"
+              px={3}
+              h={10}
             >
-              <Button
-                variant="ghost"
-                colorScheme="gray"
-                fontWeight="medium"
-                fontSize="sm"
-                px={3}
-                h={10}
-              >
-                {item.icon}
-                {item.title}
-              </Button>
+              {item.title}
             </Link>
           ))}
         </HStack>

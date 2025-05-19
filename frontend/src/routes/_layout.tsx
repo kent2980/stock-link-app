@@ -1,7 +1,7 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-import Footer from "@/components/Common/Footer";
+import { Footer } from "@/components/Common/Footer";
 import { Header } from "@/components/Common/Header";
 
 export const Route = createFileRoute("/_layout")({
@@ -16,20 +16,17 @@ export const Route = createFileRoute("/_layout")({
   // },
 });
 
-const FOOTER_HEIGHT = 16;
 function Layout() {
   return (
     <Flex direction="column">
       <Header />
-      <Box w="100%" mx="auto" mb={{ base: FOOTER_HEIGHT, md: 0 }}>
-        {/* <AppSidebar /> */}
-        <Box bg="gray.50">
-          <Outlet />
-        </Box>
+      {/* <AppSidebar /> */}
+      <Box bg="gray.50" pb={{ base: "80px", md: "40px" }} pt="20px">
+        <Outlet />
       </Box>
       {/* フッターはモバイルのみ表示 */}
       <Box display={{ base: "block", md: "none" }}>
-        <Footer footerHeight={FOOTER_HEIGHT} />
+        <Footer />
       </Box>
     </Flex>
   );

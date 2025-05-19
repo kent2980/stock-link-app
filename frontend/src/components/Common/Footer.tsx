@@ -1,62 +1,72 @@
-import { MenuListStore } from "@/Store/Store";
-import { Flex, FlexProps, IconButton } from "@chakra-ui/react";
-import { useNavigate } from "@tanstack/react-router";
-import { useStore } from "@tanstack/react-store";
-import React from "react";
+import { Box, Grid, Link } from "@chakra-ui/react";
+import { BarChart2, Briefcase, Heart, Home, Search } from "lucide-react";
 
-interface FooterProps extends FlexProps {
-  footerHeight?: number | string; // ヘッダーの高さを指定するプロパティ
-}
-
-const Footer: React.FC<FooterProps> = ({ footerHeight = 12, ...props }) => {
-  const { menuList } = useStore(MenuListStore, (state) => state); // ストアからデータを取得
-  const navigate = useNavigate();
-  const handleMenuClick = (menuUrl: string | null | undefined) => {
-    if (menuUrl) {
-      navigate({ to: menuUrl });
-    }
-  };
+export function Footer() {
+  const navItems = [
+    {
+      name: "ホーム",
+      href: "/",
+      icon: Home,
+    },
+    {
+      name: "検索",
+      href: "/stocks",
+      icon: Search,
+    },
+    {
+      name: "チャート",
+      href: "/chart-analysis",
+      icon: BarChart2,
+    },
+    {
+      name: "ポートフォリオ",
+      href: "/portfolio",
+      icon: Briefcase,
+    },
+    {
+      name: "お気に入り",
+      href: "/favorites",
+      icon: Heart,
+    },
+  ];
 
   return (
-    <Flex
-      id="footer"
-      as="footer"
-      w="100%"
-      justifyContent="center"
-      alignItems="center"
+    <Box
       position="fixed"
-      bottom={0} // 隠すときは上に移動
-      display={{ base: "flex", md: "none" }}
-      zIndex={1000}
-      boxShadow="md"
-      h={footerHeight}
-      bg="gray.50"
-      {...props}
+      bottom={0}
+      left={0}
+      zIndex={50}
+      width="100vw"
+      borderTop="1px"
+      borderColor="gray.200"
+      bg="white"
+      _dark={{ bg: "gray.900", borderColor: "gray.800" }}
+      display={{ base: "block", md: "none" }}
     >
-      <Flex
-        direction="row"
-        justifyContent="space-evenly"
-        alignItems="center"
-        m={"0 auto"}
-        px={4}
-        w="100%"
-      >
-        {menuList.map((item, index) => (
-          <IconButton
-            key={index}
-            aria-label={item.menuLabel}
-            variant="ghost"
-            onClick={() => handleMenuClick(item.menuUrl)}
-            _hover={{ bg: "gray.200" }}
-            _active={{ bg: "gray.300" }}
-            _focus={{ boxShadow: "outline" }}
-            size={"2xl"}
+      <Grid mx="auto" h="56px" maxW="lg" templateColumns="repeat(5, 1fr)">
+        {navItems.map((item) => (
+          <Link
+            key={item.name}
+            href={item.href}
+            display="inline-flex"
+            alignItems="center"
+            justifyContent="center"
+            px={5}
+            py={3}
+            color="green.600"
+            _hover={{ color: "green.600" }}
           >
-            {item.menuIcon}
-          </IconButton>
+            <Box
+              as={item.icon}
+              h={6}
+              w={6}
+              transition="colors"
+              color="green.600"
+              _groupHover={{ color: "green.600" }}
+            />
+          </Link>
         ))}
-      </Flex>
-    </Flex>
+      </Grid>
+    </Box>
   );
-};
-export default Footer;
+}

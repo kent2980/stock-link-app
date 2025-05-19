@@ -178,7 +178,15 @@ export default function DisclosurePage() {
     >
       <Box className="container mx-auto px-4 py-6 h-full flex flex-col">
         {/* 検索・フィルターボタン（固定表示） */}
-        <Box zIndex={10} display="flex" justifyContent="flex-end" mb={4}>
+        <Box
+          zIndex={10}
+          position="fixed"
+          right={4}
+          top="80px"
+          display="flex"
+          justifyContent="flex-end"
+          mb={4}
+        >
           <Button
             onClick={() => setShowFilters(!showFilters)}
             variant="solid"
@@ -277,6 +285,7 @@ export default function DisclosurePage() {
         )}
 
         <Tabs.Root
+          mt={12}
           defaultValue="all"
           display="flex"
           flexDirection="column"
