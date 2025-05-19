@@ -16,7 +16,6 @@ export const Route = createFileRoute("/_layout")({
   // },
 });
 
-const HEADER_HEIGHT = 10;
 const FOOTER_HEIGHT = 16;
 function Layout() {
   return (
