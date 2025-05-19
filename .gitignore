@@ -4,6 +4,7 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+/stock-app/
 # macOSの隠しファイルを無視
 .DS_Store
 **/*.DS_Store
