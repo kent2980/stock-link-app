@@ -121,6 +121,137 @@ function formatDate(dateString: string) {
   return `${year}/${month}/${day} ${hours}:${minutes}`;
 }
 
+function CustomFilterButton({
+  showFilters,
+  setShowFilters,
+}: {
+  showFilters: boolean;
+  setShowFilters: (show: boolean) => void;
+}) {
+  const selectItems = createListCollection({
+    items: [
+      { value: "all", label: "すべて" },
+      { value: "financial", label: "決算短信" },
+      { value: "dividend", label: "配当" },
+      { value: "forecast", label: "業績予想" },
+      { value: "management", label: "役員異動" },
+      { value: "stock", label: "自己株式" },
+      { value: "other", label: "その他" },
+    ],
+  });
+
+  return (
+    <>
+      {/* 検索・フィルターボタン（固定表示） */}
+      <Box
+        zIndex={10}
+        position="fixed"
+        right={4}
+        top="80px"
+        display="flex"
+        justifyContent="flex-end"
+        mb={4}
+      >
+        <Button
+          onClick={() => setShowFilters(!showFilters)}
+          variant="solid"
+          size="sm"
+          borderRadius="full"
+          boxShadow="md"
+          bg="emerald.600"
+          _hover={{ bg: "emerald.700" }}
+          color="white"
+          display="flex"
+          alignItems="center"
+        >
+          <SlidersHorizontal className="h-4 w-4 mr-2" />
+          {showFilters ? "フィルターを閉じる" : "検索・フィルター"}
+          {showFilters ? (
+            <ChevronUp className="h-4 w-4 ml-2" />
+          ) : (
+            <ChevronDown className="h-4 w-4 ml-2" />
+          )}
+        </Button>
+      </Box>
+
+      {/* 検索・フィルターエリア（トグル表示） */}
+      {showFilters && (
+        <Box
+          mb={6}
+          rounded="lg"
+          bg="white"
+          p={4}
+          boxShadow="sm"
+          transition="all 0.3s ease-in-out"
+        >
+          <Box
+            display="flex"
+            flexDirection={{ base: "column", md: "row" }}
+            alignItems={{ md: "center" }}
+            gap={{ base: 4, md: 0 }}
+          >
+            <Box
+              position="relative"
+              flex="1"
+              mb={{ base: 4, md: 0 }}
+              mr={{ md: 4 }}
+            >
+              <Box
+                as={Search}
+                position="absolute"
+                left="12px"
+                top="50%"
+                transform="translateY(-50%)"
+                h={4}
+                w={4}
+                color="gray.400"
+                pointerEvents="none"
+              />
+              <Input
+                placeholder="企業名・銘柄コード・キーワードで検索"
+                pl="32px"
+              />
+            </Box>
+            <Box display="flex" flexWrap="wrap" alignItems="center" gap={2}>
+              <Button
+                variant="outline"
+                size="sm"
+                display="flex"
+                alignItems="center"
+              >
+                <Filter style={{ marginRight: 8, height: 16, width: 16 }} />
+                <Box as="span">フィルター</Box>
+              </Button>
+              <Box w="180px">
+                <Select.Root
+                  collection={selectItems}
+                  size="sm"
+                  placeholder="カテゴリー"
+                >
+                  {selectItems.items.map((item) => (
+                    <Select.Item key={item.value} item={item}>
+                      {item.label}
+                    </Select.Item>
+                  ))}
+                </Select.Root>
+              </Box>
+              <Button
+                variant="outline"
+                size="sm"
+                display="flex"
+                alignItems="center"
+              >
+                <Calendar style={{ marginRight: 8, height: 16, width: 16 }} />
+                <Box as="span">日付</Box>
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      )}
+    </>
+  );
+}
+
 export default function DisclosurePage() {
   const [showFilters, setShowFilters] = useState(false);
   const [contentHeight, setContentHeight] = useState("calc(100vh - 180px)");
@@ -159,133 +290,17 @@ export default function DisclosurePage() {
     };
   }, [showFilters]);
 
-  const selectItems = createListCollection({
-    items: [
-      { value: "all", label: "すべて" },
-      { value: "financial", label: "決算短信" },
-      { value: "dividend", label: "配当" },
-      { value: "forecast", label: "業績予想" },
-      { value: "management", label: "役員異動" },
-      { value: "stock", label: "自己株式" },
-      { value: "other", label: "その他" },
-    ],
-  });
-
   return (
-    <Box
-      className="bg-gray-50 h-[calc(100vh-120px)] overflow-hidden"
-      ref={containerRef}
-    >
+    <Box ref={containerRef}>
+      {/* フィルターボタン */}
+      <CustomFilterButton
+        showFilters={showFilters}
+        setShowFilters={setShowFilters}
+      />
+      {/* メインコンテンツ */}
       <Box className="container mx-auto px-4 py-6 h-full flex flex-col">
-        {/* 検索・フィルターボタン（固定表示） */}
-        <Box
-          zIndex={10}
-          position="fixed"
-          right={4}
-          top="80px"
-          display="flex"
-          justifyContent="flex-end"
-          mb={4}
-        >
-          <Button
-            onClick={() => setShowFilters(!showFilters)}
-            variant="solid"
-            size="sm"
-            borderRadius="full"
-            boxShadow="md"
-            bg="emerald.600"
-            _hover={{ bg: "emerald.700" }}
-            color="white"
-            display="flex"
-            alignItems="center"
-          >
-            <SlidersHorizontal className="h-4 w-4 mr-2" />
-            {showFilters ? "フィルターを閉じる" : "検索・フィルター"}
-            {showFilters ? (
-              <ChevronUp className="h-4 w-4 ml-2" />
-            ) : (
-              <ChevronDown className="h-4 w-4 ml-2" />
-            )}
-          </Button>
-        </Box>
-
-        {/* 検索・フィルターエリア（トグル表示） */}
-        {showFilters && (
-          <Box
-            mb={6}
-            rounded="lg"
-            bg="white"
-            p={4}
-            boxShadow="sm"
-            transition="all 0.3s ease-in-out"
-          >
-            <Box
-              display="flex"
-              flexDirection={{ base: "column", md: "row" }}
-              alignItems={{ md: "center" }}
-              gap={{ base: 4, md: 0 }}
-            >
-              <Box
-                position="relative"
-                flex="1"
-                mb={{ base: 4, md: 0 }}
-                mr={{ md: 4 }}
-              >
-                <Box
-                  as={Search}
-                  position="absolute"
-                  left="12px"
-                  top="50%"
-                  transform="translateY(-50%)"
-                  h={4}
-                  w={4}
-                  color="gray.400"
-                  pointerEvents="none"
-                />
-                <Input
-                  placeholder="企業名・銘柄コード・キーワードで検索"
-                  pl="32px"
-                />
-              </Box>
-              <Box display="flex" flexWrap="wrap" alignItems="center" gap={2}>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  display="flex"
-                  alignItems="center"
-                >
-                  <Filter style={{ marginRight: 8, height: 16, width: 16 }} />
-                  <Box as="span">フィルター</Box>
-                </Button>
-                <Box w="180px">
-                  <Select.Root
-                    collection={selectItems}
-                    size="sm"
-                    placeholder="カテゴリー"
-                  >
-                    {selectItems.items.map((item) => (
-                      <Select.Item key={item.value} item={item}>
-                        {item.label}
-                      </Select.Item>
-                    ))}
-                  </Select.Root>
-                </Box>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  display="flex"
-                  alignItems="center"
-                >
-                  <Calendar style={{ marginRight: 8, height: 16, width: 16 }} />
-                  <Box as="span">日付</Box>
-                </Button>
-              </Box>
-            </Box>
-          </Box>
-        )}
-
         <Tabs.Root
-          mt={12}
+          mt={6}
           defaultValue="all"
           display="flex"
           flexDirection="column"
@@ -301,13 +316,12 @@ export default function DisclosurePage() {
             <TabsTrigger value="yesterday">昨日</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="all" mt={4} flex="1" overflow="hidden">
+          <TabsContent value="all" mt={4} flex="1">
             <Flex
+              overflowY="auto"
               direction="column"
               gap={4}
-              overflowY="auto"
-              className="scroll-smooth snap-y snap-mandatory space-y-4 pr-2"
-              style={{ height: contentHeight }}
+              // style={{ height: contentHeight }}
             >
               {disclosureData.map((item) => (
                 <Card.Root
@@ -389,8 +403,8 @@ export default function DisclosurePage() {
             </Flex>
           </TabsContent>
 
-          <TabsContent value="important" mt={4} flex="1" overflow="hidden">
-            <Box overflowY="auto">
+          <TabsContent value="important" mt={4} flex="1">
+            <Flex overflowY="auto" direction="column" gap={4}>
               {disclosureData
                 .filter((item) => item.important)
                 .map((item) => (
@@ -468,15 +482,11 @@ export default function DisclosurePage() {
                     </Card.Body>
                   </Card.Root>
                 ))}
-            </Box>
+            </Flex>
           </TabsContent>
 
           <TabsContent value="today" className="mt-4 flex-grow overflow-hidden">
-            <Box
-              overflowY="auto"
-              className="scroll-smooth snap-y snap-mandatory space-y-4 pr-2"
-              style={{ height: contentHeight }}
-            >
+            <Flex overflowY="auto" direction="column" gap={4}>
               {disclosureData
                 .filter((item) => {
                   const today = new Date();
@@ -564,18 +574,14 @@ export default function DisclosurePage() {
                     </Card.Body>
                   </Card.Root>
                 ))}
-            </Box>
+            </Flex>
           </TabsContent>
 
           <TabsContent
             value="yesterday"
             className="mt-4 flex-grow overflow-hidden"
           >
-            <Box
-              overflowY="auto"
-              className="scroll-smooth snap-y snap-mandatory space-y-4 pr-2"
-              style={{ height: contentHeight }}
-            >
+            <Flex overflowY="auto" direction="column" gap={4}>
               {disclosureData
                 .filter((item) => {
                   const today = new Date();
@@ -665,18 +671,9 @@ export default function DisclosurePage() {
                     </Card.Body>
                   </Card.Root>
                 ))}
-            </Box>
+            </Flex>
           </TabsContent>
         </Tabs.Root>
-
-        <Box mt={4} display="flex" justifyContent="center">
-          <Button variant="outline" mx={2}>
-            前の10件
-          </Button>
-          <Button variant="outline" mx={2}>
-            次の10件
-          </Button>
-        </Box>
       </Box>
     </Box>
   );
