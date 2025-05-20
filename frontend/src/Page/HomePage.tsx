@@ -1,7 +1,7 @@
+import { DashboardInfo } from "@/components/Home/dashboard-info";
 import {
   Box,
   Link as ChakraLink,
-  Container,
   Flex,
   Grid,
   Heading,
@@ -87,7 +87,15 @@ export default function HomePage() {
 
   return (
     <Box minH="100vh" bg="gray.50">
-      <Container as="main" maxW="container.lg" py={8} px={0}>
+      <Flex
+        direction="column"
+        gap={4}
+        as="main"
+        maxW="container.lg"
+        py={8}
+        px={0}
+      >
+        <DashboardInfo />
         <Grid
           templateColumns={{
             base: "repeat(1, 1fr)",
@@ -141,7 +149,7 @@ export default function HomePage() {
             </ChakraLink>
           ))}
         </Grid>
-      </Container>
+      </Flex>
     </Box>
   );
 }
