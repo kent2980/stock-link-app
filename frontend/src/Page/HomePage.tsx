@@ -90,7 +90,7 @@ export default function HomePage() {
       <Container as="main" maxW="container.lg" py={8} px={0}>
         <Grid
           templateColumns={{
-            base: "repeat(2, 1fr)",
+            base: "repeat(1, 1fr)",
             md: "repeat(2, 1fr)",
             lg: "repeat(3, 1fr)",
           }}
