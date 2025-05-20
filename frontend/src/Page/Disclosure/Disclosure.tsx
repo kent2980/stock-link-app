@@ -23,7 +23,7 @@ import {
   Search,
   SlidersHorizontal,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 // モックデータ - 実際のアプリでは API から取得
 const disclosureData = [
   {
@@ -254,44 +254,10 @@ function CustomFilterButton({
 
 export default function DisclosurePage() {
   const [showFilters, setShowFilters] = useState(false);
-  const [contentHeight, setContentHeight] = useState("calc(100vh - 180px)");
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // 画面サイズに応じてコンテンツの高さを調整
-  useEffect(() => {
-    const updateHeight = () => {
-      const headerHeight = 64; // ヘッダーの高さ（px）
-      const footerHeight = 56; // フッターの高さ（px）
-      const tabsHeight = 48; // タブの高さ（px）
-      const filterButtonHeight = 40; // フィルターボタンの高さ（px）
-      const paginationHeight = 60; // ページネーションの高さ（px）
-      const additionalPadding = 32; // 追加のパディング（px）
-
-      // フィルターが表示されている場合は、その高さも考慮
-      const filterHeight = showFilters ? 100 : 0;
-
-      const totalOffset =
-        headerHeight +
-        footerHeight +
-        tabsHeight +
-        filterButtonHeight +
-        paginationHeight +
-        additionalPadding +
-        filterHeight;
-
-      setContentHeight(`calc(100vh - ${totalOffset}px)`);
-    };
-
-    updateHeight();
-    window.addEventListener("resize", updateHeight);
-
-    return () => {
-      window.removeEventListener("resize", updateHeight);
-    };
-  }, [showFilters]);
-
   return (
-    <Box ref={containerRef}>
+    <Box ref={containerRef} pb={{ base: 6, md: 0 }}>
       {/* フィルターボタン */}
       <CustomFilterButton
         showFilters={showFilters}
