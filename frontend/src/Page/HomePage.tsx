@@ -117,6 +117,7 @@ export default function HomePage() {
                   borderColor: "emerald.300",
                 }}
                 h="full"
+                w="full"
               >
                 <Stack align="center" p={6} textAlign="center" gap={4}>
                   <Flex
