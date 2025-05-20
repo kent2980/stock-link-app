@@ -3,19 +3,15 @@ import {
   Box,
   Button,
   Card,
+  Container,
   createListCollection,
   Flex,
   Input,
   Link,
   Select,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "@tanstack/react-router";
 import {
-  Bell,
   Calendar,
   ChevronDown,
   ChevronUp,
@@ -257,390 +253,101 @@ export default function DisclosurePage() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <Box ref={containerRef} pb={{ base: 6, md: 0 }}>
+    <Container
+      ref={containerRef}
+      pb={{ base: 6, md: 0 }}
+      pt={12}
+      px={{ base: 0, md: 4 }}
+    >
       {/* フィルターボタン */}
       <CustomFilterButton
         showFilters={showFilters}
         setShowFilters={setShowFilters}
       />
       {/* メインコンテンツ */}
-      <Box className="container mx-auto px-4 py-6 h-full flex flex-col">
-        <Tabs.Root
-          mt={12}
-          defaultValue="all"
-          display="flex"
-          flexDirection="column"
-          flex="1"
-        >
-          <TabsList>
-            <TabsTrigger value="all">すべて</TabsTrigger>
-            <TabsTrigger value="important" display="flex" alignItems="center">
-              <Bell className="mr-1 h-4 w-4 text-emerald-600" />
-              重要
-            </TabsTrigger>
-            <TabsTrigger value="today">本日</TabsTrigger>
-            <TabsTrigger value="yesterday">昨日</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="all" mt={4} flex="1">
-            <Flex
-              overflowY="auto"
-              direction="column"
-              gap={4}
-              // style={{ height: contentHeight }}
-            >
-              {disclosureData.map((item) => (
-                <Card.Root
-                  key={item.id}
-                  className="overflow-hidden snap-start snap-always"
-                >
-                  <Card.Body className="p-0" p={0}>
-                    <Link as={RouterLink}>
-                      <Box
-                        borderLeft="4px solid"
-                        borderColor="green.emphasized"
-                        p={4}
-                      >
-                        <Box
-                          mb={2}
-                          display="flex"
-                          flexWrap="wrap"
-                          alignItems="center"
-                          justifyContent="space-between"
-                          gap={2}
-                        >
-                          <Box display="flex" alignItems="center">
-                            <Box
-                              as="span"
-                              mr={2}
-                              fontWeight="semibold"
-                              color="gray.900"
-                            >
-                              {item.company}
-                            </Box>
-                            <Box as="span" fontSize="sm" color="gray.500">
-                              {item.code}
-                            </Box>
-                            {item.important && (
-                              <Badge
-                                ml={2}
-                                bg="red.100"
-                                color="red.800"
-                                _hover={{ bg: "red.100" }}
-                              >
-                                重要
-                              </Badge>
-                            )}
-                          </Box>
-                          <Box display="flex" alignItems="center">
-                            <Badge variant="outline" mr={2}>
-                              {item.category}
-                            </Badge>
-                            <Box as="span" fontSize="sm" color="gray.500">
-                              {formatDate(item.date)}
-                            </Box>
-                          </Box>
-                        </Box>
-                        <Box
-                          as="h3"
-                          mb={1}
-                          fontSize="lg"
-                          fontWeight="medium"
-                          color="gray.900"
-                        >
-                          {item.title}
-                        </Box>
-                        <Box as="p" fontSize="sm" color="gray.600">
-                          {item.summary}
-                        </Box>
-                        <Box mt={3} textAlign="right">
-                          <Button
-                            color="emerald.600"
-                            _hover={{ color: "emerald.700" }}
-                          >
-                            詳細を見る
-                          </Button>
-                        </Box>
-                      </Box>
-                    </Link>
-                  </Card.Body>
-                </Card.Root>
-              ))}
-            </Flex>
-          </TabsContent>
-
-          <TabsContent value="important" mt={4} flex="1">
-            <Flex overflowY="auto" direction="column" gap={4}>
-              {disclosureData
-                .filter((item) => item.important)
-                .map((item) => (
-                  <Card.Root
-                    key={item.id}
-                    className="overflow-hidden snap-start snap-always"
-                  >
-                    <Card.Body className="p-0">
-                      <Link as={RouterLink}>
-                        <Box
-                          borderLeft="4px solid"
-                          borderColor="emerald.500"
-                          p={4}
-                        >
-                          <Box
-                            mb={2}
-                            display="flex"
-                            flexWrap="wrap"
-                            alignItems="center"
-                            justifyContent="space-between"
-                            gap={2}
-                          >
-                            <Box display="flex" alignItems="center">
-                              <Box
-                                as="span"
-                                mr={2}
-                                fontWeight="semibold"
-                                color="gray.900"
-                              >
-                                {item.company}
-                              </Box>
-                              <Box as="span" fontSize="sm" color="gray.500">
-                                {item.code}
-                              </Box>
-                              <Badge
-                                ml={2}
-                                bg="red.100"
-                                color="red.800"
-                                _hover={{ bg: "red.100" }}
-                              >
-                                重要
-                              </Badge>
-                            </Box>
-                            <Box display="flex" alignItems="center">
-                              <Badge variant="outline" mr={2}>
-                                {item.category}
-                              </Badge>
-                              <Box as="span" fontSize="sm" color="gray.500">
-                                {formatDate(item.date)}
-                              </Box>
-                            </Box>
-                          </Box>
-                          <Box
-                            as="h3"
-                            mb={1}
-                            fontSize="lg"
-                            fontWeight="medium"
-                            color="gray.900"
-                          >
-                            {item.title}
-                          </Box>
-                          <Box as="p" fontSize="sm" color="gray.600">
-                            {item.summary}
-                          </Box>
-                          <Box mt={3} textAlign="right">
-                            <Button
-                              color="emerald.600"
-                              _hover={{ color: "emerald.700" }}
-                            >
-                              詳細を見る
-                            </Button>
-                          </Box>
-                        </Box>
-                      </Link>
-                    </Card.Body>
-                  </Card.Root>
-                ))}
-            </Flex>
-          </TabsContent>
-
-          <TabsContent value="today" className="mt-4 flex-grow overflow-hidden">
-            <Flex overflowY="auto" direction="column" gap={4}>
-              {disclosureData
-                .filter((item) => {
-                  const today = new Date();
-                  const itemDate = new Date(item.date);
-                  return (
-                    itemDate.getDate() === today.getDate() &&
-                    itemDate.getMonth() === today.getMonth() &&
-                    itemDate.getFullYear() === today.getFullYear()
-                  );
-                })
-                .map((item) => (
-                  <Card.Root
-                    key={item.id}
-                    className="overflow-hidden snap-start snap-always"
-                  >
-                    <Card.Body className="p-0">
-                      <Link as={RouterLink}>
-                        <Box
-                          borderLeft="4px solid"
-                          borderColor="emerald.500"
-                          p={4}
-                        >
-                          <Box
-                            mb={2}
-                            display="flex"
-                            flexWrap="wrap"
-                            alignItems="center"
-                            justifyContent="space-between"
-                            gap={2}
-                          >
-                            <Box display="flex" alignItems="center">
-                              <Box
-                                as="span"
-                                mr={2}
-                                fontWeight="semibold"
-                                color="gray.900"
-                              >
-                                {item.company}
-                              </Box>
-                              <Box as="span" fontSize="sm" color="gray.500">
-                                {item.code}
-                              </Box>
-                              {item.important && (
-                                <Badge
-                                  ml={2}
-                                  bg="red.100"
-                                  color="red.800"
-                                  _hover={{ bg: "red.100" }}
-                                >
-                                  重要
-                                </Badge>
-                              )}
-                            </Box>
-                            <Box display="flex" alignItems="center">
-                              <Badge variant="outline" mr={2}>
-                                {item.category}
-                              </Badge>
-                              <Box as="span" fontSize="sm" color="gray.500">
-                                {formatDate(item.date)}
-                              </Box>
-                            </Box>
-                          </Box>
-                          <Box
-                            as="h3"
-                            mb={1}
-                            fontSize="lg"
-                            fontWeight="medium"
-                            color="gray.900"
-                          >
-                            {item.title}
-                          </Box>
-                          <Box as="p" fontSize="sm" color="gray.600">
-                            {item.summary}
-                          </Box>
-                          <Box mt={3} textAlign="right">
-                            <Button
-                              color="emerald.600"
-                              _hover={{ color: "emerald.700" }}
-                            >
-                              詳細を見る
-                            </Button>
-                          </Box>
-                        </Box>
-                      </Link>
-                    </Card.Body>
-                  </Card.Root>
-                ))}
-            </Flex>
-          </TabsContent>
-
-          <TabsContent
-            value="yesterday"
-            className="mt-4 flex-grow overflow-hidden"
+      <Flex
+        direction="column"
+        gap={4}
+        // style={{ height: contentHeight }}
+      >
+        {disclosureData.map((item) => (
+          <Card.Root
+            key={item.id}
+            className="overflow-hidden snap-start snap-always"
           >
-            <Flex overflowY="auto" direction="column" gap={4}>
-              {disclosureData
-                .filter((item) => {
-                  const today = new Date();
-                  const yesterday = new Date(today);
-                  yesterday.setDate(yesterday.getDate() - 1);
-                  const itemDate = new Date(item.date);
-                  return (
-                    itemDate.getDate() === yesterday.getDate() &&
-                    itemDate.getMonth() === yesterday.getMonth() &&
-                    itemDate.getFullYear() === yesterday.getFullYear()
-                  );
-                })
-                .map((item) => (
-                  <Card.Root
-                    key={item.id}
-                    className="overflow-hidden snap-start snap-always"
+            <Card.Body className="p-0" p={0}>
+              <Link as={RouterLink}>
+                <Box
+                  borderLeft="4px solid"
+                  borderColor="green.emphasized"
+                  p={4}
+                >
+                  <Box
+                    mb={2}
+                    display="flex"
+                    flexWrap="wrap"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    gap={2}
                   >
-                    <Card.Body className="p-0">
-                      <Link as={RouterLink}>
-                        <Box
-                          borderLeft="4px solid"
-                          borderColor="emerald.500"
-                          p={4}
+                    <Box display="flex" alignItems="center">
+                      <Box
+                        as="span"
+                        mr={2}
+                        fontWeight="semibold"
+                        color="gray.900"
+                      >
+                        {item.company}
+                      </Box>
+                      <Box as="span" fontSize="sm" color="gray.500">
+                        {item.code}
+                      </Box>
+                      {item.important && (
+                        <Badge
+                          ml={2}
+                          bg="red.100"
+                          color="red.800"
+                          _hover={{ bg: "red.100" }}
                         >
-                          <Box
-                            mb={2}
-                            display="flex"
-                            flexWrap="wrap"
-                            alignItems="center"
-                            justifyContent="space-between"
-                            gap={2}
-                          >
-                            <Box display="flex" alignItems="center">
-                              <Box
-                                as="span"
-                                mr={2}
-                                fontWeight="semibold"
-                                color="gray.900"
-                              >
-                                {item.company}
-                              </Box>
-                              <Box as="span" fontSize="sm" color="gray.500">
-                                {item.code}
-                              </Box>
-                              {item.important && (
-                                <Badge
-                                  ml={2}
-                                  bg="red.100"
-                                  color="red.800"
-                                  _hover={{ bg: "red.100" }}
-                                >
-                                  重要
-                                </Badge>
-                              )}
-                            </Box>
-                            <Box display="flex" alignItems="center">
-                              <Badge variant="outline" mr={2}>
-                                {item.category}
-                              </Badge>
-                              <Box as="span" fontSize="sm" color="gray.500">
-                                {formatDate(item.date)}
-                              </Box>
-                            </Box>
-                          </Box>
-                          <Box
-                            as="h3"
-                            mb={1}
-                            fontSize="lg"
-                            fontWeight="medium"
-                            color="gray.900"
-                          >
-                            {item.title}
-                          </Box>
-                          <Box as="p" fontSize="sm" color="gray.600">
-                            {item.summary}
-                          </Box>
-                          <Box mt={3} textAlign="right">
-                            <Button
-                              color="emerald.600"
-                              _hover={{ color: "emerald.700" }}
-                            >
-                              詳細を見る
-                            </Button>
-                          </Box>
-                        </Box>
-                      </Link>
-                    </Card.Body>
-                  </Card.Root>
-                ))}
-            </Flex>
-          </TabsContent>
-        </Tabs.Root>
-      </Box>
-    </Box>
+                          重要
+                        </Badge>
+                      )}
+                    </Box>
+                    <Box display="flex" alignItems="center">
+                      <Badge variant="outline" mr={2}>
+                        {item.category}
+                      </Badge>
+                      <Box as="span" fontSize="sm" color="gray.500">
+                        {formatDate(item.date)}
+                      </Box>
+                    </Box>
+                  </Box>
+                  <Box
+                    as="h3"
+                    mb={1}
+                    fontSize="lg"
+                    fontWeight="medium"
+                    color="gray.900"
+                  >
+                    {item.title}
+                  </Box>
+                  <Box as="p" fontSize="sm" color="gray.600">
+                    {item.summary}
+                  </Box>
+                  <Box mt={3} textAlign="right">
+                    <Button
+                      color="emerald.600"
+                      _hover={{ color: "emerald.700" }}
+                    >
+                      詳細を見る
+                    </Button>
+                  </Box>
+                </Box>
+              </Link>
+            </Card.Body>
+          </Card.Root>
+        ))}
+      </Flex>
+    </Container>
   );
 }
