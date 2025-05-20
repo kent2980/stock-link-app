@@ -266,7 +266,7 @@ export default function DisclosurePage() {
       {/* メインコンテンツ */}
       <Box className="container mx-auto px-4 py-6 h-full flex flex-col">
         <Tabs.Root
-          mt={6}
+          mt={12}
           defaultValue="all"
           display="flex"
           flexDirection="column"
