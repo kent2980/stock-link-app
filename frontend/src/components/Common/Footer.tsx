@@ -37,8 +37,10 @@ export function Footer() {
       left={0}
       zIndex={50}
       width="100vw"
+      py={2}
       borderTop="1px"
       borderColor="gray.200"
+      borderStyle="solid"
       bg="white"
       _dark={{ bg: "gray.900", borderColor: "gray.800" }}
       display={{ base: "block", md: "none" }}
