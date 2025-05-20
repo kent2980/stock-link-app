@@ -37,7 +37,7 @@ export function Footer() {
       left={0}
       zIndex={50}
       width="100vw"
-      py={1}
+      pb={4}
       borderTop="1px"
       borderColor="gray.200"
       borderStyle="solid"
