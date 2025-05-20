@@ -10,3 +10,4 @@ node_modules/
 **/*.DS_Store
 /frontend/public/assets/images/stock_logo/**
 backend/app/scripts/logo_downloader.py
+.DS_Store
