@@ -17,6 +17,7 @@ import { Route as RecoverPasswordImport } from './routes/recover-password'
 import { Route as LoginImport } from './routes/login'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
+import { Route as LayoutPerformanceImport } from './routes/_layout/performance'
 import { Route as LayoutCategoryImport } from './routes/_layout/category'
 import { Route as LayoutStockIndexImport } from './routes/_layout/stock/index'
 import { Route as LayoutDisclosureIndexImport } from './routes/_layout/disclosure/index'
@@ -53,6 +54,11 @@ const LayoutRoute = LayoutImport.update({
 
 const LayoutIndexRoute = LayoutIndexImport.update({
   path: '/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutPerformanceRoute = LayoutPerformanceImport.update({
+  path: '/performance',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -116,6 +122,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCategoryImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/performance': {
+      preLoaderRoute: typeof LayoutPerformanceImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/': {
       preLoaderRoute: typeof LayoutIndexImport
       parentRoute: typeof LayoutImport
@@ -148,6 +158,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren([
   LayoutRoute.addChildren([
     LayoutCategoryRoute,
+    LayoutPerformanceRoute,
     LayoutIndexRoute,
     LayoutDisclosureIndexRoute,
     LayoutStockIndexRoute,
