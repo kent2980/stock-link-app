@@ -1,4 +1,4 @@
-import Disclosure from "@/Page/disclosure/Disclosure";
+import DisclosurePage from "@/Page/disclosure/Disclosure";
 import { Container } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -9,7 +9,7 @@ export const Route = createFileRoute("/_layout/disclosure/")({
 function Index() {
   return (
     <Container>
-      <Disclosure />
+      <DisclosurePage />
     </Container>
   );
 }
