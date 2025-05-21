@@ -1,4 +1,4 @@
-import DisclosurePage from "@/Page/disclosure/Disclosure";
+import DisclosurePage from "@/Pages/disclosure/Disclosure";
 import { Container } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 

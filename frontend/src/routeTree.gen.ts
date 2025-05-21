@@ -10,146 +10,146 @@
 
 // Import Routes
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as SignupImport } from './routes/signup'
-import { Route as ResetPasswordImport } from './routes/reset-password'
-import { Route as RecoverPasswordImport } from './routes/recover-password'
-import { Route as LoginImport } from './routes/login'
-import { Route as LayoutImport } from './routes/_layout'
-import { Route as LayoutIndexImport } from './routes/_layout/index'
-import { Route as LayoutPerformanceImport } from './routes/_layout/performance'
-import { Route as LayoutCategoryImport } from './routes/_layout/category'
-import { Route as LayoutStockIndexImport } from './routes/_layout/stock/index'
-import { Route as LayoutDisclosureIndexImport } from './routes/_layout/disclosure/index'
-import { Route as LayoutStockIndustry33Industry33Import } from './routes/_layout/stock/industry_33.$industry_33'
-import { Route as LayoutStockIndustry17Industry17Import } from './routes/_layout/stock/industry_17.$industry_17'
-import { Route as LayoutStockDateDateStrImport } from './routes/_layout/stock/date.$dateStr'
+import { Route as rootRoute } from "./routes/__root";
+import { Route as LayoutImport } from "./routes/_layout";
+import { Route as LayoutCategoryImport } from "./routes/_layout/category";
+import { Route as LayoutDisclosureIndexImport } from "./routes/_layout/disclosure/index";
+import { Route as LayoutIndexImport } from "./routes/_layout/index";
+import { Route as LayoutPerformanceImport } from "./routes/_layout/performance";
+import { Route as LayoutStockDateDateStrImport } from "./routes/_layout/stock/date.$dateStr";
+import { Route as LayoutStockIndexImport } from "./routes/_layout/stock/index";
+import { Route as LayoutStockIndustry17Industry17Import } from "./routes/_layout/stock/industry_17.$industry_17";
+import { Route as LayoutStockIndustry33Industry33Import } from "./routes/_layout/stock/industry_33.$industry_33";
+import { Route as LoginImport } from "./routes/login";
+import { Route as RecoverPasswordImport } from "./routes/recover-password";
+import { Route as ResetPasswordImport } from "./routes/reset-password";
+import { Route as SignupImport } from "./routes/signup";
 
 // Create/Update Routes
 
 const SignupRoute = SignupImport.update({
-  path: '/signup',
+  path: "/signup",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const ResetPasswordRoute = ResetPasswordImport.update({
-  path: '/reset-password',
+  path: "/reset-password",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const RecoverPasswordRoute = RecoverPasswordImport.update({
-  path: '/recover-password',
+  path: "/recover-password",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const LoginRoute = LoginImport.update({
-  path: '/login',
+  path: "/login",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const LayoutRoute = LayoutImport.update({
-  id: '/_layout',
+  id: "/_layout",
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const LayoutIndexRoute = LayoutIndexImport.update({
-  path: '/',
+  path: "/",
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
 
 const LayoutPerformanceRoute = LayoutPerformanceImport.update({
-  path: '/performance',
+  path: "/performance",
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
 
 const LayoutCategoryRoute = LayoutCategoryImport.update({
-  path: '/category',
+  path: "/category",
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
 
 const LayoutStockIndexRoute = LayoutStockIndexImport.update({
-  path: '/stock/',
+  path: "/stock/",
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
 
 const LayoutDisclosureIndexRoute = LayoutDisclosureIndexImport.update({
-  path: '/disclosure/',
+  path: "/disclosure/",
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
 
 const LayoutStockIndustry33Industry33Route =
   LayoutStockIndustry33Industry33Import.update({
-    path: '/stock/industry_33/$industry_33',
+    path: "/stock/industry_33/$industry_33",
     getParentRoute: () => LayoutRoute,
-  } as any)
+  } as any);
 
 const LayoutStockIndustry17Industry17Route =
   LayoutStockIndustry17Industry17Import.update({
-    path: '/stock/industry_17/$industry_17',
+    path: "/stock/industry_17/$industry_17",
     getParentRoute: () => LayoutRoute,
-  } as any)
+  } as any);
 
 const LayoutStockDateDateStrRoute = LayoutStockDateDateStrImport.update({
-  path: '/stock/date/$dateStr',
+  path: "/stock/date/$dateStr",
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
 
 // Populate the FileRoutesByPath interface
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/_layout': {
-      preLoaderRoute: typeof LayoutImport
-      parentRoute: typeof rootRoute
-    }
-    '/login': {
-      preLoaderRoute: typeof LoginImport
-      parentRoute: typeof rootRoute
-    }
-    '/recover-password': {
-      preLoaderRoute: typeof RecoverPasswordImport
-      parentRoute: typeof rootRoute
-    }
-    '/reset-password': {
-      preLoaderRoute: typeof ResetPasswordImport
-      parentRoute: typeof rootRoute
-    }
-    '/signup': {
-      preLoaderRoute: typeof SignupImport
-      parentRoute: typeof rootRoute
-    }
-    '/_layout/category': {
-      preLoaderRoute: typeof LayoutCategoryImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/performance': {
-      preLoaderRoute: typeof LayoutPerformanceImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/': {
-      preLoaderRoute: typeof LayoutIndexImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/disclosure/': {
-      preLoaderRoute: typeof LayoutDisclosureIndexImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/stock/': {
-      preLoaderRoute: typeof LayoutStockIndexImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/stock/date/$dateStr': {
-      preLoaderRoute: typeof LayoutStockDateDateStrImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/stock/industry_17/$industry_17': {
-      preLoaderRoute: typeof LayoutStockIndustry17Industry17Import
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/stock/industry_33/$industry_33': {
-      preLoaderRoute: typeof LayoutStockIndustry33Industry33Import
-      parentRoute: typeof LayoutImport
-    }
+    "/_layout": {
+      preLoaderRoute: typeof LayoutImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/login": {
+      preLoaderRoute: typeof LoginImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/recover-password": {
+      preLoaderRoute: typeof RecoverPasswordImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/reset-password": {
+      preLoaderRoute: typeof ResetPasswordImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/signup": {
+      preLoaderRoute: typeof SignupImport;
+      parentRoute: typeof rootRoute;
+    };
+    "/_layout/category": {
+      preLoaderRoute: typeof LayoutCategoryImport;
+      parentRoute: typeof LayoutImport;
+    };
+    "/_layout/performance": {
+      preLoaderRoute: typeof LayoutPerformanceImport;
+      parentRoute: typeof LayoutImport;
+    };
+    "/_layout/": {
+      preLoaderRoute: typeof LayoutIndexImport;
+      parentRoute: typeof LayoutImport;
+    };
+    "/_layout/disclosure/": {
+      preLoaderRoute: typeof LayoutDisclosureIndexImport;
+      parentRoute: typeof LayoutImport;
+    };
+    "/_layout/stock/": {
+      preLoaderRoute: typeof LayoutStockIndexImport;
+      parentRoute: typeof LayoutImport;
+    };
+    "/_layout/stock/date/$dateStr": {
+      preLoaderRoute: typeof LayoutStockDateDateStrImport;
+      parentRoute: typeof LayoutImport;
+    };
+    "/_layout/stock/industry_17/$industry_17": {
+      preLoaderRoute: typeof LayoutStockIndustry17Industry17Import;
+      parentRoute: typeof LayoutImport;
+    };
+    "/_layout/stock/industry_33/$industry_33": {
+      preLoaderRoute: typeof LayoutStockIndustry33Industry33Import;
+      parentRoute: typeof LayoutImport;
+    };
   }
 }
 
@@ -170,6 +170,6 @@ export const routeTree = rootRoute.addChildren([
   RecoverPasswordRoute,
   ResetPasswordRoute,
   SignupRoute,
-])
+]);
 
 /* prettier-ignore-end */

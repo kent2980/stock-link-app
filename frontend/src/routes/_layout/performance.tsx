@@ -1,4 +1,4 @@
-import PerformancePage from "@/Page/performance/page";
+import PerformancePage from "@/Pages/performance/page";
 import { Box } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 

@@ -1,4 +1,4 @@
-import HomePage from "@/Page/HomePage";
+import HomePage from "@/Pages/HomePage";
 import { Container } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 
