@@ -3,13 +3,12 @@
 import datetime
 
 import pandas as pd
-import sqlalchemy
 import sqlalchemy.exc
 import yfinance as yf
 from app.api.deps import SessionDep
 from app.models import DailyStockPrice
 from fastapi import APIRouter, HTTPException, Query
-from sqlmodel import select
+from sqlmodel import desc, select
 
 from . import schema as sc
 
@@ -67,8 +66,8 @@ def create_daily_stock_price(
 
 @router.get(
     "/select_daily_stock_price",
-    response_model=sc.DailyStockPricePublic,
     summary="日次株価情報を取得",
+    response_model=sc.DailyStockPricePublic,
 )
 def get_daily_stock_price(
     *,
@@ -80,13 +79,9 @@ def get_daily_stock_price(
     日次株価情報を取得
     """
 
+    statement = select(DailyStockPrice).order_by(desc(DailyStockPrice.days))
     if date_str:
         days = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
-    else:
-        days = datetime.date.today()
-
-    statement = select(DailyStockPrice)
-    if date_str:
         statement = statement.where(DailyStockPrice.days == days)
     if stock_code:
         statement = statement.where(DailyStockPrice.code == stock_code)
@@ -97,4 +92,7 @@ def get_daily_stock_price(
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
 
-    return item
+    print(type(item))
+
+    # Rowオブジェクトから辞書アクセスで値を取得
+    return sc.DailyStockPricePublic.model_validate(item)
