@@ -69,6 +69,8 @@ export function DashboardInfo() {
                 direction="row"
                 whiteSpace={{ base: "normal", md: "nowrap" }}
                 color="green.800"
+                h={10}
+                alignItems="center"
               >
                 <Text as="span" fontWeight="medium">
                   {MOCK_DATA.todaysHeadlines[currentHeadline]}
