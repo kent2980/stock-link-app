@@ -1,6 +1,8 @@
 "use client";
 
-import { Box, Card, Flex, Text } from "@chakra-ui/react";
+import { InformationService } from "@/client";
+import { Box, Card, Flex, Skeleton, Text } from "@chakra-ui/react";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -8,7 +10,7 @@ import {
   FileText,
   TrendingUp,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 // Mock data - in a real app, this would come from an API
 const MOCK_DATA = {
@@ -94,7 +96,9 @@ export function DashboardInfo() {
               </Box>
               <Box mt={1} display="flex" alignItems="baseline">
                 <Box fontSize="2xl" fontWeight="semibold" color="gray.900">
-                  {MOCK_DATA.totalReports.toLocaleString()}
+                  <Suspense fallback={<Skeleton height="20px" width="50px" />}>
+                    <TotalReports />
+                  </Suspense>
                 </Box>
                 <Box ml={2} fontSize="xs" color="gray.500">
                   件
@@ -114,7 +118,9 @@ export function DashboardInfo() {
               </Box>
               <Box mt={1} display="flex" alignItems="baseline">
                 <Box fontSize="2xl" fontWeight="semibold" color="gray.900">
-                  {MOCK_DATA.newReportsToday.toLocaleString()}
+                  <Suspense fallback={<Skeleton height="20px" width="50px" />}>
+                    <NewReportsToday />
+                  </Suspense>
                 </Box>
                 <Box ml={2} fontSize="xs" color="gray.500">
                   件
@@ -236,19 +242,9 @@ export function DashboardInfo() {
               <Box fontSize="sm" fontWeight="medium" color="gray.500">
                 更新日時
               </Box>
-              <Box mt={1} fontSize="lg" fontWeight="semibold" color="gray.900">
-                {new Date().toLocaleDateString("ja-JP", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </Box>
-              <Box fontSize="sm" color="gray.500">
-                {new Date().toLocaleTimeString("ja-JP", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </Box>
+              <Suspense fallback={<Text>Loading...</Text>}>
+                <InsertDate />
+              </Suspense>
             </Card.Body>
           </Card.Root>
         </Box>
@@ -256,3 +252,56 @@ export function DashboardInfo() {
     </Box>
   );
 }
+
+const TotalReports = () => {
+  const { data } = useSuspenseQuery({
+    queryKey: ["totalReports"],
+    queryFn: async () => {
+      return await InformationService.getDocumentCount();
+    },
+  });
+
+  return <Text>{data}</Text>;
+};
+
+const NewReportsToday = () => {
+  const { data } = useSuspenseQuery({
+    queryKey: ["newReportsToday"],
+    queryFn: async () => {
+      return await InformationService.getDocumentCount({
+        dateStr: new Date().toISOString().split("T")[0],
+      });
+    },
+  });
+
+  return <Text>{data}</Text>;
+};
+
+const InsertDate = () => {
+  const { data } = useSuspenseQuery({
+    queryKey: ["insertDate"],
+    queryFn: async () => {
+      return await InformationService.getUpdateTimestamp();
+    },
+  });
+
+  const date = new Date(data);
+
+  return (
+    <>
+      <Box mt={1} fontSize="lg" fontWeight="semibold" color="gray.900">
+        {date.toLocaleDateString("ja-JP", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}
+      </Box>
+      <Box fontSize="sm" color="gray.500">
+        {date.toLocaleTimeString("ja-JP", {
+          hour: "2-digit",
+          minute: "2-digit",
+        })}
+      </Box>
+    </>
+  );
+};

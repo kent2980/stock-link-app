@@ -191,6 +191,13 @@ export type PeriodSchemaBase = {
     period: string;
 };
 
+export type PrivateUserCreate = {
+    email: string;
+    password: string;
+    full_name: string;
+    is_verified?: boolean;
+};
+
 export type PublicCalender = {
     reporting_date: string;
     count: number;
@@ -503,6 +510,8 @@ export type InformationGetCalendarResponse = (PublicCalenders);
 
 export type InformationGetLatestReportingDateResponse = (PublicLatestReportingDate);
 
+export type InformationGetUpdateTimestampResponse = (string);
+
 export type ItemsReadItemsData = {
     limit?: number;
     skip?: number;
@@ -612,6 +621,12 @@ export type LoginRecoverPasswordHtmlContentData = {
 
 export type LoginRecoverPasswordHtmlContentResponse = (string);
 
+export type PrivateCreateUserData = {
+    requestBody: PrivateUserCreate;
+};
+
+export type PrivateCreateUserResponse = (UserPublic);
+
 export type UsersReadUsersData = {
     limit?: number;
     skip?: number;
@@ -681,3 +696,9 @@ export type WikiGetStockWikiItemData = {
 export type WikiGetStockWikiItemResponse = (StockWikiPublic);
 
 export type WikiGetStockWikiItemsResponse = (StockWikisPublicList);
+
+export type XbrlSourceGetIxSourceFileItemData = {
+    sourceFileId: string;
+};
+
+export type XbrlSourceGetIxSourceFileItemResponse = (boolean);

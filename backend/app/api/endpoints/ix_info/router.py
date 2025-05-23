@@ -1,11 +1,10 @@
 import re
-from datetime import date
-
-from fastapi import APIRouter, HTTPException, Query
-from sqlmodel import desc, func, select
+from datetime import date, datetime
 
 from app.api.deps import SessionDep
 from app.models import IxHeadTitle, JpxStockInfo
+from fastapi import APIRouter, HTTPException, Query
+from sqlmodel import desc, func, select
 
 from . import crud
 from . import schema as sc
@@ -278,3 +277,26 @@ def get_latest_reporting_date(*, session: SessionDep) -> sc.PublicLatestReportin
         reporting_date=item[0],
         count=item[1],
     )
+
+
+@router.get(
+    "/update_timestamp",
+    summary="最新の更新日時を取得",
+    response_model=datetime,
+)
+def get_update_timestamp(*, session: SessionDep) -> datetime:
+    """
+    Get latest update timestamp.
+    """
+    statement = (
+        select(IxHeadTitle.insert_date)
+        .where(IxHeadTitle.insert_date.isnot(None))
+        .order_by(desc(IxHeadTitle.insert_date))
+    )
+    results = session.exec(statement)
+    item = results.first()
+
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+    return item
