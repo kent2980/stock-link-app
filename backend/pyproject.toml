@@ -34,6 +34,8 @@ dependencies = [
     "isort>=6.0.1",
     "black>=25.1.0",
     "types-requests>=2.32.0.20250515",
+    "yfinance>=0.2.61",
+    "pandas-datareader>=0.10.0",
 ]
 
 [tool.uv]

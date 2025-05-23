@@ -9,6 +9,20 @@ export type Body_login_login_access_token = {
     client_secret?: (string | null);
 };
 
+/**
+ * 日次株価情報を公開するためのクラス
+ */
+export type DailyStockPricePublic = {
+    code: string;
+    days: string;
+    open: number;
+    high: number;
+    low: number;
+    close: number;
+    volume?: (number | null);
+    adjusted_close?: (number | null);
+};
+
 export type DocumentListPublic = {
     id: number;
     head_item_key: string;
@@ -543,6 +557,26 @@ export type ItemsDeleteItemData = {
 };
 
 export type ItemsDeleteItemResponse = (Message);
+
+export type IxStockCreateDailyStockPriceData = {
+    code: string;
+    dateStr?: (string | null);
+};
+
+export type IxStockCreateDailyStockPriceResponse = (unknown);
+
+export type IxStockGetDailyStockPriceData = {
+    /**
+     * YYYY-MM-DD形式の日付
+     */
+    dateStr?: (string | null);
+    /**
+     * 株式コード
+     */
+    stockCode?: (string | null);
+};
+
+export type IxStockGetDailyStockPriceResponse = (DailyStockPricePublic);
 
 export type JpxReadJpxStockInfoItemData = {
     code: string;

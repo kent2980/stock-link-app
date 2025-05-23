@@ -1,6 +1,6 @@
 "use client";
 
-import { InformationService } from "@/client";
+import { InformationService, IxStockService } from "@/client";
 import { Box, Card, Flex, Skeleton, Text } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {
@@ -162,36 +162,9 @@ export function DashboardInfo() {
               <Box fontSize="sm" fontWeight="medium" color="gray.500">
                 日経平均株価
               </Box>
-              <Box mt={1} display="flex" alignItems="baseline">
-                <Box fontSize="2xl" fontWeight="semibold" color="gray.900">
-                  {MOCK_DATA.nikkeiAverage.value.toLocaleString()}
-                </Box>
-              </Box>
-              <Box mt={1} display="flex" alignItems="center">
-                {MOCK_DATA.nikkeiAverage.change > 0 ? (
-                  <Box display="flex" alignItems="center" color="emerald.600">
-                    <ArrowUpIcon
-                      style={{ marginRight: 4, height: 12, width: 12 }}
-                    />
-                    <Text fontSize="xs">
-                      {MOCK_DATA.nikkeiAverage.change.toLocaleString()} (
-                      {MOCK_DATA.nikkeiAverage.percentChange}%)
-                    </Text>
-                  </Box>
-                ) : (
-                  <Box display="flex" alignItems="center" color="red.600">
-                    <ArrowDownIcon
-                      style={{ marginRight: 4, height: 12, width: 12 }}
-                    />
-                    <Text fontSize="xs">
-                      {Math.abs(
-                        MOCK_DATA.nikkeiAverage.change
-                      ).toLocaleString()}{" "}
-                      ({Math.abs(MOCK_DATA.nikkeiAverage.percentChange)}%)
-                    </Text>
-                  </Box>
-                )}
-              </Box>
+              <Suspense fallback={<Skeleton height="30px" width="150px" />}>
+                <NikkeiAverage />
+              </Suspense>
             </Card.Body>
           </Card.Root>
 
@@ -244,7 +217,7 @@ export function DashboardInfo() {
               <Box fontSize="sm" fontWeight="medium" color="gray.500">
                 更新日時
               </Box>
-              <Suspense fallback={<Text>Loading...</Text>}>
+              <Suspense fallback={<Skeleton height="30px" width="150px" />}>
                 <InsertDate />
               </Suspense>
             </Card.Body>
@@ -303,6 +276,46 @@ const InsertDate = () => {
           hour: "2-digit",
           minute: "2-digit",
         })}
+      </Box>
+    </>
+  );
+};
+
+const NikkeiAverage = () => {
+  const { data } = useSuspenseQuery({
+    queryKey: ["nikkeiAverage"],
+    queryFn: async () => {
+      return await IxStockService.getDailyStockPrice({
+        stockCode: "^N225",
+      });
+    },
+  });
+
+  return (
+    <>
+      <Box mt={1} display="flex" alignItems="baseline">
+        <Box fontSize="2xl" fontWeight="semibold" color="gray.900">
+          {data.close.toLocaleString()}
+        </Box>
+      </Box>
+      <Box mt={1} display="flex" alignItems="center">
+        {MOCK_DATA.nikkeiAverage.change > 0 ? (
+          <Box display="flex" alignItems="center" color="emerald.600">
+            <ArrowUpIcon style={{ marginRight: 4, height: 12, width: 12 }} />
+            <Text fontSize="xs">
+              {MOCK_DATA.nikkeiAverage.change.toLocaleString()} (
+              {MOCK_DATA.nikkeiAverage.percentChange}%)
+            </Text>
+          </Box>
+        ) : (
+          <Box display="flex" alignItems="center" color="red.600">
+            <ArrowDownIcon style={{ marginRight: 4, height: 12, width: 12 }} />
+            <Text fontSize="xs">
+              {Math.abs(MOCK_DATA.nikkeiAverage.change).toLocaleString()} (
+              {Math.abs(MOCK_DATA.nikkeiAverage.percentChange)}%)
+            </Text>
+          </Box>
+        )}
       </Box>
     </>
   );

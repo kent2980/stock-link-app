@@ -814,7 +814,7 @@ class JpxStockInfo(JpxStockInfoBase, table=True):
 # endregion
 
 
-class StockWikiBase(SQLModel, table=False):
+class StockBase(SQLModel, table=False):
     """StockWikiの基底クラスです。
 
     Properties:
@@ -834,7 +834,7 @@ class StockWikiBase(SQLModel, table=False):
     )
 
 
-class StockWiki(StockWikiBase, table=True, description="企業のWiki情報"):
+class StockWiki(StockBase, table=True, description="企業のWiki情報"):
     """StockWikiの作成時のプロパティです。"""
 
     __tablename__ = "stock_wiki"
@@ -845,3 +845,26 @@ class StockWiki(StockWikiBase, table=True, description="企業のWiki情報"):
     url: str | None = Field(max_length=255, description="Wiki URL")
 
     __table_args__ = (Index("stock_wiki_code", "code"),)
+
+
+class DailyStockPrice(StockBase, table=True):
+    """DailyStockPriceの作成時のプロパティです。"""
+
+    __tablename__ = "daily_stock_price"
+
+    code: str = Field(max_length=5, description="証券コード", index=True)
+    days: date = Field(description="日付", index=True)
+    open: Decimal | None = Field(sa_column=Column(DECIMAL(20, 2)), description="始値")
+    high: Decimal | None = Field(sa_column=Column(DECIMAL(20, 2)), description="高値")
+    low: Decimal | None = Field(sa_column=Column(DECIMAL(20, 2)), description="安値")
+    close: Decimal | None = Field(sa_column=Column(DECIMAL(20, 2)), description="終値")
+    volume: int | None = Field(description="出来高")
+    adjusted_close: Decimal | None = Field(
+        sa_column=Column(DECIMAL(20, 2)), description="調整後終値"
+    )
+
+    __table_args__ = (
+        Index("daily_stock_price_code", "code"),
+        Index("daily_stock_price_days", "days"),
+        UniqueConstraint("code", "days", name="uq_daily_stock_price_code_days"),
+    )
