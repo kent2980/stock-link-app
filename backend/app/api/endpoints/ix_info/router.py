@@ -1,10 +1,11 @@
 import re
 from datetime import date, datetime
 
-from app.api.deps import SessionDep
-from app.models import IxHeadTitle, JpxStockInfo
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import desc, func, select
+
+from app.api.deps import SessionDep
+from app.models import IxHeadTitle, JpxStockInfo
 
 from . import crud
 from . import schema as sc
