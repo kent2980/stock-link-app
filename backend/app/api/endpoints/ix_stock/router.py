@@ -1,8 +1,5 @@
-# 依存関数やスキーマ、CRUD操作をインポート（必要に応じて編集）
-# from . import crud
 import datetime
 
-import pandas as pd
 import sqlalchemy.exc
 import yfinance as yf
 from app.api.deps import SessionDep
@@ -11,6 +8,7 @@ from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import desc, select
 
 from . import schema as sc
+from . import utils
 
 router = APIRouter()
 
@@ -22,16 +20,16 @@ def create_daily_stock_price(
     """
     日次株価情報を作成
     """
-    # yfinanceから株価情報を取得
+    # date_strをdatetime.date型に変換
     if date_str:
         days = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
     else:
         days = datetime.date.today()
-    ticker = yf.Ticker(code)
-    stock_data = ticker.history(start=days, end=days + datetime.timedelta(days=1))
+    # yfinanceから株価情報を取得
+    stock_data = utils.get_stock_data(code, days)
     if stock_data.empty:
         raise HTTPException(status_code=404, detail="Stock data not found")
-    print(stock_data.columns)
+
     # # DataFrameを辞書に変換
     item_in = sc.DailyStockPriceCreate(
         code=code,
@@ -91,8 +89,6 @@ def get_daily_stock_price(
 
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
-
-    print(type(item))
 
     # Rowオブジェクトから辞書アクセスで値を取得
     return sc.DailyStockPricePublic.model_validate(item)
