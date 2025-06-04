@@ -2,8 +2,9 @@ import datetime
 import re
 from collections import defaultdict
 
-from app.models import IxHeadTitle, IxNonFraction
 from sqlmodel import Session
+
+from app.models import IxHeadTitle, IxNonFraction
 
 from . import crud
 from . import schema as sc
@@ -608,7 +609,7 @@ def generate_summary_sentence(data: sc.FinItemsResponse) -> str:
         cur_change = result.curChange
 
         if cur_change:
-            if not result.isActive is True or cur_change.value is None:
+            if result.isActive is not True or cur_change.value is None:
                 continue
 
             change_value = cur_change.value

@@ -1,11 +1,10 @@
-import re
 
-from app.api.deps import SessionDep
 from fastapi import APIRouter, HTTPException, Query
 
-from . import crud
+from app.api.deps import SessionDep
+
+from . import crud, utils
 from . import schema as sc
-from . import utils
 from .exceptions import HeadItemNotFound, NotDictKeyError
 
 router = APIRouter()
@@ -69,7 +68,7 @@ def get_disclosure_items(
                     important=True,
                 )
             )
-        except Exception as e:
+        except Exception:
             print(item.id)
             continue
     return sc.DisclosureItemsList(

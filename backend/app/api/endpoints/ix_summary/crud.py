@@ -1,5 +1,8 @@
 from collections.abc import Sequence
-from typing import List
+
+from fastapi import Query
+from sqlalchemy.orm import aliased
+from sqlmodel import Session, and_, case, desc, exists, func, literal, select
 
 from app.models import (
     IxDefinitionArc,
@@ -12,9 +15,6 @@ from app.models import (
     IxNonNumeric,
     ScLinkBaseRef,
 )
-from fastapi import Query
-from sqlalchemy.orm import aliased
-from sqlmodel import Session, and_, case, desc, exists, func, literal, select
 
 from . import schema as sc
 
@@ -472,7 +472,7 @@ def get_base_head_item_key_offset_item(
 
 
 def get_disclosure_items(
-    session: Session, report_types: List[str], limit: int, offset: int
+    session: Session, report_types: list[str], limit: int, offset: int
 ) -> Sequence[IxHeadTitle]:
     """
     #### 開示項目情報を取得する

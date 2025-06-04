@@ -1,11 +1,11 @@
 import datetime
 
 import sqlalchemy.exc
-import yfinance as yf
-from app.api.deps import SessionDep
-from app.models import DailyStockPrice
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import desc, select
+
+from app.api.deps import SessionDep
+from app.models import DailyStockPrice
 
 from . import schema as sc
 from . import utils
