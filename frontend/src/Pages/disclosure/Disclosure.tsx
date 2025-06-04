@@ -293,7 +293,10 @@ export default function DisclosurePage() {
             </Card.Body>
           </Card.Root>
         ))}
-        {isFetchingNextPage && <div>Loading...</div>}
+        {isFetchingNextPage && <Box>Loading...</Box>}
+        <Box visibility="hidden" height={0} ref={ref}>
+          <Box />
+        </Box>
       </Flex>
     </Container>
   );
