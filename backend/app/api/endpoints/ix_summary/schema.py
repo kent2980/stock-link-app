@@ -1,3 +1,5 @@
+import datetime
+
 from sqlmodel import Field, SQLModel
 
 
@@ -142,3 +144,24 @@ class FinItemsDividendsResponse(FinStructBase):
     """配当のメトリック情報のリストを表すクラス"""
 
     data: FinValueDividends | None = Field(default=None)
+
+
+class DisclosureItem(SQLModel):
+    """開示項目を表すクラス"""
+
+    id: int
+    company: str
+    code: str
+    date: str
+    title: str
+    summary: str
+    category: str
+    important: bool
+
+
+class DisclosureItemsList(SQLModel):
+    """開示項目のリストを表すクラス"""
+
+    offset: int = Field(default=0, description="オフセット")
+    count: int
+    data: list[DisclosureItem] = Field(default=[])

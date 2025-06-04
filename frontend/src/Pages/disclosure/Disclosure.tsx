@@ -1,4 +1,8 @@
 import {
+  FinancialSummaryGetDisclosureItemsResponse,
+  FinancialSummaryService,
+} from "@/client";
+import {
   Badge,
   Box,
   Button,
@@ -10,6 +14,7 @@ import {
   Link,
   Select,
 } from "@chakra-ui/react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { Link as RouterLink } from "@tanstack/react-router";
 import {
   Calendar,
@@ -19,7 +24,8 @@ import {
   Search,
   SlidersHorizontal,
 } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useInView } from "react-intersection-observer";
 // モックデータ - 実際のアプリでは API から取得
 const disclosureData = [
   {
@@ -251,6 +257,30 @@ function CustomFilterButton({
 export default function DisclosurePage() {
   const [showFilters, setShowFilters] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ["disclosureItems"],
+      queryFn: async () => {
+        return await FinancialSummaryService.getDisclosureItems();
+      },
+      initialPageParam: 0,
+      getNextPageParam: (
+        lastPage: FinancialSummaryGetDisclosureItemsResponse
+      ) => (lastPage.offset != null ? lastPage.offset : undefined),
+    });
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (hasNextPage && inView) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage]);
+
+  if (isLoading || !data) {
+    return <div>Loading...</div>;
+  }
+
+  const items = data.pages.map((page) => page.data).flat();
 
   return (
     <Container
@@ -270,9 +300,9 @@ export default function DisclosurePage() {
         gap={4}
         // style={{ height: contentHeight }}
       >
-        {disclosureData.map((item) => (
+        {items?.map((item) => (
           <Card.Root
-            key={item.id}
+            key={item?.id}
             className="overflow-hidden snap-start snap-always"
           >
             <Card.Body className="p-0" p={0}>
@@ -297,12 +327,12 @@ export default function DisclosurePage() {
                         fontWeight="semibold"
                         color="gray.900"
                       >
-                        {item.company}
+                        {item?.company}
                       </Box>
                       <Box as="span" fontSize="sm" color="gray.500">
-                        {item.code}
+                        {item?.code}
                       </Box>
-                      {item.important && (
+                      {item?.important && (
                         <Badge
                           ml={2}
                           bg="red.100"
@@ -315,10 +345,10 @@ export default function DisclosurePage() {
                     </Box>
                     <Box display="flex" alignItems="center">
                       <Badge variant="outline" mr={2}>
-                        {item.category}
+                        {item?.category}
                       </Badge>
                       <Box as="span" fontSize="sm" color="gray.500">
-                        {formatDate(item.date)}
+                        {formatDate(item?.date ?? "")}
                       </Box>
                     </Box>
                   </Box>
@@ -329,10 +359,10 @@ export default function DisclosurePage() {
                     fontWeight="medium"
                     color="gray.900"
                   >
-                    {item.title}
+                    {item?.title}
                   </Box>
                   <Box as="p" fontSize="sm" color="gray.600">
-                    {item.summary}
+                    {item?.summary}
                   </Box>
                   <Box mt={3} textAlign="right">
                     <Button
@@ -347,6 +377,7 @@ export default function DisclosurePage() {
             </Card.Body>
           </Card.Root>
         ))}
+        {isFetchingNextPage && <div>Loading...</div>}
       </Flex>
     </Container>
   );

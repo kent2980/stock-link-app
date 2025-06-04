@@ -1,14 +1,62 @@
+import datetime
 import re
 from collections import defaultdict
 
-from sqlmodel import Session
-
 from app.models import IxHeadTitle, IxNonFraction
+from sqlmodel import Session
 
 from . import crud
 from . import schema as sc
 from .exceptions import HeadItemNotFound, NotDictKeyError
 from .summaryItems import SummaryItems
+
+
+def get_head_item_key(
+    session: Session,
+    code: str,
+    head_item_key: str | None = None,
+    report_types: list[str] | None = None,
+    current_period: str | None = None,
+    year: str | None = None,
+    offset: int = 0,
+) -> str:
+    """
+    #### この関数は、head_item_keyを取得する関数です。
+    - **機能**:head_item_keyを取得します。
+    - **引数**:session: Session
+    - **引数**:head_item_key: str | None - head_item_key
+    - **引数**:code: str - 証券コード
+    - **引数**:report_types: list[str] | None - レポートタイプ
+    - **引数**:current_period: str | None - 現在の期間
+    - **引数**:year: str | None - 年
+    - **引数**:offset: int - オフセット
+    - **戻り値**:str - head_item_key
+    - **例外**:HeadItemNotFound - head item not found.
+    """
+    if head_item_key is None:
+        head_item_key = crud.get_ix_head_title(
+            session=session,
+            code=code,
+            report_types=report_types,
+            offset=offset,
+            current_period=current_period,
+            year=year,
+        ).item_key
+        if not head_item_key:
+            raise HeadItemNotFound("head item not found.")
+    else:
+        if offset > 0:
+            try:
+                head_item_key = get_base_head_item_key_offset(
+                    session=session,
+                    headItemKey=head_item_key,
+                    report_types=report_types,
+                    offset=offset,
+                )
+            except HeadItemNotFound:
+                raise
+
+    return head_item_key
 
 
 def get_context_list(items: sc.TreeItemsList, attr_value: str) -> list[list[str]]:
@@ -134,7 +182,6 @@ def var_init(
     ):  # attr_value_dictのキーがFY, QUでない場合、例外を発生させる
         raise NotDictKeyError("not dict keys error. keys must be 'FY' or 'QU'.")
     # endregion
-
     # region head_itemの取得
     head_item = crud.get_ix_head_title_by_item_key(  # head_itemを取得
         session=session, item_key=head_item_key
@@ -504,40 +551,6 @@ def get_summary_items_list(
     return items_list
 
 
-def get_head_item_key(
-    session: Session,
-    code: str,
-    report_types: list[str] | None,
-    current_period: str | None = None,
-    year: str | None = None,
-    offset: int = 0,
-) -> str:
-    """
-    #### この関数は、指定された証券コードに一致するhead_item_keyを取得する関数です。
-    - **機能**:指定された証券コードに一致するhead_item_keyを取得します。
-    - **引数**:session: Session
-    - **引数**:code: str - 証券コード
-    - **引数**:report_types: List[str]  - レポートタイプ
-    - **引数**:offset: int - オフセット
-    - **戻り値**:str - head_item_key
-    - **例外**:HeadItemNotFound
-    """
-
-    headItems = crud.get_ix_head_title(
-        session,
-        code=code,
-        report_types=report_types,
-        offset=offset,
-        current_period=current_period,
-        year=year,
-    )
-
-    if not headItems:
-        raise HeadItemNotFound("head item not found.")
-
-    return headItems.item_key
-
-
 def get_base_head_item_key_offset(
     session: Session,
     headItemKey: str,
@@ -555,3 +568,98 @@ def get_base_head_item_key_offset(
         raise HeadItemNotFound(f"head item not found.{str(e)}")
 
     return item
+
+
+def generate_summary_sentence(data: sc.FinItemsResponse) -> str:
+    """
+    指定されたデータから財務情報の要約文を生成する関数
+    - **引数**: data: dict - 財務情報のデータ
+    - **戻り値**: str - 財務情報の要約文
+    - **例外**: 対象期間の財務情報が取得できない場合、適切なメッセージを返す
+    """
+
+    # 期間タイトルの取得
+    yearDate = datetime.date.fromisoformat(data.period.fiscalYear).year
+    period = data.period.period
+    if period == "FY":
+        period_title = f"{yearDate}年度通期"
+    elif period == "HY":
+        period_title = f"{yearDate}年度上期"
+    elif period == "Q1":
+        period_title = f"{yearDate}年度第1四半期"
+    elif period == "Q2":
+        period_title = f"{yearDate}年度第2四半期"
+    elif period == "Q3":
+        period_title = f"{yearDate}年度第3四半期"
+    else:
+        period_title = f"{yearDate}年度{period}期"
+
+    # 要約文の生成
+    phrases = []
+    increase_count = 0
+    decrease_count = 0
+
+    revenue_change = None
+    profit_change = None
+
+    for item in data.data:
+        label = item.label
+        result = item.result
+        cur_change = result.curChange
+
+        if cur_change:
+            if not result.isActive is True or cur_change.value is None:
+                continue
+
+            change_value = cur_change.value
+            percentage = f"{abs(change_value):.1f}%"
+
+            if change_value > 0:
+                phrase = f"{label}は{percentage}増加"
+                increase_count += 1
+            elif change_value < 0:
+                phrase = f"{label}は{percentage}減少"
+                decrease_count += 1
+            else:
+                phrase = f"{label}は前年と同水準"
+
+            phrases.append(phrase)
+
+            # 増収増益などの判定に使う
+            if "売上" in label or "収益" in label:
+                revenue_change = change_value
+            if "利益" in label:
+                profit_change = change_value
+
+    if not phrases:
+        return "対象期間の財務情報は取得できませんでした。"
+
+    # 要約の構築
+    if len(phrases) > 1:
+        summary = "、".join(phrases[:-1]) + "および" + phrases[-1]
+    else:
+        summary = phrases[0]
+
+    # 全体コメントの決定
+    if increase_count > decrease_count:
+        comment = "前年同期比で好調な結果。"
+    elif decrease_count > increase_count:
+        comment = "前年同期比でやや不調な結果。"
+    else:
+        comment = "前年並みの結果。"
+
+    # 増収増益などの判定
+    trend = ""
+    if revenue_change is not None and profit_change is not None:
+        if revenue_change > 0 and profit_change > 0:
+            trend = "増収増益、"
+        elif revenue_change > 0 and profit_change < 0:
+            trend = "増収減益、"
+        elif revenue_change < 0 and profit_change > 0:
+            trend = "減収増益、"
+        elif revenue_change < 0 and profit_change < 0:
+            trend = "減収減益、"
+        else:
+            trend = ""
+
+    return f"{period_title}において、{summary}しました。{trend}{comment}"

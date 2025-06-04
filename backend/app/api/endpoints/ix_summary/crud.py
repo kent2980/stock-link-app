@@ -1,8 +1,5 @@
 from collections.abc import Sequence
-
-from fastapi import Query
-from sqlalchemy.orm import aliased
-from sqlmodel import Session, and_, case, desc, exists, func, literal, select
+from typing import List
 
 from app.models import (
     IxDefinitionArc,
@@ -15,6 +12,9 @@ from app.models import (
     IxNonNumeric,
     ScLinkBaseRef,
 )
+from fastapi import Query
+from sqlalchemy.orm import aliased
+from sqlmodel import Session, and_, case, desc, exists, func, literal, select
 
 from . import schema as sc
 
@@ -82,10 +82,11 @@ def get_ix_head_title(
     statement = statement.order_by(
         desc(IxHeadTitle.id),
     )
-    statement = statement.offset(offset)
+    if offset < 0:
+        print("Offset must be greater than or equal to 0")
+        statement = statement.offset(offset)
     result = session.exec(statement)
     item = result.first()
-
     return item
 
 
@@ -402,7 +403,6 @@ def is_change_value(
 
     if not item:
         return None
-    print(item.value)
     return item.value == "true"
 
 
@@ -469,3 +469,33 @@ def get_base_head_item_key_offset_item(
     if item is None:
         raise ValueError("No previous item found")
     return item.item_key
+
+
+def get_disclosure_items(
+    session: Session, report_types: List[str], limit: int, offset: int
+) -> Sequence[IxHeadTitle]:
+    """
+    #### 開示項目情報を取得する
+    - **機能**: 開示項目情報を取得する
+    - **param1**: session: Session  DBセッション
+    - **param2**: limit: int  取得する最大数
+    - **param3**: offset: int  オフセット
+    """
+
+    statement = (
+        select(IxHeadTitle)
+        .where(
+            IxHeadTitle.current_period.isnot(None),
+            IxHeadTitle.company_name.isnot(None),
+            IxHeadTitle.report_type.in_(report_types) if report_types else True,
+        )
+        .order_by(
+            desc(IxHeadTitle.reporting_date),
+            desc(IxHeadTitle.fy_year_end),
+        )
+        .limit(limit)
+        .offset(offset)
+    )
+    result = session.exec(statement)
+    items = result.all()
+    return items

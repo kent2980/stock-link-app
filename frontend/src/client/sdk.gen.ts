@@ -3,11 +3,99 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { FinancialSummaryGetOperatingResultsData, FinancialSummaryGetOperatingResultsResponse, FinancialSummaryGetOtherOperatingResultsData, FinancialSummaryGetOtherOperatingResultsResponse, FinancialSummaryGetForecastsData, FinancialSummaryGetForecastsResponse, FinancialSummaryGetFinancialPositionData, FinancialSummaryGetFinancialPositionResponse, FinancialSummaryGetCashFlowsData, FinancialSummaryGetCashFlowsResponse, FinancialSummaryGetForecastChangeData, FinancialSummaryGetForecastChangeResponse, FinancialSummaryGetDividendsChangeData, FinancialSummaryGetDividendsChangeResponse, FinancialSummaryGetDividendsData, FinancialSummaryGetDividendsResponse, InformationGetDocumentCountData, InformationGetDocumentCountResponse, InformationGetLatestDocumentTitleResponse, InformationReadIxHeadTitleItemData, InformationReadIxHeadTitleItemResponse, InformationGetDocumentListData, InformationGetDocumentListResponse, InformationReadIxHeadTitleItemsUrlListResponse, InformationGetCalendarResponse, InformationGetLatestReportingDateResponse, InformationGetUpdateTimestampResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, IxStockCreateDailyStockPriceData, IxStockCreateDailyStockPriceResponse, IxStockGetDailyStockPriceData, IxStockGetDailyStockPriceResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, JpxReadIndustryCountData, JpxReadIndustryCountResponse, JpxReadIndustryNameData, JpxReadIndustryNameResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, PrivateCreateUserData, PrivateCreateUserResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, WikiGetStockWikiItemsResponse, XbrlSourceGetIxSourceFileItemData, XbrlSourceGetIxSourceFileItemResponse } from './types.gen';
+import type { FinancialSummaryGetDisclosureItemsData, FinancialSummaryGetDisclosureItemsResponse, FinancialSummaryGetFinancialSummaryData, FinancialSummaryGetFinancialSummaryResponse, FinancialSummaryGetOperatingResultsData, FinancialSummaryGetOperatingResultsResponse, FinancialSummaryGetOtherOperatingResultsData, FinancialSummaryGetOtherOperatingResultsResponse, FinancialSummaryGetForecastsData, FinancialSummaryGetForecastsResponse, FinancialSummaryGetFinancialPositionData, FinancialSummaryGetFinancialPositionResponse, FinancialSummaryGetCashFlowsData, FinancialSummaryGetCashFlowsResponse, FinancialSummaryGetForecastChangeData, FinancialSummaryGetForecastChangeResponse, FinancialSummaryGetDividendsChangeData, FinancialSummaryGetDividendsChangeResponse, FinancialSummaryGetDividendsData, FinancialSummaryGetDividendsResponse, InformationGetDocumentCountData, InformationGetDocumentCountResponse, InformationGetLatestDocumentTitleResponse, InformationReadIxHeadTitleItemData, InformationReadIxHeadTitleItemResponse, InformationGetDocumentListData, InformationGetDocumentListResponse, InformationReadIxHeadTitleItemsUrlListResponse, InformationGetCalendarResponse, InformationGetLatestReportingDateResponse, InformationGetUpdateTimestampResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, IxStockCreateDailyStockPriceData, IxStockCreateDailyStockPriceResponse, IxStockGetDailyStockPriceData, IxStockGetDailyStockPriceResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, JpxReadIndustryCountData, JpxReadIndustryCountResponse, JpxReadIndustryNameData, JpxReadIndustryNameResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, PrivateCreateUserData, PrivateCreateUserResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, WikiGetStockWikiItemsResponse, XbrlSourceGetIxSourceFileItemData, XbrlSourceGetIxSourceFileItemResponse } from './types.gen';
 
 export class FinancialSummaryService {
     /**
+     * 開示項目情報を取得
+     * 開示項目情報を取得するエンドポイント。
+     * Args:
+     * session (SessionDep): データベースセッション依存性。
+     * report_types (list[str] | None, optional): 取得する開示項目のレポートタイプ。デフォルトは["edif", "edus", "edjp"]。
+     * limit (int, optional): 取得する開示項目の最大数。デフォルトは20。
+     * offset (int, optional): オフセット値。デフォルトは0。
+     * Raises:
+     * HTTPException: パラメータ不正やデータが見つからない場合に発生。
+     * Returns:
+     * sc.DisclosureItemsList: 開示項目のリストとメタデータを含むレスポンスモデル。
+     * @param data The data for the request.
+     * @param data.reportTypes 取得する開示項目のレポートタイプ
+     * @param data.limit 取得する開示項目の最大数
+     * @param data.offset オフセット
+     * @returns DisclosureItemsList Successful Response
+     * @throws ApiError
+     */
+    public static getDisclosureItems(data: FinancialSummaryGetDisclosureItemsData = {}): CancelablePromise<FinancialSummaryGetDisclosureItemsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/summary/disclosure_items/',
+            query: {
+                report_types: data.reportTypes,
+                limit: data.limit,
+                offset: data.offset
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * 財務サマリー情報を取得
+     * 財務サマリー情報を取得するエンドポイント。
+     *
+     * Args:
+     * session (SessionDep): データベースセッション依存性。
+     * code (str | None, optional): 銘柄コード。指定しない場合はhead_item_keyを利用。
+     * head_item_key (str | None, optional): ヘッドアイテムキー。指定しない場合はcodeを利用。
+     * report_types (list[str] | None, optional): レポートタイプのリスト。
+     * offset (int, optional): オフセット値。デフォルトは0。
+     *
+     * Raises:
+     * HTTPException: パラメータ不正やデータが見つからない場合に発生。
+     *
+     * Returns:
+     * str: 財務サマリー情報の文字列。
+     * @param data The data for the request.
+     * @param data.code 銘柄コード
+     * @param data.headItemKey head_item_key
+     * @param data.reportTypes レポートタイプ
+     * @param data.offset オフセット
+     * @returns string Successful Response
+     * @throws ApiError
+     */
+    public static getFinancialSummary(data: FinancialSummaryGetFinancialSummaryData = {}): CancelablePromise<FinancialSummaryGetFinancialSummaryResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/summary/financial_summary/',
+            query: {
+                code: data.code,
+                head_item_key: data.headItemKey,
+                report_types: data.reportTypes,
+                offset: data.offset
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
      * 経営成績情報を取得
+     * 経営成績情報を取得するエンドポイント。
+     *
+     * Args:
+     * session (SessionDep): データベースセッション依存性。
+     * code (str | None, optional): 銘柄コード。指定しない場合はhead_item_keyを利用。
+     * head_item_key (str | None, optional): ヘッドアイテムキー。指定しない場合はcodeを利用。
+     * report_types (list[str] | None, optional): レポートタイプのリスト。
+     * offset (int, optional): オフセット値。デフォルトは0。
+     *
+     * Raises:
+     * HTTPException: パラメータ不正やデータが見つからない場合に発生。
+     *
+     * Returns:
+     * sc.FinItemsResponse: 経営成績情報のレスポンスモデル。
      * @param data The data for the request.
      * @param data.code 銘柄コード
      * @param data.headItemKey head_item_key
@@ -34,6 +122,17 @@ export class FinancialSummaryService {
     
     /**
      * その他の経営成績情報を取得
+     * その他の経営成績情報を取得するエンドポイント。
+     * Args:
+     * session (SessionDep): データベースセッション依存性。
+     * code (str | None, optional): 銘柄コード。指定しない場合はhead_item_keyを利用。
+     * head_item_key (str | None, optional): ヘッドアイテムキー。指定しない場合はcodeを利用。
+     * report_types (list[str] | None, optional): レポートタイプのリスト。
+     * offset (int, optional): オフセット値。デフォルトは0。
+     * Raises:
+     * HTTPException: パラメータ不正やデータが見つからない場合に発生。
+     * Returns:
+     * sc.FinItemsResponse: その他の経営成績情報のレスポンスモデル。
      * @param data The data for the request.
      * @param data.code 銘柄コード
      * @param data.headItemKey head_item_key
@@ -60,6 +159,17 @@ export class FinancialSummaryService {
     
     /**
      * 予測情報を取得
+     * 予測情報を取得するエンドポイント。
+     * Args:
+     * session (SessionDep): データベースセッション依存性。
+     * code (str | None, optional): 銘柄コード。指定しない場合はhead_item_keyを利用。
+     * head_item_key (str | None, optional): ヘッドアイテムキー。指定しない場合はcodeを利用。
+     * report_types (list[str] | None, optional): レポートタイプのリスト。
+     * offset (int, optional): オフセット値。デフォルトは0。
+     * Raises:
+     * HTTPException: パラメータ不正やデータが見つからない場合に発生。
+     * Returns:
+     * sc.FinItemsResponse: 予測情報のレスポンスモデル。
      * @param data The data for the request.
      * @param data.code 銘柄コード
      * @param data.headItemKey head_item_key
@@ -86,6 +196,17 @@ export class FinancialSummaryService {
     
     /**
      * 財政状態情報を取得
+     * 財政状態情報を取得するエンドポイント。
+     * Args:
+     * session (SessionDep): データベースセッション依存性。
+     * code (str | None, optional): 銘柄コード。指定しない場合はhead_item_keyを利用。
+     * head_item_key (str | None, optional): ヘッドアイテムキー。指定しない場合はcodeを利用。
+     * report_types (list[str] | None, optional): レポートタイプのリスト。
+     * offset (int, optional): オフセット値。デフォルトは0。
+     * Raises:
+     * HTTPException: パラメータ不正やデータが見つからない場合に発生。
+     * Returns:
+     * sc.FinItemsResponse: 財政状態情報のレスポンスモデル。
      * @param data The data for the request.
      * @param data.code 銘柄コード
      * @param data.headItemKey head_item_key
@@ -112,6 +233,16 @@ export class FinancialSummaryService {
     
     /**
      * キャッシュフロー情報を取得
+     * キャッシュフロー情報を取得するエンドポイント。
+     * Args:
+     * session (SessionDep): データベースセッション依存性。
+     * code (str): 銘柄コード。
+     * year (str | None, optional): 年度。指定しない場合は最新の年度を利用。
+     * offset (int, optional): オフセット値。デフォルトは0。
+     * Raises:
+     * HTTPException: パラメータ不正やデータが見つからない場合に発生。
+     * Returns:
+     * sc.FinItemsResponse: キャッシュフロー情報のレスポンスモデル。
      * @param data The data for the request.
      * @param data.code
      * @param data.year 年度
@@ -138,6 +269,17 @@ export class FinancialSummaryService {
     
     /**
      * 業績予想の変更情報を取得
+     * 業績予想の変更情報を取得するエンドポイント。
+     * Args:
+     * session (SessionDep): データベースセッション依存性。
+     * head_item_key (str | None, optional): ヘッドアイテムキー。指定しない場合はcodeを利用。
+     * code (str | None, optional): 銘柄コード。指定しない場合はhead_item_keyを利用。
+     * report_types (list[str] | None, optional): レポートタイプのリスト。
+     * offset (int, optional): オフセット値。デフォルトは0。
+     * Raises:
+     * HTTPException: パラメータ不正やデータが見つからない場合に発生。
+     * Returns:
+     * bool | None: 業績予想の変更情報。変更がない場合はNone。
      * @param data The data for the request.
      * @param data.headItemKey head_item_key
      * @param data.code 銘柄コード
@@ -164,6 +306,17 @@ export class FinancialSummaryService {
     
     /**
      * 配当予想の変更情報を取得
+     * 配当予想の変更情報を取得するエンドポイント。
+     * Args:
+     * session (SessionDep): データベースセッション依存性。
+     * head_item_key (str | None, optional): ヘッドアイテムキー。指定しない場合はcodeを利用。
+     * code (str | None, optional): 銘柄コード。指定しない場合はhead_item_keyを利用。
+     * report_types (list[str] | None, optional): レポートタイプのリスト。
+     * offset (int, optional): オフセット値。デフォルトは0。
+     * Raises:
+     * HTTPException: パラメータ不正やデータが見つからない場合に発生。
+     * Returns:
+     * bool | None: 配当予想の変更情報。変更がない場合はNone。
      * @param data The data for the request.
      * @param data.headItemKey head_item_key
      * @param data.code 銘柄コード
@@ -190,6 +343,17 @@ export class FinancialSummaryService {
     
     /**
      * 配当情報を取得
+     * 配当情報を取得するエンドポイント。
+     * Args:
+     * session (SessionDep): データベースセッション依存性。
+     * code (str | None, optional): 銘柄コード。指定しない場合はhead_item_keyを利用。
+     * head_item_key (str | None, optional): ヘッドアイテムキー。指定しない場合はcodeを利用。
+     * report_types (list[str] | None, optional): レポートタイプのリスト。
+     * offset (int, optional): オフセット値。デフォルトは0。
+     * Raises:
+     * HTTPException: パラメータ不正やデータが見つからない場合に発生。
+     * Returns:
+     * sc.FinItemsDividendsResponse: 配当情報のレスポンスモデル。
      * @param data The data for the request.
      * @param data.code 銘柄コード
      * @param data.headItemKey head_item_key

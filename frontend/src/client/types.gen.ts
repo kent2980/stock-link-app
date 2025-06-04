@@ -23,6 +23,32 @@ export type DailyStockPricePublic = {
     adjusted_close?: (number | null);
 };
 
+/**
+ * 開示項目を表すクラス
+ */
+export type DisclosureItem = {
+    id: number;
+    company: string;
+    code: string;
+    date: string;
+    title: string;
+    summary: string;
+    category: string;
+    important: boolean;
+};
+
+/**
+ * 開示項目のリストを表すクラス
+ */
+export type DisclosureItemsList = {
+    /**
+     * オフセット
+     */
+    offset?: number;
+    count: number;
+    data?: Array<DisclosureItem>;
+};
+
 export type DocumentListPublic = {
     id: number;
     head_item_key: string;
@@ -332,6 +358,44 @@ export type ValidationError = {
     msg: string;
     type: string;
 };
+
+export type FinancialSummaryGetDisclosureItemsData = {
+    /**
+     * 取得する開示項目の最大数
+     */
+    limit?: number;
+    /**
+     * オフセット
+     */
+    offset?: number;
+    /**
+     * 取得する開示項目のレポートタイプ
+     */
+    reportTypes?: (Array<(string)> | null);
+};
+
+export type FinancialSummaryGetDisclosureItemsResponse = (DisclosureItemsList);
+
+export type FinancialSummaryGetFinancialSummaryData = {
+    /**
+     * 銘柄コード
+     */
+    code?: (string | null);
+    /**
+     * head_item_key
+     */
+    headItemKey?: (string | null);
+    /**
+     * オフセット
+     */
+    offset?: number;
+    /**
+     * レポートタイプ
+     */
+    reportTypes?: (Array<(string)> | null);
+};
+
+export type FinancialSummaryGetFinancialSummaryResponse = (string);
 
 export type FinancialSummaryGetOperatingResultsData = {
     /**
