@@ -1,4 +1,3 @@
-
 from fastapi import APIRouter, HTTPException, Query
 
 from app.api.deps import SessionDep

@@ -4,7 +4,6 @@ import sys
 import requests
 
 if __name__ == "__main__":
-
     # 引数からAPIベースURLを取得
     if len(sys.argv) > 1:
         api_base_url = sys.argv[1]
