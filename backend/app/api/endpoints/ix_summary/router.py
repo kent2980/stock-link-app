@@ -61,9 +61,7 @@ def get_disclosure_items(
                     date=item.insert_date.strftime("%Y-%m-%d %H:%M:%S"),
                     title=item.document_name,
                     category=item.report_type,
-                    summary=get_financial_summary(
-                        session=session, head_item_key=item.item_key, offset=0
-                    ),
+                    summary="",
                     important=True,
                 )
             )
