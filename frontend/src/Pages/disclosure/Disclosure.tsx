@@ -264,6 +264,9 @@ export default function DisclosurePage() {
                       <Box as="span" fontSize="sm" color="gray.500">
                         {formatDate(item?.insert_date ?? "")}
                       </Box>
+                      <Box as="span" ml={2} fontSize="sm" color="gray.500">
+                        報告日:{item?.reporting_date ?? ""}
+                      </Box>
                     </Box>
                   </Box>
                   <Box
