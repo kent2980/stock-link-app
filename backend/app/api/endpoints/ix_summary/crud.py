@@ -1,5 +1,9 @@
 from collections.abc import Sequence
 
+from fastapi import Query
+from sqlalchemy.orm import aliased
+from sqlmodel import Session, and_, case, desc, exists, func, literal, select
+
 from app.models import (
     IxDefinitionArc,
     IxDefinitionLoc,
@@ -11,9 +15,6 @@ from app.models import (
     IxNonNumeric,
     ScLinkBaseRef,
 )
-from fastapi import Query
-from sqlalchemy.orm import aliased
-from sqlmodel import Session, and_, case, desc, exists, func, literal, select
 
 from . import schema as sc
 
