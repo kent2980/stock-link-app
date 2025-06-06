@@ -160,6 +160,8 @@ class DisclosureItem(SQLModel):
 class DisclosureItemsList(SQLModel):
     """開示項目のリストを表すクラス"""
 
-    offset: int = Field(default=0, description="オフセット")
     count: int
+    page: int
+    next_page: int | None = Field(default=None)
+    previous_page: int | None = Field(default=None)
     data: list[DisclosureItem] = Field(default=[])

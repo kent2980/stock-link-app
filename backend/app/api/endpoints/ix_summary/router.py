@@ -1,9 +1,9 @@
+from app.api.deps import SessionDep
 from fastapi import APIRouter, HTTPException, Query
 
-from app.api.deps import SessionDep
-
-from . import crud, utils
+from . import crud
 from . import schema as sc
+from . import utils
 from .exceptions import HeadItemNotFound, NotDictKeyError
 
 router = APIRouter()
@@ -22,8 +22,6 @@ def get_disclosure_items(
         description="取得する開示項目のレポートタイプ",
         example=["edif", "edus", "edjp"],
     ),
-    limit: int = Query(20, description="取得する開示項目の最大数"),
-    offset: int = Query(0, description="オフセット"),
 ) -> sc.DisclosureItemsList:
     """
     開示項目情報を取得するエンドポイント。
@@ -40,8 +38,6 @@ def get_disclosure_items(
     items = crud.get_disclosure_items(
         session=session,
         report_types=report_types,
-        limit=limit,
-        offset=offset,
     )
     if not items:
         raise HTTPException(
@@ -71,7 +67,8 @@ def get_disclosure_items(
             print(item.id)
             continue
     return sc.DisclosureItemsList(
-        count=len(item_list), data=item_list, offset=offset + limit
+        count=len(item_list),
+        data=item_list,
     )
 
 
