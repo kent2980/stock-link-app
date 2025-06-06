@@ -1,9 +1,9 @@
-from app.api.deps import SessionDep
 from fastapi import APIRouter, HTTPException, Query
 
-from . import crud
+from app.api.deps import SessionDep
+
+from . import crud, utils
 from . import schema as sc
-from . import utils
 from .exceptions import HeadItemNotFound, NotDictKeyError
 
 router = APIRouter()
