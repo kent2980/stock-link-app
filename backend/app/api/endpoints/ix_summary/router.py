@@ -22,6 +22,7 @@ def get_disclosure_items(
         description="取得する開示項目のレポートタイプ",
         example=["edif", "edus", "edjp"],
     ),
+    page: int = Query(1, description="ページ番号", ge=1, le=1000),
 ) -> sc.DisclosureItemsList:
     """
     開示項目情報を取得するエンドポイント。
@@ -38,6 +39,8 @@ def get_disclosure_items(
     items = crud.get_disclosure_items(
         session=session,
         report_types=report_types,
+        limit=5,  # デフォルトの取得数を20に設定
+        offset=(page - 1) * 5,  # ページ番号に基づいてオフセットを計算
     )
     if not items:
         raise HTTPException(
@@ -54,7 +57,8 @@ def get_disclosure_items(
                     id=item.id,
                     company=item.company_name,
                     code=item.securities_code,
-                    date=item.insert_date.strftime("%Y-%m-%d %H:%M:%S"),
+                    reporting_date=item.reporting_date.strftime("%Y-%m-%d"),
+                    insert_date=item.insert_date.strftime("%Y-%m-%d %H:%M:%S"),
                     title=item.document_name,
                     category=item.report_type,
                     summary="",
@@ -67,6 +71,9 @@ def get_disclosure_items(
     return sc.DisclosureItemsList(
         count=len(item_list),
         data=item_list,
+        page=page,
+        next_page=page + 1 if len(item_list) == 5 else None,
+        previous_page=page - 1 if page > 1 else None,
     )
 
 

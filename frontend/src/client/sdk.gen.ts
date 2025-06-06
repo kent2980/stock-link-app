@@ -20,8 +20,7 @@ export class FinancialSummaryService {
      * sc.DisclosureItemsList: 開示項目のリストとメタデータを含むレスポンスモデル。
      * @param data The data for the request.
      * @param data.reportTypes 取得する開示項目のレポートタイプ
-     * @param data.limit 取得する開示項目の最大数
-     * @param data.offset オフセット
+     * @param data.page ページ番号
      * @returns DisclosureItemsList Successful Response
      * @throws ApiError
      */
@@ -31,8 +30,7 @@ export class FinancialSummaryService {
             url: '/api/v1/ix/summary/disclosure_items/',
             query: {
                 report_types: data.reportTypes,
-                limit: data.limit,
-                offset: data.offset
+                page: data.page
             },
             errors: {
                 422: 'Validation Error'

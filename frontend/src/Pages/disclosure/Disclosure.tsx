@@ -1,7 +1,4 @@
-import {
-  FinancialSummaryGetDisclosureItemsResponse,
-  FinancialSummaryService,
-} from "@/client";
+import { FinancialSummaryService } from "@/client";
 import {
   Badge,
   Box,
@@ -176,13 +173,14 @@ export default function DisclosurePage() {
   const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: ["disclosureItems"],
-      queryFn: async () => {
-        return await FinancialSummaryService.getDisclosureItems();
+      queryFn: async ({ pageParam = 1 }) => {
+        return await FinancialSummaryService.getDisclosureItems({
+          page: pageParam,
+        });
       },
-      initialPageParam: 0,
-      getNextPageParam: (
-        lastPage: FinancialSummaryGetDisclosureItemsResponse
-      ) => (lastPage.offset != null ? lastPage.offset : undefined),
+      initialPageParam: 1,
+      getNextPageParam: (lastPage) =>
+        lastPage.next_page ? lastPage.page + 1 : undefined,
     });
   const { ref, inView } = useInView();
 
@@ -264,7 +262,7 @@ export default function DisclosurePage() {
                         {item?.category}
                       </Badge>
                       <Box as="span" fontSize="sm" color="gray.500">
-                        {formatDate(item?.date ?? "")}
+                        {formatDate(item?.insert_date ?? "")}
                       </Box>
                     </Box>
                   </Box>

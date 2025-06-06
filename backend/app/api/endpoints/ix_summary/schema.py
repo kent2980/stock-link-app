@@ -150,7 +150,8 @@ class DisclosureItem(SQLModel):
     id: int
     company: str
     code: str
-    date: str
+    reporting_date: str
+    insert_date: str
     title: str
     summary: str
     category: str

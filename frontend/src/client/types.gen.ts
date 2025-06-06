@@ -30,7 +30,8 @@ export type DisclosureItem = {
     id: number;
     company: string;
     code: string;
-    date: string;
+    reporting_date: string;
+    insert_date: string;
     title: string;
     summary: string;
     category: string;
@@ -41,11 +42,10 @@ export type DisclosureItem = {
  * 開示項目のリストを表すクラス
  */
 export type DisclosureItemsList = {
-    /**
-     * オフセット
-     */
-    offset?: number;
     count: number;
+    page: number;
+    next_page?: (number | null);
+    previous_page?: (number | null);
     data?: Array<DisclosureItem>;
 };
 
@@ -361,13 +361,9 @@ export type ValidationError = {
 
 export type FinancialSummaryGetDisclosureItemsData = {
     /**
-     * 取得する開示項目の最大数
+     * ページ番号
      */
-    limit?: number;
-    /**
-     * オフセット
-     */
-    offset?: number;
+    page?: number;
     /**
      * 取得する開示項目のレポートタイプ
      */

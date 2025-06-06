@@ -471,7 +471,7 @@ def get_base_head_item_key_offset_item(
 
 
 def get_disclosure_items(
-    session: Session, report_types: list[str]
+    session: Session, report_types: list[str], limit: int = 10, offset: int = 0
 ) -> Sequence[IxHeadTitle]:
     """
     #### 開示項目情報を取得する
@@ -491,7 +491,10 @@ def get_disclosure_items(
         .order_by(
             desc(IxHeadTitle.reporting_date),
             desc(IxHeadTitle.fy_year_end),
+            desc(IxHeadTitle.insert_date),
         )
+        .limit(limit)
+        .offset(offset)  # オフセットを適用
     )
     result = session.exec(statement)
     items = result.all()
