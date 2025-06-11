@@ -3,12 +3,12 @@ import {
   Badge,
   Box,
   Button,
-  Card,
   Container,
   createListCollection,
   Flex,
   Input,
   Link,
+  List,
   Select,
 } from "@chakra-ui/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -158,25 +158,42 @@ function CustomFilterButton({
 export default function DisclosurePage() {
   const [showFilters, setShowFilters] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: ["disclosureItems"],
-      queryFn: async ({ pageParam = 1 }) => {
-        return await FinancialSummaryService.getDisclosureItems({
-          page: pageParam,
-        });
-      },
-      initialPageParam: 1,
-      getNextPageParam: (lastPage) =>
-        lastPage.next_page ? lastPage.page + 1 : undefined,
-    });
+  const {
+    data,
+    isLoading,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasPreviousPage,
+    fetchPreviousPage,
+    isFetchingPreviousPage,
+  } = useInfiniteQuery({
+    queryKey: ["disclosureItems"],
+    queryFn: async ({ pageParam = 1 }) => {
+      return await FinancialSummaryService.getDisclosureItems({
+        page: pageParam,
+      });
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) =>
+      lastPage.next_page ? lastPage.page + 1 : undefined,
+    getPreviousPageParam: (firstPage) =>
+      firstPage.previous_page ? firstPage.page - 1 : undefined,
+  });
   const { ref, inView } = useInView();
+  const { ref: prevRef, inView: prevInView } = useInView();
 
   useEffect(() => {
     if (hasNextPage && inView) {
       fetchNextPage();
     }
   }, [inView, hasNextPage, fetchNextPage]);
+
+  useEffect(() => {
+    if (hasPreviousPage && prevInView) {
+      fetchPreviousPage();
+    }
+  }, [prevInView, hasPreviousPage, fetchPreviousPage]);
 
   if (isLoading || !data) {
     return <div>Loading...</div>;
@@ -199,30 +216,42 @@ export default function DisclosurePage() {
       {/* メインコンテンツ */}
       <Flex
         direction="column"
-        gap={4}
+        gap={0}
         // style={{ height: contentHeight }}
       >
-        {items?.map((item) => (
-          <Card.Root
-            key={item?.id}
-            className="overflow-hidden snap-start snap-always"
-          >
-            <Card.Body className="p-0" p={0}>
+        {isFetchingPreviousPage && <Box>Loading previous...</Box>}
+        <Box visibility="hidden" height={0} ref={prevRef}>
+          <Box />
+        </Box>
+        <List.Root
+          border="1px solid"
+          borderColor="gray.200"
+          borderTopWidth="1px"
+          borderXWidth="1px"
+        >
+          {items?.map((item) => (
+            <List.Item
+              key={item?.id}
+              overflow="hidden"
+              style={{
+                scrollSnapAlign: "start",
+                scrollSnapStop: "always",
+                scrollSnapType: "y mandatory",
+              }}
+              borderStyle="solid"
+              borderColor="gray.200"
+              borderBottomWidth="1px"
+            >
               <Link as={RouterLink}>
-                <Box
-                  borderLeft="4px solid"
-                  borderColor="green.emphasized"
-                  p={4}
-                >
-                  <Box
+                <Box p={2}>
+                  <Flex
                     mb={2}
-                    display="flex"
                     flexWrap="wrap"
                     alignItems="center"
                     justifyContent="space-between"
-                    gap={2}
+                    gap={0}
                   >
-                    <Box display="flex" alignItems="center">
+                    <Flex alignItems="center">
                       <Box
                         as="span"
                         mr={2}
@@ -244,7 +273,7 @@ export default function DisclosurePage() {
                           重要
                         </Badge>
                       )}
-                    </Box>
+                    </Flex>
                     <Box display="flex" alignItems="center">
                       <Badge variant="outline" mr={2}>
                         {item?.category}
@@ -256,32 +285,26 @@ export default function DisclosurePage() {
                         報告日:{item?.reporting_date ?? ""}
                       </Box>
                     </Box>
-                  </Box>
-                  <Box
-                    as="h3"
-                    mb={1}
-                    fontSize="lg"
-                    fontWeight="medium"
-                    color="gray.900"
-                  >
-                    {item?.title}
-                  </Box>
-                  <Box as="p" fontSize="sm" color="gray.600">
-                    {item?.summary}
-                  </Box>
-                  <Box mt={3} textAlign="right">
-                    <Button
-                      color="emerald.600"
-                      _hover={{ color: "emerald.700" }}
+                  </Flex>
+                  <Flex flexWrap="wrap" justifyContent="space-between">
+                    <Box
+                      as="h3"
+                      mb={1}
+                      fontSize="xs"
+                      fontWeight="medium"
+                      color="gray.900"
                     >
-                      詳細を見る
-                    </Button>
-                  </Box>
+                      {item?.title}
+                    </Box>
+                    <Box as="p" fontSize="sm" color="gray.600">
+                      {item?.summary}
+                    </Box>
+                  </Flex>
                 </Box>
               </Link>
-            </Card.Body>
-          </Card.Root>
-        ))}
+            </List.Item>
+          ))}
+        </List.Root>
         {isFetchingNextPage && <Box>Loading...</Box>}
         <Box visibility="hidden" height={0} ref={ref}>
           <Box />

@@ -147,7 +147,7 @@ class FinItemsDividendsResponse(FinStructBase):
 class DisclosureItem(SQLModel):
     """開示項目を表すクラス"""
 
-    id: int
+    item_id: int
     company: str
     code: str
     reporting_date: str
@@ -165,4 +165,14 @@ class DisclosureItemsList(SQLModel):
     page: int
     next_page: int | None = Field(default=None)
     previous_page: int | None = Field(default=None)
+    data: list[DisclosureItem] = Field(default=[])
+
+
+class DisclosureItemsIdList(SQLModel):
+    """開示項目のIDリストを表すクラス"""
+
+    count: int
+    item_id: int
+    next_id: int | None = Field(default=None)
+    previous_id: int | None = Field(default=None)
     data: list[DisclosureItem] = Field(default=[])

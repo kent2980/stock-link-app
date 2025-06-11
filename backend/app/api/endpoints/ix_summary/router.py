@@ -1,3 +1,4 @@
+
 from fastapi import APIRouter, HTTPException, Query
 
 from app.api.deps import SessionDep
@@ -54,7 +55,7 @@ def get_disclosure_items(
         try:
             item_list.append(
                 sc.DisclosureItem(
-                    id=item.id,
+                    item_id=item.id,
                     company=item.company_name,
                     code=item.securities_code,
                     reporting_date=item.reporting_date.strftime("%Y-%m-%d"),
@@ -74,6 +75,74 @@ def get_disclosure_items(
         page=page,
         next_page=page + 1 if len(item_list) == 5 else None,
         previous_page=page - 1 if page > 1 else None,
+    )
+
+
+@router.get(
+    "/disclosure_items/id/{id}",
+    summary="開示項目情報をIDで取得",
+    response_model=sc.DisclosureItemsIdList,
+)
+def get_disclosure_items_by_id(
+    *,
+    session: SessionDep,
+    report_types: list[str] | None = Query(
+        ["edif", "edus", "edjp"],
+        description="取得する開示項目のレポートタイプ",
+        example=["edif", "edus", "edjp"],
+    ),
+    item_id: int = Query(..., description="開示項目のID"),
+) -> sc.DisclosureItemsIdList:
+    """
+    開示項目情報をIDで取得するエンドポイント。
+
+    Args:
+        session (SessionDep): データベースセッション依存性。
+        id (int): 開示項目のID。
+
+    Raises:
+        HTTPException: データが見つからない場合に発生。
+
+    Returns:
+        sc.DisclosureItem: 開示項目の詳細情報。
+    """
+    items = crud.get_disclosure_item_by_id(
+        session=session, report_types=report_types, item_id=item_id
+    )
+
+    if not items:
+        raise HTTPException(
+            status_code=404,
+            detail=f"ID {item_id} の開示項目が見つかりません。",
+        )
+
+    items_list = []
+
+    for item in items:
+        try:
+            items_list.append(
+                sc.DisclosureItem(
+                    item_id=item.id,
+                    company=item.company_name,
+                    code=item.securities_code,
+                    reporting_date=item.reporting_date.strftime("%Y-%m-%d"),
+                    insert_date=item.insert_date.strftime("%Y-%m-%d %H:%M:%S"),
+                    title=item.document_name,
+                    category=item.report_type,
+                    summary="",
+                    important=True,
+                )
+            )
+        except Exception:
+            print(item.id)
+            continue
+
+    return sc.DisclosureItemsIdList(
+        count=len(items_list),
+        data=items_list,
+        item_id=item_id,
+        next_id=items_list[0].item_id if items_list else None,
+        previous_id=items_list[-1].item_id if items_list else None,
     )
 
 

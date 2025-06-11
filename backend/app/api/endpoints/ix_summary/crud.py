@@ -499,3 +499,37 @@ def get_disclosure_items(
     result = session.exec(statement)
     items = result.all()
     return items
+
+
+def get_disclosure_item_by_id(
+    session: Session, report_types: list[str], item_id: int, limit: int = 5
+) -> Sequence[IxHeadTitle]:
+    """
+    #### 開示項目情報をIDで取得する
+    - **機能**: 開示項目情報をIDで取得する
+    - **param1**: session: Session  DBセッション
+    - **param2**: report_types: List[str] レポートタイプ
+    - **param3**: item_id: int  取得するID
+    - **return**: Sequence[IxHeadTitle] 開示項目情報のリスト
+    - **raises**: ValueError if no item found with the given ID
+    """
+
+    statement = (
+        select(IxHeadTitle)
+        .where(
+            IxHeadTitle.id < item_id,
+            IxHeadTitle.current_period.isnot(None),
+            IxHeadTitle.company_name.isnot(None),
+            IxHeadTitle.report_type.in_(report_types) if report_types else True,
+        )
+        .order_by(
+            desc(IxHeadTitle.id),
+        )
+        .limit(limit)
+    )
+
+    result = session.exec(statement)
+    items = result.all()
+    if not items:
+        raise ValueError("No item found with the given ID")
+    return items
