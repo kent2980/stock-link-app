@@ -1,5 +1,5 @@
 import DisclosurePage from "@/Pages/disclosure/Disclosure";
-import { Container } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 
@@ -9,10 +9,10 @@ export const Route = createFileRoute("/_layout/disclosure/")({
 
 function Index() {
   return (
-    <Container>
+    <Box px={{ base: 0, md: 4 }}>
       <Suspense fallback={<div>Loading...</div>}>
         <DisclosurePage />
       </Suspense>
-    </Container>
+    </Box>
   );
 }

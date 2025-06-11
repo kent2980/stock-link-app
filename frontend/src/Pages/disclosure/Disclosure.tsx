@@ -202,12 +202,7 @@ export default function DisclosurePage() {
   const items = data.pages.map((page) => page.data).flat();
 
   return (
-    <Container
-      ref={containerRef}
-      pb={{ base: 6, md: 0 }}
-      pt={12}
-      px={{ base: 0, md: 4 }}
-    >
+    <Container ref={containerRef} pb={{ base: 6, md: 0 }} pt={12} px={0}>
       {/* フィルターボタン */}
       <CustomFilterButton
         showFilters={showFilters}
