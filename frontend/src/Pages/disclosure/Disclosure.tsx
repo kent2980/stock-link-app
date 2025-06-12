@@ -326,6 +326,12 @@ const SummaryItem = ({ head_item_id }: SummaryItemProps) => {
         headItemKey: head_item_id,
       });
     },
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    refetchOnMount: false,
+    staleTime: 1000 * 3600 * 24 * 7, // 7日間キャッシュ
+    gcTime: 1000 * 3600 * 24 * 10, // 10日間でガーベジコレクション
   });
   return (
     <Box>
