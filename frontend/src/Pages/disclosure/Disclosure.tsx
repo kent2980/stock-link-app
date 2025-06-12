@@ -202,7 +202,7 @@ export default function DisclosurePage() {
   const items = data.pages.map((page) => page.data).flat();
 
   return (
-    <Container ref={containerRef} pb={{ base: 6, md: 0 }} pt={12} px={0}>
+    <Container ref={containerRef} pb={0} pt={12} px={0}>
       {/* フィルターボタン */}
       <CustomFilterButton
         showFilters={showFilters}
@@ -240,27 +240,33 @@ export default function DisclosurePage() {
               <Link as={RouterLink}>
                 <Box p={2}>
                   <Flex
-                    mb={2}
-                    flexWrap="wrap"
-                    alignItems="center"
+                    direction={{ base: "column", md: "row" }}
+                    alignItems="flex-start"
                     justifyContent="space-between"
-                    gap={0}
+                    gap={1}
                   >
-                    <Flex alignItems="center">
-                      <Box
-                        as="span"
-                        mr={2}
-                        fontWeight="semibold"
-                        color="gray.900"
-                      >
-                        {item?.company}
+                    {/* 1列目 */}
+                    <Flex alignItems="center" fontSize="2xs">
+                      <Box as="span" color="gray.500">
+                        {item?.insert_date ?? ""}
                       </Box>
+                      <Box as="span" ml={2} color="gray.500">
+                        報告日:{item?.reporting_date ?? ""}
+                      </Box>
+                    </Flex>
+                    {/* 2列目 */}
+                    <Flex alignItems="center" gap={2}>
                       <Box as="span" fontSize="sm" color="gray.500">
                         {item?.code}
                       </Box>
+                      <Box as="span" fontWeight="semibold" color="gray.900">
+                        {item?.company}
+                      </Box>
+                    </Flex>
+                    {/* ３列目 */}
+                    <Flex alignItems="center" gap={2}>
                       {item?.important && (
                         <Badge
-                          ml={2}
                           bg="red.100"
                           color="red.800"
                           _hover={{ bg: "red.100" }}
@@ -268,32 +274,18 @@ export default function DisclosurePage() {
                           重要
                         </Badge>
                       )}
+                      <Box
+                        as="h3"
+                        fontSize="xs"
+                        fontWeight="medium"
+                        color="gray.900"
+                      >
+                        {item?.title}
+                      </Box>
+                      <Box as="p" fontSize="sm" color="gray.600">
+                        {item?.summary}
+                      </Box>
                     </Flex>
-                    <Box display="flex" alignItems="center">
-                      <Badge variant="outline" mr={2}>
-                        {item?.category}
-                      </Badge>
-                      <Box as="span" fontSize="sm" color="gray.500">
-                        {item?.insert_date ?? ""}
-                      </Box>
-                      <Box as="span" ml={2} fontSize="sm" color="gray.500">
-                        報告日:{item?.reporting_date ?? ""}
-                      </Box>
-                    </Box>
-                  </Flex>
-                  <Flex flexWrap="wrap" justifyContent="space-between">
-                    <Box
-                      as="h3"
-                      mb={1}
-                      fontSize="xs"
-                      fontWeight="medium"
-                      color="gray.900"
-                    >
-                      {item?.title}
-                    </Box>
-                    <Box as="p" fontSize="sm" color="gray.600">
-                      {item?.summary}
-                    </Box>
                   </Flex>
                 </Box>
               </Link>
