@@ -291,12 +291,14 @@ export default function DisclosurePage() {
                       alignItems="center"
                       gap={2}
                       fontSize="xs"
-                      color="gray.500"
+                      color="gray.700"
                     >
                       <Box as="span">
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <SummaryItem head_item_id={item?.headItemKey ?? ""} />
-                        </Suspense>
+                        {item?.headItemKey ? (
+                          <Suspense fallback={<div>Loading...</div>}>
+                            <SummaryItem head_item_id={item.headItemKey} />
+                          </Suspense>
+                        ) : null}
                       </Box>
                     </Flex>
                   </Flex>
