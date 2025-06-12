@@ -27,7 +27,8 @@ export type DailyStockPricePublic = {
  * 開示項目を表すクラス
  */
 export type DisclosureItem = {
-    id: number;
+    headItemKey: string;
+    item_id: number;
     company: string;
     code: string;
     reporting_date: string;
@@ -36,6 +37,17 @@ export type DisclosureItem = {
     summary: string;
     category: string;
     important: boolean;
+};
+
+/**
+ * 開示項目のIDリストを表すクラス
+ */
+export type DisclosureItemsIdList = {
+    count: number;
+    item_id: number;
+    next_id?: (number | null);
+    previous_id?: (number | null);
+    data?: Array<DisclosureItem>;
 };
 
 /**
@@ -371,6 +383,19 @@ export type FinancialSummaryGetDisclosureItemsData = {
 };
 
 export type FinancialSummaryGetDisclosureItemsResponse = (DisclosureItemsList);
+
+export type FinancialSummaryGetDisclosureItemsByIdData = {
+    /**
+     * 開示項目のID
+     */
+    itemId: number;
+    /**
+     * 取得する開示項目のレポートタイプ
+     */
+    reportTypes?: (Array<(string)> | null);
+};
+
+export type FinancialSummaryGetDisclosureItemsByIdResponse = (DisclosureItemsIdList);
 
 export type FinancialSummaryGetFinancialSummaryData = {
     /**

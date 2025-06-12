@@ -13,7 +13,7 @@ import {
   Select,
   Text,
 } from "@chakra-ui/react";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { Link as RouterLink } from "@tanstack/react-router";
 import {
   Calendar,
@@ -23,7 +23,7 @@ import {
   Search,
   SlidersHorizontal,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 function CustomFilterButton({
@@ -226,9 +226,9 @@ export default function DisclosurePage() {
           borderTopWidth="1px"
           borderXWidth="1px"
         >
-          {items?.map((item) => (
+          {items?.map((item, key) => (
             <List.Item
-              key={item?.id}
+              key={key}
               overflow="hidden"
               style={{
                 scrollSnapAlign: "start",
@@ -286,6 +286,19 @@ export default function DisclosurePage() {
                         {item?.summary}
                       </Box>
                     </Flex>
+                    {/* 4列目 */}
+                    <Flex
+                      alignItems="center"
+                      gap={2}
+                      fontSize="xs"
+                      color="gray.500"
+                    >
+                      <Box as="span">
+                        <Suspense fallback={<div>Loading...</div>}>
+                          <SummaryItem head_item_id={item?.headItemKey ?? ""} />
+                        </Suspense>
+                      </Box>
+                    </Flex>
                   </Flex>
                 </Box>
               </Link>
@@ -300,3 +313,24 @@ export default function DisclosurePage() {
     </Container>
   );
 }
+
+interface SummaryItemProps {
+  head_item_id: string;
+}
+
+const SummaryItem = ({ head_item_id }: SummaryItemProps) => {
+  const { data } = useSuspenseQuery({
+    queryKey: ["summaryItem", head_item_id],
+    queryFn: async () => {
+      return await FinancialSummaryService.getFinancialSummary({
+        headItemKey: head_item_id,
+      });
+    },
+  });
+  return (
+    <Box>
+      {/* ここにSummaryItemの内容を実装 */}
+      <Text>{data}</Text>
+    </Box>
+  );
+};

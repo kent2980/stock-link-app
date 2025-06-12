@@ -147,6 +147,7 @@ class FinItemsDividendsResponse(FinStructBase):
 class DisclosureItem(SQLModel):
     """開示項目を表すクラス"""
 
+    headItemKey: str
     item_id: int
     company: str
     code: str

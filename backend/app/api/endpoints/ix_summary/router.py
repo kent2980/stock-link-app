@@ -54,6 +54,7 @@ def get_disclosure_items(
         try:
             item_list.append(
                 sc.DisclosureItem(
+                    headItemKey=item.item_key,
                     item_id=item.id,
                     company=item.company_name,
                     code=item.securities_code,
