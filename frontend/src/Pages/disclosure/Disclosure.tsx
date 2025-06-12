@@ -6,10 +6,12 @@ import {
   Container,
   createListCollection,
   Flex,
+  HStack,
   Input,
   Link,
   List,
   Select,
+  Text,
 } from "@chakra-ui/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Link as RouterLink } from "@tanstack/react-router";
@@ -247,12 +249,10 @@ export default function DisclosurePage() {
                   >
                     {/* 1列目 */}
                     <Flex alignItems="center" fontSize="2xs">
-                      <Box as="span" color="gray.500">
-                        {item?.insert_date ?? ""}
-                      </Box>
-                      <Box as="span" ml={2} color="gray.500">
-                        報告日:{item?.reporting_date ?? ""}
-                      </Box>
+                      <HStack color="gray.500" gap={1}>
+                        <Calendar hanging={10} width={10} color="#4381ae" />
+                        <Text>{item?.insert_date ?? ""}</Text>
+                      </HStack>
                     </Flex>
                     {/* 2列目 */}
                     <Flex alignItems="center" gap={2}>
