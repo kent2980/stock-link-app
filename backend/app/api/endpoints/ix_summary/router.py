@@ -1,9 +1,11 @@
-from fastapi import APIRouter, HTTPException, Query
-
 from app.api.deps import SessionDep
+from app.models import IxHeadTitle, IxHeadTitleSummary
+from fastapi import APIRouter, HTTPException, Query
+from sqlmodel import select
 
-from . import crud, utils
+from . import crud
 from . import schema as sc
+from . import utils
 from .exceptions import HeadItemNotFound, NotDictKeyError
 
 router = APIRouter()
@@ -745,3 +747,107 @@ def get_dividends(
     )
 
     return result
+
+
+@router.post(
+    "/ix_title_summary/all/",
+    summary="iXBRLのヘッダー情報の要約レコードを書き込む",
+    response_model=int,
+)
+def post_ix_title_summaries(
+    *,
+    session: SessionDep,
+) -> int:
+    """
+    Get IX title summaries.
+    """
+
+    # 要約が取得されていない全てのKeyを取得
+    statement = (
+        select(IxHeadTitle.item_key)
+        .outerjoin(
+            IxHeadTitleSummary,
+            IxHeadTitle.item_key == IxHeadTitleSummary.head_item_key,
+        )
+        .where(IxHeadTitleSummary.summary.is_(None))
+    )
+
+    keys = session.exec(statement).all()
+    if not keys:
+        raise HTTPException(
+            status_code=404,
+            detail="要約はすでに取得されています。",
+        )
+
+    # 要約を取得
+    list = sc.IxSummaryResponseCreateList(data=[])
+    print("jjjj")
+    for key in keys:
+        try:
+            summary = get_financial_summary(
+                session=session, head_item_key=key, offset=0
+            )
+            list.data.append(
+                sc.IxSummaryResponseCreate(
+                    head_item_key=key,
+                    summary=summary,
+                )
+            )
+        except Exception as e:
+            print(f"Error processing key {key}: {str(e)}")
+            # ヘッドアイテムが見つからない場合はスキップ
+            continue
+
+    # 要約をデータベースに保存
+    new_items = [IxHeadTitleSummary.model_validate(item) for item in list.data]
+
+    try:
+        session.bulk_save_objects(new_items)
+        session.commit()
+    except Exception as e:
+        session.rollback()
+        raise HTTPException(
+            status_code=500,
+            detail=f"要約の保存に失敗しました: {str(e)}",
+        )
+    return len(new_items)
+
+
+@router.post(
+    "/ix_title_summary/item/",
+    summary="iXBRLのヘッダー情報の要約レコードを作成",
+    response_model=sc.IxSummaryResponseCreate,
+)
+def post_ix_title_summary_item(
+    *,
+    session: SessionDep,
+    head_item_key: str,
+) -> int:
+
+    item = sc.IxSummaryResponseCreate(head_item_key=head_item_key)
+
+    try:
+        summary = get_financial_summary(
+            session=session, head_item_key=head_item_key, offset=0
+        )
+        item.summary = summary
+    except Exception as e:
+        raise HTTPException(
+            status_code=404,
+            detail=f"ヘッドアイテムキー {head_item_key} の要約が見つかりません: {str(e)}",
+        )
+
+    new_item = IxHeadTitleSummary.model_validate(item)
+
+    try:
+        session.add(new_item)
+        session.commit()
+        session.refresh(new_item)
+    except Exception as e:
+        session.rollback()
+        raise HTTPException(
+            status_code=500,
+            detail=f"要約の保存に失敗しました: {str(e)}",
+        )
+
+    return new_item

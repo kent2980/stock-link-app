@@ -137,8 +137,20 @@ class NewPassword(SQLModel):
 # endregion
 
 
+class ClockBase(SQLModel):
+
+    insert_date: datetime = Field(
+        default_factory=lambda: datetime.now(ZoneInfo("Asia/Tokyo")),
+        sa_column_kwargs={"comment": "作成日時"},
+    )
+    update_date: datetime = Field(
+        default_factory=lambda: datetime.now(ZoneInfo("Asia/Tokyo")),
+        sa_column_kwargs={"comment": "更新日時"},
+    )
+
+
 # region Stock
-class XbrlBase(SQLModel):
+class XbrlBase(ClockBase):
     """XBRLの基底クラスです。
 
     Properties:
@@ -156,15 +168,6 @@ class XbrlBase(SQLModel):
         min_length=36,
         unique=True,
         sa_column_kwargs={"comment": "ItemKey"},
-    )
-    insert_date: datetime = Field(
-        # timezone Asia/Tokyo
-        default_factory=lambda: datetime.now(ZoneInfo("Asia/Tokyo")),
-        sa_column_kwargs={"comment": "作成日時"},
-    )
-    update_date: datetime = Field(
-        default_factory=lambda: datetime.now(ZoneInfo("Asia/Tokyo")),
-        sa_column_kwargs={"comment": "更新日時"},
     )
 
 
@@ -867,4 +870,22 @@ class DailyStockPrice(StockBase, table=True):
         Index("daily_stock_price_code", "code"),
         Index("daily_stock_price_days", "days"),
         UniqueConstraint("code", "days", name="uq_daily_stock_price_code_days"),
+    )
+
+
+class IxHeadTitleSummary(ClockBase, table=True):
+    """HeadItemKeySummaryの作成時のプロパティです。"""
+
+    __tablename__ = "ix_head_title_summary"
+
+    head_item_key: str = Field(
+        max_length=36, description="HeadItemKey", unique=True, primary_key=True
+    )
+    summary: str = Field(sa_column=Column(Text), description="要約", default="")
+
+    __table_args__ = (
+        Index("ix_head_title_summary_head_item_key", "head_item_key"),
+        ForeignKeyConstraint(
+            ["head_item_key"], ["ix_head_title.item_key"], ondelete="CASCADE"
+        ),
     )

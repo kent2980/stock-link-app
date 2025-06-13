@@ -177,3 +177,32 @@ class DisclosureItemsIdList(SQLModel):
     next_id: int | None = Field(default=None)
     previous_id: int | None = Field(default=None)
     data: list[DisclosureItem] = Field(default=[])
+
+
+class IxSummaryResponse(SQLModel):
+    """iXBRLのヘッダー情報の要約を表すクラス"""
+
+    head_item_key: str
+    summary: str
+
+
+class IxSummaryResponseList(SQLModel):
+    """iXBRLのヘッダー情報の要約のリストを表すクラス"""
+
+    data: list[IxSummaryResponse]
+    count: int
+
+
+class IxSummaryResponseCreate(SQLModel):
+    """iXBRLのヘッダー情報の要約を作成するクラス"""
+
+    head_item_key: str = Field(max_length=36, min_length=36, unique=True)
+    summary: str = Field(max_length=1000, description="要約内容", default="")
+
+
+class IxSummaryResponseCreateList(SQLModel):
+    """iXBRLのヘッダー情報の要約のリストを作成するクラス"""
+
+    data: list[IxSummaryResponseCreate] = Field(
+        default=[], description="iXBRLのヘッダー情報の要約のリスト"
+    )
