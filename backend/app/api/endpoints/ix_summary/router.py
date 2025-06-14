@@ -1,11 +1,11 @@
+from app.api.deps import SessionDep
+from app.models import IxHeadTitle, IxHeadTitleSummary
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
 
-from app.api.deps import SessionDep
-from app.models import IxHeadTitle, IxHeadTitleSummary
-
-from . import crud, utils
+from . import crud
 from . import schema as sc
+from . import utils
 from .exceptions import HeadItemNotFound, NotDictKeyError
 
 router = APIRouter()
@@ -909,7 +909,7 @@ def patch_ix_title_summary_all(
     )
 
     count = 0
-    BATCH_SIZE = 100
+    BATCH_SIZE = 1000
     batch = []
 
     for summary in session.exec(statement):
