@@ -943,8 +943,10 @@ def patch_ix_title_summary_all(
         if len(batch) >= BATCH_SIZE:
             session.commit()
             batch.clear()
+            print(f"Updated {count} summaries so far...")
 
     if batch:
         session.commit()
+        print(f"Updated {count} summaries so far...")
 
     return count
