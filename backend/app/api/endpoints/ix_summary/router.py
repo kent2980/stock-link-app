@@ -804,7 +804,7 @@ def post_ix_title_summaries(
             cashflow = get_cash_flows(
                 session=session,
                 code=item.securities_code,
-                year=item.reporting_date.strftime("%Y"),
+                year=item.fy_year_end[0:4] if item.fy_year_end else None,
                 offset=0 if item.current_period == "FY" else 1,
             )
             data = sc.IxSummaryResponseCreate(
@@ -845,10 +845,10 @@ def post_ix_title_summary_item(
     session: SessionDep,
     head_item_key: str,
 ) -> int:
-    statement = select(IxHeadTitle.securities_code).where(
-        IxHeadTitle.item_key == head_item_key
-    )
-    code = session.exec(statement).first()
+    statement = select(IxHeadTitle).where(IxHeadTitle.item_key == head_item_key)
+    result = session.exec(statement).first()
+    code = result.securities_code if result else None
+    fy_year_end = result.fy_year_end if result else None
     item = sc.IxSummaryResponseCreate(head_item_key=head_item_key)
 
     try:
@@ -864,7 +864,7 @@ def post_ix_title_summary_item(
         cashflow = get_cash_flows(
             session=session,
             code=code,
-            year=item.reporting_date.strftime("%Y"),
+            year=fy_year_end[0:4] if fy_year_end else None,
             offset=0 if item.current_period == "FY" else 1,
         )
         item.summary = summary
@@ -938,7 +938,7 @@ def patch_ix_title_summary_all(
                 summary[0].cashflow_json = get_cash_flows(
                     session=session,
                     code=code,
-                    year=summary[1].reporting_date.strftime("%Y"),
+                    year=summary[1].fy_year_end[0:4],
                     offset=0 if summary[1].current_period == "FY" else 1,
                 ).model_dump_json()
                 updated = True
