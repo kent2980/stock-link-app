@@ -1,5 +1,6 @@
-import { FinancialSummaryService } from "@/client";
+import { FinancialSummaryService, FinItemsResponse } from "@/client";
 import {
+  Badge,
   Box,
   Button,
   Container,
@@ -230,69 +231,102 @@ export default function DisclosurePage() {
           borderTopWidth="1px"
           borderXWidth="1px"
         >
-          {items?.map((item, key) => (
-            <List.Item
-              key={key}
-              overflow="hidden"
-              style={{
-                scrollSnapAlign: "start",
-                scrollSnapStop: "always",
-                scrollSnapType: "y mandatory",
-              }}
-              borderStyle="solid"
-              borderColor="gray.200"
-              borderBottomWidth="1px"
-              onClick={() => handleLinkClick(item?.headItemKey ?? "")}
-            >
-              <Box p={2}>
-                <Flex
-                  direction="column"
-                  alignItems="flex-start"
-                  justifyContent="space-between"
-                  gap={1}
-                >
-                  {/* 1列目 */}
-                  <Flex alignItems="center" fontSize="2xs">
-                    <HStack color="gray.500" gap={1}>
-                      <Calendar hanging={10} width={10} color="#4381ae" />
-                      <Text>{item?.insert_date ?? ""}</Text>
-                    </HStack>
-                  </Flex>
-                  {/* 2列目 */}
-                  <Flex alignItems="center" gap={2}>
-                    <Box as="span" fontSize="sm" color="gray.500">
-                      {item?.code}
-                    </Box>
-                    <Box as="span" fontWeight="semibold" color="gray.900">
-                      {item?.company}
-                    </Box>
-                  </Flex>
-                  {/* ３列目 */}
-                  <Flex alignItems="center" gap={2}>
-                    <Box
-                      as="h3"
-                      fontSize="xs"
-                      fontWeight="medium"
-                      color="gray.900"
-                    >
-                      {item?.title}
-                    </Box>
-                  </Flex>
-                  {/* 4列目 */}
+          {items?.map((item, key) => {
+            const ope: FinItemsResponse = JSON.parse(
+              item?.operating_result_json ?? "{}"
+            );
+            const forecast: FinItemsResponse = JSON.parse(
+              item?.forecast_json ?? "{}"
+            );
+            return (
+              <List.Item
+                key={key}
+                overflow="hidden"
+                style={{
+                  scrollSnapAlign: "start",
+                  scrollSnapStop: "always",
+                  scrollSnapType: "y mandatory",
+                }}
+                borderStyle="solid"
+                borderColor="gray.200"
+                borderBottomWidth="1px"
+                onClick={() => handleLinkClick(item?.headItemKey ?? "")}
+              >
+                <Box p={2}>
                   <Flex
-                    alignItems="center"
-                    gap={2}
-                    fontSize="xs"
-                    color="gray.600"
+                    direction="column"
+                    alignItems="flex-start"
+                    justifyContent="space-between"
+                    gap={1}
                   >
-                    <Box>
-                      <Text>{item?.summary}</Text>
-                    </Box>
+                    {/* 1列目 */}
+                    <Flex alignItems="center" fontSize="2xs">
+                      <HStack color="gray.500" gap={1}>
+                        <Calendar hanging={10} width={10} color="#4381ae" />
+                        <Text>{item?.insert_date ?? ""}</Text>
+                      </HStack>
+                    </Flex>
+                    {/* 2列目 */}
+                    <Flex alignItems="center" gap={2}>
+                      <Box as="span" fontSize="sm" color="gray.500">
+                        {item?.code}
+                      </Box>
+                      <Box as="span" fontWeight="semibold" color="gray.900">
+                        {item?.company}
+                      </Box>
+                    </Flex>
+                    {/* ３列目 */}
+                    <Flex alignItems="center" gap={2}>
+                      <Box
+                        as="h3"
+                        fontSize="xs"
+                        fontWeight="medium"
+                        color="gray.900"
+                      >
+                        {item?.title}
+                      </Box>
+                    </Flex>
+                    {/* 4列目 */}
+                    <Flex
+                      direction="column"
+                      alignItems="center"
+                      gap={2}
+                      fontSize="xs"
+                      color="gray.600"
+                    >
+                      <Box>
+                        {ope.data?.map((data, index) => (
+                          <Box key={index} as="span">
+                            <Badge colorPalette="green">{data.label}: </Badge>
+                            {data.result?.curChange?.value ?? " - "}%
+                          </Box>
+                        ))}
+                      </Box>
+                      <Box>
+                        {forecast.data?.map((data, index) => (
+                          <Box key={index} as="span">
+                            <Badge colorPalette="blue">{data.label}: </Badge>
+                            {data.forecast?.curChange?.value ?? " - "}%
+                          </Box>
+                        ))}
+                      </Box>
+                    </Flex>
+                    {/* 5列目 */}
+                    <Flex
+                      alignItems="center"
+                      gap={2}
+                      fontSize="xs"
+                      color="gray.600"
+                    >
+                      <Box>
+                        <Text>{item?.summary}</Text>
+                      </Box>
+                    </Flex>
                   </Flex>
-                </Flex>
-              </Box>
-            </List.Item>
-          ))}
+                </Box>
+              </List.Item>
+            );
+          })}
         </List.Root>
         {isFetchingNextPage && <Box>Loading...</Box>}
         <Box visibility="hidden" height={0} ref={ref}>

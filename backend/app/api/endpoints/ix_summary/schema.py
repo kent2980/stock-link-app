@@ -155,6 +155,9 @@ class DisclosureItem(SQLModel):
     insert_date: str
     title: str
     summary: str
+    operating_result_json: str | None
+    forecast_json: str | None
+    cashflow_json: str | None
     category: str
     important: bool
 
@@ -184,6 +187,13 @@ class IxSummaryResponse(SQLModel):
 
     head_item_key: str
     summary: str
+    operating_result_json: str | None = Field(
+        default=None, description="営業利益のJSONデータ"
+    )
+    forecast_json: str | None = Field(default=None, description="業績予想のJSONデータ")
+    cashflow_json: str | None = Field(
+        default=None, description="キャッシュフローのJSONデータ"
+    )
 
 
 class IxSummaryResponseList(SQLModel):
@@ -198,6 +208,13 @@ class IxSummaryResponseCreate(SQLModel):
 
     head_item_key: str = Field(max_length=36, min_length=36, unique=True)
     summary: str = Field(max_length=1000, description="要約内容", default="")
+    operating_result_json: str | None = Field(
+        default=None, description="営業利益のJSONデータ"
+    )
+    forecast_json: str | None = Field(default=None, description="業績予想のJSONデータ")
+    cashflow_json: str | None = Field(
+        default=None, description="キャッシュフローのJSONデータ"
+    )
 
 
 class IxSummaryResponseCreateList(SQLModel):

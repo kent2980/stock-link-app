@@ -881,6 +881,17 @@ class IxHeadTitleSummary(ClockBase, table=True):
         max_length=36, description="HeadItemKey", unique=True, primary_key=True
     )
     summary: str = Field(sa_column=Column(Text), description="要約", default="")
+    operating_result_json: str | None = Field(
+        sa_column=Column(Text), description="営業利益のJSON形式の要約", default=None
+    )
+    forecast_json: str | None = Field(
+        sa_column=Column(Text), description="業績予想のJSON形式の要約", default=None
+    )
+    cashflow_json: str | None = Field(
+        sa_column=Column(Text),
+        description="キャッシュフローのJSON形式の要約",
+        default=None,
+    )
 
     __table_args__ = (
         Index("ix_head_title_summary_head_item_key", "head_item_key"),

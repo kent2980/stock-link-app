@@ -66,6 +66,9 @@ def get_disclosure_items(
                     category=item[0].report_type,
                     summary=item[1].summary if item[1] else "",
                     important=True,
+                    operating_result_json=item[1].operating_result_json,
+                    forecast_json=item[1].forecast_json,
+                    cashflow_json=item[1].cashflow_json,
                 )
             )
         except Exception:
@@ -133,6 +136,9 @@ def get_disclosure_items_by_id(
                     category=item[0].report_type,
                     summary=item[1].summary if item[1] else "",
                     important=True,
+                    operating_result_json=item[1].operating_result_json,
+                    forecast_json=item[1].forecast_json,
+                    cashflow_json=item[1].cashflow_json,
                 )
             )
         except Exception:
@@ -789,7 +795,16 @@ def post_ix_title_summaries(
             summary = get_financial_summary(
                 session=session, head_item_key=key, offset=0
             )
-            item = sc.IxSummaryResponseCreate(head_item_key=key, summary=summary)
+            ope = get_operating_results(session=session, head_item_key=key, offset=0)
+            forecast = get_forecasts(
+                session=session, code=None, head_item_key=key, offset=0
+            )
+            item = sc.IxSummaryResponseCreate(
+                head_item_key=key,
+                summary=summary,
+                operating_result_json=ope.model_dump_json() if ope else None,
+                forecast_json=forecast.model_dump_json() if forecast else None,
+            )
             buffer.append(IxHeadTitleSummary.model_validate(item))
         except Exception as e:
             print(f"Error processing key {key}: {str(e)}")
@@ -827,7 +842,15 @@ def post_ix_title_summary_item(
         summary = get_financial_summary(
             session=session, head_item_key=head_item_key, offset=0
         )
+        ope = get_operating_results(
+            session=session, head_item_key=head_item_key, offset=0
+        )
+        forecast = get_forecasts(
+            session=session, code=None, head_item_key=head_item_key, offset=0
+        )
         item.summary = summary
+        item.operating_result_json = ope.model_dump_json() if ope else None
+        item.forecast_json = forecast.model_dump_json() if forecast else None
     except Exception as e:
         raise HTTPException(
             status_code=404,
@@ -848,3 +871,41 @@ def post_ix_title_summary_item(
         )
 
     return new_item
+
+
+@router.patch(
+    "/ix_title_summary/all/",
+    summary="iXBRLのヘッダー情報の要約レコードを更新",
+    response_model=int,
+)
+def patch_ix_title_summary_all(
+    *,
+    session: SessionDep,
+) -> int:
+    """
+    Update all iXBRL title summaries.
+    """
+    statement = select(IxHeadTitleSummary).where(
+        IxHeadTitleSummary.summary.is_not(None)
+    )
+
+    summaries = list(session.exec(statement))
+    if not summaries:
+        raise HTTPException(
+            status_code=404,
+            detail="要約は見つかりませんでした。",
+        )
+
+    # 要約を更新
+    for summary in summaries:
+        head_item_key = summary.head_item_key
+        if not summary.operating_result_json:
+            summary.operating_result_json = get_operating_results(
+                session=session, head_item_key=head_item_key, offset=0
+            ).model_dump_json()
+        if not summary.forecast_json:
+            summary.forecast_json = get_forecasts(
+                session=session, head_item_key=head_item_key, offset=0
+            ).model_dump_json()
+    session.commit()
+    return len(summaries)

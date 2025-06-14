@@ -35,6 +35,9 @@ export type DisclosureItem = {
     insert_date: string;
     title: string;
     summary: string;
+    operating_result_json: (string | null);
+    forecast_json: (string | null);
+    cashflow_json: (string | null);
     category: string;
     important: boolean;
 };
@@ -205,6 +208,29 @@ export type ItemsPublic = {
 export type ItemUpdate = {
     title?: (string | null);
     description?: (string | null);
+};
+
+/**
+ * iXBRLのヘッダー情報の要約を作成するクラス
+ */
+export type IxSummaryResponseCreate = {
+    head_item_key: string;
+    /**
+     * 要約内容
+     */
+    summary?: string;
+    /**
+     * 営業利益のJSONデータ
+     */
+    operating_result_json?: (string | null);
+    /**
+     * 業績予想のJSONデータ
+     */
+    forecast_json?: (string | null);
+    /**
+     * キャッシュフローのJSONデータ
+     */
+    cashflow_json?: (string | null);
 };
 
 export type JpxStockInfoPublic = {
@@ -578,6 +604,14 @@ export type FinancialSummaryGetDividendsData = {
 };
 
 export type FinancialSummaryGetDividendsResponse = (FinItemsDividendsResponse);
+
+export type FinancialSummaryPostIxTitleSummariesResponse = (number);
+
+export type FinancialSummaryPostIxTitleSummaryItemData = {
+    headItemKey: string;
+};
+
+export type FinancialSummaryPostIxTitleSummaryItemResponse = (IxSummaryResponseCreate);
 
 export type InformationGetDocumentCountData = {
     dateStr?: (string | null);

@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { FinancialSummaryGetDisclosureItemsData, FinancialSummaryGetDisclosureItemsResponse, FinancialSummaryGetDisclosureItemsByIdData, FinancialSummaryGetDisclosureItemsByIdResponse, FinancialSummaryGetFinancialSummaryData, FinancialSummaryGetFinancialSummaryResponse, FinancialSummaryGetOperatingResultsData, FinancialSummaryGetOperatingResultsResponse, FinancialSummaryGetOtherOperatingResultsData, FinancialSummaryGetOtherOperatingResultsResponse, FinancialSummaryGetForecastsData, FinancialSummaryGetForecastsResponse, FinancialSummaryGetFinancialPositionData, FinancialSummaryGetFinancialPositionResponse, FinancialSummaryGetCashFlowsData, FinancialSummaryGetCashFlowsResponse, FinancialSummaryGetForecastChangeData, FinancialSummaryGetForecastChangeResponse, FinancialSummaryGetDividendsChangeData, FinancialSummaryGetDividendsChangeResponse, FinancialSummaryGetDividendsData, FinancialSummaryGetDividendsResponse, InformationGetDocumentCountData, InformationGetDocumentCountResponse, InformationGetLatestDocumentTitleResponse, InformationReadIxHeadTitleItemData, InformationReadIxHeadTitleItemResponse, InformationGetDocumentListData, InformationGetDocumentListResponse, InformationReadIxHeadTitleItemsUrlListResponse, InformationGetCalendarResponse, InformationGetLatestReportingDateResponse, InformationGetUpdateTimestampResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, IxStockCreateDailyStockPriceData, IxStockCreateDailyStockPriceResponse, IxStockGetDailyStockPriceData, IxStockGetDailyStockPriceResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, JpxReadIndustryCountData, JpxReadIndustryCountResponse, JpxReadIndustryNameData, JpxReadIndustryNameResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, PrivateCreateUserData, PrivateCreateUserResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, WikiGetStockWikiItemsResponse, XbrlSourceGetIxSourceFileItemData, XbrlSourceGetIxSourceFileItemResponse } from './types.gen';
+import type { FinancialSummaryGetDisclosureItemsData, FinancialSummaryGetDisclosureItemsResponse, FinancialSummaryGetDisclosureItemsByIdData, FinancialSummaryGetDisclosureItemsByIdResponse, FinancialSummaryGetFinancialSummaryData, FinancialSummaryGetFinancialSummaryResponse, FinancialSummaryGetOperatingResultsData, FinancialSummaryGetOperatingResultsResponse, FinancialSummaryGetOtherOperatingResultsData, FinancialSummaryGetOtherOperatingResultsResponse, FinancialSummaryGetForecastsData, FinancialSummaryGetForecastsResponse, FinancialSummaryGetFinancialPositionData, FinancialSummaryGetFinancialPositionResponse, FinancialSummaryGetCashFlowsData, FinancialSummaryGetCashFlowsResponse, FinancialSummaryGetForecastChangeData, FinancialSummaryGetForecastChangeResponse, FinancialSummaryGetDividendsChangeData, FinancialSummaryGetDividendsChangeResponse, FinancialSummaryGetDividendsData, FinancialSummaryGetDividendsResponse, FinancialSummaryPostIxTitleSummariesResponse, FinancialSummaryPostIxTitleSummaryItemData, FinancialSummaryPostIxTitleSummaryItemResponse, InformationGetDocumentCountData, InformationGetDocumentCountResponse, InformationGetLatestDocumentTitleResponse, InformationReadIxHeadTitleItemData, InformationReadIxHeadTitleItemResponse, InformationGetDocumentListData, InformationGetDocumentListResponse, InformationReadIxHeadTitleItemsUrlListResponse, InformationGetCalendarResponse, InformationGetLatestReportingDateResponse, InformationGetUpdateTimestampResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, IxStockCreateDailyStockPriceData, IxStockCreateDailyStockPriceResponse, IxStockGetDailyStockPriceData, IxStockGetDailyStockPriceResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, JpxReadIndustryCountData, JpxReadIndustryCountResponse, JpxReadIndustryNameData, JpxReadIndustryNameResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, PrivateCreateUserData, PrivateCreateUserResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, WikiGetStockWikiItemsResponse, XbrlSourceGetIxSourceFileItemData, XbrlSourceGetIxSourceFileItemResponse } from './types.gen';
 
 export class FinancialSummaryService {
     /**
@@ -402,6 +402,39 @@ export class FinancialSummaryService {
                 head_item_key: data.headItemKey,
                 report_types: data.reportTypes,
                 offset: data.offset
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * iXBRLのヘッダー情報の要約レコードを書き込む
+     * Get IX title summaries.
+     * @returns number Successful Response
+     * @throws ApiError
+     */
+    public static postIxTitleSummaries(): CancelablePromise<FinancialSummaryPostIxTitleSummariesResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/ix/summary/ix_title_summary/all/'
+        });
+    }
+    
+    /**
+     * iXBRLのヘッダー情報の要約レコードを作成
+     * @param data The data for the request.
+     * @param data.headItemKey
+     * @returns IxSummaryResponseCreate Successful Response
+     * @throws ApiError
+     */
+    public static postIxTitleSummaryItem(data: FinancialSummaryPostIxTitleSummaryItemData): CancelablePromise<FinancialSummaryPostIxTitleSummaryItemResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/ix/summary/ix_title_summary/item/',
+            query: {
+                head_item_key: data.headItemKey
             },
             errors: {
                 422: 'Validation Error'
