@@ -238,6 +238,9 @@ export default function DisclosurePage() {
             const forecast: FinItemsResponse = JSON.parse(
               item?.forecast_json ?? "{}"
             );
+            const cashflow: FinItemsResponse = JSON.parse(
+              item?.cashflow_json ?? "{}"
+            );
             return (
               <List.Item
                 key={key}
@@ -307,6 +310,15 @@ export default function DisclosurePage() {
                           <Box key={index} as="span">
                             <Badge colorPalette="blue">{data.label}: </Badge>
                             {data.forecast?.curChange?.value ?? " - "}%
+                          </Box>
+                        ))}
+                      </Box>
+                      <Box>
+                        {cashflow.data?.map((data, index) => (
+                          <Box key={index} as="span">
+                            <Badge colorPalette="orange">{data.label}: </Badge>
+                            {data.result?.curValue?.value ?? " - "}
+                            {data.result?.curValue?.display_scale ?? ""}
                           </Box>
                         ))}
                       </Box>

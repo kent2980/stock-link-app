@@ -34,15 +34,17 @@ def get_head_item_key(
     - **戻り値**:str - head_item_key
     - **例外**:HeadItemNotFound - head item not found.
     """
+    print(code)
     if head_item_key is None:
-        head_item_key = crud.get_ix_head_title(
+        head_item = crud.get_ix_head_title(
             session=session,
             code=code,
             report_types=report_types,
             offset=offset,
             current_period=current_period,
             year=year,
-        ).item_key
+        )
+        head_item_key = head_item.item_key if head_item else None
         if not head_item_key:
             raise HeadItemNotFound("head item not found.")
     else:

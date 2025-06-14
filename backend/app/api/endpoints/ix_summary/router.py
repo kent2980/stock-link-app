@@ -770,7 +770,7 @@ def post_ix_title_summaries(
 
     # 要約が取得されていない全てのKeyを取得
     statement = (
-        select(IxHeadTitle.item_key)
+        select(IxHeadTitle)
         .outerjoin(
             IxHeadTitleSummary,
             IxHeadTitle.item_key == IxHeadTitleSummary.head_item_key,
@@ -778,8 +778,8 @@ def post_ix_title_summaries(
         .where(IxHeadTitleSummary.summary.is_(None))
     )
 
-    keys = session.exec(statement)
-    if not keys:
+    items = session.exec(statement)
+    if not items:
         raise HTTPException(
             status_code=404,
             detail="要約はすでに取得されています。",
@@ -790,24 +790,33 @@ def post_ix_title_summaries(
     buffer = []
     count = 0
 
-    for key in keys:
+    for item in items:
         try:
             summary = get_financial_summary(
-                session=session, head_item_key=key, offset=0
+                session=session, head_item_key=item.item_key, offset=0
             )
-            ope = get_operating_results(session=session, head_item_key=key, offset=0)
+            ope = get_operating_results(
+                session=session, head_item_key=item.item_key, offset=0
+            )
             forecast = get_forecasts(
-                session=session, code=None, head_item_key=key, offset=0
+                session=session, code=None, head_item_key=item.item_key, offset=0
             )
-            item = sc.IxSummaryResponseCreate(
-                head_item_key=key,
+            cashflow = get_cash_flows(
+                session=session,
+                code=item.securities_code,
+                year=item.reporting_date.strftime("%Y"),
+                offset=0 if item.current_period == "FY" else 1,
+            )
+            data = sc.IxSummaryResponseCreate(
+                head_item_key=item.item_key,
                 summary=summary,
                 operating_result_json=ope.model_dump_json() if ope else None,
                 forecast_json=forecast.model_dump_json() if forecast else None,
+                cashflow_json=cashflow.model_dump_json() if cashflow else None,
             )
-            buffer.append(IxHeadTitleSummary.model_validate(item))
+            buffer.append(IxHeadTitleSummary.model_validate(data))
         except Exception as e:
-            print(f"Error processing key {key}: {str(e)}")
+            print(f"Error processing key {item.item_key}: {str(e)}")
             # ヘッドアイテムが見つからない場合はスキップ
             continue
 
@@ -836,6 +845,10 @@ def post_ix_title_summary_item(
     session: SessionDep,
     head_item_key: str,
 ) -> int:
+    statement = select(IxHeadTitle.securities_code).where(
+        IxHeadTitle.item_key == head_item_key
+    )
+    code = session.exec(statement).first()
     item = sc.IxSummaryResponseCreate(head_item_key=head_item_key)
 
     try:
@@ -848,9 +861,16 @@ def post_ix_title_summary_item(
         forecast = get_forecasts(
             session=session, code=None, head_item_key=head_item_key, offset=0
         )
+        cashflow = get_cash_flows(
+            session=session,
+            code=code,
+            year=item.reporting_date.strftime("%Y"),
+            offset=0 if item.current_period == "FY" else 1,
+        )
         item.summary = summary
         item.operating_result_json = ope.model_dump_json() if ope else None
         item.forecast_json = forecast.model_dump_json() if forecast else None
+        item.cashflow_json = cashflow.model_dump_json() if cashflow else None
     except Exception as e:
         raise HTTPException(
             status_code=404,
@@ -882,8 +902,10 @@ def patch_ix_title_summary_all(
     *,
     session: SessionDep,
 ) -> int:
-    statement = select(IxHeadTitleSummary).where(
-        IxHeadTitleSummary.summary.is_not(None)
+    statement = (
+        select(IxHeadTitleSummary, IxHeadTitle)
+        .join(IxHeadTitle, IxHeadTitle.item_key == IxHeadTitleSummary.head_item_key)
+        .where(IxHeadTitleSummary.summary.is_not(None))
     )
 
     count = 0
@@ -891,20 +913,32 @@ def patch_ix_title_summary_all(
     batch = []
 
     for summary in session.exec(statement):
-        head_item_key = summary.head_item_key
+        head_item_key = summary[0].head_item_key
+        code = summary[1].securities_code
         updated = False
-        if not summary.operating_result_json:
-            summary.operating_result_json = get_operating_results(
+        if not summary[0].operating_result_json:
+            summary[0].operating_result_json = get_operating_results(
                 session=session, code=None, head_item_key=head_item_key, offset=0
             ).model_dump_json()
             updated = True
-        if not summary.forecast_json:
-            summary.forecast_json = get_forecasts(
+        if not summary[0].forecast_json:
+            summary[0].forecast_json = get_forecasts(
                 session=session, code=None, head_item_key=head_item_key, offset=0
             ).model_dump_json()
             updated = True
+        if not summary[0].cashflow_json:
+            try:
+                summary[0].cashflow_json = get_cash_flows(
+                    session=session,
+                    code=code,
+                    year=summary[1].reporting_date.strftime("%Y"),
+                    offset=0 if summary[1].current_period == "FY" else 1,
+                ).model_dump_json()
+                updated = True
+            except HTTPException:
+                summary[0].cashflow_json = None
         if updated:
-            batch.append(summary)
+            batch.append(summary[0])
             count += 1
         if len(batch) >= BATCH_SIZE:
             session.commit()
