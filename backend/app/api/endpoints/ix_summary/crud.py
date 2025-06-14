@@ -8,6 +8,7 @@ from app.models import (
     IxDefinitionArc,
     IxDefinitionLoc,
     IxHeadTitle,
+    IxHeadTitleSummary,
     IxLabelArc,
     IxLabelLoc,
     IxLabelValue,
@@ -473,7 +474,7 @@ def get_base_head_item_key_offset_item(
 
 def get_disclosure_items(
     session: Session, report_types: list[str], limit: int = 10, offset: int = 0
-) -> Sequence[IxHeadTitle]:
+) -> Sequence[tuple[IxHeadTitle, IxHeadTitleSummary]]:
     """
     #### 開示項目情報を取得する
     - **機能**: 開示項目情報を取得する
@@ -483,7 +484,10 @@ def get_disclosure_items(
     """
 
     statement = (
-        select(IxHeadTitle)
+        select(IxHeadTitle, IxHeadTitleSummary)
+        .outerjoin(
+            IxHeadTitleSummary, IxHeadTitleSummary.head_item_key == IxHeadTitle.item_key
+        )
         .where(
             IxHeadTitle.current_period.isnot(None),
             IxHeadTitle.company_name.isnot(None),
@@ -503,7 +507,7 @@ def get_disclosure_items(
 
 def get_disclosure_item_by_id(
     session: Session, report_types: list[str], item_id: int, limit: int = 5
-) -> Sequence[IxHeadTitle]:
+) -> Sequence[tuple[IxHeadTitle, IxHeadTitleSummary]]:
     """
     #### 開示項目情報をIDで取得する
     - **機能**: 開示項目情報をIDで取得する
@@ -515,7 +519,10 @@ def get_disclosure_item_by_id(
     """
 
     statement = (
-        select(IxHeadTitle)
+        select(IxHeadTitle, IxHeadTitleSummary)
+        .outerjoin(
+            IxHeadTitleSummary, IxHeadTitleSummary.head_item_key == IxHeadTitle.item_key
+        )
         .where(
             IxHeadTitle.id < item_id,
             IxHeadTitle.current_period.isnot(None),

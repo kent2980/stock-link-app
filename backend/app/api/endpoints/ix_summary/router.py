@@ -56,15 +56,15 @@ def get_disclosure_items(
         try:
             item_list.append(
                 sc.DisclosureItem(
-                    headItemKey=item.item_key,
-                    item_id=item.id,
-                    company=item.company_name,
-                    code=item.securities_code,
-                    reporting_date=item.reporting_date.strftime("%Y-%m-%d"),
-                    insert_date=item.insert_date.strftime("%Y-%m-%d %H:%M:%S"),
-                    title=item.document_name,
-                    category=item.report_type,
-                    summary="",
+                    headItemKey=item[0].item_key,
+                    item_id=item[0].id,
+                    company=item[0].company_name,
+                    code=item[0].securities_code,
+                    reporting_date=item[0].reporting_date.strftime("%Y-%m-%d"),
+                    insert_date=item[0].insert_date.strftime("%Y-%m-%d %H:%M:%S"),
+                    title=item[0].document_name,
+                    category=item[0].report_type,
+                    summary=item[1].summary if item[1] else "",
                     important=True,
                 )
             )
@@ -124,14 +124,14 @@ def get_disclosure_items_by_id(
         try:
             items_list.append(
                 sc.DisclosureItem(
-                    item_id=item.id,
-                    company=item.company_name,
-                    code=item.securities_code,
-                    reporting_date=item.reporting_date.strftime("%Y-%m-%d"),
-                    insert_date=item.insert_date.strftime("%Y-%m-%d %H:%M:%S"),
-                    title=item.document_name,
-                    category=item.report_type,
-                    summary="",
+                    item_id=item[0].id,
+                    company=item[0].company_name,
+                    code=item[0].securities_code,
+                    reporting_date=item[0].reporting_date.strftime("%Y-%m-%d"),
+                    insert_date=item[0].insert_date.strftime("%Y-%m-%d %H:%M:%S"),
+                    title=item[0].document_name,
+                    category=item[0].report_type,
+                    summary=item[1].summary if item[1] else "",
                     important=True,
                 )
             )
@@ -772,7 +772,7 @@ def post_ix_title_summaries(
         .where(IxHeadTitleSummary.summary.is_(None))
     )
 
-    keys = session.exec(statement).all()
+    keys = session.exec(statement)
     if not keys:
         raise HTTPException(
             status_code=404,
@@ -780,37 +780,35 @@ def post_ix_title_summaries(
         )
 
     # 要約を取得
-    list = sc.IxSummaryResponseCreateList(data=[])
-    print("jjjj")
+    BATCH_SIZE = 1000  # 一度に処理するバッチサイズ
+    buffer = []
+    count = 0
+
     for key in keys:
         try:
             summary = get_financial_summary(
                 session=session, head_item_key=key, offset=0
             )
-            list.data.append(
-                sc.IxSummaryResponseCreate(
-                    head_item_key=key,
-                    summary=summary,
-                )
-            )
+            item = sc.IxSummaryResponseCreate(head_item_key=key, summary=summary)
+            buffer.append(IxHeadTitleSummary.model_validate(item))
         except Exception as e:
             print(f"Error processing key {key}: {str(e)}")
             # ヘッドアイテムが見つからない場合はスキップ
             continue
 
-    # 要約をデータベースに保存
-    new_items = [IxHeadTitleSummary.model_validate(item) for item in list.data]
+        if len(buffer) >= BATCH_SIZE:
+            session.bulk_save_objects(buffer)
+            session.commit()
+            count += len(buffer)
+            buffer.clear()
 
-    try:
-        session.bulk_save_objects(new_items)
+    # 残りのデータを保存
+    if buffer:
+        session.bulk_save_objects(buffer)
         session.commit()
-    except Exception as e:
-        session.rollback()
-        raise HTTPException(
-            status_code=500,
-            detail=f"要約の保存に失敗しました: {str(e)}",
-        )
-    return len(new_items)
+        count += len(buffer)
+
+    return count
 
 
 @router.post(

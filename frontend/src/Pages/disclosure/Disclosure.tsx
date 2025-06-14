@@ -13,7 +13,7 @@ import {
   Select,
   Text,
 } from "@chakra-ui/react";
-import { useInfiniteQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { Link as RouterLink } from "@tanstack/react-router";
 import {
   Calendar,
@@ -23,7 +23,7 @@ import {
   Search,
   SlidersHorizontal,
 } from "lucide-react";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 function CustomFilterButton({
@@ -282,23 +282,16 @@ export default function DisclosurePage() {
                       >
                         {item?.title}
                       </Box>
-                      <Box as="p" fontSize="sm" color="gray.600">
-                        {item?.summary}
-                      </Box>
                     </Flex>
                     {/* 4列目 */}
                     <Flex
                       alignItems="center"
                       gap={2}
                       fontSize="xs"
-                      color="gray.700"
+                      color="gray.600"
                     >
-                      <Box as="span">
-                        {item?.headItemKey ? (
-                          <Suspense fallback={<div>Loading...</div>}>
-                            <SummaryItem head_item_id={item.headItemKey} />
-                          </Suspense>
-                        ) : null}
+                      <Box>
+                        <Text>{item?.summary}</Text>
                       </Box>
                     </Flex>
                   </Flex>
@@ -315,30 +308,3 @@ export default function DisclosurePage() {
     </Container>
   );
 }
-
-interface SummaryItemProps {
-  head_item_id: string;
-}
-
-const SummaryItem = ({ head_item_id }: SummaryItemProps) => {
-  const { data } = useSuspenseQuery({
-    queryKey: ["summaryItem", head_item_id],
-    queryFn: async () => {
-      return await FinancialSummaryService.getFinancialSummary({
-        headItemKey: head_item_id,
-      });
-    },
-    retry: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-    refetchOnMount: false,
-    staleTime: 1000 * 3600 * 24 * 7, // 7日間キャッシュ
-    gcTime: 1000 * 3600 * 24 * 10, // 10日間でガーベジコレクション
-  });
-  return (
-    <Box>
-      {/* ここにSummaryItemの内容を実装 */}
-      <Text>{data}</Text>
-    </Box>
-  );
-};
