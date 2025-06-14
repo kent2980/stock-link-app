@@ -913,44 +913,54 @@ def patch_ix_title_summary_all(
     batch = []
 
     for summary in session.exec(statement):
-        head_item_key = summary[0].head_item_key
-        code = summary[1].securities_code
-        updated = False
-        print(f"Processing head_item_key: {head_item_key}, code: {code}")
-        if not summary[0].operating_result_json:
-            try:
-                summary[0].operating_result_json = get_operating_results(
-                    session=session, code=None, head_item_key=head_item_key, offset=0
-                ).model_dump_json()
-                updated = True
-            except Exception:
-                summary[0].operating_result_json = None
-        if not summary[0].forecast_json:
-            try:
-                summary[0].forecast_json = get_forecasts(
-                    session=session, code=None, head_item_key=head_item_key, offset=0
-                ).model_dump_json()
-                updated = True
-            except Exception:
-                summary[0].forecast_json = None
-        if not summary[0].cashflow_json:
-            try:
-                summary[0].cashflow_json = get_cash_flows(
-                    session=session,
-                    code=code,
-                    year=summary[1].fy_year_end[0:4],
-                    offset=0 if summary[1].current_period == "FY" else 1,
-                ).model_dump_json()
-                updated = True
-            except Exception:
-                summary[0].cashflow_json = None
-        if updated:
-            batch.append(summary[0])
-            count += 1
-        if len(batch) >= BATCH_SIZE:
-            session.commit()
-            batch.clear()
-            print(f"Updated {count} summaries so far...")
+        try:
+            head_item_key = summary[0].head_item_key
+            code = summary[1].securities_code
+            updated = False
+            print(f"Processing head_item_key: {head_item_key}, code: {code}")
+            if not summary[0].operating_result_json:
+                try:
+                    summary[0].operating_result_json = get_operating_results(
+                        session=session,
+                        code=None,
+                        head_item_key=head_item_key,
+                        offset=0,
+                    ).model_dump_json()
+                    updated = True
+                except Exception:
+                    summary[0].operating_result_json = None
+            if not summary[0].forecast_json:
+                try:
+                    summary[0].forecast_json = get_forecasts(
+                        session=session,
+                        code=None,
+                        head_item_key=head_item_key,
+                        offset=0,
+                    ).model_dump_json()
+                    updated = True
+                except Exception:
+                    summary[0].forecast_json = None
+            if not summary[0].cashflow_json:
+                try:
+                    summary[0].cashflow_json = get_cash_flows(
+                        session=session,
+                        code=code,
+                        year=summary[1].fy_year_end[0:4],
+                        offset=0 if summary[1].current_period == "FY" else 1,
+                    ).model_dump_json()
+                    updated = True
+                except Exception:
+                    summary[0].cashflow_json = None
+            if updated:
+                batch.append(summary[0])
+                count += 1
+            if len(batch) >= BATCH_SIZE:
+                session.commit()
+                batch.clear()
+                print(f"Updated {count} summaries so far...")
+        except Exception as e:
+            print(f"Error processing head_item_key {head_item_key}: {str(e)}")
+            continue
 
     if batch:
         session.commit()
