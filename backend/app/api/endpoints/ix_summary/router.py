@@ -843,7 +843,7 @@ def post_ix_title_summary_item(
             session=session, head_item_key=head_item_key, offset=0
         )
         ope = get_operating_results(
-            session=session, head_item_key=head_item_key, offset=0
+            session=session, code=None, head_item_key=head_item_key, offset=0
         )
         forecast = get_forecasts(
             session=session, code=None, head_item_key=head_item_key, offset=0
@@ -882,30 +882,35 @@ def patch_ix_title_summary_all(
     *,
     session: SessionDep,
 ) -> int:
-    """
-    Update all iXBRL title summaries.
-    """
     statement = select(IxHeadTitleSummary).where(
         IxHeadTitleSummary.summary.is_not(None)
     )
 
-    summaries = list(session.exec(statement))
-    if not summaries:
-        raise HTTPException(
-            status_code=404,
-            detail="要約は見つかりませんでした。",
-        )
+    count = 0
+    BATCH_SIZE = 100
+    batch = []
 
-    # 要約を更新
-    for summary in summaries:
+    for summary in session.exec(statement):
         head_item_key = summary.head_item_key
+        updated = False
         if not summary.operating_result_json:
             summary.operating_result_json = get_operating_results(
-                session=session, head_item_key=head_item_key, offset=0
+                session=session, code=None, head_item_key=head_item_key, offset=0
             ).model_dump_json()
+            updated = True
         if not summary.forecast_json:
             summary.forecast_json = get_forecasts(
-                session=session, head_item_key=head_item_key, offset=0
+                session=session, code=None, head_item_key=head_item_key, offset=0
             ).model_dump_json()
-    session.commit()
-    return len(summaries)
+            updated = True
+        if updated:
+            batch.append(summary)
+            count += 1
+        if len(batch) >= BATCH_SIZE:
+            session.commit()
+            batch.clear()
+
+    if batch:
+        session.commit()
+
+    return count
