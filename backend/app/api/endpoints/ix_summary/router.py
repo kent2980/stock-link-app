@@ -918,15 +918,21 @@ def patch_ix_title_summary_all(
         updated = False
         print(f"Processing head_item_key: {head_item_key}, code: {code}")
         if not summary[0].operating_result_json:
-            summary[0].operating_result_json = get_operating_results(
-                session=session, code=None, head_item_key=head_item_key, offset=0
-            ).model_dump_json()
-            updated = True
+            try:
+                summary[0].operating_result_json = get_operating_results(
+                    session=session, code=None, head_item_key=head_item_key, offset=0
+                ).model_dump_json()
+                updated = True
+            except Exception:
+                summary[0].operating_result_json = None
         if not summary[0].forecast_json:
-            summary[0].forecast_json = get_forecasts(
-                session=session, code=None, head_item_key=head_item_key, offset=0
-            ).model_dump_json()
-            updated = True
+            try:
+                summary[0].forecast_json = get_forecasts(
+                    session=session, code=None, head_item_key=head_item_key, offset=0
+                ).model_dump_json()
+                updated = True
+            except Exception:
+                summary[0].forecast_json = None
         if not summary[0].cashflow_json:
             try:
                 summary[0].cashflow_json = get_cash_flows(
@@ -936,7 +942,7 @@ def patch_ix_title_summary_all(
                     offset=0 if summary[1].current_period == "FY" else 1,
                 ).model_dump_json()
                 updated = True
-            except HTTPException:
+            except Exception:
                 summary[0].cashflow_json = None
         if updated:
             batch.append(summary[0])
