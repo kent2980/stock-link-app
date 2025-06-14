@@ -916,6 +916,7 @@ def patch_ix_title_summary_all(
         head_item_key = summary[0].head_item_key
         code = summary[1].securities_code
         updated = False
+        print(f"Processing head_item_key: {head_item_key}, code: {code}")
         if not summary[0].operating_result_json:
             summary[0].operating_result_json = get_operating_results(
                 session=session, code=None, head_item_key=head_item_key, offset=0
