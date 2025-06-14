@@ -1,11 +1,11 @@
-from app.api.deps import SessionDep
-from app.models import IxHeadTitle, IxHeadTitleSummary
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
 
-from . import crud
+from app.api.deps import SessionDep
+from app.models import IxHeadTitle, IxHeadTitleSummary
+
+from . import crud, utils
 from . import schema as sc
-from . import utils
 from .exceptions import HeadItemNotFound, NotDictKeyError
 
 router = APIRouter()
