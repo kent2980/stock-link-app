@@ -909,7 +909,7 @@ def patch_ix_title_summary_all(
     )
 
     count = 0
-    BATCH_SIZE = 1000
+    BATCH_SIZE = 100
     batch = []
 
     for summary in session.exec(statement):
@@ -917,7 +917,7 @@ def patch_ix_title_summary_all(
             head_item_key = summary[0].head_item_key
             code = summary[1].securities_code
             updated = False
-            print(f"Processing head_item_key: {head_item_key}, code: {code}")
+            print(f"{count}.Processing head_item_key: {head_item_key}, code: {code}")
             if not summary[0].operating_result_json:
                 try:
                     summary[0].operating_result_json = get_operating_results(
@@ -955,6 +955,7 @@ def patch_ix_title_summary_all(
                 batch.append(summary[0])
                 count += 1
             if len(batch) >= BATCH_SIZE:
+                print(f"Committing batch of {len(batch)} summaries...")
                 session.commit()
                 batch.clear()
                 print(f"Updated {count} summaries so far...")
@@ -963,6 +964,7 @@ def patch_ix_title_summary_all(
             continue
 
     if batch:
+        print(f"Committing final batch of {len(batch)} summaries...")
         session.commit()
         print(f"Updated {count} summaries so far...")
 
