@@ -1,6 +1,5 @@
 import { FinancialSummaryService } from "@/client";
 import {
-  Badge,
   Box,
   Button,
   Container,
@@ -8,13 +7,12 @@ import {
   Flex,
   HStack,
   Input,
-  Link,
   List,
   Select,
   Text,
 } from "@chakra-ui/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { Link as RouterLink } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import {
   Calendar,
   ChevronDown,
@@ -158,6 +156,7 @@ function CustomFilterButton({
 }
 
 export default function DisclosurePage() {
+  const navigate = useNavigate({ from: "disclosure" });
   const [showFilters, setShowFilters] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const {
@@ -203,6 +202,11 @@ export default function DisclosurePage() {
 
   const items = data.pages.map((page) => page.data).flat();
 
+  const handleLinkClick = (itemId: string) => {
+    // クリックされたアイテムの詳細ページへ遷移
+    navigate({ to: `/disclosure/page/${itemId}` });
+  };
+
   return (
     <Container ref={containerRef} pb={0} pt={12} px={0}>
       {/* フィルターボタン */}
@@ -238,65 +242,55 @@ export default function DisclosurePage() {
               borderStyle="solid"
               borderColor="gray.200"
               borderBottomWidth="1px"
+              onClick={() => handleLinkClick(item?.headItemKey ?? "")}
             >
-              <Link as={RouterLink}>
-                <Box p={2}>
-                  <Flex
-                    direction={{ base: "column", md: "row" }}
-                    alignItems="flex-start"
-                    justifyContent="space-between"
-                    gap={1}
-                  >
-                    {/* 1列目 */}
-                    <Flex alignItems="center" fontSize="2xs">
-                      <HStack color="gray.500" gap={1}>
-                        <Calendar hanging={10} width={10} color="#4381ae" />
-                        <Text>{item?.insert_date ?? ""}</Text>
-                      </HStack>
-                    </Flex>
-                    {/* 2列目 */}
-                    <Flex alignItems="center" gap={2}>
-                      <Box as="span" fontSize="sm" color="gray.500">
-                        {item?.code}
-                      </Box>
-                      <Box as="span" fontWeight="semibold" color="gray.900">
-                        {item?.company}
-                      </Box>
-                    </Flex>
-                    {/* ３列目 */}
-                    <Flex alignItems="center" gap={2}>
-                      {item?.important && (
-                        <Badge
-                          bg="red.100"
-                          color="red.800"
-                          _hover={{ bg: "red.100" }}
-                        >
-                          重要
-                        </Badge>
-                      )}
-                      <Box
-                        as="h3"
-                        fontSize="xs"
-                        fontWeight="medium"
-                        color="gray.900"
-                      >
-                        {item?.title}
-                      </Box>
-                    </Flex>
-                    {/* 4列目 */}
-                    <Flex
-                      alignItems="center"
-                      gap={2}
-                      fontSize="xs"
-                      color="gray.600"
-                    >
-                      <Box>
-                        <Text>{item?.summary}</Text>
-                      </Box>
-                    </Flex>
+              <Box p={2}>
+                <Flex
+                  direction="column"
+                  alignItems="flex-start"
+                  justifyContent="space-between"
+                  gap={1}
+                >
+                  {/* 1列目 */}
+                  <Flex alignItems="center" fontSize="2xs">
+                    <HStack color="gray.500" gap={1}>
+                      <Calendar hanging={10} width={10} color="#4381ae" />
+                      <Text>{item?.insert_date ?? ""}</Text>
+                    </HStack>
                   </Flex>
-                </Box>
-              </Link>
+                  {/* 2列目 */}
+                  <Flex alignItems="center" gap={2}>
+                    <Box as="span" fontSize="sm" color="gray.500">
+                      {item?.code}
+                    </Box>
+                    <Box as="span" fontWeight="semibold" color="gray.900">
+                      {item?.company}
+                    </Box>
+                  </Flex>
+                  {/* ３列目 */}
+                  <Flex alignItems="center" gap={2}>
+                    <Box
+                      as="h3"
+                      fontSize="xs"
+                      fontWeight="medium"
+                      color="gray.900"
+                    >
+                      {item?.title}
+                    </Box>
+                  </Flex>
+                  {/* 4列目 */}
+                  <Flex
+                    alignItems="center"
+                    gap={2}
+                    fontSize="xs"
+                    color="gray.600"
+                  >
+                    <Box>
+                      <Text>{item?.summary}</Text>
+                    </Box>
+                  </Flex>
+                </Flex>
+              </Box>
             </List.Item>
           ))}
         </List.Root>

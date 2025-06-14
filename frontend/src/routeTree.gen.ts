@@ -24,6 +24,7 @@ import { Route as LayoutDisclosureIndexImport } from './routes/_layout/disclosur
 import { Route as LayoutStockIndustry33Industry33Import } from './routes/_layout/stock/industry_33.$industry_33'
 import { Route as LayoutStockIndustry17Industry17Import } from './routes/_layout/stock/industry_17.$industry_17'
 import { Route as LayoutStockDateDateStrImport } from './routes/_layout/stock/date.$dateStr'
+import { Route as LayoutDisclosurePageKeyImport } from './routes/_layout/disclosure/page.$key'
 
 // Create/Update Routes
 
@@ -94,6 +95,11 @@ const LayoutStockDateDateStrRoute = LayoutStockDateDateStrImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutDisclosurePageKeyRoute = LayoutDisclosurePageKeyImport.update({
+  path: '/disclosure/page/$key',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -138,6 +144,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutStockIndexImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/disclosure/page/$key': {
+      preLoaderRoute: typeof LayoutDisclosurePageKeyImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/stock/date/$dateStr': {
       preLoaderRoute: typeof LayoutStockDateDateStrImport
       parentRoute: typeof LayoutImport
@@ -162,6 +172,7 @@ export const routeTree = rootRoute.addChildren([
     LayoutIndexRoute,
     LayoutDisclosureIndexRoute,
     LayoutStockIndexRoute,
+    LayoutDisclosurePageKeyRoute,
     LayoutStockDateDateStrRoute,
     LayoutStockIndustry17Industry17Route,
     LayoutStockIndustry33Industry33Route,
