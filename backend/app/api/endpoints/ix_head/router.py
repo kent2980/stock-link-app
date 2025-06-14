@@ -1,8 +1,8 @@
 from typing import Any
 
-from app.api.deps import SessionDep
-from app.models import IxHeadTitleSummary
 from fastapi import APIRouter, Query
+
+from app.api.deps import SessionDep
 
 from . import crud
 from . import schema as sc

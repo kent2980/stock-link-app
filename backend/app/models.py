@@ -138,7 +138,6 @@ class NewPassword(SQLModel):
 
 
 class ClockBase(SQLModel):
-
     insert_date: datetime = Field(
         default_factory=lambda: datetime.now(ZoneInfo("Asia/Tokyo")),
         sa_column_kwargs={"comment": "作成日時"},

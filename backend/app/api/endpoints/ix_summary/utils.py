@@ -2,8 +2,9 @@ import datetime
 import re
 from collections import defaultdict
 
-from app.models import IxHeadTitle, IxNonFraction
 from sqlmodel import Session
+
+from app.models import IxHeadTitle, IxNonFraction
 
 from . import crud
 from . import schema as sc

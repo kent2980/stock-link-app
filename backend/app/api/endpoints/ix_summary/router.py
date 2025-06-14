@@ -1,11 +1,11 @@
-from app.api.deps import SessionDep
-from app.models import IxHeadTitle, IxHeadTitleSummary
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
 
-from . import crud
+from app.api.deps import SessionDep
+from app.models import IxHeadTitle, IxHeadTitleSummary
+
+from . import crud, utils
 from . import schema as sc
-from . import utils
 from .exceptions import HeadItemNotFound, NotDictKeyError
 
 router = APIRouter()
@@ -823,7 +823,6 @@ def post_ix_title_summary_item(
     session: SessionDep,
     head_item_key: str,
 ) -> int:
-
     item = sc.IxSummaryResponseCreate(head_item_key=head_item_key)
 
     try:
