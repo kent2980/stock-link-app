@@ -35,7 +35,7 @@ export const system = createSystem(defaultConfig, {
       colors: {
         ui: {
           background: { value: "#ece5e4" },
-          main: { value: "#4696e1ff" },
+          main: { value: "green.600" },
           secondary: { value: "#d9d9d7ff" },
           dark: { value: "#333333" },
           light: { value: "#ffffff" },

@@ -404,7 +404,7 @@ function ValueList({ items, type }: ValueListProps) {
   console.log("ValueList items:", items);
   return (
     <Box w="100vw" display={items ? "block" : "none"}>
-      <Heading as="h4" size="xs" mb={2} bg="gray.200" px={4} py={1}>
+      <Heading as="h4" size="xs" mb={2} bg="#74e28ecf" px={4} py={1}>
         {headingLabel(type)}
       </Heading>
       <List.Root listStyle="none">
