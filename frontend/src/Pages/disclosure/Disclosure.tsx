@@ -420,7 +420,9 @@ function ValueList({ items, type }: ValueListProps) {
             }
           >
             <HStack justify="space-between">
-              <Text className="label">{item.label}</Text>
+              <Text className="label">
+                {item.label?.replace("によるキャッシュ・フロー", "CF")}
+              </Text>
               <HStack>
                 <Text className="value">{itemValue(item)}</Text>
                 <Text
