@@ -351,6 +351,13 @@ function ValueList({ items, type }: ValueListProps) {
           ? `${item.result.curChange.value.toFixed(1).toString().replace("-", "△")} ${item.result.curChange.display_scale}`
           : " - ";
       case "forecast":
+        // curValue?.unitが"JPYPerShare"の場合はcurValue?.valueを表示
+        if (
+          item.forecast?.curValue?.unit === "JPYPerShares" &&
+          item.forecast?.curValue?.value != null
+        ) {
+          return `${item.forecast.curValue.value.toString().replace("-", "△")} ${item.forecast.curValue.display_scale}`;
+        }
         return item.forecast?.curChange?.value != null &&
           item.forecast?.curChange?.display_scale != null
           ? `${item.forecast.curChange.value.toFixed(1).toString().replace("-", "△")} ${item.forecast.curChange.display_scale}`
@@ -359,6 +366,24 @@ function ValueList({ items, type }: ValueListProps) {
         return item.result?.curValue?.value != null &&
           item.result?.curValue?.display_scale != null
           ? `${item.result.curValue.value.toString().replace("-", "△")} ${item.result.curValue.display_scale}`
+          : " - ";
+      default:
+        return " - ";
+    }
+  };
+  const itemPreValue = (item: FinValueFinance) => {
+    switch (type) {
+      case "operating_result":
+        return item.result?.preChange?.value != null &&
+          item.result?.preChange?.display_scale != null
+          ? `${item.result.preChange.value.toFixed(1).toString().replace("-", "△")} ${item.result.preChange.display_scale}`
+          : " - ";
+      case "forecast":
+        return null;
+      case "cashflow":
+        return item.result?.preValue?.value != null &&
+          item.result?.preValue?.display_scale != null
+          ? `${item.result.preValue.value.toString().replace("-", "△")} ${item.result.preValue.display_scale}`
           : " - ";
       default:
         return " - ";
@@ -396,7 +421,17 @@ function ValueList({ items, type }: ValueListProps) {
           >
             <HStack justify="space-between">
               <Text className="label">{item.label}</Text>
-              <Text className="value">{itemValue(item)}</Text>
+              <HStack>
+                <Text className="value">{itemValue(item)}</Text>
+                <Text
+                  className="pre-value"
+                  color="gray.500"
+                  textAlign="right"
+                  display={itemPreValue(item) ? "block" : "none"}
+                >
+                  ({itemPreValue(item)})
+                </Text>
+              </HStack>
             </HStack>
           </List.Item>
         ))}
