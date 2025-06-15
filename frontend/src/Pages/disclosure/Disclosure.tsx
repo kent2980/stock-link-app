@@ -1,11 +1,15 @@
-import { FinancialSummaryService, FinItemsResponse } from "@/client";
 import {
-  Badge,
+  FinancialSummaryService,
+  FinItemsResponse,
+  FinValueFinance,
+} from "@/client";
+import {
   Box,
   Button,
   Container,
   createListCollection,
   Flex,
+  Heading,
   HStack,
   Input,
   List,
@@ -297,31 +301,9 @@ export default function DisclosurePage() {
                       fontSize="xs"
                       color="gray.600"
                     >
-                      <Box>
-                        {ope.data?.map((data, index) => (
-                          <Box key={index} as="span">
-                            <Badge colorPalette="green">{data.label}: </Badge>
-                            {data.result?.curChange?.value ?? " - "}%
-                          </Box>
-                        ))}
-                      </Box>
-                      <Box>
-                        {forecast.data?.map((data, index) => (
-                          <Box key={index} as="span">
-                            <Badge colorPalette="blue">{data.label}: </Badge>
-                            {data.forecast?.curChange?.value ?? " - "}%
-                          </Box>
-                        ))}
-                      </Box>
-                      <Box>
-                        {cashflow.data?.map((data, index) => (
-                          <Box key={index} as="span">
-                            <Badge colorPalette="orange">{data.label}: </Badge>
-                            {data.result?.curValue?.value ?? " - "}
-                            {data.result?.curValue?.display_scale ?? ""}
-                          </Box>
-                        ))}
-                      </Box>
+                      <ValueList items={ope} type="operating_result" />
+                      <ValueList items={forecast} type="forecast" />
+                      <ValueList items={cashflow} type="cashflow" />
                     </Flex>
                     {/* 5列目 */}
                     <Flex
@@ -331,6 +313,9 @@ export default function DisclosurePage() {
                       color="gray.600"
                     >
                       <Box>
+                        <Heading as="h4" size="xs" mb={1}>
+                          概要
+                        </Heading>
                         <Text>{item?.summary}</Text>
                       </Box>
                     </Flex>
@@ -346,5 +331,72 @@ export default function DisclosurePage() {
         </Box>
       </Flex>
     </Container>
+  );
+}
+
+interface ValueListProps {
+  items: FinItemsResponse;
+  type: string;
+}
+
+function ValueList({ items, type }: ValueListProps) {
+  const itemValue = (item: FinValueFinance) => {
+    switch (type) {
+      case "operating_result":
+        return item.result?.curChange?.value != null &&
+          item.result?.curChange?.display_scale != null
+          ? `${item.result.curChange.value.toFixed(1).toString().replace("-", "△")} ${item.result.curChange.display_scale}`
+          : " - ";
+      case "forecast":
+        return item.forecast?.curChange?.value != null &&
+          item.forecast?.curChange?.display_scale != null
+          ? `${item.forecast.curChange.value.toFixed(1).toString().replace("-", "△")} ${item.forecast.curChange.display_scale}`
+          : " - ";
+      case "cashflow":
+        return item.result?.curValue?.value != null &&
+          item.result?.curValue?.display_scale != null
+          ? `${item.result.curValue.value.toString().replace("-", "△")} ${item.result.curValue.display_scale}`
+          : " - ";
+      default:
+        return " - ";
+    }
+  };
+  const headingLabel = (type: string) => {
+    switch (type) {
+      case "operating_result":
+        return "経営成績";
+      case "forecast":
+        return "業績予想";
+      case "cashflow":
+        return "キャッシュフロー";
+      default:
+        return "その他";
+    }
+  };
+  return (
+    <Box w="100vw">
+      <Heading as="h4" size="xs" mb={2} bg="gray.100" px={4} py={1}>
+        {headingLabel(type)}
+      </Heading>
+      <List.Root listStyle="none">
+        {items?.data?.map((item, index) => (
+          <List.Item
+            key={index}
+            px={6}
+            borderBottom={
+              index !== (items.data?.length ?? 0) - 1 ? "1px solid" : undefined
+            }
+            borderColor={
+              index !== (items.data?.length ?? 0) - 1 ? "gray.200" : undefined
+            }
+          >
+            <HStack justify="space-between">
+              <Text className="label">{item.label}</Text>
+              <Text className="value">{itemValue(item)}</Text>
+            </HStack>
+          </List.Item>
+        ))}
+      </List.Root>
+    </Box>
   );
 }
