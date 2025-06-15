@@ -236,13 +236,13 @@ export default function DisclosurePage() {
           borderXWidth="1px"
         >
           {items?.map((item, key) => {
-            const ope: FinItemsResponse = JSON.parse(
+            const ope: FinItemsResponse | null = JSON.parse(
               item?.operating_result_json ?? "{}"
             );
-            const forecast: FinItemsResponse = JSON.parse(
+            const forecast: FinItemsResponse | null = JSON.parse(
               item?.forecast_json ?? "{}"
             );
-            const cashflow: FinItemsResponse = JSON.parse(
+            const cashflow: FinItemsResponse | null = JSON.parse(
               item?.cashflow_json ?? "{}"
             );
             return (
@@ -335,7 +335,7 @@ export default function DisclosurePage() {
 }
 
 interface ValueListProps {
-  items: FinItemsResponse;
+  items: FinItemsResponse | null;
   type: string;
 }
 
@@ -374,7 +374,7 @@ function ValueList({ items, type }: ValueListProps) {
     }
   };
   return (
-    <Box w="100vw">
+    <Box w="100vw" display={items ? "block" : "none"}>
       <Heading as="h4" size="xs" mb={2} bg="gray.100" px={4} py={1}>
         {headingLabel(type)}
       </Heading>
