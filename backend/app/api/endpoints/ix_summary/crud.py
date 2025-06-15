@@ -491,7 +491,7 @@ def get_disclosure_items(
         .where(
             IxHeadTitle.current_period.isnot(None),
             IxHeadTitle.company_name.isnot(None),
-            IxHeadTitle.report_type.in_(report_types) if report_types else True,
+            IxHeadTitle.report_type.in_(report_types),
         )
         .order_by(
             desc(IxHeadTitle.reporting_date),

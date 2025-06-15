@@ -66,13 +66,17 @@ def get_disclosure_items(
                     category=item[0].report_type,
                     summary=item[1].summary if item[1] else "",
                     important=True,
-                    operating_result_json=item[1].operating_result_json,
-                    forecast_json=item[1].forecast_json,
-                    cashflow_json=item[1].cashflow_json,
+                    operating_result_json=(
+                        item[1].operating_result_json if item[1] else None
+                    ),
+                    forecast_json=item[1].forecast_json if item[1] else None,
+                    cashflow_json=item[1].cashflow_json if item[1] else None,
                 )
             )
-        except Exception:
-            print(item.id)
+        except Exception as e:
+            print(
+                f"Error processing item ID {item[0].id}: {item[0].company_name} - {str(e)}"
+            )
             continue
     return sc.DisclosureItemsList(
         count=len(item_list),
@@ -843,14 +847,18 @@ def post_ix_title_summaries(
 def post_ix_title_summary_item(
     *,
     session: SessionDep,
-    head_item_key: str,
+    head_item_key: str = Query(..., description="ヘッドアイテムキー"),
 ) -> int:
     statement = select(IxHeadTitle).where(IxHeadTitle.item_key == head_item_key)
     result = session.exec(statement).first()
     code = result.securities_code if result else None
     fy_year_end = result.fy_year_end if result else None
+    current_period = result.current_period if result else None
     item = sc.IxSummaryResponseCreate(head_item_key=head_item_key)
 
+    print(
+        f"Processing head_item_key: {head_item_key}, code: {code}, fy_year_end: {fy_year_end}, current_period: {current_period}"
+    )
     try:
         summary = get_financial_summary(
             session=session, head_item_key=head_item_key, offset=0
@@ -861,16 +869,16 @@ def post_ix_title_summary_item(
         forecast = get_forecasts(
             session=session, code=None, head_item_key=head_item_key, offset=0
         )
-        cashflow = get_cash_flows(
-            session=session,
-            code=code,
-            year=fy_year_end[0:4] if fy_year_end else None,
-            offset=0 if item.current_period == "FY" else 1,
-        )
+        # cashflow = get_cash_flows(
+        #     session=session,
+        #     code=code,
+        #     year=fy_year_end[0:4] if fy_year_end else None,
+        #     offset=0 if current_period == "FY" else 1,
+        # )
         item.summary = summary
         item.operating_result_json = ope.model_dump_json() if ope else None
         item.forecast_json = forecast.model_dump_json() if forecast else None
-        item.cashflow_json = cashflow.model_dump_json() if cashflow else None
+        # item.cashflow_json = cashflow.model_dump_json() if cashflow else None
     except Exception as e:
         raise HTTPException(
             status_code=404,
