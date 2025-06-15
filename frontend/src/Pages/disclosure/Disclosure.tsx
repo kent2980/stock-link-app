@@ -236,14 +236,17 @@ export default function DisclosurePage() {
           borderXWidth="1px"
         >
           {items?.map((item, key) => {
-            const ope: FinItemsResponse | null = JSON.parse(
-              item?.operating_result_json ?? "{}"
+            const json_parse = (json: string | null | undefined) => {
+              return json ? JSON.parse(json) : null;
+            };
+            const ope: FinItemsResponse | null = json_parse(
+              item?.operating_result_json
             );
-            const forecast: FinItemsResponse | null = JSON.parse(
-              item?.forecast_json ?? "{}"
+            const forecast: FinItemsResponse | null = json_parse(
+              item?.forecast_json
             );
-            const cashflow: FinItemsResponse | null = JSON.parse(
-              item?.cashflow_json ?? "{}"
+            const cashflow: FinItemsResponse | null = json_parse(
+              item?.cashflow_json
             );
             return (
               <List.Item
@@ -335,7 +338,7 @@ export default function DisclosurePage() {
 }
 
 interface ValueListProps {
-  items: FinItemsResponse | null;
+  items: FinItemsResponse | null | undefined;
   type: string;
 }
 
@@ -373,9 +376,10 @@ function ValueList({ items, type }: ValueListProps) {
         return "その他";
     }
   };
+  console.log("ValueList items:", items);
   return (
     <Box w="100vw" display={items ? "block" : "none"}>
-      <Heading as="h4" size="xs" mb={2} bg="gray.100" px={4} py={1}>
+      <Heading as="h4" size="xs" mb={2} bg="gray.200" px={4} py={1}>
         {headingLabel(type)}
       </Heading>
       <List.Root listStyle="none">
