@@ -262,7 +262,7 @@ function ValueList({ items, type }: ValueListProps) {
   };
   console.log("ValueList items:", items);
   return (
-    <Box w="100vw" display={items ? "block" : "none"}>
+    <Box w="100%" display={items ? "block" : "none"}>
       <Heading
         as="h4"
         size="xs"
