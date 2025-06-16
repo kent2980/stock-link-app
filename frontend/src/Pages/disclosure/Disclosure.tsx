@@ -213,12 +213,7 @@ export default function DisclosurePage() {
   };
 
   return (
-    <Container ref={containerRef} pb={0} pt={12} px={0}>
-      {/* フィルターボタン */}
-      <CustomFilterButton
-        showFilters={showFilters}
-        setShowFilters={setShowFilters}
-      />
+    <Container ref={containerRef} pb={0} px={0}>
       {/* メインコンテンツ */}
       <Flex
         direction="column"
@@ -229,12 +224,7 @@ export default function DisclosurePage() {
         <Box visibility="hidden" height={0} ref={prevRef}>
           <Box />
         </Box>
-        <List.Root
-          border="1px solid"
-          borderColor="gray.200"
-          borderTopWidth="1px"
-          borderXWidth="1px"
-        >
+        <List.Root gap={0}>
           {items?.map((item, key) => {
             const json_parse = (json: string | null | undefined) => {
               return json ? JSON.parse(json) : null;
@@ -257,9 +247,8 @@ export default function DisclosurePage() {
                   scrollSnapStop: "always",
                   scrollSnapType: "y mandatory",
                 }}
-                borderStyle="solid"
-                borderColor="gray.200"
-                borderBottomWidth="1px"
+                m={3}
+                boxShadow="sm"
                 onClick={() => handleLinkClick(item?.headItemKey ?? "")}
               >
                 <Box p={2}>
@@ -278,7 +267,14 @@ export default function DisclosurePage() {
                     </Flex>
                     {/* 2列目 */}
                     <Flex alignItems="center" gap={2}>
-                      <Box as="span" fontSize="sm" color="gray.500">
+                      <Box
+                        as="span"
+                        fontSize="sm"
+                        border="1px solid"
+                        borderColor="gray.200"
+                        px={2}
+                        bg="gray.100"
+                      >
                         {item?.code}
                       </Box>
                       <Box as="span" fontWeight="semibold" color="gray.900">
@@ -315,10 +311,16 @@ export default function DisclosurePage() {
                       fontSize="xs"
                       color="gray.600"
                     >
-                      <Box>
-                        <Heading as="h4" size="xs" mb={1}>
-                          概要
-                        </Heading>
+                      <Box
+                        p={2}
+                        rounded="md"
+                        bg="white"
+                        m={2}
+                        mx="auto"
+                        border="1px solid"
+                        borderColor="gray.200"
+                        width="96vw"
+                      >
                         <Text>{item?.summary}</Text>
                       </Box>
                     </Flex>
