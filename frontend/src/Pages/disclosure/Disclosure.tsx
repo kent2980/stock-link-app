@@ -176,7 +176,7 @@ export default function DisclosurePage() {
                         mx="auto"
                         border="1px solid"
                         borderColor="gray.200"
-                        width="96vw"
+                        width="100%"
                       >
                         <Text>{item?.summary}</Text>
                       </Box>
