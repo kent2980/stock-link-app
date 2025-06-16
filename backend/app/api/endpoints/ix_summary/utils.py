@@ -34,7 +34,6 @@ def get_head_item_key(
     - **戻り値**:str - head_item_key
     - **例外**:HeadItemNotFound - head item not found.
     """
-    print(code)
     if head_item_key is None:
         head_item = crud.get_ix_head_title(
             session=session,
@@ -46,7 +45,7 @@ def get_head_item_key(
         )
         head_item_key = head_item.item_key if head_item else None
         if not head_item_key:
-            raise HeadItemNotFound("head item not found.")
+            raise HeadItemNotFound("head item not found.2")
     else:
         if offset > 0:
             try:
@@ -112,7 +111,7 @@ def get_metric_schema_value_and_change(
 def get_attr_value(head_item: IxHeadTitle, attr_value_dict: dict[str, str]) -> str:
     # region attr_valueの設定
     if head_item.current_period is None:  # head_itemが存在しない場合、例外を発生させる
-        raise HeadItemNotFound("head item not found.")
+        raise HeadItemNotFound("head item not found.1")
     elif (
         head_item.current_period == "FY"
     ):  # head_itemのcurrent_periodがFYの場合、attr_valueをFYに設定

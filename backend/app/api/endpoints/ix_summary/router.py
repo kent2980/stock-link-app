@@ -796,21 +796,33 @@ def post_ix_title_summaries(
 
     for item in items:
         try:
-            summary = get_financial_summary(
-                session=session, head_item_key=item.item_key, offset=0
-            )
-            ope = get_operating_results(
-                session=session, head_item_key=item.item_key, offset=0
-            )
-            forecast = get_forecasts(
-                session=session, code=None, head_item_key=item.item_key, offset=0
-            )
-            cashflow = get_cash_flows(
-                session=session,
-                code=item.securities_code,
-                year=item.fy_year_end[0:4] if item.fy_year_end else None,
-                offset=0 if item.current_period == "FY" else 1,
-            )
+            try:
+                summary = get_financial_summary(
+                    session=session, head_item_key=item.item_key, offset=0
+                )
+            except HTTPException:
+                summary = ""
+            try:
+                ope = get_operating_results(
+                    session=session, head_item_key=item.item_key, offset=0
+                )
+            except HTTPException:
+                ope = None
+            try:
+                forecast = get_forecasts(
+                    session=session, code=None, head_item_key=item.item_key, offset=0
+                )
+            except HTTPException:
+                forecast = None
+            try:
+                cashflow = get_cash_flows(
+                    session=session,
+                    code=item.securities_code,
+                    year=item.fy_year_end[0:4] if item.fy_year_end else None,
+                    offset=0 if item.current_period == "FY" else 1,
+                )
+            except HTTPException:
+                cashflow = None
             data = sc.IxSummaryResponseCreate(
                 head_item_key=item.item_key,
                 summary=summary,
@@ -860,25 +872,37 @@ def post_ix_title_summary_item(
         f"Processing head_item_key: {head_item_key}, code: {code}, fy_year_end: {fy_year_end}, current_period: {current_period}"
     )
     try:
-        summary = get_financial_summary(
-            session=session, head_item_key=head_item_key, offset=0
-        )
-        ope = get_operating_results(
-            session=session, code=None, head_item_key=head_item_key, offset=0
-        )
-        forecast = get_forecasts(
-            session=session, code=None, head_item_key=head_item_key, offset=0
-        )
-        # cashflow = get_cash_flows(
-        #     session=session,
-        #     code=code,
-        #     year=fy_year_end[0:4] if fy_year_end else None,
-        #     offset=0 if current_period == "FY" else 1,
-        # )
+        try:
+            summary = get_financial_summary(
+                session=session, head_item_key=head_item_key, offset=0
+            )
+        except HTTPException:
+            summary = ""
+        try:
+            ope = get_operating_results(
+                session=session, code=None, head_item_key=head_item_key, offset=0
+            )
+        except HTTPException:
+            ope = None
+        try:
+            forecast = get_forecasts(
+                session=session, code=None, head_item_key=head_item_key, offset=0
+            )
+        except HTTPException:
+            forecast = None
+        try:
+            cashflow = get_cash_flows(
+                session=session,
+                code=code,
+                year=fy_year_end[0:4] if fy_year_end else None,
+                offset=0 if current_period == "FY" else 1,
+            )
+        except HTTPException:
+            cashflow = None
         item.summary = summary
         item.operating_result_json = ope.model_dump_json() if ope else None
         item.forecast_json = forecast.model_dump_json() if forecast else None
-        # item.cashflow_json = cashflow.model_dump_json() if cashflow else None
+        item.cashflow_json = cashflow.model_dump_json() if cashflow else None
     except Exception as e:
         raise HTTPException(
             status_code=404,
