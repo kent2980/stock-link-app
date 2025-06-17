@@ -9,6 +9,7 @@ import {
   Flex,
   Heading,
   HStack,
+  VStack,
   List,
   Text,
 } from "@chakra-ui/react";
@@ -150,9 +151,7 @@ export default function DisclosurePage() {
                       </Box>
                     </Flex>
                     {/* 4列目 */}
-                    <Flex
-                      direction="column"
-                      alignItems="center"
+                    <VStack
                       gap={2}
                       fontSize="xs"
                       color="gray.600"
@@ -160,7 +159,7 @@ export default function DisclosurePage() {
                       <ValueList items={ope} type="operating_result" />
                       <ValueList items={forecast} type="forecast" />
                       <ValueList items={cashflow} type="cashflow" />
-                    </Flex>
+                    </VStack>
                     {/* 5列目 */}
                     <Flex
                       alignItems="center"
@@ -279,7 +278,6 @@ function ValueList({ items, type }: ValueListProps) {
         {items?.data?.map((item, index) => (
           <List.Item
             key={index}
-            px={6}
             borderBottom={
               index !== (items.data?.length ?? 0) - 1 ? "1px solid" : undefined
             }
