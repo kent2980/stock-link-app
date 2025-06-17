@@ -665,3 +665,698 @@ def generate_summary_sentence(data: sc.FinItemsResponse) -> str:
             trend = ""
 
     return f"{period_title}において、{summary}しました。{trend}{comment}"
+
+
+def get_disclosure_items(
+    *,
+    session: Session,
+    report_types: list[str] | None = None,
+    page: int = 1,
+) -> sc.DisclosureItemsList:
+    """
+    開示項目情報を取得するエンドポイント。
+    Args:
+        session (Session): データベースセッション依存性。
+        report_types (list[str] | None, optional): 取得する開示項目のレポートタイプ。デフォルトは["edif", "edus", "edjp"]。
+        limit (int, optional): 取得する開示項目の最大数。デフォルトは20。
+        offset (int, optional): オフセット値。デフォルトは0。
+    Raises:
+        HeadItemNotFound: パラメータ不正やデータが見つからない場合に発生。
+    Returns:
+        sc.DisclosureItemsList: 開示項目のリストとメタデータを含むレスポンスモデル。
+    """
+    if report_types is None:
+        report_types = ["edif", "edus", "edjp"]
+
+    items = crud.get_disclosure_items(
+        session=session,
+        report_types=report_types,
+        limit=5,  # デフォルトの取得数を20に設定
+        offset=(page - 1) * 5,  # ページ番号に基づいてオフセットを計算
+    )
+    if not items:
+        raise HeadItemNotFound(
+            "開示項目が見つかりません。",
+        )
+
+    item_list = []
+
+    for item in items:
+        try:
+            item_list.append(
+                sc.DisclosureItem(
+                    headItemKey=item[0].item_key,
+                    item_id=item[0].id,
+                    company=item[0].company_name,
+                    code=item[0].securities_code,
+                    reporting_date=item[0].reporting_date.strftime("%Y-%m-%d"),
+                    insert_date=item[0].insert_date.strftime("%Y-%m-%d %H:%M:%S"),
+                    title=item[0].document_name,
+                    category=item[0].report_type,
+                    summary=item[1].summary if item[1] else "",
+                    important=True,
+                    operating_result_json=(
+                        item[1].operating_result_json if item[1] else None
+                    ),
+                    forecast_json=item[1].forecast_json if item[1] else None,
+                    cashflow_json=item[1].cashflow_json if item[1] else None,
+                )
+            )
+        except Exception as e:
+            print(
+                f"Error processing item ID {item[0].id}: {item[0].company_name} - {str(e)}"
+            )
+            continue
+    return sc.DisclosureItemsList(
+        count=len(item_list),
+        data=item_list,
+        page=page,
+        next_page=page + 1 if len(item_list) == 5 else None,
+        previous_page=page - 1 if page > 1 else None,
+    )
+
+
+def get_disclosure_items_by_id(
+    *,
+    session: Session,
+    report_types: list[str] | None = None,
+    item_id: int,
+) -> sc.DisclosureItemsIdList:
+    """
+    開示項目情報をIDで取得するエンドポイント。
+
+    Args:
+        session (Session): データベースセッション依存性。
+        id (int): 開示項目のID。
+
+    Raises:
+        HeadItemNotFound: データが見つからない場合に発生。
+
+    Returns:
+        sc.DisclosureItem: 開示項目の詳細情報。
+    """
+    if report_types is None:
+        report_types = ["edif", "edus", "edjp"]
+
+    items = crud.get_disclosure_item_by_id(
+        session=session, report_types=report_types, item_id=item_id
+    )
+
+    if not items:
+        raise HeadItemNotFound(f"ID {item_id} の開示項目が見つかりません。")
+
+    items_list = []
+
+    for item in items:
+        try:
+            items_list.append(
+                sc.DisclosureItem(
+                    item_id=item[0].id,
+                    company=item[0].company_name,
+                    code=item[0].securities_code,
+                    reporting_date=item[0].reporting_date.strftime("%Y-%m-%d"),
+                    insert_date=item[0].insert_date.strftime("%Y-%m-%d %H:%M:%S"),
+                    title=item[0].document_name,
+                    category=item[0].report_type,
+                    summary=item[1].summary if item[1] else "",
+                    important=True,
+                    operating_result_json=item[1].operating_result_json,
+                    forecast_json=item[1].forecast_json,
+                    cashflow_json=item[1].cashflow_json,
+                )
+            )
+        except Exception:
+            print(item.id)
+            continue
+
+    return sc.DisclosureItemsIdList(
+        count=len(items_list),
+        data=items_list,
+        item_id=item_id,
+        next_id=items_list[0].item_id if items_list else None,
+        previous_id=items_list[-1].item_id if items_list else None,
+    )
+
+
+def get_financial_summary(
+    *,
+    session: Session,
+    code: str | None = None,
+    head_item_key: str | None = None,
+    report_types: list[str] | None = None,
+    offset: int = 0,
+) -> str:
+    """
+    財務サマリー情報を取得するエンドポイント。
+
+    Args:
+        session (Session): データベースセッション依存性。
+        code (str | None, optional): 銘柄コード。指定しない場合はhead_item_keyを利用。
+        head_item_key (str | None, optional): ヘッドアイテムキー。指定しない場合はcodeを利用。
+        report_types (list[str] | None, optional): レポートタイプのリスト。
+        offset (int, optional): オフセット値。デフォルトは0。
+
+    Raises:
+        HeadItemNotFound: パラメータ不正やデータが見つからない場合に発生。
+
+    Returns:
+        str: 財務サマリー情報の文字列。
+    """
+    ope = get_operating_results(
+        session=session,
+        code=code,
+        head_item_key=head_item_key,
+        report_types=report_types,
+        offset=offset,
+    )
+
+    titles = generate_summary_sentence(ope)
+
+    if not titles:
+        raise HeadItemNotFound(
+            "指定された銘柄コードまたはhead_item_keyに対応するタイトル情報が見つかりません。"
+        )
+
+    return titles
+
+
+def get_operating_results(
+    *,
+    session: Session,
+    code: str | None = None,
+    head_item_key: str | None = None,
+    report_types: list[str] | None = None,
+    offset: int = 0,
+) -> sc.FinItemsResponse:
+    """
+    経営成績情報を取得するエンドポイント。
+
+    Args:
+        session (Session): データベースセッション依存性。
+        code (str | None, optional): 銘柄コード。指定しない場合はhead_item_keyを利用。
+        head_item_key (str | None, optional): ヘッドアイテムキー。指定しない場合はcodeを利用。
+        report_types (list[str] | None, optional): レポートタイプのリスト。
+        offset (int, optional): オフセット値。デフォルトは0。
+
+    Raises:
+        HeadItemNotFound: パラメータ不正やデータが見つからない場合に発生。
+
+    Returns:
+        sc.FinItemsResponse: 経営成績情報のレスポンスモデル。
+    """
+    if code is None and head_item_key is None:
+        raise HeadItemNotFound(
+            "銘柄コードかhead_item_keyどちらかを指定してください",
+        )
+
+    attr_value_dict = {  # この辞書は、attr_valueとfrom_nameの対応を表しています。
+        "FY": "BusinessResultsOperatingResults",
+        "QU": "BusinessResultsQuarterlyOperatingResults",
+    }
+
+    from_names = [
+        "tse-ed-t_ConsolidatedIncomeStatementsInformationAbstract",
+        "tse-ed-t_IncomeStatementsInformationAbstract",
+    ]
+
+    # head_item_keyを取得
+    try:
+        head_item_key = get_head_item_key(
+            session=session,
+            head_item_key=head_item_key,
+            code=code,
+            report_types=report_types,
+            offset=offset,
+        )
+    except HeadItemNotFound as e:
+        raise HeadItemNotFound(str(e))
+
+    try:
+        item = get_summary_items(
+            session=session,
+            head_item_key=head_item_key,
+            attr_value_dict=attr_value_dict,
+            from_names=from_names,
+            is_change=True,
+        )
+    except NotDictKeyError as e:
+        raise HeadItemNotFound(str(e))
+    except HeadItemNotFound as e:
+        raise HeadItemNotFound(str(e))
+
+    result = get_struct(
+        items=item,
+        struct=sc.FinItemsResponse(),
+    )
+
+    return result
+
+
+def get_other_operating_results(
+    *,
+    session: Session,
+    code: str | None = None,
+    head_item_key: str | None = None,
+    report_types: list[str] | None = None,
+    offset: int = 0,
+) -> sc.FinItemsResponse:
+    """
+    その他の経営成績情報を取得するエンドポイント。
+    Args:
+        session (Session): データベースセッション依存性。
+        code (str | None, optional): 銘柄コード。指定しない場合はhead_item_keyを利用。
+        head_item_key (str | None, optional): ヘッドアイテムキー。指定しない場合はcodeを利用。
+        report_types (list[str] | None, optional): レポートタイプのリスト。
+        offset (int, optional): オフセット値。デフォルトは0。
+    Raises:
+        HeadItemNotFound: パラメータ不正やデータが見つからない場合に発生。
+    Returns:
+        sc.FinItemsResponse: その他の経営成績情報のレスポンスモデル。
+    """
+    if code and head_item_key:
+        raise HeadItemNotFound(
+            "銘柄コードかhead_item_keyどちらかを指定してください",
+        )
+
+    attr_value_dict = {
+        "FY": "BusinessResultsOperatingResults",
+        "QU": "BusinessResultsQuarterlyOperatingResults",
+    }
+
+    from_names = [
+        "tse-ed-t_OtherConsolidatedOperatingResultsAbstract",
+        "tse-ed-t_OtherOperatingResultsAbstract",
+    ]
+
+    # head_item_keyを取得
+    try:
+        head_item_key = get_head_item_key(
+            session=session,
+            head_item_key=head_item_key,
+            code=code,
+            report_types=report_types,
+            offset=offset,
+        )
+    except HeadItemNotFound as e:
+        raise HeadItemNotFound(str(e))
+
+    try:
+        item = get_summary_items(
+            session=session,
+            head_item_key=head_item_key,
+            attr_value_dict=attr_value_dict,
+            from_names=from_names,
+            is_change=False,
+        )
+    except NotDictKeyError as e:
+        raise HeadItemNotFound(str(e))
+    except HeadItemNotFound as e:
+        raise HeadItemNotFound(str(e))
+
+    result = get_struct(
+        items=item,
+        struct=sc.FinItemsResponse(),
+    )
+
+    return result
+
+
+def get_forecasts(
+    *,
+    session: Session,
+    code: str | None = None,
+    head_item_key: str | None = None,
+    report_types: list[str] | None = None,
+    offset: int = 0,
+) -> sc.FinItemsResponse:
+    """
+    予測情報を取得するエンドポイント。
+    Args:
+        session (Session): データベースセッション依存性。
+        code (str | None, optional): 銘柄コード。指定しない場合はhead_item_keyを利用。
+        head_item_key (str | None, optional): ヘッドアイテムキー。指定しない場合はcodeを利用。
+        report_types (list[str] | None, optional): レポートタイプのリスト。
+        offset (int, optional): オフセット値。デフォルトは0。
+    Raises:
+        HeadItemNotFound: パラメータ不正やデータが見つからない場合に発生。
+    Returns:
+        sc.FinItemsResponse: 予測情報のレスポンスモデル。
+    """
+    if code and head_item_key:
+        raise HeadItemNotFound(
+            "銘柄コードかhead_item_keyどちらかを指定してください",
+        )
+
+    attr_value_dict = {
+        "FY": "Forecasts",
+        "QU": "QuarterlyForecasts",
+    }
+
+    from_names = [
+        "tse-ed-t_MainTableOfConsolidatedForecastsAbstract",
+        "tse-ed-t_MainTableOfForecastsAbstract",
+    ]
+
+    # head_item_keyを取得
+    try:
+        head_item_key = get_head_item_key(
+            session=session,
+            head_item_key=head_item_key,
+            code=code,
+            report_types=report_types,
+            offset=offset,
+        )
+    except HeadItemNotFound as e:
+        raise HeadItemNotFound(str(e))
+
+    try:
+        item = get_summary_items(
+            session=session,
+            head_item_key=head_item_key,
+            attr_value_dict=attr_value_dict,
+            from_names=from_names,
+            is_change=True,
+        )
+    except NotDictKeyError as e:
+        raise HeadItemNotFound(str(e))
+    except HeadItemNotFound as e:
+        raise HeadItemNotFound(str(e))
+
+    result = get_struct(
+        items=item,
+        struct=sc.FinItemsResponse(),
+    )
+
+    return result
+
+
+def get_financial_position(
+    *,
+    session: Session,
+    code: str | None = None,
+    head_item_key: str | None = None,
+    report_types: list[str] | None = None,
+    offset: int = 0,
+) -> sc.FinItemsResponse:
+    """
+    財政状態情報を取得するエンドポイント。
+    Args:
+        session (Session): データベースセッション依存性。
+        code (str | None, optional): 銘柄コード。指定しない場合はhead_item_keyを利用。
+        head_item_key (str | None, optional): ヘッドアイテムキー。指定しない場合はcodeを利用。
+        report_types (list[str] | None, optional): レポートタイプのリスト。
+        offset (int, optional): オフセット値。デフォルトは0。
+    Raises:
+        HeadItemNotFound: パラメータ不正やデータが見つからない場合に発生。
+    Returns:
+        sc.FinItemsResponse: 財政状態情報のレスポンスモデル。
+    """
+    if code and head_item_key:
+        raise HeadItemNotFound(
+            "銘柄コードかhead_item_keyどちらかを指定してください",
+        )
+
+    attr_value_dict = {
+        "FY": "BusinessResultsFinancialPositions",
+        "QU": "BusinessResultsQuarterlyFinancialPositions",
+    }
+
+    from_names = [
+        "tse-ed-t_ConsolidatedFinancialPositionsAbstract",
+        "tse-ed-t_FinancialPositionsAbstract",
+    ]
+
+    # head_item_keyを取得
+    try:
+        head_item_key = get_head_item_key(
+            session=session,
+            head_item_key=head_item_key,
+            code=code,
+            report_types=report_types,
+            offset=offset,
+        )
+    except HeadItemNotFound as e:
+        raise HeadItemNotFound(str(e))
+
+    try:
+        item = get_summary_items(
+            session=session,
+            head_item_key=head_item_key,
+            attr_value_dict=attr_value_dict,
+            from_names=from_names,
+            is_change=False,
+        )
+    except NotDictKeyError as e:
+        raise HeadItemNotFound(str(e))
+    except HeadItemNotFound as e:
+        raise HeadItemNotFound(str(e))
+
+    result = get_struct(
+        items=item,
+        struct=sc.FinItemsResponse(),
+    )
+
+    return result
+
+
+def get_cash_flows(
+    *,
+    session: Session,
+    code: str,
+    year: str | None = None,
+    offset: int = 0,
+) -> sc.FinItemsResponse:
+    """
+    キャッシュフロー情報を取得するエンドポイント。
+    Args:
+        session (Session): データベースセッション依存性。
+        code (str): 銘柄コード。
+        year (str | None, optional): 年度。指定しない場合は最新の年度を利用。
+        offset (int, optional): オフセット値。デフォルトは0。
+    Raises:
+        HeadItemNotFound: パラメータ不正やデータが見つからない場合に発生。
+    Returns:
+        sc.FinItemsResponse: キャッシュフロー情報のレスポンスモデル。
+    """
+    attr_value_dict = {
+        "FY": "BusinessResultsCashFlows",
+        "QU": "BusinessResultsQuarterlyCashFlows",
+    }
+
+    from_names = [
+        "tse-ed-t_ConsolidatedCashFlowsAbstract",
+        "tse-ed-t_CashFlowsAbstract",
+    ]
+
+    try:
+        head_item_key = get_head_item_key(
+            session=session,
+            code=code,
+            report_types=["edjp", "edif", "edus"],
+            offset=offset,
+            year=year,
+            current_period="FY",
+        )
+    except HeadItemNotFound as e:
+        raise HeadItemNotFound(str(e))
+
+    try:
+        item = get_summary_items(
+            session=session,
+            head_item_key=head_item_key,
+            attr_value_dict=attr_value_dict,
+            from_names=from_names,
+            is_change=False,
+        )
+    except NotDictKeyError as e:
+        raise HeadItemNotFound(str(e))
+    except HeadItemNotFound as e:
+        raise HeadItemNotFound(str(e))
+
+    result = get_struct(
+        items=item,
+        struct=sc.FinItemsResponse(),
+    )
+
+    return result
+
+
+def get_forecast_change(
+    *,
+    session: Session,
+    head_item_key: str | None = None,
+    code: str | None = None,
+    report_types: list[str] | None = None,
+    offset: int = 0,
+) -> bool | None:
+    """
+    業績予想の変更情報を取得するエンドポイント。
+    Args:
+        session (Session): データベースセッション依存性。
+        head_item_key (str | None, optional): ヘッドアイテムキー。指定しない場合はcodeを利用。
+        code (str | None, optional): 銘柄コード。指定しない場合はhead_item_keyを利用。
+        report_types (list[str] | None, optional): レポートタイプのリスト。
+        offset (int, optional): オフセット値。デフォルトは0。
+    Raises:
+        HeadItemNotFound: パラメータ不正やデータが見つからない場合に発生。
+    Returns:
+        bool | None: 業績予想の変更情報。変更がない場合はNone。
+    """
+    if head_item_key is None:
+        try:
+            head_item_key = get_head_item_key(
+                session=session, code=code, report_types=report_types, offset=offset
+            )
+        except HeadItemNotFound as e:
+            raise HeadItemNotFound(str(e))
+    else:
+        if offset > 0:
+            try:
+                head_item_key = get_base_head_item_key_offset(
+                    session=session,
+                    headItemKey=head_item_key,
+                    report_types=report_types,
+                    offset=offset,
+                )
+            except HeadItemNotFound as e:
+                raise HeadItemNotFound(str(e))
+
+    names = [
+        "tse-ed-t_CorrectionOfConsolidatedFinancialForecastInThisQuarter",
+        "tse-ed-t_CorrectionOfNonConsolidatedFinancialForecastInThisQuarter",
+        "tse-ed-t_CorrectionOfFinancialForecastInThisQuarter",
+    ]
+
+    item = crud.is_change_value(
+        session=session, head_item_key=head_item_key, names=names
+    )
+
+    return item
+
+
+def get_dividends_change(
+    *,
+    session: Session,
+    head_item_key: str | None = None,
+    code: str | None = None,
+    report_types: list[str] | None = None,
+    offset: int = 0,
+) -> bool | None:
+    """
+    配当予想の変更情報を取得するエンドポイント。
+    Args:
+        session (Session): データベースセッション依存性。
+        head_item_key (str | None, optional): ヘッドアイテムキー。指定しない場合はcodeを利用。
+        code (str | None, optional): 銘柄コード。指定しない場合はhead_item_keyを利用。
+        report_types (list[str] | None, optional): レポートタイプのリスト。
+        offset (int, optional): オフセット値。デフォルトは0。
+    Raises:
+        HeadItemNotFound: パラメータ不正やデータが見つからない場合に発生。
+    Returns:
+        bool | None: 配当予想の変更情報。変更がない場合はNone。
+    """
+    if head_item_key is None:
+        try:
+            head_item_key = get_head_item_key(
+                session=session, code=code, report_types=report_types, offset=offset
+            )
+        except HeadItemNotFound as e:
+            raise HeadItemNotFound(str(e))
+    else:
+        if offset > 0:
+            try:
+                head_item_key = get_base_head_item_key_offset(
+                    session=session,
+                    headItemKey=head_item_key,
+                    report_types=report_types,
+                    offset=offset,
+                )
+            except HeadItemNotFound as e:
+                raise HeadItemNotFound(str(e))
+
+    names = ["tse-ed-t_CorrectionOfDividendForecastInThisQuarter"]
+
+    item = crud.is_change_value(
+        session=session, head_item_key=head_item_key, names=names
+    )
+
+    return item
+
+
+def get_dividends(
+    *,
+    session: Session,
+    code: str | None = None,
+    head_item_key: str | None = None,
+    report_types: list[str] | None = None,
+    offset: int = 0,
+) -> sc.FinItemsDividendsResponse:
+    """
+    配当情報を取得するエンドポイント。
+    Args:
+        session (Session): データベースセッション依存性。
+        code (str | None, optional): 銘柄コード。指定しない場合はhead_item_keyを利用。
+        head_item_key (str | None, optional): ヘッドアイテムキー。指定しない場合はcodeを利用。
+        report_types (list[str] | None, optional): レポートタイプのリスト。
+        offset (int, optional): オフセット値。デフォルトは0。
+    Raises:
+        HeadItemNotFound: パラメータ不正やデータが見つからない場合に発生。
+    Returns:
+        sc.FinItemsDividendsResponse: 配当情報のレスポンスモデル。
+    """
+    if code and head_item_key:
+        raise HeadItemNotFound(
+            "銘柄コードかhead_item_keyどちらかを指定してください",
+        )
+
+    attr_value_dict = {
+        "FY": "Dividends",
+        "QU": "QuarterlyDividends",
+    }
+
+    from_names = [
+        "tse-ed-t_DividendPerShareAbstract",
+        "tse-ed-t_TotalDividendPaidAnnualAbstract",
+        "tse-ed-t_PayoutRatioConsolidatedAbstract",
+        "tse-ed-t_RatioOfTotalAmountOfDividendsToNetAssetsAbstract",
+        "tse-ed-t_RatioOfTotalAmountOfDividendsToNetAssetsConsolidatedAbstract",
+    ]
+
+    if head_item_key is None:
+        try:
+            head_item_key = get_head_item_key(
+                session=session, code=code, report_types=report_types, offset=offset
+            )
+        except HeadItemNotFound as e:
+            raise HeadItemNotFound(str(e))
+    else:
+        if offset > 0:
+            try:
+                head_item_key = get_base_head_item_key_offset(
+                    session=session,
+                    headItemKey=head_item_key,
+                    report_types=report_types,
+                    offset=offset,
+                )
+            except HeadItemNotFound as e:
+                raise HeadItemNotFound(str(e))
+
+    try:
+        item = get_summary_items(
+            session=session,
+            head_item_key=head_item_key,
+            attr_value_dict=attr_value_dict,
+            from_names=from_names,
+            is_change=False,
+        )
+    except NotDictKeyError as e:
+        raise HeadItemNotFound(str(e))
+    except HeadItemNotFound as e:
+        raise HeadItemNotFound(str(e))
+
+    result = get_dividends_struct(
+        items=item,
+        struct=sc.FinItemsDividendsResponse(),
+    )
+
+    return result
