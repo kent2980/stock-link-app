@@ -106,6 +106,7 @@ export default function DisclosurePage() {
                   scrollSnapType: "y mandatory",
                 }}
                 m={3}
+                bg="white"
                 boxShadow="sm"
                 onClick={() => handleLinkClick(item?.headItemKey ?? "")}
               >
