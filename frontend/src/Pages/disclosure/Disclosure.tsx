@@ -155,6 +155,7 @@ export default function DisclosurePage() {
                       gap={2}
                       fontSize="xs"
                       color="gray.600"
+                      width="100%"
                     >
                       <ValueList items={ope} type="operating_result" />
                       <ValueList items={forecast} type="forecast" />
