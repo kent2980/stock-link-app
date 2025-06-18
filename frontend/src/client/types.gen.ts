@@ -23,6 +23,47 @@ export type DailyStockPricePublic = {
     adjusted_close?: (number | null);
 };
 
+/**
+ * 開示項目を表すクラス
+ */
+export type DisclosureItem = {
+    headItemKey: string;
+    item_id: number;
+    company: string;
+    code: string;
+    reporting_date: string;
+    insert_date: string;
+    title: string;
+    summary: string;
+    operating_result_json: (string | null);
+    forecast_json: (string | null);
+    cashflow_json: (string | null);
+    category: string;
+    important: boolean;
+};
+
+/**
+ * 開示項目のIDリストを表すクラス
+ */
+export type DisclosureItemsIdList = {
+    count: number;
+    item_id: number;
+    next_id?: (number | null);
+    previous_id?: (number | null);
+    data?: Array<DisclosureItem>;
+};
+
+/**
+ * 開示項目のリストを表すクラス
+ */
+export type DisclosureItemsList = {
+    count: number;
+    page: number;
+    next_page?: (number | null);
+    previous_page?: (number | null);
+    data?: Array<DisclosureItem>;
+};
+
 export type DocumentListPublic = {
     id: number;
     head_item_key: string;
@@ -265,6 +306,32 @@ export type ValidationError = {
     msg: string;
     type: string;
 };
+
+export type FinancialSummaryGetDisclosureItemsData = {
+    /**
+     * ページ番号
+     */
+    page?: number;
+    /**
+     * 取得する開示項目のレポートタイプ
+     */
+    reportTypes?: (Array<(string)> | null);
+};
+
+export type FinancialSummaryGetDisclosureItemsResponse = (DisclosureItemsList);
+
+export type FinancialSummaryGetDisclosureItemsByIdData = {
+    /**
+     * 開示項目のID
+     */
+    itemId: number;
+    /**
+     * 取得する開示項目のレポートタイプ
+     */
+    reportTypes?: (Array<(string)> | null);
+};
+
+export type FinancialSummaryGetDisclosureItemsByIdResponse = (DisclosureItemsIdList);
 
 export type FinancialSummaryPostIxTitleSummariesResponse = (number);
 
