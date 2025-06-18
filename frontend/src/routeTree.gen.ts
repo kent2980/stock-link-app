@@ -10,114 +10,104 @@
 
 // Import Routes
 
-import { Route as rootRoute } from "./routes/__root";
-import { Route as LayoutImport } from "./routes/_layout";
-import { Route as LayoutCategoryImport } from "./routes/_layout/category";
-import { Route as LayoutDisclosureIndexImport } from "./routes/_layout/disclosure/index";
-import { Route as LayoutDisclosurePageKeyImport } from "./routes/_layout/disclosure/page.$key";
-import { Route as LayoutIndexImport } from "./routes/_layout/index";
-import { Route as LayoutPerformanceImport } from "./routes/_layout/performance";
-import { Route as LoginImport } from "./routes/login";
-import { Route as RecoverPasswordImport } from "./routes/recover-password";
-import { Route as ResetPasswordImport } from "./routes/reset-password";
-import { Route as SignupImport } from "./routes/signup";
+import { Route as rootRoute } from './routes/__root'
+import { Route as SignupImport } from './routes/signup'
+import { Route as ResetPasswordImport } from './routes/reset-password'
+import { Route as RecoverPasswordImport } from './routes/recover-password'
+import { Route as LoginImport } from './routes/login'
+import { Route as LayoutImport } from './routes/_layout'
+import { Route as LayoutIndexImport } from './routes/_layout/index'
+import { Route as LayoutPerformanceImport } from './routes/_layout/performance'
+import { Route as LayoutDisclosureIndexImport } from './routes/_layout/disclosure/index'
+import { Route as LayoutDisclosurePageKeyImport } from './routes/_layout/disclosure/page.$key'
 
 // Create/Update Routes
 
 const SignupRoute = SignupImport.update({
-  path: "/signup",
+  path: '/signup',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const ResetPasswordRoute = ResetPasswordImport.update({
-  path: "/reset-password",
+  path: '/reset-password',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const RecoverPasswordRoute = RecoverPasswordImport.update({
-  path: "/recover-password",
+  path: '/recover-password',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const LoginRoute = LoginImport.update({
-  path: "/login",
+  path: '/login',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const LayoutRoute = LayoutImport.update({
-  id: "/_layout",
+  id: '/_layout',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const LayoutIndexRoute = LayoutIndexImport.update({
-  path: "/",
+  path: '/',
   getParentRoute: () => LayoutRoute,
-} as any);
+} as any)
 
 const LayoutPerformanceRoute = LayoutPerformanceImport.update({
-  path: "/performance",
+  path: '/performance',
   getParentRoute: () => LayoutRoute,
-} as any);
-
-const LayoutCategoryRoute = LayoutCategoryImport.update({
-  path: "/category",
-  getParentRoute: () => LayoutRoute,
-} as any);
+} as any)
 
 const LayoutDisclosureIndexRoute = LayoutDisclosureIndexImport.update({
-  path: "/disclosure/",
+  path: '/disclosure/',
   getParentRoute: () => LayoutRoute,
-} as any);
+} as any)
 
 const LayoutDisclosurePageKeyRoute = LayoutDisclosurePageKeyImport.update({
-  path: "/disclosure/page/$key",
+  path: '/disclosure/page/$key',
   getParentRoute: () => LayoutRoute,
-} as any);
+} as any)
 
 // Populate the FileRoutesByPath interface
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/_layout": {
-      preLoaderRoute: typeof LayoutImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/login": {
-      preLoaderRoute: typeof LoginImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/recover-password": {
-      preLoaderRoute: typeof RecoverPasswordImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/reset-password": {
-      preLoaderRoute: typeof ResetPasswordImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/signup": {
-      preLoaderRoute: typeof SignupImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/_layout/category": {
-      preLoaderRoute: typeof LayoutCategoryImport;
-      parentRoute: typeof LayoutImport;
-    };
-    "/_layout/performance": {
-      preLoaderRoute: typeof LayoutPerformanceImport;
-      parentRoute: typeof LayoutImport;
-    };
-    "/_layout/": {
-      preLoaderRoute: typeof LayoutIndexImport;
-      parentRoute: typeof LayoutImport;
-    };
-    "/_layout/disclosure/": {
-      preLoaderRoute: typeof LayoutDisclosureIndexImport;
-      parentRoute: typeof LayoutImport;
-    };
-    "/_layout/disclosure/page/$key": {
-      preLoaderRoute: typeof LayoutDisclosurePageKeyImport;
-      parentRoute: typeof LayoutImport;
-    };
+    '/_layout': {
+      preLoaderRoute: typeof LayoutImport
+      parentRoute: typeof rootRoute
+    }
+    '/login': {
+      preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/recover-password': {
+      preLoaderRoute: typeof RecoverPasswordImport
+      parentRoute: typeof rootRoute
+    }
+    '/reset-password': {
+      preLoaderRoute: typeof ResetPasswordImport
+      parentRoute: typeof rootRoute
+    }
+    '/signup': {
+      preLoaderRoute: typeof SignupImport
+      parentRoute: typeof rootRoute
+    }
+    '/_layout/performance': {
+      preLoaderRoute: typeof LayoutPerformanceImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/': {
+      preLoaderRoute: typeof LayoutIndexImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/disclosure/': {
+      preLoaderRoute: typeof LayoutDisclosureIndexImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/disclosure/page/$key': {
+      preLoaderRoute: typeof LayoutDisclosurePageKeyImport
+      parentRoute: typeof LayoutImport
+    }
   }
 }
 
@@ -125,7 +115,6 @@ declare module "@tanstack/react-router" {
 
 export const routeTree = rootRoute.addChildren([
   LayoutRoute.addChildren([
-    LayoutCategoryRoute,
     LayoutPerformanceRoute,
     LayoutIndexRoute,
     LayoutDisclosureIndexRoute,
@@ -135,6 +124,6 @@ export const routeTree = rootRoute.addChildren([
   RecoverPasswordRoute,
   ResetPasswordRoute,
   SignupRoute,
-]);
+])
 
 /* prettier-ignore-end */
