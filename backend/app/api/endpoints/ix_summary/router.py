@@ -1,13 +1,13 @@
 import json
 
+from app.api.deps import SessionDep
+from app.models import IxHeadTitle, IxHeadTitleSummary
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
 
-from app.api.deps import SessionDep
-from app.models import IxHeadTitle, IxHeadTitleSummary
-
-from . import crud, utils
+from . import crud
 from . import schema as sc
+from . import utils
 from .exceptions import HeadItemNotFound
 
 router = APIRouter()
@@ -51,7 +51,7 @@ def get_disclosure_items(
             status_code=404,
             detail="開示項目が見つかりません。",
         )
-
+    print(f"Retrieved {len(items)} items for page {page}")
     item_list = []
 
     for item in items:
@@ -69,10 +69,20 @@ def get_disclosure_items(
                     summary=item[1].summary if item[1] else "",
                     important=True,
                     operating_result=(
-                        json.loads(item[1].operating_result_json) if item[1] else None
+                        json.loads(item[1].operating_result_json)
+                        if item[1].operating_result_json
+                        else None
                     ),
-                    forecast=json.loads(item[1].forecast_json) if item[1] else None,
-                    cashflow=json.loads(item[1].cashflow_json) if item[1] else None,
+                    forecast=(
+                        json.loads(item[1].forecast_json)
+                        if item[1].forecast_json
+                        else None
+                    ),
+                    cashflow=(
+                        json.loads(item[1].cashflow_json)
+                        if item[1].cashflow_json
+                        else None
+                    ),
                 )
             )
         except Exception as e:
@@ -140,10 +150,12 @@ def get_disclosure_items_by_id(
         summary=item[1].summary if item[1] else "",
         important=True,
         operating_result=(
-            json.loads(item[1].operating_result_json) if item[1] else None
+            json.loads(item[1].operating_result_json)
+            if item[1].operating_result_json
+            else None
         ),
-        forecast=json.loads(item[1].forecast_json) if item[1] else None,
-        cashflow=json.loads(item[1].cashflow_json) if item[1] else None,
+        forecast=json.loads(item[1].forecast_json) if item[1].forecast_json else None,
+        cashflow=json.loads(item[1].cashflow_json) if item[1].cashflow_json else None,
     )
 
     return sc.DisclosureItems(
