@@ -9,9 +9,9 @@ import {
   Flex,
   Heading,
   HStack,
-  VStack,
   List,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
@@ -84,18 +84,9 @@ export default function DisclosurePage() {
         </Box>
         <List.Root gap={0}>
           {items?.map((item, key) => {
-            const json_parse = (json: string | null | undefined) => {
-              return json ? JSON.parse(json) : null;
-            };
-            const ope: FinItemsResponse | null = json_parse(
-              item?.operating_result_json
-            );
-            const forecast: FinItemsResponse | null = json_parse(
-              item?.forecast_json
-            );
-            const cashflow: FinItemsResponse | null = json_parse(
-              item?.cashflow_json
-            );
+            const ope = item?.operating_result;
+            const forecast = item?.forecast;
+            const cashflow = item?.cashflow;
             return (
               <List.Item
                 key={key}
@@ -152,12 +143,7 @@ export default function DisclosurePage() {
                       </Box>
                     </Flex>
                     {/* 4列目 */}
-                    <VStack
-                      gap={2}
-                      fontSize="xs"
-                      color="gray.600"
-                      width="100%"
-                    >
+                    <VStack gap={2} fontSize="xs" color="gray.600" width="100%">
                       <ValueList items={ope} type="operating_result" />
                       <ValueList items={forecast} type="forecast" />
                       <ValueList items={cashflow} type="cashflow" />

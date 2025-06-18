@@ -35,9 +35,9 @@ export type DisclosureItem = {
     insert_date: string;
     title: string;
     summary: string;
-    operating_result_json: (string | null);
-    forecast_json: (string | null);
-    cashflow_json: (string | null);
+    operating_result: (FinItemsResponse | null);
+    forecast: (FinItemsResponse | null);
+    cashflow: (FinItemsResponse | null);
     category: string;
     important: boolean;
 };
@@ -45,12 +45,9 @@ export type DisclosureItem = {
 /**
  * 開示項目のIDリストを表すクラス
  */
-export type DisclosureItemsIdList = {
-    count: number;
+export type DisclosureItems = {
     item_id: number;
-    next_id?: (number | null);
-    previous_id?: (number | null);
-    data?: Array<DisclosureItem>;
+    data?: (DisclosureItem | null);
 };
 
 /**
@@ -82,6 +79,48 @@ export type DocumentListPublic = {
 export type DocumentListPublics = {
     count: number;
     data: Array<DocumentListPublic>;
+};
+
+/**
+ * メトリック情報のリストを表すクラス
+ */
+export type FinItemsResponse = {
+    period?: (PeriodSchemaBase | null);
+    head_item_key?: (string | null);
+    data?: (Array<FinValueFinance> | null);
+};
+
+/**
+ * メトリック情報を表すクラス
+ */
+export type FinValueBase = {
+    name: string;
+    value: (number | null);
+    unit: (string | null);
+    display_scale: (string | null);
+    scale: (number | null);
+};
+
+/**
+ * メトリック親情報を表すクラス
+ */
+export type FinValueFinance = {
+    name: string;
+    order: number;
+    label?: (string | null);
+    result?: (FinValueWithChange | null);
+    forecast?: (FinValueWithChange | null);
+    upper?: (FinValueWithChange | null);
+    lower?: (FinValueWithChange | null);
+};
+
+export type FinValueWithChange = {
+    isActive?: (boolean | null);
+    curValue?: (FinValueBase | null);
+    curChange?: (FinValueBase | null);
+    preValue?: (FinValueBase | null);
+    preChange?: (FinValueBase | null);
+    context?: (string | null);
 };
 
 export type HTTPValidationError = {
@@ -177,6 +216,15 @@ export type Message = {
 export type NewPassword = {
     token: string;
     new_password: string;
+};
+
+/**
+ * 期間情報を表すクラス
+ */
+export type PeriodSchemaBase = {
+    accountingStandard: string;
+    fiscalYear: string;
+    period: string;
 };
 
 export type PrivateUserCreate = {
@@ -331,7 +379,7 @@ export type FinancialSummaryGetDisclosureItemsByIdData = {
     reportTypes?: (Array<(string)> | null);
 };
 
-export type FinancialSummaryGetDisclosureItemsByIdResponse = (DisclosureItemsIdList);
+export type FinancialSummaryGetDisclosureItemsByIdResponse = (DisclosureItems);
 
 export type FinancialSummaryPostIxTitleSummariesResponse = (number);
 

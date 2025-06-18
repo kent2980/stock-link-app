@@ -1,3 +1,4 @@
+
 from sqlmodel import Field, SQLModel
 
 
@@ -155,9 +156,9 @@ class DisclosureItem(SQLModel):
     insert_date: str
     title: str
     summary: str
-    operating_result_json: str | None
-    forecast_json: str | None
-    cashflow_json: str | None
+    operating_result: FinItemsResponse | None
+    forecast: FinItemsResponse | None
+    cashflow: FinItemsResponse | None
     category: str
     important: bool
 
@@ -172,14 +173,11 @@ class DisclosureItemsList(SQLModel):
     data: list[DisclosureItem] = Field(default=[])
 
 
-class DisclosureItemsIdList(SQLModel):
+class DisclosureItems(SQLModel):
     """開示項目のIDリストを表すクラス"""
 
-    count: int
     item_id: int
-    next_id: int | None = Field(default=None)
-    previous_id: int | None = Field(default=None)
-    data: list[DisclosureItem] = Field(default=[])
+    data: DisclosureItem | None = Field(default=None)
 
 
 class IxSummaryResponse(SQLModel):

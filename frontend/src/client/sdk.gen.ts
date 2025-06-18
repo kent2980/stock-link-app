@@ -54,7 +54,7 @@ export class FinancialSummaryService {
      * @param data The data for the request.
      * @param data.itemId 開示項目のID
      * @param data.reportTypes 取得する開示項目のレポートタイプ
-     * @returns DisclosureItemsIdList Successful Response
+     * @returns DisclosureItems Successful Response
      * @throws ApiError
      */
     public static getDisclosureItemsById(data: FinancialSummaryGetDisclosureItemsByIdData): CancelablePromise<FinancialSummaryGetDisclosureItemsByIdResponse> {

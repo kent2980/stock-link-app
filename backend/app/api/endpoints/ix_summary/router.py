@@ -1,3 +1,5 @@
+import json
+
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
 
@@ -66,11 +68,11 @@ def get_disclosure_items(
                     category=item[0].report_type,
                     summary=item[1].summary if item[1] else "",
                     important=True,
-                    operating_result_json=(
-                        item[1].operating_result_json if item[1] else None
+                    operating_result=(
+                        json.loads(item[1].operating_result_json) if item[1] else None
                     ),
-                    forecast_json=item[1].forecast_json if item[1] else None,
-                    cashflow_json=item[1].cashflow_json if item[1] else None,
+                    forecast=json.loads(item[1].forecast_json) if item[1] else None,
+                    cashflow=json.loads(item[1].cashflow_json) if item[1] else None,
                 )
             )
         except Exception as e:
@@ -90,7 +92,7 @@ def get_disclosure_items(
 @router.get(
     "/disclosure_items/id/{id}",
     summary="開示項目情報をIDで取得",
-    response_model=sc.DisclosureItemsIdList,
+    response_model=sc.DisclosureItems,
 )
 def get_disclosure_items_by_id(
     *,
@@ -101,7 +103,7 @@ def get_disclosure_items_by_id(
         example=["edif", "edus", "edjp"],
     ),
     item_id: int = Query(..., description="開示項目のID"),
-) -> sc.DisclosureItemsIdList:
+) -> sc.DisclosureItems:
     """
     開示項目情報をIDで取得するエンドポイント。
 
@@ -116,7 +118,7 @@ def get_disclosure_items_by_id(
         sc.DisclosureItem: 開示項目の詳細情報。
     """
     items = crud.get_disclosure_item_by_id(
-        session=session, report_types=report_types, item_id=item_id
+        session=session, report_types=report_types, item_id=item_id, limit=1
     )
 
     if not items:
@@ -125,36 +127,28 @@ def get_disclosure_items_by_id(
             detail=f"ID {item_id} の開示項目が見つかりません。",
         )
 
-    items_list = []
+    item = items[0]
 
-    for item in items:
-        try:
-            items_list.append(
-                sc.DisclosureItem(
-                    item_id=item[0].id,
-                    company=item[0].company_name,
-                    code=item[0].securities_code,
-                    reporting_date=item[0].reporting_date.strftime("%Y-%m-%d"),
-                    insert_date=item[0].insert_date.strftime("%Y-%m-%d %H:%M:%S"),
-                    title=item[0].document_name,
-                    category=item[0].report_type,
-                    summary=item[1].summary if item[1] else "",
-                    important=True,
-                    operating_result_json=item[1].operating_result_json,
-                    forecast_json=item[1].forecast_json,
-                    cashflow_json=item[1].cashflow_json,
-                )
-            )
-        except Exception:
-            print(item.id)
-            continue
+    disc = sc.DisclosureItem(
+        item_id=item[0].id,
+        company=item[0].company_name,
+        code=item[0].securities_code,
+        reporting_date=item[0].reporting_date.strftime("%Y-%m-%d"),
+        insert_date=item[0].insert_date.strftime("%Y-%m-%d %H:%M:%S"),
+        title=item[0].document_name,
+        category=item[0].report_type,
+        summary=item[1].summary if item[1] else "",
+        important=True,
+        operating_result=(
+            json.loads(item[1].operating_result_json) if item[1] else None
+        ),
+        forecast=json.loads(item[1].forecast_json) if item[1] else None,
+        cashflow=json.loads(item[1].cashflow_json) if item[1] else None,
+    )
 
-    return sc.DisclosureItemsIdList(
-        count=len(items_list),
-        data=items_list,
+    return sc.DisclosureItems(
+        data=disc,
         item_id=item_id,
-        next_id=items_list[0].item_id if items_list else None,
-        previous_id=items_list[-1].item_id if items_list else None,
     )
 
 
