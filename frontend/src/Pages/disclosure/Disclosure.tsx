@@ -127,7 +127,12 @@ export default function DisclosurePage() {
                       >
                         {item?.code}
                       </Box>
-                      <Box as="span" fontWeight="semibold" color="gray.900">
+                      <Box
+                        as="span"
+                        fontWeight="semibold"
+                        color="gray.900"
+                        className="company-name"
+                      >
                         {item?.company}
                       </Box>
                     </Flex>
