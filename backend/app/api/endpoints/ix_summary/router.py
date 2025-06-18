@@ -1,14 +1,161 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
 
 from app.api.deps import SessionDep
 from app.models import IxHeadTitle, IxHeadTitleSummary
 
+from . import crud, utils
 from . import schema as sc
-from . import utils
 from .exceptions import HeadItemNotFound
 
 router = APIRouter()
+
+
+@router.get(
+    "/disclosure_items/",
+    summary="開示項目情報を取得",
+    response_model=sc.DisclosureItemsList,
+)
+def get_disclosure_items(
+    *,
+    session: SessionDep,
+    report_types: list[str] | None = Query(
+        ["edif", "edus", "edjp"],
+        description="取得する開示項目のレポートタイプ",
+        example=["edif", "edus", "edjp"],
+    ),
+    page: int = Query(1, description="ページ番号", ge=1, le=1000),
+) -> sc.DisclosureItemsList:
+    """
+    開示項目情報を取得するエンドポイント。
+    Args:
+        session (SessionDep): データベースセッション依存性。
+        report_types (list[str] | None, optional): 取得する開示項目のレポートタイプ。デフォルトは["edif", "edus", "edjp"]。
+        limit (int, optional): 取得する開示項目の最大数。デフォルトは20。
+        offset (int, optional): オフセット値。デフォルトは0。
+    Raises:
+        HTTPException: パラメータ不正やデータが見つからない場合に発生。
+    Returns:
+        sc.DisclosureItemsList: 開示項目のリストとメタデータを含むレスポンスモデル。
+    """
+    items = crud.get_disclosure_items(
+        session=session,
+        report_types=report_types,
+        limit=5,  # デフォルトの取得数を20に設定
+        offset=(page - 1) * 5,  # ページ番号に基づいてオフセットを計算
+    )
+    if not items:
+        raise HTTPException(
+            status_code=404,
+            detail="開示項目が見つかりません。",
+        )
+
+    item_list = []
+
+    for item in items:
+        try:
+            item_list.append(
+                sc.DisclosureItem(
+                    headItemKey=item[0].item_key,
+                    item_id=item[0].id,
+                    company=item[0].company_name,
+                    code=item[0].securities_code,
+                    reporting_date=item[0].reporting_date.strftime("%Y-%m-%d"),
+                    insert_date=item[0].insert_date.strftime("%Y-%m-%d %H:%M:%S"),
+                    title=item[0].document_name,
+                    category=item[0].report_type,
+                    summary=item[1].summary if item[1] else "",
+                    important=True,
+                    operating_result_json=(
+                        item[1].operating_result_json if item[1] else None
+                    ),
+                    forecast_json=item[1].forecast_json if item[1] else None,
+                    cashflow_json=item[1].cashflow_json if item[1] else None,
+                )
+            )
+        except Exception as e:
+            print(
+                f"Error processing item ID {item[0].id}: {item[0].company_name} - {str(e)}"
+            )
+            continue
+    return sc.DisclosureItemsList(
+        count=len(item_list),
+        data=item_list,
+        page=page,
+        next_page=page + 1 if len(item_list) == 5 else None,
+        previous_page=page - 1 if page > 1 else None,
+    )
+
+
+@router.get(
+    "/disclosure_items/id/{id}",
+    summary="開示項目情報をIDで取得",
+    response_model=sc.DisclosureItemsIdList,
+)
+def get_disclosure_items_by_id(
+    *,
+    session: SessionDep,
+    report_types: list[str] | None = Query(
+        ["edif", "edus", "edjp"],
+        description="取得する開示項目のレポートタイプ",
+        example=["edif", "edus", "edjp"],
+    ),
+    item_id: int = Query(..., description="開示項目のID"),
+) -> sc.DisclosureItemsIdList:
+    """
+    開示項目情報をIDで取得するエンドポイント。
+
+    Args:
+        session (SessionDep): データベースセッション依存性。
+        id (int): 開示項目のID。
+
+    Raises:
+        HTTPException: データが見つからない場合に発生。
+
+    Returns:
+        sc.DisclosureItem: 開示項目の詳細情報。
+    """
+    items = crud.get_disclosure_item_by_id(
+        session=session, report_types=report_types, item_id=item_id
+    )
+
+    if not items:
+        raise HTTPException(
+            status_code=404,
+            detail=f"ID {item_id} の開示項目が見つかりません。",
+        )
+
+    items_list = []
+
+    for item in items:
+        try:
+            items_list.append(
+                sc.DisclosureItem(
+                    item_id=item[0].id,
+                    company=item[0].company_name,
+                    code=item[0].securities_code,
+                    reporting_date=item[0].reporting_date.strftime("%Y-%m-%d"),
+                    insert_date=item[0].insert_date.strftime("%Y-%m-%d %H:%M:%S"),
+                    title=item[0].document_name,
+                    category=item[0].report_type,
+                    summary=item[1].summary if item[1] else "",
+                    important=True,
+                    operating_result_json=item[1].operating_result_json,
+                    forecast_json=item[1].forecast_json,
+                    cashflow_json=item[1].cashflow_json,
+                )
+            )
+        except Exception:
+            print(item.id)
+            continue
+
+    return sc.DisclosureItemsIdList(
+        count=len(items_list),
+        data=items_list,
+        item_id=item_id,
+        next_id=items_list[0].item_id if items_list else None,
+        previous_id=items_list[-1].item_id if items_list else None,
+    )
 
 
 @router.post(
