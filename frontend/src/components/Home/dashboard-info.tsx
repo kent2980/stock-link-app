@@ -1,16 +1,10 @@
 "use client";
 
 import { InformationService, IxStockService } from "@/client";
-import { Box, Card, Flex, Skeleton, Text } from "@chakra-ui/react";
+import { Box, Card, HStack, Skeleton, Text } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  BarChart3,
-  FileText,
-  TrendingUp,
-} from "lucide-react";
-import { Suspense, useEffect, useState } from "react";
+import { ArrowDownIcon, ArrowUpIcon, FileText } from "lucide-react";
+import { Suspense } from "react";
 
 // Mock data - in a real app, this would come from an API
 const MOCK_DATA = {
@@ -27,135 +21,14 @@ const MOCK_DATA = {
     change: -12.64,
     percentChange: -0.47,
   },
-  todaysHeadlines: [
-    "トヨタ自動車、第2四半期営業利益が予想を上回る",
-    "ソニーグループ、半導体部門の好調で通期見通しを上方修正",
-    "任天堂、新型ゲーム機の発売を来年に延期と発表",
-    "三菱UFJ、デジタル戦略強化で収益増加",
-    "ソフトバンクグループ、AI投資で大幅増益",
-  ],
 };
 
 export function DashboardInfo() {
-  const [currentHeadline, setCurrentHeadline] = useState(0);
-
-  // Rotate through headlines
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentHeadline(
-        (prev) => (prev + 1) % MOCK_DATA.todaysHeadlines.length
-      );
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <Box>
       <Box maxW="container.xl" mx="auto" px={4}>
-        {/* Headline ticker */}
-        <Box mb={6} overflow="hidden" rounded="lg" bg="green.50" p={4}>
-          <Box display="flex" alignItems="center">
-            <BarChart3
-              style={{
-                marginRight: 12,
-                height: 20,
-                width: 20,
-                color: "#059669",
-              }}
-            />
-            <Box overflow="hidden">
-              <Flex
-                direction="row"
-                whiteSpace={{ base: "normal", md: "nowrap" }}
-                color="green.800"
-                h={10}
-                alignItems="center"
-              >
-                <Text as="span" fontWeight="medium">
-                  {MOCK_DATA.todaysHeadlines[currentHeadline]}
-                </Text>
-              </Flex>
-            </Box>
-          </Box>
-        </Box>
-
         {/* Stats grid */}
-        <Box
-          display="grid"
-          gridTemplateColumns={{
-            base: "repeat(2, 1fr)",
-            md: "repeat(3, 1fr)",
-            lg: "repeat(6, 1fr)",
-          }}
-          gap={4}
-        >
-          {/* Total reports */}
-          <Card.Root>
-            <Card.Body p={4}>
-              <Box fontSize="sm" fontWeight="medium" color="gray.500">
-                全報告書件数
-              </Box>
-              <Box mt={1} display="flex" alignItems="baseline">
-                <Box fontSize="2xl" fontWeight="semibold" color="gray.900">
-                  <Suspense fallback={<Skeleton height="20px" width="50px" />}>
-                    <TotalReports />
-                  </Suspense>
-                </Box>
-                <Box ml={2} fontSize="xs" color="gray.500">
-                  件
-                </Box>
-              </Box>
-              <Box mt={1}>
-                <FileText style={{ height: 16, width: 16, color: "#9CA3AF" }} />
-              </Box>
-            </Card.Body>
-          </Card.Root>
-
-          {/* New reports today */}
-          <Card.Root>
-            <Card.Body p={4}>
-              <Box fontSize="sm" fontWeight="medium" color="gray.500">
-                本日の新規報告書
-              </Box>
-              <Box mt={1} display="flex" alignItems="baseline">
-                <Box fontSize="2xl" fontWeight="semibold" color="gray.900">
-                  <Suspense fallback={<Skeleton height="20px" width="50px" />}>
-                    <NewReportsToday />
-                  </Suspense>
-                </Box>
-                <Box ml={2} fontSize="xs" color="gray.500">
-                  件
-                </Box>
-              </Box>
-              <Box mt={1}>
-                <FileText style={{ height: 16, width: 16, color: "#059669" }} />
-              </Box>
-            </Card.Body>
-          </Card.Root>
-
-          {/* Good earnings count */}
-          <Card.Root>
-            <Card.Body p={4}>
-              <Box fontSize="sm" fontWeight="medium" color="gray.500">
-                好決算件数
-              </Box>
-              <Box mt={1} display="flex" alignItems="baseline">
-                <Box fontSize="2xl" fontWeight="semibold" color="emerald.600">
-                  {MOCK_DATA.goodEarningsCount.toLocaleString()}
-                </Box>
-                <Box ml={2} fontSize="xs" color="gray.500">
-                  件
-                </Box>
-              </Box>
-              <Box mt={1}>
-                <TrendingUp
-                  style={{ height: 16, width: 16, color: "#059669" }}
-                />
-              </Box>
-            </Card.Body>
-          </Card.Root>
-
+        <HStack gap={4}>
           {/* Nikkei Average */}
           <Card.Root>
             <Card.Body p={4}>
@@ -168,39 +41,24 @@ export function DashboardInfo() {
             </Card.Body>
           </Card.Root>
 
-          {/* TOPIX */}
+          {/* New reports today */}
           <Card.Root>
             <Card.Body p={4}>
               <Box fontSize="sm" fontWeight="medium" color="gray.500">
-                TOPIX
+                本日の新規報告書
               </Box>
               <Box mt={1} display="flex" alignItems="baseline">
-                <Box fontSize="2xl" fontWeight="semibold" color="gray.900">
-                  {MOCK_DATA.topix.value.toLocaleString()}
+                <Box fontSize="md" fontWeight="semibold" color="gray.900">
+                  <Suspense fallback={<Skeleton height="20px" width="50px" />}>
+                    <NewReportsToday />
+                  </Suspense>
+                </Box>
+                <Box ml={2} fontSize="xs" color="gray.500">
+                  件
                 </Box>
               </Box>
-              <Box mt={1} display="flex" alignItems="center">
-                {MOCK_DATA.topix.change > 0 ? (
-                  <Box display="flex" alignItems="center" color="emerald.600">
-                    <ArrowUpIcon
-                      style={{ marginRight: 4, height: 12, width: 12 }}
-                    />
-                    <Text fontSize="xs">
-                      {MOCK_DATA.topix.change.toLocaleString()} (
-                      {MOCK_DATA.topix.percentChange}%)
-                    </Text>
-                  </Box>
-                ) : (
-                  <Box display="flex" alignItems="center" color="red.600">
-                    <ArrowDownIcon
-                      style={{ marginRight: 4, height: 12, width: 12 }}
-                    />
-                    <Text fontSize="xs">
-                      {Math.abs(MOCK_DATA.topix.change).toLocaleString()} (
-                      {Math.abs(MOCK_DATA.topix.percentChange)}%)
-                    </Text>
-                  </Box>
-                )}
+              <Box mt={1}>
+                <FileText style={{ height: 16, width: 16, color: "#059669" }} />
               </Box>
             </Card.Body>
           </Card.Root>
@@ -222,22 +80,11 @@ export function DashboardInfo() {
               </Suspense>
             </Card.Body>
           </Card.Root>
-        </Box>
+        </HStack>
       </Box>
     </Box>
   );
 }
-
-const TotalReports = () => {
-  const { data } = useSuspenseQuery({
-    queryKey: ["totalReports"],
-    queryFn: async () => {
-      return await InformationService.getDocumentCount();
-    },
-  });
-
-  return <Text>{data}</Text>;
-};
 
 const NewReportsToday = () => {
   const { data } = useSuspenseQuery({
@@ -264,7 +111,7 @@ const InsertDate = () => {
 
   return (
     <>
-      <Box mt={1} fontSize="lg" fontWeight="semibold" color="gray.900">
+      <Box mt={1} fontSize="sm" fontWeight="semibold" color="gray.900">
         {date.toLocaleDateString("ja-JP", {
           year: "numeric",
           month: "long",
@@ -294,7 +141,7 @@ const NikkeiAverage = () => {
   return (
     <>
       <Box mt={1} display="flex" alignItems="baseline">
-        <Box fontSize="2xl" fontWeight="semibold" color="gray.900">
+        <Box fontSize="sm" fontWeight="semibold" color="gray.900">
           {data.close.toLocaleString()}
         </Box>
       </Box>
