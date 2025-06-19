@@ -1,4 +1,4 @@
-import HomePage from "@/Pages/HomePage";
+import DisclosurePage from "@/Pages/disclosure/Disclosure";
 import { Container } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -8,8 +8,8 @@ export const Route = createFileRoute("/_layout/")({
 
 function Index() {
   return (
-    <Container>
-      <HomePage />
+    <Container id="main-container">
+      <DisclosurePage />
     </Container>
   );
 }
