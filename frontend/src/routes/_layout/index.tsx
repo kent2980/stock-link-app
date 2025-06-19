@@ -1,5 +1,5 @@
 import DisclosurePage from "@/Pages/disclosure/Disclosure";
-import { Container } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_layout/")({
@@ -8,8 +8,8 @@ export const Route = createFileRoute("/_layout/")({
 
 function Index() {
   return (
-    <Container id="main-container">
+    <Box id="main-content">
       <DisclosurePage />
-    </Container>
+    </Box>
   );
 }
