@@ -1,3 +1,4 @@
+import json
 from collections.abc import Sequence
 
 from fastapi import Query
@@ -503,6 +504,100 @@ def get_disclosure_items(
     result = session.exec(statement)
     items = result.all()
     return items
+
+
+def get_disclosure_cursor(
+    session: Session,
+    report_types: list[str],
+    limit: int = 10,
+    cursor: int | None = None,
+    direction: str = "order",
+) -> sc.DisclosureCursor:
+    """
+    #### 開示項目情報を取得する
+    - **機能**: 開示項目情報を取得する
+    """
+
+    if direction not in ["order", "newer"]:
+        raise ValueError("Direction must be 'order' or 'newer'")
+
+    statement = (
+        select(IxHeadTitle, IxHeadTitleSummary)
+        .outerjoin(
+            IxHeadTitleSummary, IxHeadTitleSummary.head_item_key == IxHeadTitle.item_key
+        )
+        .where(
+            IxHeadTitle.current_period.isnot(None),
+            IxHeadTitle.company_name.isnot(None),
+            IxHeadTitle.report_type.in_(report_types),
+        )
+        .order_by(
+            desc(IxHeadTitle.reporting_date),
+            desc(IxHeadTitle.insert_date),
+        )
+    )
+
+    if cursor is not None:
+        if direction == "order":
+            statement = statement.where(IxHeadTitle.id > cursor)
+        else:
+            statement = statement.where(IxHeadTitle.id < cursor)
+
+    statement = statement.limit(limit)
+
+    result = session.exec(statement)
+    items = result.all()
+
+    next_cursor = items[0][0].id if items else None
+    try:
+        previous_cursor = items[limit - 1][0].id if items else None
+    except IndexError:
+        previous_cursor = None
+    item_list = []
+
+    for item in items:
+        try:
+            item_list.append(
+                sc.DisclosureItem(
+                    headItemKey=item[0].item_key,
+                    item_id=item[0].id,
+                    company=item[0].company_name,
+                    code=item[0].securities_code,
+                    reporting_date=item[0].reporting_date.strftime("%Y-%m-%d"),
+                    insert_date=item[0].insert_date.strftime("%Y-%m-%d %H:%M:%S"),
+                    title=item[0].document_name,
+                    category=item[0].report_type,
+                    summary=item[1].summary if item[1] else "",
+                    important=True,
+                    operating_result=(
+                        json.loads(item[1].operating_result_json)
+                        if item[1] and item[1].operating_result_json
+                        else None
+                    ),
+                    forecast=(
+                        json.loads(item[1].forecast_json)
+                        if item[1] and item[1].forecast_json
+                        else None
+                    ),
+                    cashflow=(
+                        json.loads(item[1].cashflow_json)
+                        if item[1] and item[1].cashflow_json
+                        else None
+                    ),
+                )
+            )
+        except Exception as e:
+            print(
+                f"Error processing item ID {item[0].id}: {item[0].company_name} - {str(e)}"
+            )
+            continue
+
+    return sc.DisclosureCursor(
+        data=item_list,
+        count=len(item_list),
+        next_cursor=next_cursor,
+        previous_cursor=previous_cursor,
+    )
 
 
 def get_disclosure_item_by_id(

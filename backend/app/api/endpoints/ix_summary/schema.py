@@ -162,6 +162,13 @@ class DisclosureItem(SQLModel):
     important: bool
 
 
+class DisclosureCursor(SQLModel):
+    next_cursor: int | None = Field(default=None, description="次のカーソル")
+    previous_cursor: int | None = Field(default=None, description="前のカーソル")
+    count: int = Field(default=0, description="開示項目の総数")
+    data: list[DisclosureItem] = Field(default=[])
+
+
 class DisclosureItemsList(SQLModel):
     """開示項目のリストを表すクラス"""
 

@@ -28,11 +28,11 @@ def get_disclosure_items(
     ),
     page: int = Query(1, description="ページ番号", ge=1, le=1000),
     limit: int = Query(
-        5,
+        20,
         description="取得する開示項目の最大数",
         ge=1,
         le=100,
-        example=5,
+        example=20,
     ),
 ) -> sc.DisclosureItemsList:
     """
@@ -104,6 +104,56 @@ def get_disclosure_items(
         next_page=page + 1 if len(item_list) == limit else None,
         previous_page=page - 1 if page > 1 else None,
     )
+
+
+@router.get(
+    "/disclosure_items/cursor/",
+    summary="開示項目情報を取得",
+    response_model=sc.DisclosureCursor,
+)
+def get_disclosure_items_cursor(
+    *,
+    session: SessionDep,
+    report_types: list[str] | None = Query(
+        ["edif", "edus", "edjp"],
+        description="取得する開示項目のレポートタイプ",
+        example=["edif", "edus", "edjp"],
+    ),
+    cursor: int | None = Query(None, description="カーソル"),
+    direction: str = Query(
+        "order",
+        description="カーソルの方向。'order' または 'newer' を指定",
+        example="order",
+    ),
+    limit: int = Query(
+        20,
+        description="取得する開示項目の最大数",
+        ge=1,
+        le=100,
+        example=20,
+    ),
+) -> sc.DisclosureCursor:
+    """
+    開示項目情報を取得するエンドポイント。
+    Args:
+        session (SessionDep): データベースセッション依存性。
+        report_types (list[str] | None, optional): 取得する開示項目のレポートタイプ。デフォルトは["edif", "edus", "edjp"]。
+        limit (int, optional): 取得する開示項目の最大数。デフォルトは20。
+        offset (int, optional): オフセット値。デフォルトは0。
+    Raises:
+        HTTPException: パラメータ不正やデータが見つからない場合に発生。
+    Returns:
+        sc.DisclosureItemsList: 開示項目のリストとメタデータを含むレスポンスモデル。
+    """
+    items = crud.get_disclosure_cursor(
+        session=session,
+        report_types=report_types,
+        limit=limit,  # デフォルトの取得数を20に設定
+        cursor=cursor,  # カーソルを使用して取得
+        direction=direction,  # カーソルの方向を指定
+    )
+
+    return items
 
 
 @router.get(
