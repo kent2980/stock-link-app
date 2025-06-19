@@ -10,6 +10,7 @@ import {
   Heading,
   HStack,
   List,
+  Skeleton,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -36,6 +37,7 @@ export default function DisclosurePage() {
     queryFn: async ({ pageParam = 1 }) => {
       return await FinancialSummaryService.getDisclosureItems({
         page: pageParam,
+        limit: 20,
       });
     },
     initialPageParam: 1,
@@ -60,7 +62,7 @@ export default function DisclosurePage() {
   }, [prevInView, hasPreviousPage, fetchPreviousPage]);
 
   if (isLoading || !data) {
-    return <div>Loading...</div>;
+    return <LoadingItems length={20} />;
   }
 
   const items = data.pages.map((page) => page.data).flat();
@@ -179,7 +181,7 @@ export default function DisclosurePage() {
             );
           })}
         </List.Root>
-        {isFetchingNextPage && <Box>Loading...</Box>}
+        {isFetchingNextPage && <LoadingItems length={20} />}
         <Box visibility="hidden" height={0} ref={ref}>
           <Box />
         </Box>
@@ -298,5 +300,23 @@ function ValueList({ items, type }: ValueListProps) {
         ))}
       </List.Root>
     </Box>
+  );
+}
+
+function LoadingItems({ length = 20 }: { length?: number }) {
+  return (
+    <>
+      {Array.from({ length: length }).map((_, index: number) => (
+        <Box key={index} p={3} bg="white" boxShadow="sm" m={3} h="60vh">
+          <Flex direction="column" gap={2}>
+            <Skeleton h="20vh" />
+            <Skeleton h="8vh" />
+            <Skeleton h="8vh" />
+            <Skeleton h="8vh" />
+            <Skeleton h="5vh" />
+          </Flex>
+        </Box>
+      ))}
+    </>
   );
 }

@@ -21,6 +21,7 @@ export class FinancialSummaryService {
      * @param data The data for the request.
      * @param data.reportTypes 取得する開示項目のレポートタイプ
      * @param data.page ページ番号
+     * @param data.limit 取得する開示項目の最大数
      * @returns DisclosureItemsList Successful Response
      * @throws ApiError
      */
@@ -30,7 +31,8 @@ export class FinancialSummaryService {
             url: '/api/v1/ix/summary/disclosure_items/',
             query: {
                 report_types: data.reportTypes,
-                page: data.page
+                page: data.page,
+                limit: data.limit
             },
             errors: {
                 422: 'Validation Error'

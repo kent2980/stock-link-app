@@ -357,6 +357,10 @@ export type ValidationError = {
 
 export type FinancialSummaryGetDisclosureItemsData = {
     /**
+     * 取得する開示項目の最大数
+     */
+    limit?: number;
+    /**
      * ページ番号
      */
     page?: number;
