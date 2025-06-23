@@ -21,7 +21,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 
-export default function HomePage() {
+export default function MainMenu() {
   const navigate = useNavigate({ from: "/" });
 
   const handleClick = (url: string) => {

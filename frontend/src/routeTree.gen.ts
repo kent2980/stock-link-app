@@ -18,6 +18,7 @@ import { Route as LoginImport } from './routes/login'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutPerformanceImport } from './routes/_layout/performance'
+import { Route as LayoutMenuImport } from './routes/_layout/menu'
 import { Route as LayoutDisclosureIndexImport } from './routes/_layout/disclosure/index'
 import { Route as LayoutDisclosurePageKeyImport } from './routes/_layout/disclosure/page.$key'
 
@@ -58,6 +59,11 @@ const LayoutPerformanceRoute = LayoutPerformanceImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutMenuRoute = LayoutMenuImport.update({
+  path: '/menu',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 const LayoutDisclosureIndexRoute = LayoutDisclosureIndexImport.update({
   path: '/disclosure/',
   getParentRoute: () => LayoutRoute,
@@ -92,6 +98,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupImport
       parentRoute: typeof rootRoute
     }
+    '/_layout/menu': {
+      preLoaderRoute: typeof LayoutMenuImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/performance': {
       preLoaderRoute: typeof LayoutPerformanceImport
       parentRoute: typeof LayoutImport
@@ -115,6 +125,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   LayoutRoute.addChildren([
+    LayoutMenuRoute,
     LayoutPerformanceRoute,
     LayoutIndexRoute,
     LayoutDisclosureIndexRoute,
