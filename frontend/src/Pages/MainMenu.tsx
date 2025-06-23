@@ -1,4 +1,3 @@
-import { DashboardInfo } from "@/components/Home/dashboard-info";
 import {
   Box,
   Link as ChakraLink,
@@ -95,7 +94,6 @@ export default function MainMenu() {
         py={8}
         px={0}
       >
-        <DashboardInfo />
         <Grid
           templateColumns={{
             base: "repeat(1, 1fr)",

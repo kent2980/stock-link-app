@@ -1,14 +1,14 @@
 import { Box, Grid, Link } from "@chakra-ui/react";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
-import { Home, Menu, Search } from "lucide-react";
+import { Home, Menu } from "lucide-react";
 
 export function Footer() {
   const navItems = [
-    {
-      name: "検索",
-      href: "/stocks",
-      icon: Search,
-    },
+    // {
+    //   name: "検索",
+    //   href: "/stocks",
+    //   icon: Search,
+    // },
     {
       name: "メニュー",
       href: "/menu",
@@ -50,7 +50,12 @@ export function Footer() {
       _dark={{ bg: "gray.900", borderColor: "gray.800" }}
       display={{ base: "block", md: "none" }}
     >
-      <Grid mx="auto" h="56px" maxW="lg" templateColumns="repeat(3, 1fr)">
+      <Grid
+        mx="auto"
+        h="56px"
+        maxW="lg"
+        templateColumns={`repeat(${navItems.length + 1}, 1fr)`}
+      >
         <Box
           display="inline-flex"
           alignItems="center"

@@ -40,6 +40,8 @@ export default function DisclosurePage() {
         limit: 20,
       });
     },
+    gcTime: 24 * 60 * 60 * 1000, // 24時間後にガーベジコレクション
+    staleTime: 10 * 60 * 1000, // 10分間のステールタイム
     initialPageParam: 1,
     getNextPageParam: (lastPage) =>
       lastPage.next_page ? lastPage.page + 1 : undefined,
