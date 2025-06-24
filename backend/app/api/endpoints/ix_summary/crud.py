@@ -1,6 +1,9 @@
 import json
 from collections.abc import Sequence
-from typing import Tuple
+
+from fastapi import Query
+from sqlalchemy.orm import aliased
+from sqlmodel import Session, and_, case, desc, exists, func, literal, select
 
 from app.models import (
     IxDefinitionArc,
@@ -15,9 +18,6 @@ from app.models import (
     JpxStockInfo,
     ScLinkBaseRef,
 )
-from fastapi import Query
-from sqlalchemy.orm import aliased
-from sqlmodel import Session, and_, case, desc, exists, func, literal, select
 
 from . import schema as sc
 
@@ -481,7 +481,7 @@ def get_disclosure_items(
     offset: int = 0,
     code_17: int | None = None,
     code_33: int | None = None,
-) -> Sequence[Tuple[IxHeadTitle, IxHeadTitleSummary, JpxStockInfo]]:
+) -> Sequence[tuple[IxHeadTitle, IxHeadTitleSummary, JpxStockInfo]]:
     """
     #### 開示項目情報を取得する
     - **機能**: 開示項目情報を取得する
