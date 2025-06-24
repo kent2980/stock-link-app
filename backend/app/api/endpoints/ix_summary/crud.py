@@ -1,9 +1,6 @@
 import json
 from collections.abc import Sequence
-
-from fastapi import Query
-from sqlalchemy.orm import aliased
-from sqlmodel import Session, and_, case, desc, exists, func, literal, select
+from typing import Tuple
 
 from app.models import (
     IxDefinitionArc,
@@ -15,8 +12,12 @@ from app.models import (
     IxLabelValue,
     IxNonFraction,
     IxNonNumeric,
+    JpxStockInfo,
     ScLinkBaseRef,
 )
+from fastapi import Query
+from sqlalchemy.orm import aliased
+from sqlmodel import Session, and_, case, desc, exists, func, literal, select
 
 from . import schema as sc
 
@@ -474,8 +475,13 @@ def get_base_head_item_key_offset_item(
 
 
 def get_disclosure_items(
-    session: Session, report_types: list[str], limit: int = 10, offset: int = 0
-) -> Sequence[tuple[IxHeadTitle, IxHeadTitleSummary]]:
+    session: Session,
+    report_types: list[str],
+    limit: int = 10,
+    offset: int = 0,
+    code_17: int | None = None,
+    code_33: int | None = None,
+) -> Sequence[Tuple[IxHeadTitle, IxHeadTitleSummary, JpxStockInfo]]:
     """
     #### 開示項目情報を取得する
     - **機能**: 開示項目情報を取得する
@@ -485,10 +491,11 @@ def get_disclosure_items(
     """
 
     statement = (
-        select(IxHeadTitle, IxHeadTitleSummary)
+        select(IxHeadTitle, IxHeadTitleSummary, JpxStockInfo)
         .outerjoin(
             IxHeadTitleSummary, IxHeadTitleSummary.head_item_key == IxHeadTitle.item_key
         )
+        .outerjoin(JpxStockInfo, JpxStockInfo.code == IxHeadTitle.securities_code)
         .where(
             IxHeadTitle.current_period.isnot(None),
             IxHeadTitle.company_name.isnot(None),
@@ -501,6 +508,12 @@ def get_disclosure_items(
         .limit(limit)
         .offset(offset)  # オフセットを適用
     )
+
+    if code_17:
+        statement = statement.where(JpxStockInfo.industry_17_code == code_17)
+    if code_33:
+        statement = statement.where(JpxStockInfo.industry_33_code == code_33)
+
     result = session.exec(statement)
     items = result.all()
     return items

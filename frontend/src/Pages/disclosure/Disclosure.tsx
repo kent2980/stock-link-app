@@ -20,7 +20,13 @@ import { Calendar } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 
-export default function DisclosurePage() {
+interface DisclosurePageProps {
+  code_17?: number;
+}
+
+export default function DisclosurePage(props: DisclosurePageProps) {
+  // コード17をpropsから取得
+  const { code_17 } = props;
   const navigate = useNavigate({ from: "disclosure" });
   const containerRef = useRef<HTMLDivElement>(null);
   const {
@@ -33,16 +39,18 @@ export default function DisclosurePage() {
     fetchPreviousPage,
     isFetchingPreviousPage,
   } = useInfiniteQuery({
-    queryKey: ["disclosureItems"],
+    queryKey: ["disclosureItems", code_17],
     queryFn: async ({ pageParam = 1 }) => {
       return await FinancialSummaryService.getDisclosureItems({
         page: pageParam,
         limit: 20,
+        code17: code_17,
       });
     },
     gcTime: 24 * 60 * 60 * 1000, // 24時間後にガーベジコレクション
     staleTime: 10 * 60 * 1000, // 10分間のステールタイム
     initialPageParam: 1,
+    retry: false,
     getNextPageParam: (lastPage) =>
       lastPage.next_page ? lastPage.page + 1 : undefined,
     getPreviousPageParam: (firstPage) =>
@@ -63,8 +71,14 @@ export default function DisclosurePage() {
     }
   }, [prevInView, hasPreviousPage, fetchPreviousPage]);
 
-  if (isLoading || !data) {
+  if (isLoading) {
     return <LoadingItems length={20} />;
+  } else if (!data) {
+    return (
+      <Box p={4} h="100vh">
+        No data available
+      </Box>
+    );
   }
 
   const items = data.pages.map((page) => page.data).flat();
@@ -75,7 +89,13 @@ export default function DisclosurePage() {
   };
 
   return (
-    <Container ref={containerRef} pb={0} px={0}>
+    <Container
+      ref={containerRef}
+      pb={0}
+      px={0}
+      maxH="calc(100vh - 200px)"
+      overflowY="auto"
+    >
       {/* メインコンテンツ */}
       <Flex
         direction="column"

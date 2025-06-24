@@ -23,6 +23,22 @@ export type DailyStockPricePublic = {
     adjusted_close?: (number | null);
 };
 
+export type DisclosureCursor = {
+    /**
+     * 次のカーソル
+     */
+    next_cursor?: (number | null);
+    /**
+     * 前のカーソル
+     */
+    previous_cursor?: (number | null);
+    /**
+     * 開示項目の総数
+     */
+    count?: number;
+    data?: Array<DisclosureItem>;
+};
+
 /**
  * 開示項目を表すクラス
  */
@@ -357,6 +373,14 @@ export type ValidationError = {
 
 export type FinancialSummaryGetDisclosureItemsData = {
     /**
+     * 17業種コード
+     */
+    code17?: (number | null);
+    /**
+     * 33業種コード
+     */
+    code33?: (number | null);
+    /**
      * 取得する開示項目の最大数
      */
     limit?: number;
@@ -371,6 +395,27 @@ export type FinancialSummaryGetDisclosureItemsData = {
 };
 
 export type FinancialSummaryGetDisclosureItemsResponse = (DisclosureItemsList);
+
+export type FinancialSummaryGetDisclosureItemsCursorData = {
+    /**
+     * カーソル
+     */
+    cursor?: (number | null);
+    /**
+     * カーソルの方向。'order' または 'newer' を指定
+     */
+    direction?: string;
+    /**
+     * 取得する開示項目の最大数
+     */
+    limit?: number;
+    /**
+     * 取得する開示項目のレポートタイプ
+     */
+    reportTypes?: (Array<(string)> | null);
+};
+
+export type FinancialSummaryGetDisclosureItemsCursorResponse = (DisclosureCursor);
 
 export type FinancialSummaryGetDisclosureItemsByIdData = {
     /**

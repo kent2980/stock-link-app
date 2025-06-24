@@ -1,13 +1,13 @@
 import json
 
+from app.api.deps import SessionDep
+from app.models import IxHeadTitle, IxHeadTitleSummary
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
 
-from app.api.deps import SessionDep
-from app.models import IxHeadTitle, IxHeadTitleSummary
-
-from . import crud, utils
+from . import crud
 from . import schema as sc
+from . import utils
 from .exceptions import HeadItemNotFound
 
 router = APIRouter()
@@ -34,6 +34,16 @@ def get_disclosure_items(
         le=100,
         example=20,
     ),
+    code_17: int | None = Query(
+        None,
+        description="17業種コード",
+        example=12345678901234567,
+    ),
+    code_33: int | None = Query(
+        None,
+        description="33業種コード",
+        example=123456789012345678901234567890123,
+    ),
 ) -> sc.DisclosureItemsList:
     """
     開示項目情報を取得するエンドポイント。
@@ -52,6 +62,8 @@ def get_disclosure_items(
         report_types=report_types,
         limit=limit,  # デフォルトの取得数を20に設定
         offset=(page - 1) * limit,  # ページ番号に基づいてオフセットを計算
+        code_17=code_17,  # 17桁コードはオプション
+        code_33=code_33,  # 33桁コードはオプション
     )
     if not items:
         raise HTTPException(

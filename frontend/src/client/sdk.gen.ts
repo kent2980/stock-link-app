@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { FinancialSummaryGetDisclosureItemsData, FinancialSummaryGetDisclosureItemsResponse, FinancialSummaryGetDisclosureItemsByIdData, FinancialSummaryGetDisclosureItemsByIdResponse, FinancialSummaryPostIxTitleSummariesResponse, FinancialSummaryPatchIxTitleSummaryAllResponse, FinancialSummaryPostIxTitleSummaryItemData, FinancialSummaryPostIxTitleSummaryItemResponse, InformationGetDocumentCountData, InformationGetDocumentCountResponse, InformationGetLatestDocumentTitleResponse, InformationReadIxHeadTitleItemData, InformationReadIxHeadTitleItemResponse, InformationGetDocumentListData, InformationGetDocumentListResponse, InformationReadIxHeadTitleItemsUrlListResponse, InformationGetCalendarResponse, InformationGetLatestReportingDateResponse, InformationGetUpdateTimestampResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, IxStockCreateDailyStockPriceData, IxStockCreateDailyStockPriceResponse, IxStockGetDailyStockPriceData, IxStockGetDailyStockPriceResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, JpxReadIndustryCountData, JpxReadIndustryCountResponse, JpxReadIndustryNameData, JpxReadIndustryNameResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, PrivateCreateUserData, PrivateCreateUserResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, WikiGetStockWikiItemsResponse, XbrlSourceGetIxSourceFileItemData, XbrlSourceGetIxSourceFileItemResponse } from './types.gen';
+import type { FinancialSummaryGetDisclosureItemsData, FinancialSummaryGetDisclosureItemsResponse, FinancialSummaryGetDisclosureItemsCursorData, FinancialSummaryGetDisclosureItemsCursorResponse, FinancialSummaryGetDisclosureItemsByIdData, FinancialSummaryGetDisclosureItemsByIdResponse, FinancialSummaryPostIxTitleSummariesResponse, FinancialSummaryPatchIxTitleSummaryAllResponse, FinancialSummaryPostIxTitleSummaryItemData, FinancialSummaryPostIxTitleSummaryItemResponse, InformationGetDocumentCountData, InformationGetDocumentCountResponse, InformationGetLatestDocumentTitleResponse, InformationReadIxHeadTitleItemData, InformationReadIxHeadTitleItemResponse, InformationGetDocumentListData, InformationGetDocumentListResponse, InformationReadIxHeadTitleItemsUrlListResponse, InformationGetCalendarResponse, InformationGetLatestReportingDateResponse, InformationGetUpdateTimestampResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, IxStockCreateDailyStockPriceData, IxStockCreateDailyStockPriceResponse, IxStockGetDailyStockPriceData, IxStockGetDailyStockPriceResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, JpxReadIndustryCountData, JpxReadIndustryCountResponse, JpxReadIndustryNameData, JpxReadIndustryNameResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, PrivateCreateUserData, PrivateCreateUserResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, WikiGetStockWikiItemsResponse, XbrlSourceGetIxSourceFileItemData, XbrlSourceGetIxSourceFileItemResponse } from './types.gen';
 
 export class FinancialSummaryService {
     /**
@@ -22,6 +22,8 @@ export class FinancialSummaryService {
      * @param data.reportTypes 取得する開示項目のレポートタイプ
      * @param data.page ページ番号
      * @param data.limit 取得する開示項目の最大数
+     * @param data.code17 17業種コード
+     * @param data.code33 33業種コード
      * @returns DisclosureItemsList Successful Response
      * @throws ApiError
      */
@@ -32,6 +34,44 @@ export class FinancialSummaryService {
             query: {
                 report_types: data.reportTypes,
                 page: data.page,
+                limit: data.limit,
+                code_17: data.code17,
+                code_33: data.code33
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * 開示項目情報を取得
+     * 開示項目情報を取得するエンドポイント。
+     * Args:
+     * session (SessionDep): データベースセッション依存性。
+     * report_types (list[str] | None, optional): 取得する開示項目のレポートタイプ。デフォルトは["edif", "edus", "edjp"]。
+     * limit (int, optional): 取得する開示項目の最大数。デフォルトは20。
+     * offset (int, optional): オフセット値。デフォルトは0。
+     * Raises:
+     * HTTPException: パラメータ不正やデータが見つからない場合に発生。
+     * Returns:
+     * sc.DisclosureItemsList: 開示項目のリストとメタデータを含むレスポンスモデル。
+     * @param data The data for the request.
+     * @param data.reportTypes 取得する開示項目のレポートタイプ
+     * @param data.cursor カーソル
+     * @param data.direction カーソルの方向。'order' または 'newer' を指定
+     * @param data.limit 取得する開示項目の最大数
+     * @returns DisclosureCursor Successful Response
+     * @throws ApiError
+     */
+    public static getDisclosureItemsCursor(data: FinancialSummaryGetDisclosureItemsCursorData = {}): CancelablePromise<FinancialSummaryGetDisclosureItemsCursorResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/ix/summary/disclosure_items/cursor/',
+            query: {
+                report_types: data.reportTypes,
+                cursor: data.cursor,
+                direction: data.direction,
                 limit: data.limit
             },
             errors: {

@@ -23,6 +23,7 @@
     "chart.js": "^4.4.8",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
+    "embla-carousel-react": "^8.6.0",
     "form-data": "4.0.0",
     "framer-motion": "^12.12.1",
     "lucide-react": "^0.485.0",
