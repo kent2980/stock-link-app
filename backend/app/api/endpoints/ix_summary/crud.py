@@ -1,10 +1,6 @@
 import json
 from collections.abc import Sequence
 
-from fastapi import Query
-from sqlalchemy.orm import aliased
-from sqlmodel import Session, and_, case, desc, exists, func, literal, select
-
 from app.models import (
     IxDefinitionArc,
     IxDefinitionLoc,
@@ -18,6 +14,9 @@ from app.models import (
     JpxStockInfo,
     ScLinkBaseRef,
 )
+from fastapi import Query
+from sqlalchemy.orm import aliased
+from sqlmodel import Session, and_, case, desc, exists, func, literal, select
 
 from . import schema as sc
 
@@ -481,6 +480,7 @@ def get_disclosure_items(
     offset: int = 0,
     code_17: int | None = None,
     code_33: int | None = None,
+    is_distinct: bool = True,
 ) -> Sequence[tuple[IxHeadTitle, IxHeadTitleSummary, JpxStockInfo]]:
     """
     #### 開示項目情報を取得する
@@ -490,29 +490,72 @@ def get_disclosure_items(
     - **param3**: offset: int  オフセット
     """
 
-    statement = (
-        select(IxHeadTitle, IxHeadTitleSummary, JpxStockInfo)
-        .outerjoin(
-            IxHeadTitleSummary, IxHeadTitleSummary.head_item_key == IxHeadTitle.item_key
+    if is_distinct:
+        statement = (
+            select(IxHeadTitle, IxHeadTitleSummary, JpxStockInfo)
+            .outerjoin(
+                IxHeadTitleSummary,
+                IxHeadTitleSummary.head_item_key == IxHeadTitle.item_key,
+            )
+            .outerjoin(JpxStockInfo, JpxStockInfo.code == IxHeadTitle.securities_code)
+            .where(
+                IxHeadTitle.current_period.isnot(None),
+                IxHeadTitle.company_name.isnot(None),
+                IxHeadTitle.report_type.in_(report_types),
+            )
+            .order_by(
+                desc(IxHeadTitle.reporting_date),
+                desc(IxHeadTitle.insert_date),
+            )
+            .limit(limit)
+            .offset(offset)  # オフセットを適用
         )
-        .outerjoin(JpxStockInfo, JpxStockInfo.code == IxHeadTitle.securities_code)
-        .where(
-            IxHeadTitle.current_period.isnot(None),
-            IxHeadTitle.company_name.isnot(None),
-            IxHeadTitle.report_type.in_(report_types),
-        )
-        .order_by(
-            desc(IxHeadTitle.reporting_date),
-            desc(IxHeadTitle.insert_date),
-        )
-        .limit(limit)
-        .offset(offset)  # オフセットを適用
-    )
 
-    if code_17:
-        statement = statement.where(JpxStockInfo.industry_17_code == code_17)
-    if code_33:
-        statement = statement.where(JpxStockInfo.industry_33_code == code_33)
+        if code_17:
+            statement = statement.where(JpxStockInfo.industry_17_code == code_17)
+        if code_33:
+            statement = statement.where(JpxStockInfo.industry_33_code == code_33)
+    else:
+        # サブクエリでsecurities_codeごとに最新のidを取得
+        subquery = (
+            select(
+                IxHeadTitle.securities_code,
+                func.max(IxHeadTitle.reporting_date).label("max_reporting_date"),
+            )
+            .where(
+                IxHeadTitle.current_period.isnot(None),
+                IxHeadTitle.company_name.isnot(None),
+                IxHeadTitle.report_type.in_(report_types),
+            )
+            .group_by(IxHeadTitle.securities_code)
+        )
+        if code_17 or code_33:
+            subquery = subquery.join(
+                JpxStockInfo, JpxStockInfo.code == IxHeadTitle.securities_code
+            )
+            if code_17:
+                subquery = subquery.where(JpxStockInfo.industry_17_code == code_17)
+            if code_33:
+                subquery = subquery.where(JpxStockInfo.industry_33_code == code_33)
+
+        subquery = subquery.subquery()
+        # メインクエリで最新のreporting_dateのIxHeadTitleを取得
+        statement = (
+            select(IxHeadTitle, IxHeadTitleSummary, JpxStockInfo)
+            .join(
+                subquery,
+                (IxHeadTitle.securities_code == subquery.c.securities_code)
+                & (IxHeadTitle.reporting_date == subquery.c.max_reporting_date),
+            )
+            .outerjoin(
+                IxHeadTitleSummary,
+                IxHeadTitleSummary.head_item_key == IxHeadTitle.item_key,
+            )
+            .outerjoin(JpxStockInfo, JpxStockInfo.code == IxHeadTitle.securities_code)
+            .order_by(desc(IxHeadTitle.reporting_date), desc(IxHeadTitle.insert_date))
+            .limit(limit)
+            .offset(offset)
+        )
 
     result = session.exec(statement)
     items = result.all()

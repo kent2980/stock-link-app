@@ -45,6 +45,7 @@ export default function DisclosurePage(props: DisclosurePageProps) {
         page: pageParam,
         limit: 20,
         code17: code_17,
+        isDistinct: false,
       });
     },
     gcTime: 24 * 60 * 60 * 1000, // 24時間後にガーベジコレクション

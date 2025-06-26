@@ -1,13 +1,13 @@
 import json
 
+from app.api.deps import SessionDep
+from app.models import IxHeadTitle, IxHeadTitleSummary
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
 
-from app.api.deps import SessionDep
-from app.models import IxHeadTitle, IxHeadTitleSummary
-
-from . import crud, utils
+from . import crud
 from . import schema as sc
+from . import utils
 from .exceptions import HeadItemNotFound
 
 router = APIRouter()
@@ -44,6 +44,11 @@ def get_disclosure_items(
         description="33業種コード",
         example=123456789012345678901234567890123,
     ),
+    is_distinct: bool = Query(
+        True,
+        description="重複を排除するかどうか",
+        example=True,
+    ),
 ) -> sc.DisclosureItemsList:
     """
     開示項目情報を取得するエンドポイント。
@@ -64,6 +69,7 @@ def get_disclosure_items(
         offset=(page - 1) * limit,  # ページ番号に基づいてオフセットを計算
         code_17=code_17,  # 17桁コードはオプション
         code_33=code_33,  # 33桁コードはオプション
+        is_distinct=is_distinct,  # 重複を排除するかどうか
     )
     if not items:
         raise HTTPException(

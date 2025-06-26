@@ -24,6 +24,7 @@ export class FinancialSummaryService {
      * @param data.limit 取得する開示項目の最大数
      * @param data.code17 17業種コード
      * @param data.code33 33業種コード
+     * @param data.isDistinct 重複を排除するかどうか
      * @returns DisclosureItemsList Successful Response
      * @throws ApiError
      */
@@ -36,7 +37,8 @@ export class FinancialSummaryService {
                 page: data.page,
                 limit: data.limit,
                 code_17: data.code17,
-                code_33: data.code33
+                code_33: data.code33,
+                is_distinct: data.isDistinct
             },
             errors: {
                 422: 'Validation Error'

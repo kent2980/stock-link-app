@@ -381,6 +381,10 @@ export type FinancialSummaryGetDisclosureItemsData = {
      */
     code33?: (number | null);
     /**
+     * 重複を排除するかどうか
+     */
+    isDistinct?: boolean;
+    /**
      * 取得する開示項目の最大数
      */
     limit?: number;
