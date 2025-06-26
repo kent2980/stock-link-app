@@ -1,4 +1,4 @@
-import MiniDisclosure from "@/Pages/disclosure/MiniDisclosure";
+import DisclosureIndex from "@/Pages/disclosure/DisclosureIndex";
 import { Box } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
@@ -11,7 +11,7 @@ function Index() {
   return (
     <Box id="main-content">
       <Suspense fallback={<div>Loading...</div>}>
-        <MiniDisclosure />
+        <DisclosureIndex />
       </Suspense>
     </Box>
   );
