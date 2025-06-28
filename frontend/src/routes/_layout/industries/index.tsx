@@ -1,17 +1,17 @@
-import DisclosurePage from "@/Pages/disclosure/Disclosure17";
+import Industries from "@/Pages/Industries";
 import { Box } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 
-export const Route = createFileRoute("/_layout/disclosure/")({
+export const Route = createFileRoute("/_layout/industries/")({
   component: Index,
 });
 
 function Index() {
   return (
-    <Box px={{ base: 0, md: 4 }}>
+    <Box>
       <Suspense fallback={<div>Loading...</div>}>
-        <DisclosurePage />
+        <Industries />
       </Suspense>
     </Box>
   );

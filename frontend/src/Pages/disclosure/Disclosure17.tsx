@@ -20,11 +20,11 @@ import { Calendar } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 
-interface DisclosurePageProps {
-  code_17?: number;
+interface Disclosure17Props {
+  code_17?: number | null;
 }
 
-export default function DisclosurePage(props: DisclosurePageProps) {
+export default function Disclosure17(props: Disclosure17Props) {
   // コード17をpropsから取得
   const { code_17 } = props;
   const navigate = useNavigate({ from: "disclosure" });
@@ -39,7 +39,7 @@ export default function DisclosurePage(props: DisclosurePageProps) {
     fetchPreviousPage,
     isFetchingPreviousPage,
   } = useInfiniteQuery({
-    queryKey: ["disclosureItems", code_17],
+    queryKey: ["disclosureItems17", code_17],
     queryFn: async ({ pageParam = 1 }) => {
       return await FinancialSummaryService.getDisclosureItems({
         page: pageParam,

@@ -1,7 +1,7 @@
 from sqlalchemy import func
 from sqlmodel import Session, select
 
-from app.models import JpxStockInfo
+from app.models import IxHeadTitle, JpxStockInfo
 
 from . import schema as sc
 
@@ -117,43 +117,99 @@ def read_jpx_stock_info_item_tcs(
 
 
 def read_jpx_stock_info_industry_names(
-    *, type: int, session: Session
+    *, session: Session, type: int, report_types: list[str]
 ) -> sc.IndustriesList:
     """
     Get all industries.
     """
 
+    # typeが17または33でない場合はエラーを返す
+    if type not in [17, 33]:
+        raise ValueError("type must be 17 or 33")
+
+    # typeに応じてカラムを選択
     if type == 17:
-        statement = (
-            select(
-                JpxStockInfo.industry_17_name.label("name"),
-                JpxStockInfo.industry_17_code.label("code"),
-            )
-            .where(
-                JpxStockInfo.industry_17_name.is_not(None),
-                JpxStockInfo.industry_17_code.is_not(None),
-            )
-            .order_by(JpxStockInfo.industry_17_code)
-            .distinct()
-        )
+        name_column = JpxStockInfo.industry_17_name
+        code_column = JpxStockInfo.industry_17_code
     elif type == 33:
-        statement = (
-            select(
-                JpxStockInfo.industry_33_name.label("name"),
-                JpxStockInfo.industry_33_code.label("code"),
-            )
-            .where(
-                JpxStockInfo.industry_33_name.is_not(None),
-                JpxStockInfo.industry_33_code.is_not(None),
-            )
-            .order_by(JpxStockInfo.industry_33_code)
-            .distinct()
+        name_column = JpxStockInfo.industry_33_name
+        code_column = JpxStockInfo.industry_33_code
+
+    # 最新レコードの日付を取得
+    subquery1 = (
+        select(func.max(IxHeadTitle.reporting_date).label("max_date"))
+    ).subquery()
+
+    # 業種ごとの最新レコード数を取得するためのサブクエリを作成
+    subquery2 = (
+        select(
+            code_column.label("subquery_code"),
+            func.count(IxHeadTitle.securities_code).label("todays_record"),
         )
+        .join(
+            IxHeadTitle,
+            JpxStockInfo.code == IxHeadTitle.securities_code,
+        )
+        .join(
+            subquery1,
+            IxHeadTitle.reporting_date == subquery1.c.max_date,
+        )
+        .where(
+            IxHeadTitle.report_type.in_(report_types),
+        )
+        .group_by(code_column)
+    ).subquery()
+
+    # クエリを作成
+    statement = (
+        select(
+            name_column.label("name"),
+            code_column.label("code"),
+            func.coalesce(subquery2.c.todays_record, 0).label("todays_record"),
+            subquery1.c.max_date.label("new_report_date"),
+        )
+        .outerjoin(
+            subquery2,
+            code_column == subquery2.c.subquery_code,
+        )
+        .where(
+            name_column.is_not(None),
+            code_column.is_not(None),
+        )
+        .order_by(func.coalesce(subquery2.c.todays_record, 0).desc(), code_column)
+        .group_by(
+            name_column,
+            code_column,
+            subquery2.c.todays_record,
+            subquery1.c.max_date,
+        )
+    )
+
+    # クエリを実行
     result = session.exec(statement)
     items = result.all()
+
+    # max_dateを取得
+    max_date = None
+    if len(items) > 0:
+        max_date = items[0].new_report_date
+
     # itemsの要素からNoneを除外
     items = [item for item in items if item[0] is not None]
     items = [item for item in items if item[1] is not None]
+
+    # itemsに全てのコードのレコード数を加算したitemを追加
+    all_count = 0
+    for item in items:
+        count = item[2] if item[2] is not None else 0
+        all_count += count
+    items.insert(
+        0,
+        sc.Industry(
+            code=0, name="全て", todays_record=all_count, new_report_date=max_date
+        ),
+    )
+    # IndustriesListに変換して返す
     return sc.IndustriesList(data=items)
 
 

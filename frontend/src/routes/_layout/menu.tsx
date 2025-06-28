@@ -1,6 +1,7 @@
-import MainMenu from "@/Pages/MainMenu";
+import Industries from "@/Pages/Industries";
 import { Box } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
+import { Suspense } from "react";
 
 export const Route = createFileRoute("/_layout/menu")({
   component: Menu,
@@ -9,7 +10,9 @@ export const Route = createFileRoute("/_layout/menu")({
 function Menu() {
   return (
     <Box>
-      <MainMenu />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Industries />
+      </Suspense>
     </Box>
   );
 }

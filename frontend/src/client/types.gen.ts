@@ -148,8 +148,19 @@ export type IndustriesList = {
 };
 
 export type Industry = {
+    /**
+     * 業種コード
+     */
     code: number;
+    /**
+     * 業種名
+     */
     name: string;
+    /**
+     * 本日追加されたレコードの数
+     */
+    todays_record: number;
+    new_report_date: string;
 };
 
 export type industry_count = {
@@ -396,6 +407,10 @@ export type FinancialSummaryGetDisclosureItemsData = {
      * 取得する開示項目のレポートタイプ
      */
     reportTypes?: (Array<(string)> | null);
+    /**
+     * 特定の日付の開示項目を取得する場合に指定
+     */
+    selectDate?: (string | null);
 };
 
 export type FinancialSummaryGetDisclosureItemsResponse = (DisclosureItemsList);
@@ -554,11 +569,15 @@ export type JpxReadJpxStockInfoItemTcsData = {
 
 export type JpxReadJpxStockInfoItemTcsResponse = (JpxStockInfosPublicList);
 
-export type JpxReadJpxStockInfoIndustryNamesData = {
+export type JpxGetIndustriesInfoData = {
+    /**
+     * レポートタイプのリスト
+     */
+    reportTypes?: Array<(string)>;
     type: number;
 };
 
-export type JpxReadJpxStockInfoIndustryNamesResponse = (IndustriesList);
+export type JpxGetIndustriesInfoResponse = (IndustriesList);
 
 export type JpxReadSelectIndustriesData = {
     industry17Code?: (number | null);

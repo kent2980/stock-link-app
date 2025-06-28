@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { FinancialSummaryGetDisclosureItemsData, FinancialSummaryGetDisclosureItemsResponse, FinancialSummaryGetDisclosureItemsCursorData, FinancialSummaryGetDisclosureItemsCursorResponse, FinancialSummaryGetDisclosureItemsByIdData, FinancialSummaryGetDisclosureItemsByIdResponse, FinancialSummaryPostIxTitleSummariesResponse, FinancialSummaryPatchIxTitleSummaryAllResponse, FinancialSummaryPostIxTitleSummaryItemData, FinancialSummaryPostIxTitleSummaryItemResponse, InformationGetDocumentCountData, InformationGetDocumentCountResponse, InformationGetLatestDocumentTitleResponse, InformationReadIxHeadTitleItemData, InformationReadIxHeadTitleItemResponse, InformationGetDocumentListData, InformationGetDocumentListResponse, InformationReadIxHeadTitleItemsUrlListResponse, InformationGetCalendarResponse, InformationGetLatestReportingDateResponse, InformationGetUpdateTimestampResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, IxStockCreateDailyStockPriceData, IxStockCreateDailyStockPriceResponse, IxStockGetDailyStockPriceData, IxStockGetDailyStockPriceResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxReadJpxStockInfoIndustryNamesData, JpxReadJpxStockInfoIndustryNamesResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, JpxReadIndustryCountData, JpxReadIndustryCountResponse, JpxReadIndustryNameData, JpxReadIndustryNameResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, PrivateCreateUserData, PrivateCreateUserResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, WikiGetStockWikiItemsResponse, XbrlSourceGetIxSourceFileItemData, XbrlSourceGetIxSourceFileItemResponse } from './types.gen';
+import type { FinancialSummaryGetDisclosureItemsData, FinancialSummaryGetDisclosureItemsResponse, FinancialSummaryGetDisclosureItemsCursorData, FinancialSummaryGetDisclosureItemsCursorResponse, FinancialSummaryGetDisclosureItemsByIdData, FinancialSummaryGetDisclosureItemsByIdResponse, FinancialSummaryPostIxTitleSummariesResponse, FinancialSummaryPatchIxTitleSummaryAllResponse, FinancialSummaryPostIxTitleSummaryItemData, FinancialSummaryPostIxTitleSummaryItemResponse, InformationGetDocumentCountData, InformationGetDocumentCountResponse, InformationGetLatestDocumentTitleResponse, InformationReadIxHeadTitleItemData, InformationReadIxHeadTitleItemResponse, InformationGetDocumentListData, InformationGetDocumentListResponse, InformationReadIxHeadTitleItemsUrlListResponse, InformationGetCalendarResponse, InformationGetLatestReportingDateResponse, InformationGetUpdateTimestampResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, IxStockCreateDailyStockPriceData, IxStockCreateDailyStockPriceResponse, IxStockGetDailyStockPriceData, IxStockGetDailyStockPriceResponse, JpxReadJpxStockInfoItemData, JpxReadJpxStockInfoItemResponse, JpxReadJpxStockInfoItemsResponse, JpxReadJpxStockInfoItemsTcsData, JpxReadJpxStockInfoItemsTcsResponse, JpxReadJpxStockInfoItemTcsData, JpxReadJpxStockInfoItemTcsResponse, JpxGetIndustriesInfoData, JpxGetIndustriesInfoResponse, JpxReadSelectIndustriesData, JpxReadSelectIndustriesResponse, JpxReadIndustryCountData, JpxReadIndustryCountResponse, JpxReadIndustryNameData, JpxReadIndustryNameResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, PrivateCreateUserData, PrivateCreateUserResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse, WikiGetStockWikiItemData, WikiGetStockWikiItemResponse, WikiGetStockWikiItemsResponse, XbrlSourceGetIxSourceFileItemData, XbrlSourceGetIxSourceFileItemResponse } from './types.gen';
 
 export class FinancialSummaryService {
     /**
@@ -25,6 +25,7 @@ export class FinancialSummaryService {
      * @param data.code17 17業種コード
      * @param data.code33 33業種コード
      * @param data.isDistinct 重複を排除するかどうか
+     * @param data.selectDate 特定の日付の開示項目を取得する場合に指定
      * @returns DisclosureItemsList Successful Response
      * @throws ApiError
      */
@@ -38,7 +39,8 @@ export class FinancialSummaryService {
                 limit: data.limit,
                 code_17: data.code17,
                 code_33: data.code33,
-                is_distinct: data.isDistinct
+                is_distinct: data.isDistinct,
+                select_date: data.selectDate
             },
             errors: {
                 422: 'Validation Error'
@@ -546,15 +548,19 @@ export class JpxService {
      * Get all industries.
      * @param data The data for the request.
      * @param data.type
+     * @param data.reportTypes レポートタイプのリスト
      * @returns IndustriesList Successful Response
      * @throws ApiError
      */
-    public static readJpxStockInfoIndustryNames(data: JpxReadJpxStockInfoIndustryNamesData): CancelablePromise<JpxReadJpxStockInfoIndustryNamesResponse> {
+    public static getIndustriesInfo(data: JpxGetIndustriesInfoData): CancelablePromise<JpxGetIndustriesInfoResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v1/jpx/stock_info/industries/{type}',
             path: {
                 type: data.type
+            },
+            query: {
+                report_types: data.reportTypes
             },
             errors: {
                 422: 'Validation Error'

@@ -4,13 +4,13 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
-import DisclosurePage from "./Disclosure";
+import Disclosure17 from "./Disclosure17";
 
 const DisclosureIndex: React.FC = () => {
   const { data } = useSuspenseQuery({
     queryKey: ["disclosureIndex"],
     queryFn: async () => {
-      return await JpxService.readJpxStockInfoIndustryNames({
+      return await JpxService.getIndustriesInfo({
         type: 17,
       });
     },
@@ -19,7 +19,7 @@ const DisclosureIndex: React.FC = () => {
     gcTime: 1000 * 60 * 60 * 24, // 1 day
   });
 
-  const [code, setCode] = useState<number | undefined>(undefined);
+  const [code, setCode] = useState<number | null | undefined>(undefined);
   return (
     <>
       <Flex
@@ -64,7 +64,7 @@ const DisclosureIndex: React.FC = () => {
           </Box>
         ))}
       </Flex>
-      <DisclosurePage code_17={code} />
+      <Disclosure17 code_17={code} />
     </>
   );
 };

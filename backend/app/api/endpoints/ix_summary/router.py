@@ -1,4 +1,5 @@
 import json
+from datetime import date
 
 from fastapi import APIRouter, HTTPException, Query
 from sqlmodel import select
@@ -49,6 +50,11 @@ def get_disclosure_items(
         description="重複を排除するかどうか",
         example=True,
     ),
+    select_date: date | None = Query(
+        None,
+        description="特定の日付の開示項目を取得する場合に指定",
+        example="2023-10-01",
+    ),
 ) -> sc.DisclosureItemsList:
     """
     開示項目情報を取得するエンドポイント。
@@ -70,6 +76,7 @@ def get_disclosure_items(
         code_17=code_17,  # 17桁コードはオプション
         code_33=code_33,  # 33桁コードはオプション
         is_distinct=is_distinct,  # 重複を排除するかどうか
+        select_date=select_date,  # 特定の日付の開示項目を取得する場合に指定
     )
     if not items:
         raise HTTPException(

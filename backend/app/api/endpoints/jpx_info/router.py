@@ -125,14 +125,21 @@ def read_jpx_stock_info_item_tcs(
     response_model=sc.IndustriesList,
     summary="[17] または [33] を入力して業種の名称とコードを取得",
 )
-def read_jpx_stock_info_industry_names(
-    *, type: int, session: SessionDep
+def get_industries_info(
+    *,
+    session: SessionDep,
+    type: int,
+    report_types: list[str] = Query(
+        default=["edjp", "edif", "edus"], description="レポートタイプのリスト"
+    ),
 ) -> sc.IndustriesList:
     """
     Get all industries.
     """
 
-    items = crud.read_jpx_stock_info_industry_names(type=type, session=session)
+    items = crud.read_jpx_stock_info_industry_names(
+        session=session, type=type, report_types=report_types
+    )
 
     return items
 

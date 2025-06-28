@@ -19,7 +19,9 @@ import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutPerformanceImport } from './routes/_layout/performance'
 import { Route as LayoutMenuImport } from './routes/_layout/menu'
+import { Route as LayoutIndustriesIndexImport } from './routes/_layout/industries/index'
 import { Route as LayoutDisclosureIndexImport } from './routes/_layout/disclosure/index'
+import { Route as LayoutIndustriesCodeSelectDateImport } from './routes/_layout/industries/$code/$selectDate'
 import { Route as LayoutDisclosurePageKeyImport } from './routes/_layout/disclosure/page.$key'
 
 // Create/Update Routes
@@ -64,10 +66,21 @@ const LayoutMenuRoute = LayoutMenuImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutIndustriesIndexRoute = LayoutIndustriesIndexImport.update({
+  path: '/industries/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 const LayoutDisclosureIndexRoute = LayoutDisclosureIndexImport.update({
   path: '/disclosure/',
   getParentRoute: () => LayoutRoute,
 } as any)
+
+const LayoutIndustriesCodeSelectDateRoute =
+  LayoutIndustriesCodeSelectDateImport.update({
+    path: '/industries/$code/$selectDate',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 
 const LayoutDisclosurePageKeyRoute = LayoutDisclosurePageKeyImport.update({
   path: '/disclosure/page/$key',
@@ -114,8 +127,16 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutDisclosureIndexImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/industries/': {
+      preLoaderRoute: typeof LayoutIndustriesIndexImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/disclosure/page/$key': {
       preLoaderRoute: typeof LayoutDisclosurePageKeyImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/industries/$code/$selectDate': {
+      preLoaderRoute: typeof LayoutIndustriesCodeSelectDateImport
       parentRoute: typeof LayoutImport
     }
   }
@@ -129,7 +150,9 @@ export const routeTree = rootRoute.addChildren([
     LayoutPerformanceRoute,
     LayoutIndexRoute,
     LayoutDisclosureIndexRoute,
+    LayoutIndustriesIndexRoute,
     LayoutDisclosurePageKeyRoute,
+    LayoutIndustriesCodeSelectDateRoute,
   ]),
   LoginRoute,
   RecoverPasswordRoute,

@@ -1,3 +1,5 @@
+from datetime import date
+
 from app.models import Field, SQLModel
 
 
@@ -37,8 +39,10 @@ class JpxStockInfosPublicList(SQLModel):
 
 
 class Industry(SQLModel):
-    code: int
-    name: str
+    code: int = Field(description="業種コード")
+    name: str = Field(description="業種名")
+    todays_record: int = Field(description="本日追加されたレコードの数")
+    new_report_date: date
 
 
 class IndustriesList(SQLModel):

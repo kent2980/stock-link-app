@@ -11,7 +11,7 @@ export function Footer() {
     // },
     {
       name: "メニュー",
-      href: "/menu",
+      href: "/industries",
       icon: Menu,
     },
   ];
