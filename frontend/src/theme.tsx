@@ -28,15 +28,16 @@ export const system = createSystem(defaultConfig, {
     tokens: {
       colors: {
         ui: {
-          background: { value: "#ece5e4" },
+          background: { value: "rgb(236, 229, 228)" },
           main: { value: "green.600" },
-          secondary: { value: "#d9d9d7ff" },
+          secondary: { value: "rgba(217, 217, 215, 1)" },
           dark: { value: "#333333" },
-          light: { value: "#ffffff" },
-          dataBack: { value: "#f4f4f6" },
+          light: { value: "rgb(255, 255, 255)" },
+          dataBack: { value: "rgb(244, 244, 246)" },
           description: { value: "#5c4c7d71" },
           bgGradation: {
-            value: "linear-gradient(90deg, #ffffff 0%, #f4f6fb 100%)",
+            value:
+              "linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(244, 246, 251) 100%)",
           },
           link: { value: "#556898" },
           link_hover: { value: "#2d404e" },
