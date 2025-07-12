@@ -17,12 +17,6 @@ import { Route as RecoverPasswordImport } from './routes/recover-password'
 import { Route as LoginImport } from './routes/login'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
-import { Route as LayoutPerformanceImport } from './routes/_layout/performance'
-import { Route as LayoutMenuImport } from './routes/_layout/menu'
-import { Route as LayoutIndustriesIndexImport } from './routes/_layout/industries/index'
-import { Route as LayoutDisclosureIndexImport } from './routes/_layout/disclosure/index'
-import { Route as LayoutIndustriesCodeSelectDateImport } from './routes/_layout/industries/$code/$selectDate'
-import { Route as LayoutDisclosurePageKeyImport } from './routes/_layout/disclosure/page.$key'
 
 // Create/Update Routes
 
@@ -56,37 +50,6 @@ const LayoutIndexRoute = LayoutIndexImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutPerformanceRoute = LayoutPerformanceImport.update({
-  path: '/performance',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutMenuRoute = LayoutMenuImport.update({
-  path: '/menu',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutIndustriesIndexRoute = LayoutIndustriesIndexImport.update({
-  path: '/industries/',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutDisclosureIndexRoute = LayoutDisclosureIndexImport.update({
-  path: '/disclosure/',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutIndustriesCodeSelectDateRoute =
-  LayoutIndustriesCodeSelectDateImport.update({
-    path: '/industries/$code/$selectDate',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-
-const LayoutDisclosurePageKeyRoute = LayoutDisclosurePageKeyImport.update({
-  path: '/disclosure/page/$key',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -111,32 +74,8 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupImport
       parentRoute: typeof rootRoute
     }
-    '/_layout/menu': {
-      preLoaderRoute: typeof LayoutMenuImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/performance': {
-      preLoaderRoute: typeof LayoutPerformanceImport
-      parentRoute: typeof LayoutImport
-    }
     '/_layout/': {
       preLoaderRoute: typeof LayoutIndexImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/disclosure/': {
-      preLoaderRoute: typeof LayoutDisclosureIndexImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/industries/': {
-      preLoaderRoute: typeof LayoutIndustriesIndexImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/disclosure/page/$key': {
-      preLoaderRoute: typeof LayoutDisclosurePageKeyImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/industries/$code/$selectDate': {
-      preLoaderRoute: typeof LayoutIndustriesCodeSelectDateImport
       parentRoute: typeof LayoutImport
     }
   }
@@ -145,15 +84,7 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren([
-  LayoutRoute.addChildren([
-    LayoutMenuRoute,
-    LayoutPerformanceRoute,
-    LayoutIndexRoute,
-    LayoutDisclosureIndexRoute,
-    LayoutIndustriesIndexRoute,
-    LayoutDisclosurePageKeyRoute,
-    LayoutIndustriesCodeSelectDateRoute,
-  ]),
+  LayoutRoute.addChildren([LayoutIndexRoute]),
   LoginRoute,
   RecoverPasswordRoute,
   ResetPasswordRoute,

@@ -1,8 +1,8 @@
-import { Box, Grid, Link } from "@chakra-ui/react";
+import { Box, BoxProps, Grid, Link } from "@chakra-ui/react";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { Home, Menu } from "lucide-react";
 
-export function Footer() {
+export const Footer: React.FC<BoxProps> = (props) => {
   const navItems = [
     // {
     //   name: "検索",
@@ -36,20 +36,7 @@ export function Footer() {
   };
 
   return (
-    <Box
-      position="fixed"
-      bottom={0}
-      left={0}
-      zIndex={50}
-      width="100vw"
-      pb={6}
-      borderTop="1px"
-      borderColor="gray.200"
-      borderStyle="solid"
-      bg="white"
-      _dark={{ bg: "gray.900", borderColor: "gray.800" }}
-      display={{ base: "block", md: "none" }}
-    >
+    <Box display={{ base: "block", md: "none" }} {...props}>
       <Grid
         mx="auto"
         h="56px"
@@ -70,7 +57,6 @@ export function Footer() {
             as={Home}
             h={6}
             w={6}
-            transition="colors"
             color="green.600"
             _groupHover={{ color: "green.600" }}
           />
@@ -91,7 +77,6 @@ export function Footer() {
               as={item.icon}
               h={6}
               w={6}
-              transition="colors"
               color="green.600"
               _groupHover={{ color: "green.600" }}
             />
@@ -100,4 +85,4 @@ export function Footer() {
       </Grid>
     </Box>
   );
-}
+};

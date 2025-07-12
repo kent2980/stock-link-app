@@ -1,5 +1,5 @@
 /* 全体に適応するスタイル */
 body {
-    margin: 0;
-    padding: 0;
+    background-color: #1F232E; /* 全体の背景色を黒に */
+    color: white; /* テキスト色も見やすくするなら */
 }

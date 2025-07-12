@@ -1,4 +1,4 @@
-import DisclosureIndex from "@/Pages/disclosure/DisclosureIndex";
+import StockGallery from "@/components/Card/StockGallery";
 import { Box } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
@@ -9,10 +9,13 @@ export const Route = createFileRoute("/_layout/")({
 
 function Index() {
   return (
-    <Box id="main-content">
-      <Suspense fallback={<div>Loading...</div>}>
-        <DisclosureIndex />
-      </Suspense>
+    <Box id="main-content" h="100%">
+      <Box h="40%"></Box>
+      <Box h="60%">
+        <Suspense fallback={<Box>Loading...</Box>}>
+          <StockGallery />
+        </Suspense>
+      </Box>
     </Box>
   );
 }

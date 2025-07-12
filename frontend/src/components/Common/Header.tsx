@@ -3,6 +3,7 @@
 import {
   Badge,
   Box,
+  BoxProps,
   Menu as ChakraMenu,
   Drawer,
   DrawerBody,
@@ -75,26 +76,16 @@ const mainNavItems = [
   },
 ];
 
-export function Header() {
+export const Header: React.FC<BoxProps> = (props) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
-    <Box
-      as="header"
-      position="sticky"
-      top={0}
-      zIndex={5000}
-      w="full"
-      borderBottom="1px"
-      borderColor="gray.200"
-      borderStyle="solid"
-      bg="white"
-    >
-      <Flex maxW="container.xl" mx="auto" h={16} align="center" px={4}>
+    <Box as="header" {...props}>
+      <Flex maxW="container.xl" mx="auto" align="center" px={4}>
         {/* Drawer for mobile */}
         <Box display={{ base: "block", md: "none" }} mr={2}>
           <IconButton aria-label="メニューを開く" variant="ghost" size="md">
-            <Menu size={20} />
+            <Menu size={20} color="#ffffff" />
           </IconButton>
           <Drawer.Root>
             <Drawer.Content maxW={{ base: "300px", sm: "400px" }}>
@@ -130,7 +121,7 @@ export function Header() {
                         fontSize="sm"
                         fontWeight="medium"
                         bg="green.50"
-                        color="green.700"
+                        color="green.200"
                         _hover={{
                           bg: "gray.100",
                           color: "gray.900",
@@ -152,7 +143,7 @@ export function Header() {
                       fontSize="sm"
                       fontWeight="medium"
                       bg="green.50"
-                      color="green.700"
+                      color="green.300"
                       _hover={{
                         bg: "gray.100",
                         color: "gray.900",
@@ -178,7 +169,7 @@ export function Header() {
               display={{ base: "none", md: "inline-block" }}
               fontWeight="bold"
               fontSize={16}
-              color="green.600"
+              color="green.300"
               ml={2}
             >
               株式投資総合管理
@@ -188,7 +179,7 @@ export function Header() {
 
         {/* ページタイトル */}
         <Flex align="center" mr="auto">
-          <Heading as="h1" size="md" color="gray.900" fontWeight="semibold">
+          <Heading as="h1" size="md" fontWeight="semibold">
             {/* ここにページタイトルを挿入 */}トップページ
           </Heading>
         </Flex>
@@ -243,13 +234,13 @@ export function Header() {
               size="md"
               onClick={() => setIsSearchOpen(true)}
             >
-              <Search size={20} />
+              <Search size={20} color="#ffffff" />
             </IconButton>
           )}
 
           <Box position="relative">
             <IconButton aria-label="通知" variant="ghost" size="md">
-              <Bell size={20} />
+              <Bell size={20} color="#ffffff" />
             </IconButton>
             <Badge
               position="absolute"
@@ -272,7 +263,7 @@ export function Header() {
               rounded="full"
               aria-label="ユーザーメニュー"
             >
-              <User size={20} />
+              <User size={20} color="#ffffff" />
             </IconButton>
             <ChakraMenu.Positioner>
               <ChakraMenu.Content title="マイアカウント">
@@ -295,4 +286,4 @@ export function Header() {
       </Flex>
     </Box>
   );
-}
+};
