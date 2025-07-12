@@ -72,14 +72,21 @@ export default function StockGallery(props: StockGalleryProps) {
   const items = data.pages.map((page) => page.data).flat();
 
   return (
-    <Container ref={containerRef} pb={0} px={0} h="100%" maxW="100vw">
-      <Box h="30%">
+    <Container
+      ref={containerRef}
+      pb={0}
+      px={0}
+      h="100%"
+      maxW="100vw"
+      overflowY="hidden"
+    >
+      <Box h="40%">
         <Suspense fallback={<Box>Loading...</Box>}>
           <StockInfo item={discItem} />
         </Suspense>
       </Box>
       {/* ヘッダーを固定表示 */}
-      <Box h="70%">
+      <Box h="60%">
         <Flex
           className="stock-card-header"
           direction="row"

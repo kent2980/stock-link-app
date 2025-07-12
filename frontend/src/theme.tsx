@@ -10,22 +10,16 @@ export const system = createSystem(defaultConfig, {
       fontSize: "0.875rem",
       margin: 0,
       padding: 0,
-      backgroundColor: "rgba(255,255,255)",
       fontFamily: "Noto Sans JP, sans-serif",
     },
     ".main-link": {
-      color: "ui.main",
       fontWeight: "bold",
     },
     th: {
-      backgroundColor: "#dee8eb",
-      color: "gray.800",
       fontSize: "10.5px",
       textAlign: "center",
     },
     td: {
-      backgroundColor: "white",
-      color: "var(--chakra-colors-ui-dark)",
       fontSize: "12px",
       textAlign: "center",
     },
