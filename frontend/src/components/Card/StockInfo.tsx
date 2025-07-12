@@ -7,10 +7,13 @@ interface StockInfoProps {
 }
 
 const StockInfo: React.FC<StockInfoProps> = ({ item }) => {
+  if (item == null) {
+    return <Box>No data available</Box>;
+  }
   return (
     <Box>
-      {item?.company}
-      <Box>{item?.summary}</Box>
+      {item.company}
+      <Box>{item.summary}</Box>
     </Box>
   );
 };

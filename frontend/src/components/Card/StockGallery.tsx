@@ -11,6 +11,7 @@ interface StockGalleryProps {
 }
 
 export default function StockGallery(props: StockGalleryProps) {
+  const [discItem, setDiscItem] = useState<DisclosureItem | null>(null);
   // コード17をpropsから取得
   const { code_17 } = props;
   // const navigate = useNavigate({ from: "disclosure" });
@@ -70,12 +71,12 @@ export default function StockGallery(props: StockGalleryProps) {
 
   const items = data.pages.map((page) => page.data).flat();
 
-  const [discItem, setDiscItem] = useState<DisclosureItem | null>(null);
-
   return (
     <Container ref={containerRef} pb={0} px={0} h="100%" maxW="100vw">
       <Box h="30%">
-        <StockInfo item={discItem} />
+        <Suspense fallback={<Box>Loading...</Box>}>
+          <StockInfo item={discItem} />
+        </Suspense>
       </Box>
       {/* ヘッダーを固定表示 */}
       <Box h="70%">
