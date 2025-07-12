@@ -10,12 +10,9 @@ export const Route = createFileRoute("/_layout/")({
 function Index() {
   return (
     <Box id="main-content" h="100%">
-      <Box h="30%"></Box>
-      <Box h="70%">
-        <Suspense fallback={<Box>Loading...</Box>}>
-          <StockGallery />
-        </Suspense>
-      </Box>
+      <Suspense fallback={<Box>Loading...</Box>}>
+        <StockGallery />
+      </Suspense>
     </Box>
   );
 }
