@@ -97,7 +97,12 @@ export default function StockGallery(props: StockGalleryProps) {
           top={0}
           zIndex={1}
         >
-          <Text fontSize="10px" color="#b8b8b8" w="60%" textAlign="center">
+          <Text
+            fontSize="10px"
+            color="#b8b8b8"
+            w={{ base: "60vw", md: "300px" }}
+            textAlign="center"
+          >
             会社名
             <br />
             銘柄情報

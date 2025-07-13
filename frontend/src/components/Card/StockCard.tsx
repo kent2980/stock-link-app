@@ -19,7 +19,7 @@ const StockCard: React.FC<StockCardProps> = ({ item }) => {
           <Text>{item.code}</Text>
         </Box>
         {/* 会社名・銘柄情報 */}
-        <Box w={{ base: "44%", md: "300px" }}>
+        <Box w={{ base: "40vw", md: "300px" }}>
           <Text fontWeight={600} fontSize="13px">
             {item.company.replace(/株式会社|有限会社/g, "")}
           </Text>
