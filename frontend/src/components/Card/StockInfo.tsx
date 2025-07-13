@@ -28,6 +28,16 @@ const ShortLabel = (label: string) => {
   return replacedLabel;
 };
 
+/**
+ * 数値が有効な場合%を付与し、無効な場合は"-"を返します。
+ */
+const formatPercentage = (value: number | null | undefined) => {
+  if (typeof value === "number") {
+    return `${value}%`;
+  }
+  return "-";
+};
+
 interface StockInfoProps {
   item: DisclosureItem | null;
 }
@@ -76,6 +86,7 @@ const CustomTableColumnHeader: React.FC<TableColumnHeaderProps> = ({
       py={0}
       borderBottom="1px solid"
       borderColor={borderColor}
+      textAlign="center"
     >
       {children}
     </Table.ColumnHeader>
@@ -93,6 +104,7 @@ const CustomTableCell: React.FC<TableCellProps> = ({ children, ...props }) => {
       py={0}
       borderBottom="1px solid"
       borderColor={borderColor}
+      textAlign="center"
     >
       {children}
     </Table.Cell>
@@ -189,7 +201,7 @@ const OperatingTable: React.FC<StockInfoProps> = ({ item }) => {
           </Table.Header>
           <Table.Body>
             <CustomTableRow>
-              <CustomTableCell>
+              <CustomTableCell rowSpan={2}>
                 {formatPeriodText(
                   ope?.period?.fiscalYear ?? "",
                   ope?.period?.period ?? ""
@@ -197,12 +209,19 @@ const OperatingTable: React.FC<StockInfoProps> = ({ item }) => {
               </CustomTableCell>
               {SliceOpeItems(ope?.data ?? []).map((data, index) => (
                 <CustomTableCell key={index}>
-                  {data.result?.curValue?.value}
+                  {data.result?.curValue?.value ?? "-"}
                 </CustomTableCell>
               ))}
             </CustomTableRow>
             <CustomTableRow>
-              <CustomTableCell>
+              {SliceOpeItems(ope?.data ?? []).map((data, index) => (
+                <CustomTableCell key={index}>
+                  {formatPercentage(data.result?.curChange?.value)}
+                </CustomTableCell>
+              ))}
+            </CustomTableRow>
+            <CustomTableRow>
+              <CustomTableCell rowSpan={2}>
                 {formatPeriodText(
                   PreviewFiscalYear(ope?.period?.fiscalYear ?? ""),
                   ope?.period?.period ?? ""
@@ -210,7 +229,14 @@ const OperatingTable: React.FC<StockInfoProps> = ({ item }) => {
               </CustomTableCell>
               {SliceOpeItems(ope?.data ?? []).map((data, index) => (
                 <CustomTableCell key={index}>
-                  {data.result?.preValue?.value}
+                  {data.result?.preValue?.value ?? "-"}
+                </CustomTableCell>
+              ))}
+            </CustomTableRow>
+            <CustomTableRow>
+              {SliceOpeItems(ope?.data ?? []).map((data, index) => (
+                <CustomTableCell key={index}>
+                  {formatPercentage(data.result?.preChange?.value)}
                 </CustomTableCell>
               ))}
             </CustomTableRow>
@@ -279,7 +305,7 @@ const ForecastTable: React.FC<StockInfoProps> = ({ item }) => {
           </Table.Header>
           <Table.Body>
             <CustomTableRow>
-              <CustomTableCell>
+              <CustomTableCell rowSpan={2}>
                 {formatDateStr(
                   ope?.period?.fiscalYear ?? "",
                   ope?.period?.period ?? ""
@@ -287,7 +313,14 @@ const ForecastTable: React.FC<StockInfoProps> = ({ item }) => {
               </CustomTableCell>
               {deleteItem(ope?.data ?? []).map((data, index) => (
                 <CustomTableCell key={index}>
-                  {data.forecast?.curValue?.value}
+                  {data.forecast?.curValue?.value ?? "-"}
+                </CustomTableCell>
+              ))}
+            </CustomTableRow>
+            <CustomTableRow>
+              {deleteItem(ope?.data ?? []).map((data, index) => (
+                <CustomTableCell key={index}>
+                  {formatPercentage(data.forecast?.curChange?.value)}
                 </CustomTableCell>
               ))}
             </CustomTableRow>

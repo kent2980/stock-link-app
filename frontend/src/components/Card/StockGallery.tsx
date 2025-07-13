@@ -80,7 +80,7 @@ export default function StockGallery(props: StockGalleryProps) {
       maxW="100vw"
       overflowY="hidden"
     >
-      <Box h="200px">
+      <Box h="250px">
         <Suspense fallback={<Box>Loading...</Box>}>
           <StockInfo item={discItem} />
         </Suspense>
