@@ -86,25 +86,31 @@ export default function StockGallery(props: StockGalleryProps) {
         </Suspense>
       </Box>
       {/* ヘッダーを固定表示 */}
-      <Box h="calc(100% - 200px)">
+      <Box h="calc(100% - 250px)">
         <Flex
           className="stock-card-header"
           direction="row"
-          p={2}
+          p={1}
           borderBottom="0.5px solid"
           borderColor="#545458"
           position="sticky"
           top={0}
           zIndex={1}
         >
-          <Text fontSize="12px" color="#b8b8b8" w="60%" textAlign="center">
-            会社名・銘柄情報
+          <Text fontSize="10px" color="#b8b8b8" w="60%" textAlign="center">
+            会社名
+            <br />
+            銘柄情報
           </Text>
-          <Text fontSize="12px" color="#b8b8b8" flex={1} textAlign="center">
-            実EPS
+          <Text fontSize="10px" color="#b8b8b8" flex={1} textAlign="center">
+            実利益
+            <br />
+            増減率
           </Text>
-          <Text fontSize="12px" color="#b8b8b8" flex={1} textAlign="center">
-            予EPS
+          <Text fontSize="10px" color="#b8b8b8" flex={1} textAlign="center">
+            予利益
+            <br />
+            増減率
           </Text>
         </Flex>
         {/* リスト部分のみスクロール */}
