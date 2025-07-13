@@ -255,7 +255,7 @@ const ForecastTable: React.FC<StockInfoProps> = ({ item }) => {
               <CustomTableColumnHeader>期間</CustomTableColumnHeader>
               {ope?.data?.map((data, index) => (
                 <CustomTableColumnHeader key={index}>
-                  {formatLabelText(data?.label ?? "")}
+                  {ShortLabel(formatLabelText(data?.label ?? ""))}
                 </CustomTableColumnHeader>
               ))}
             </CustomTableRow>

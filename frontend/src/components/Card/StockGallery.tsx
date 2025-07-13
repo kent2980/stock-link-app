@@ -80,13 +80,13 @@ export default function StockGallery(props: StockGalleryProps) {
       maxW="100vw"
       overflowY="hidden"
     >
-      <Box h="30%">
+      <Box h="200px">
         <Suspense fallback={<Box>Loading...</Box>}>
           <StockInfo item={discItem} />
         </Suspense>
       </Box>
       {/* ヘッダーを固定表示 */}
-      <Box h="70%">
+      <Box h="calc(100% - 200px)">
         <Flex
           className="stock-card-header"
           direction="row"
