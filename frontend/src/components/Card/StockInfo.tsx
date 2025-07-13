@@ -236,9 +236,17 @@ const ForecastTable: React.FC<StockInfoProps> = ({ item }) => {
     }
   };
 
-  const formatDateStr = (dateStr: string) => {
+  const formatDateStr = (dateStr: string, period: string) => {
     const dateObj = new Date(dateStr);
-    const year = dateObj.getFullYear().toString().slice(-2); // 2桁表記
+    let year = "";
+    if (period == "FY") {
+      year = String(dateObj.getFullYear() + 1)
+        .toString()
+        .slice(-2); // 2桁表記
+    } else {
+      year = String(dateObj.getFullYear()).toString().slice(-2); // 2桁表記
+    }
+
     const month = String(dateObj.getMonth() + 1);
     return `${year}.${month}-通期`;
   };
@@ -263,7 +271,10 @@ const ForecastTable: React.FC<StockInfoProps> = ({ item }) => {
           <Table.Body>
             <CustomTableRow>
               <CustomTableCell>
-                {formatDateStr(ope?.period?.fiscalYear ?? "")}
+                {formatDateStr(
+                  ope?.period?.fiscalYear ?? "",
+                  ope?.period?.period ?? ""
+                )}
               </CustomTableCell>
               {ope?.data?.map((data, index) => (
                 <CustomTableCell key={index}>
