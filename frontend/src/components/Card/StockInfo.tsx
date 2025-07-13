@@ -238,9 +238,9 @@ const ForecastTable: React.FC<StockInfoProps> = ({ item }) => {
 
   const formatDateStr = (dateStr: string) => {
     const dateObj = new Date(dateStr);
-    const year = dateObj.getFullYear();
+    const year = dateObj.getFullYear().toString().slice(-2); // 2桁表記
     const month = String(dateObj.getMonth() + 1).padStart(2, "0");
-    return `${year}年${month}月通期`;
+    return `${year}.${month}-通期`;
   };
 
   return (
