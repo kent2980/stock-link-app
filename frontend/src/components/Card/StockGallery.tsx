@@ -129,11 +129,23 @@ export default function StockGallery(props: StockGalleryProps) {
               gap={0}
               m={4}
               listStyle="none"
+              style={{
+                scrollSnapType: "y mandatory",
+                overflowY: "auto",
+                maxHeight: "100%",
+                padding: 0,
+              }}
             >
               {items?.map((item, key) => {
                 if (!item) return null;
                 return (
-                  <List.Item key={key} onClick={() => setDiscItem(item)}>
+                  <List.Item
+                    key={key}
+                    onClick={() => setDiscItem(item)}
+                    style={{
+                      scrollSnapAlign: "start",
+                    }}
+                  >
                     <Suspense fallback={<LoadingItems length={1} />}>
                       <StockCard item={item} />
                     </Suspense>
