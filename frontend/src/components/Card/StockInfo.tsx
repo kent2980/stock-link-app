@@ -231,6 +231,8 @@ const ForecastTable: React.FC<StockInfoProps> = ({ item }) => {
   const formatLabelText = (label: string) => {
     if (label == "1株当たり当期純利益") {
       return "EPS";
+    } else if (label == "基本的1株当たり当期利益") {
+      return "EPS";
     } else {
       return label;
     }
@@ -251,6 +253,13 @@ const ForecastTable: React.FC<StockInfoProps> = ({ item }) => {
     return `${year}.${month}-通期`;
   };
 
+  const deleteItem = (items: FinValueFinance[]) => {
+    const regex = /^親会社の所有者に帰属する当期利益$/;
+    return items.filter((item) => {
+      return !(item.label && regex.test(item.label));
+    });
+  };
+
   return (
     <Flex direction="column" gap={1} id="ForecastTable">
       <Heading as={"h2"} size="xs">
@@ -261,7 +270,7 @@ const ForecastTable: React.FC<StockInfoProps> = ({ item }) => {
           <Table.Header>
             <CustomTableRow>
               <CustomTableColumnHeader>期間</CustomTableColumnHeader>
-              {ope?.data?.map((data, index) => (
+              {deleteItem(ope?.data ?? []).map((data, index) => (
                 <CustomTableColumnHeader key={index}>
                   {ShortLabel(formatLabelText(data?.label ?? ""))}
                 </CustomTableColumnHeader>
@@ -276,7 +285,7 @@ const ForecastTable: React.FC<StockInfoProps> = ({ item }) => {
                   ope?.period?.period ?? ""
                 )}
               </CustomTableCell>
-              {ope?.data?.map((data, index) => (
+              {deleteItem(ope?.data ?? []).map((data, index) => (
                 <CustomTableCell key={index}>
                   {data.forecast?.curValue?.value}
                 </CustomTableCell>
