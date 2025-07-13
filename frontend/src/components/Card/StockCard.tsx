@@ -6,6 +6,11 @@ export interface StockCardProps {
 }
 
 const StockCard: React.FC<StockCardProps> = ({ item }) => {
+  const ope = item.operating_result;
+  const forecast = item.forecast;
+  const currentProfitIndex = ope?.data?.findIndex((data) =>
+    /.*当期純利益$|当期利益/.test(data.label ?? "")
+  );
   return (
     <Box py={5} px={2} borderBottom="0.5px solid" borderColor="#545458">
       <HStack gap={4}>
@@ -14,7 +19,7 @@ const StockCard: React.FC<StockCardProps> = ({ item }) => {
           <Text>{item.code}</Text>
         </Box>
         {/* 会社名・銘柄情報 */}
-        <Box w="146px">
+        <Box w="45%">
           <Text fontWeight={600} fontSize="13px">
             {item.company.replace(/株式会社|有限会社/g, "")}
           </Text>
@@ -23,9 +28,19 @@ const StockCard: React.FC<StockCardProps> = ({ item }) => {
           </Text>
         </Box>
         {/* 実績EPS伸び率 */}
-        <Box w="85px"></Box>
+        <Box flex="1" textAlign="center">
+          {typeof ope?.data?.[currentProfitIndex ?? 0 + 1]?.result?.curChange
+            ?.value === "number"
+            ? `${ope.data[currentProfitIndex ?? 0 + 1].result?.curChange?.value}%`
+            : "-"}
+        </Box>
         {/* 予想EPS伸び率 */}
-        <Box w="85px"></Box>
+        <Box flex="1" textAlign="center">
+          {typeof forecast?.data?.[currentProfitIndex ?? 0 + 1]?.forecast
+            ?.curChange?.value === "number"
+            ? `${forecast.data[currentProfitIndex ?? 0 + 1].forecast?.curChange?.value}%`
+            : "-"}
+        </Box>
       </HStack>
     </Box>
   );

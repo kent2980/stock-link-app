@@ -97,23 +97,13 @@ export default function StockGallery(props: StockGalleryProps) {
           top={0}
           zIndex={1}
         >
-          <Text fontSize="12px" color="#b8b8b8" w="300px" textAlign="center">
+          <Text fontSize="12px" color="#b8b8b8" w="60%" textAlign="center">
             会社名・銘柄情報
           </Text>
-          <Text
-            fontSize="12px"
-            color="#b8b8b8"
-            w="calc((100% - 300px) / 2)"
-            textAlign="center"
-          >
+          <Text fontSize="12px" color="#b8b8b8" flex={1} textAlign="center">
             実EPS
           </Text>
-          <Text
-            fontSize="12px"
-            color="#b8b8b8"
-            w="calc((100% - 300px) / 2)"
-            textAlign="center"
-          >
+          <Text fontSize="12px" color="#b8b8b8" flex={1} textAlign="center">
             予EPS
           </Text>
         </Flex>
