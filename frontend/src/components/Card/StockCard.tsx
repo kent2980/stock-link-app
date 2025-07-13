@@ -1,5 +1,5 @@
 import { DisclosureItem } from "@/client";
-import { Box, HStack, Text } from "@chakra-ui/react";
+import { Badge, Box, HStack, Text } from "@chakra-ui/react";
 
 export interface StockCardProps {
   item: DisclosureItem;
@@ -11,6 +11,26 @@ const StockCard: React.FC<StockCardProps> = ({ item }) => {
   const currentProfitIndex = ope?.data?.findIndex((data) =>
     /.*当期純利益$|当期利益/.test(data.label ?? "")
   );
+  const formatPercent = (value: number | null | undefined) => {
+    if (typeof value === "number") {
+      if (value === 0) return "0%";
+      if (value < 0)
+        return (
+          <Badge colorPalette="red" variant="solid" px="0">
+            `-${Math.abs(value)}%`
+          </Badge>
+        );
+      return (
+        <Badge colorPalette="green" variant="solid" px="0">
+          `-${Math.abs(value)}%`
+        </Badge>
+      );
+    }
+    return "-";
+  };
+  const filOpeResult = ope?.data?.[currentProfitIndex ?? 0 + 1]?.result;
+  const filForecastResult =
+    forecast?.data?.[currentProfitIndex ?? 0 + 1]?.forecast;
   return (
     <Box py={5} px={2} borderBottom="0.5px solid" borderColor="#545458">
       <HStack gap={4}>
@@ -29,17 +49,11 @@ const StockCard: React.FC<StockCardProps> = ({ item }) => {
         </Box>
         {/* 実績EPS伸び率 */}
         <Box flex="1" textAlign="center">
-          {typeof ope?.data?.[currentProfitIndex ?? 0 + 1]?.result?.curChange
-            ?.value === "number"
-            ? `${ope.data[currentProfitIndex ?? 0 + 1].result?.curChange?.value}%`
-            : "-"}
+          {formatPercent(filOpeResult?.curChange?.value)}
         </Box>
         {/* 予想EPS伸び率 */}
         <Box flex="1" textAlign="center">
-          {typeof forecast?.data?.[currentProfitIndex ?? 0 + 1]?.forecast
-            ?.curChange?.value === "number"
-            ? `${forecast.data[currentProfitIndex ?? 0 + 1].forecast?.curChange?.value}%`
-            : "-"}
+          {formatPercent(filForecastResult?.curChange?.value)}
         </Box>
       </HStack>
     </Box>

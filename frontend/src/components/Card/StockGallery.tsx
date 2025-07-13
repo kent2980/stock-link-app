@@ -143,9 +143,9 @@ export default function StockGallery(props: StockGalleryProps) {
                   <List.Item
                     key={key}
                     onClick={() => setDiscItem(item)}
-                    style={{
-                      scrollSnapAlign: "start",
-                    }}
+                    cursor="pointer"
+                    scrollSnapAlign="start"
+                    bg={discItem === item ? "#383a40" : "transparent"}
                   >
                     <Suspense fallback={<LoadingItems length={1} />}>
                       <StockCard item={item} />
