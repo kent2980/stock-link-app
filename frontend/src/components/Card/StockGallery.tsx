@@ -187,7 +187,7 @@ export default function StockGallery(props: StockGalleryProps) {
             bottom={20}
             right={4}
             zIndex={1000}
-            bg="rgba(255, 255, 255, 0.8)"
+            bg="rgba(255, 255, 255, 1)"
             p={2}
             borderRadius="full"
             boxShadow="md"
