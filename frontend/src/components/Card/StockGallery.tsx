@@ -1,5 +1,14 @@
 import { DisclosureItem, FinancialSummaryService } from "@/client";
-import { Box, Container, Flex, List, Skeleton, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  Flex,
+  List,
+  Popover,
+  Portal,
+  Skeleton,
+  Text,
+} from "@chakra-ui/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
@@ -12,6 +21,8 @@ interface StockGalleryProps {
 
 export default function StockGallery(props: StockGalleryProps) {
   const [discItem, setDiscItem] = useState<DisclosureItem | null>(null);
+  const [selectDate, setSelectDate] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
   // コード17をpropsから取得
   const { code_17 } = props;
   // const navigate = useNavigate({ from: "disclosure" });
@@ -33,6 +44,7 @@ export default function StockGallery(props: StockGalleryProps) {
         limit: 20,
         code17: code_17,
         isDistinct: false,
+        selectDate: selectDate,
       });
     },
     gcTime: 24 * 60 * 60 * 1000, // 24時間後にガーベジコレクション
@@ -139,6 +151,9 @@ export default function StockGallery(props: StockGalleryProps) {
             >
               {items?.map((item, key) => {
                 if (!item) return null;
+                if (key === 0 && !discItem) {
+                  setDiscItem(item);
+                }
                 return (
                   <List.Item
                     key={key}
@@ -161,6 +176,39 @@ export default function StockGallery(props: StockGalleryProps) {
           </Flex>
         </Box>
       </Box>
+      {/* 画面右下にフロートボタンを表示 */}
+
+      {/*  */}
+      <Popover.Root open={open} onOpenChange={(e) => setOpen(e.open)}>
+        <Popover.Trigger asChild>
+          <Box
+            position="fixed"
+            bottom={20}
+            right={4}
+            zIndex={1000}
+            bg="rgba(255, 255, 255, 0.8)"
+            p={2}
+            borderRadius="full"
+            boxShadow="md"
+            onClick={() =>
+              setSelectDate(new Date().toISOString().split("T")[0])
+            }
+            cursor="pointer"
+          >
+            <Text fontSize="12px" color="black">
+              日付選択
+            </Text>
+          </Box>
+        </Popover.Trigger>
+        <Portal>
+          <Popover.Positioner>
+            <Popover.Content>
+              <Popover.Arrow />
+              <Popover.Body>{/* <DatePickerDial /> */}</Popover.Body>
+            </Popover.Content>
+          </Popover.Positioner>
+        </Portal>
+      </Popover.Root>
     </Container>
   );
 }
