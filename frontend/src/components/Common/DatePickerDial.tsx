@@ -13,6 +13,7 @@ const DatePickerDial = () => {
       showIcon
       selected={selectedDate}
       onChange={(date) => setSelectedDate(date)}
+      locale="ja"
     />
   );
 };

@@ -12,6 +12,7 @@ import {
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import DatePickerDial from "../Common/DatePickerDial";
 import StockCard from "./StockCard";
 import StockInfo from "./StockInfo";
 
@@ -204,7 +205,11 @@ export default function StockGallery(props: StockGalleryProps) {
           <Popover.Positioner>
             <Popover.Content>
               <Popover.Arrow />
-              <Popover.Body>{/* <DatePickerDial /> */}</Popover.Body>
+              <Popover.Body>
+                <Box color="black">
+                  <DatePickerDial />
+                </Box>
+              </Popover.Body>
             </Popover.Content>
           </Popover.Positioner>
         </Portal>
