@@ -16,12 +16,12 @@ const StockCard: React.FC<StockCardProps> = ({ item }) => {
       if (value === 0) return "0%";
       if (value < 0)
         return (
-          <Badge colorPalette="red" variant="solid" px="0">
+          <Badge colorPalette="red" variant="solid" px={1}>
             -{Math.abs(value)}%
           </Badge>
         );
       return (
-        <Badge colorPalette="green" variant="solid" px="0">
+        <Badge colorPalette="green" variant="solid" px={1}>
           +{Math.abs(value)}%
         </Badge>
       );
