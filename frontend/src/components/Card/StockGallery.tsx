@@ -22,8 +22,9 @@ interface StockGalleryProps {
 
 export default function StockGallery(props: StockGalleryProps) {
   const [discItem, setDiscItem] = useState<DisclosureItem | null>(null);
-  const [selectDate, setSelectDate] = useState<string | null>(null);
+  const [selectDate, setSelectDate] = useState<Date | null>(null);
   const [open, setOpen] = useState(false);
+  const [pageParam, setPageParam] = useState(1);
   // コード17をpropsから取得
   const { code_17 } = props;
   // const navigate = useNavigate({ from: "disclosure" });
@@ -39,13 +40,15 @@ export default function StockGallery(props: StockGalleryProps) {
     isFetchingPreviousPage,
   } = useInfiniteQuery({
     queryKey: ["disclosureItems17", code_17],
-    queryFn: async ({ pageParam = 1 }) => {
+    queryFn: async () => {
       return await FinancialSummaryService.getDisclosureItems({
         page: pageParam,
         limit: 20,
         code17: code_17,
         isDistinct: false,
-        selectDate: selectDate,
+        selectDate: selectDate
+          ? selectDate.toISOString().slice(0, 10)
+          : undefined,
       });
     },
     gcTime: 24 * 60 * 60 * 1000, // 24時間後にガーベジコレクション
@@ -59,6 +62,13 @@ export default function StockGallery(props: StockGalleryProps) {
   });
   const { ref, inView } = useInView();
   const { ref: prevRef, inView: prevInView } = useInView();
+
+  // selectDateが変更されたときに、最初のページをリセット
+  useEffect(() => {
+    if (selectDate) {
+      setPageParam(1);
+    }
+  }, [selectDate]);
 
   useEffect(() => {
     if (hasNextPage && inView) {
@@ -191,9 +201,7 @@ export default function StockGallery(props: StockGalleryProps) {
             p={2}
             borderRadius="full"
             boxShadow="md"
-            onClick={() =>
-              setSelectDate(new Date().toISOString().split("T")[0])
-            }
+            onClick={() => setSelectDate(new Date())}
             cursor="pointer"
           >
             <Text fontSize="12px" color="black">
@@ -207,7 +215,10 @@ export default function StockGallery(props: StockGalleryProps) {
               <Popover.Arrow />
               <Popover.Body>
                 <Box color="black" fontSize="16px">
-                  <DatePickerDial />
+                  <DatePickerDial
+                    selectedDate={selectDate}
+                    setSelectDate={setSelectDate}
+                  />
                 </Box>
               </Popover.Body>
             </Popover.Content>
