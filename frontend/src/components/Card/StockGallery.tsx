@@ -206,7 +206,7 @@ export default function StockGallery(props: StockGalleryProps) {
             <Popover.Content>
               <Popover.Arrow />
               <Popover.Body>
-                <Box color="black">
+                <Box color="black" fontSize="16px">
                   <DatePickerDial />
                 </Box>
               </Popover.Body>

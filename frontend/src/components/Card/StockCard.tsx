@@ -1,5 +1,5 @@
 import { DisclosureItem } from "@/client";
-import { Badge, Box, HStack, Text } from "@chakra-ui/react";
+import { Badge, Box, Flex, HStack, Text } from "@chakra-ui/react";
 
 export interface StockCardProps {
   item: DisclosureItem;
@@ -32,8 +32,8 @@ const StockCard: React.FC<StockCardProps> = ({ item }) => {
   const filForecastResult =
     forecast?.data?.[currentProfitIndex ?? 0 + 1]?.forecast;
   return (
-    <Box py={5} px={2} borderBottom="0.5px solid" borderColor="#545458">
-      <HStack gap={4}>
+    <Box px={2} borderBottom="0.5px solid" borderColor="#545458">
+      <HStack pt={5} pb={3} gap={4}>
         {/* 銘柄コード */}
         <Box bg="#4eec88" color="black" rounded={10} p={1.5} fontWeight={600}>
           <Text>{item.code}</Text>
@@ -56,6 +56,18 @@ const StockCard: React.FC<StockCardProps> = ({ item }) => {
           {formatPercent(filForecastResult?.curChange?.value)}
         </Box>
       </HStack>
+      <Flex direction="row" justify="flex-end" px={2} py={1}>
+        {/* 更新日時 */}
+        <Text fontSize="11px" color="#b8b8b8">
+          {new Date(item.insert_date).toLocaleString("ja-JP", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </Text>
+      </Flex>
     </Box>
   );
 };
