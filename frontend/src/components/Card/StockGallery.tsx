@@ -22,9 +22,8 @@ interface StockGalleryProps {
 
 export default function StockGallery(props: StockGalleryProps) {
   const [discItem, setDiscItem] = useState<DisclosureItem | null>(null);
-  const [selectDate, setSelectDate] = useState<Date | null>(null);
+  const [selectDate, setSelectDate] = useState<Date | null>(new Date());
   const [open, setOpen] = useState(false);
-  const [pageParam, setPageParam] = useState(1);
   // コード17をpropsから取得
   const { code_17 } = props;
   // const navigate = useNavigate({ from: "disclosure" });
@@ -39,8 +38,8 @@ export default function StockGallery(props: StockGalleryProps) {
     fetchPreviousPage,
     isFetchingPreviousPage,
   } = useInfiniteQuery({
-    queryKey: ["disclosureItems17", code_17],
-    queryFn: async () => {
+    queryKey: ["disclosureItems17", code_17, selectDate?.toString()],
+    queryFn: async ({ pageParam = 1 }) => {
       return await FinancialSummaryService.getDisclosureItems({
         page: pageParam,
         limit: 20,
@@ -62,13 +61,6 @@ export default function StockGallery(props: StockGalleryProps) {
   });
   const { ref, inView } = useInView();
   const { ref: prevRef, inView: prevInView } = useInView();
-
-  // selectDateが変更されたときに、最初のページをリセット
-  useEffect(() => {
-    if (selectDate) {
-      setPageParam(1);
-    }
-  }, [selectDate]);
 
   useEffect(() => {
     if (hasNextPage && inView) {

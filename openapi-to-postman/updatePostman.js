@@ -41,11 +41,11 @@ var fs = require("fs");
 var openapiToPostman = require("openapi-to-postmanv2");
 // Postman APIキーとコレクションID、ワークスペースIDを設定
 var apiKey = "PMAK-67a9fea28e4dbb0001be6025-ce3f2ca5ba99421e91008b72a0cd45a4c2";
-var collectionId = "25361473-fa50396c-0934-4cd6-a8eb-92f7c99054b5";
+var collectionId = "25361473-4abc370f-6973-4841-82ae-9dcff4fcce48";
 var workspaceId = "bedc640a-9748-4cc3-8d5d-38feee02bbd7";
 // OpenAPI JSONファイルのパス
 var openApiFileUrl = "http://localhost:8000/api/v1/openapi.json";
-var openApiFilePath = "/Users/user/Vscode/XBRL_Parse_Project/stock-link-app/openapi-to-postman/doc/openapi.json";
+var openApiFilePath = "/Users/user/Vscode/app/stock-link-app/openapi-to-postman/doc/openapi.json";
 function updatePostman() {
     return __awaiter(this, void 0, void 0, function () {
         var openApiData;

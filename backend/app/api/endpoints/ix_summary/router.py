@@ -7,8 +7,9 @@ from sqlmodel import select
 from app.api.deps import SessionDep
 from app.models import IxHeadTitle, IxHeadTitleSummary
 
-from . import crud, utils
+from . import crud
 from . import schema as sc
+from . import utils
 from .exceptions import HeadItemNotFound
 
 router = APIRouter()
@@ -38,12 +39,10 @@ def get_disclosure_items(
     code_17: int | None = Query(
         None,
         description="17業種コード",
-        example=12345678901234567,
     ),
     code_33: int | None = Query(
         None,
         description="33業種コード",
-        example=123456789012345678901234567890123,
     ),
     is_distinct: bool = Query(
         True,
@@ -53,7 +52,7 @@ def get_disclosure_items(
     select_date: date | None = Query(
         None,
         description="特定の日付の開示項目を取得する場合に指定",
-        example="2023-10-01",
+        example=date.today().strftime("%Y-%m-%d"),
     ),
 ) -> sc.DisclosureItemsList:
     """
@@ -495,4 +494,5 @@ def patch_ix_title_summary_all(
         session.commit()
         print(f"Updated {count} summaries so far...")
 
+    return count
     return count

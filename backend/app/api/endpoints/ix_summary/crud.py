@@ -519,7 +519,7 @@ def get_disclosure_items(
         if code_33:
             statement = statement.where(JpxStockInfo.industry_33_code == code_33)
         if select_date:
-            statement = statement.where(IxHeadTitle.reporting_date == select_date)
+            statement = statement.where(IxHeadTitle.reporting_date <= select_date)
     else:
         # サブクエリでsecurities_codeごとに最新のidを取得
         subquery = (
@@ -563,7 +563,7 @@ def get_disclosure_items(
         )
 
     if select_date:
-        statement = statement.where(IxHeadTitle.reporting_date == select_date)
+        statement = statement.where(IxHeadTitle.reporting_date <= select_date)
 
     result = session.exec(statement)
     items = result.all()
