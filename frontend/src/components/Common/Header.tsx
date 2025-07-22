@@ -80,7 +80,13 @@ export const Header: React.FC<BoxProps> = (props) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [open, setOpen] = useState(false);
   return (
-    <Box as="header" {...props}>
+    <Box
+      as="header"
+      {...props}
+      pt={2}
+      borderBottom="solid 0.5px"
+      borderColor="gray.600"
+    >
       <Flex maxW="container.xl" mx="auto" align="center" px={4}>
         {/* Drawer for mobile */}
         <Box display={{ base: "block", md: "none" }} mr={2}>

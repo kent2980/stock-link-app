@@ -18,11 +18,13 @@ export const Route = createFileRoute("/_layout")({
 });
 
 function Layout() {
+  const headerHeight = "60px";
+  const footerHeight = "60px";
   return (
     <Flex direction="column" h="100vh" w="100vw" position="relative">
       {/* ヘッダーを上部に固定 */}
       <Box position="fixed" top={0} left={0} w="100vw" zIndex={1000}>
-        <Header h="50px" />
+        <Header h={headerHeight} />
       </Box>
       {/* サイドバーは必要に応じて調整 */}
       <Sidebar mt={16} w={60} links={[]} />
@@ -30,9 +32,9 @@ function Layout() {
       <Box
         flex="1"
         overflow="auto"
-        pt="50px" // Headerの高さ分
-        pb={{ base: "60px", md: 0 }} // Footerの高さ分（モバイルのみ）
-        h="calc(100vh - 110px)" // Headerの高さを引いた残りの高さ
+        pt={headerHeight} // Headerの高さ分
+        pb={{ base: footerHeight, md: 0 }} // Footerの高さ分（モバイルのみ）
+        h={`calc(100vh - ${headerHeight} - ${footerHeight})`} // Headerの高さを引いた残りの高さ
         w="100vw"
       >
         <Outlet />
@@ -46,7 +48,7 @@ function Layout() {
         zIndex={1000}
         display={{ base: "block", md: "none" }}
       >
-        <Footer h="60px" />
+        <Footer h={footerHeight} />
       </Box>
     </Flex>
   );

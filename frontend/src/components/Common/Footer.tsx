@@ -36,7 +36,12 @@ export const Footer: React.FC<BoxProps> = (props) => {
   };
 
   return (
-    <Box display={{ base: "block", md: "none" }} {...props}>
+    <Box
+      display={{ base: "block", md: "none" }}
+      {...props}
+      borderTop="solid 0.5px"
+      borderColor="gray.600"
+    >
       <Grid
         mx="auto"
         h="56px"

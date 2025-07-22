@@ -26,7 +26,7 @@ const CustomDrawer: React.FC<CustomDrawerProps> = ({ open, setOpen }) => {
         <IconButton
           aria-label="メニューを開く"
           variant="ghost"
-          size="md"
+          size="xl"
           _hover={{ bg: "gray.600" }}
         >
           <Menu size={20} color="#ffffff" />
