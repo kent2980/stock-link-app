@@ -22,7 +22,6 @@ import {
   BookOpen,
   FileText,
   LineChart,
-  Menu,
   Newspaper,
   PieChart,
   Search,
@@ -32,6 +31,7 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
+import CustomDrawer from "./CustomDrawer";
 
 const mainNavItems = [
   {
@@ -78,15 +78,13 @@ const mainNavItems = [
 
 export const Header: React.FC<BoxProps> = (props) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-
+  const [open, setOpen] = useState(false);
   return (
     <Box as="header" {...props}>
       <Flex maxW="container.xl" mx="auto" align="center" px={4}>
         {/* Drawer for mobile */}
         <Box display={{ base: "block", md: "none" }} mr={2}>
-          <IconButton aria-label="メニューを開く" variant="ghost" size="md">
-            <Menu size={20} color="#ffffff" />
-          </IconButton>
+          <CustomDrawer open={open} setOpen={setOpen} />
           <Drawer.Root>
             <Drawer.Content maxW={{ base: "300px", sm: "400px" }}>
               <Drawer.Header>
