@@ -13,6 +13,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import DatePickerDial from "../Common/DatePickerDial";
+import CustomSpinner from "../Spinner/CustomSpinner";
 import StockCard from "./StockCard";
 import StockInfo from "./StockInfo";
 
@@ -75,16 +76,10 @@ export default function StockGallery(props: StockGalleryProps) {
   }, [prevInView, hasPreviousPage, fetchPreviousPage]);
 
   if (isLoading) {
-    return <LoadingItems length={20} />;
-  } else if (!data) {
-    return (
-      <Box p={4} h="100%">
-        No data available
-      </Box>
-    );
+    return <CustomSpinner size="md" />;
   }
 
-  const items = data.pages.map((page) => page.data).flat();
+  const items = data?.pages.map((page) => page.data).flat();
 
   return (
     <Container
@@ -96,9 +91,7 @@ export default function StockGallery(props: StockGalleryProps) {
       overflowY="hidden"
     >
       <Box h="250px">
-        <Suspense fallback={<Box>Loading...</Box>}>
-          <StockInfo item={discItem} />
-        </Suspense>
+        {discItem ? <StockInfo item={discItem} /> : <CustomSpinner size="md" />}
       </Box>
       {/* ヘッダーを固定表示 */}
       <Box h="calc(100% - 250px)">
@@ -140,38 +133,42 @@ export default function StockGallery(props: StockGalleryProps) {
             <Box visibility="hidden" height={0} ref={prevRef}>
               <Box />
             </Box>
-            <List.Root
-              className="stock-card-list"
-              gap={0}
-              m={4}
-              listStyle="none"
-              style={{
-                scrollSnapType: "y mandatory",
-                overflowY: "auto",
-                maxHeight: "100%",
-                padding: 0,
-              }}
-            >
-              {items?.map((item, key) => {
-                if (!item) return null;
-                if (key === 0 && !discItem) {
-                  setDiscItem(item);
-                }
-                return (
-                  <List.Item
-                    key={key}
-                    onClick={() => setDiscItem(item)}
-                    cursor="pointer"
-                    scrollSnapAlign="start"
-                    bg={discItem === item ? "#383a40" : "transparent"}
-                  >
-                    <Suspense fallback={<LoadingItems length={1} />}>
-                      <StockCard item={item} />
-                    </Suspense>
-                  </List.Item>
-                );
-              })}
-            </List.Root>
+            {items ? (
+              <List.Root
+                className="stock-card-list"
+                gap={0}
+                m={4}
+                listStyle="none"
+                style={{
+                  scrollSnapType: "y mandatory",
+                  overflowY: "auto",
+                  maxHeight: "100%",
+                  padding: 0,
+                }}
+              >
+                {items?.map((item, key) => {
+                  if (!item) return null;
+                  if (key === 0 && !discItem) {
+                    setDiscItem(item);
+                  }
+                  return (
+                    <List.Item
+                      key={key}
+                      onClick={() => setDiscItem(item)}
+                      cursor="pointer"
+                      scrollSnapAlign="start"
+                      bg={discItem === item ? "#383a40" : "transparent"}
+                    >
+                      <Suspense fallback={<LoadingItems length={1} />}>
+                        <StockCard item={item} />
+                      </Suspense>
+                    </List.Item>
+                  );
+                })}
+              </List.Root>
+            ) : (
+              <CustomSpinner size="md" />
+            )}
             {isFetchingNextPage && <LoadingItems length={20} />}
             <Box visibility="hidden" height={0} ref={ref}>
               <Box />
