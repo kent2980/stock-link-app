@@ -22,7 +22,7 @@ interface StockGalleryProps {
 
 export default function StockGallery(props: StockGalleryProps) {
   const [discItem, setDiscItem] = useState<DisclosureItem | null>(null);
-  const [selectDate, setSelectDate] = useState<Date | null>(new Date());
+  const [selectDate, setSelectDate] = useState<Date>(new Date());
   const [open, setOpen] = useState(false);
   // コード17をpropsから取得
   const { code_17 } = props;
@@ -38,7 +38,7 @@ export default function StockGallery(props: StockGalleryProps) {
     fetchPreviousPage,
     isFetchingPreviousPage,
   } = useInfiniteQuery({
-    queryKey: ["disclosureItems17", code_17, selectDate?.toString()],
+    queryKey: ["disclosureItems17", code_17, selectDate],
     queryFn: async ({ pageParam = 1 }) => {
       return await FinancialSummaryService.getDisclosureItems({
         page: pageParam,
@@ -193,7 +193,6 @@ export default function StockGallery(props: StockGalleryProps) {
             p={2}
             borderRadius="full"
             boxShadow="md"
-            onClick={() => setSelectDate(new Date())}
             cursor="pointer"
           >
             <Text fontSize="12px" color="black">
