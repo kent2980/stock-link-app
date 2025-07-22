@@ -75,6 +75,10 @@ export default function StockGallery(props: StockGalleryProps) {
     }
   }, [prevInView, hasPreviousPage, fetchPreviousPage]);
 
+  useEffect(() => {
+    setDiscItem(null);
+  }, [selectDate]);
+
   if (isLoading) {
     return <CustomSpinner size="md" />;
   }
@@ -91,7 +95,11 @@ export default function StockGallery(props: StockGalleryProps) {
       overflowY="hidden"
     >
       <Box h="250px">
-        {discItem ? <StockInfo item={discItem} /> : <CustomSpinner size="md" />}
+        {!isLoading ? (
+          <StockInfo item={discItem} />
+        ) : (
+          <CustomSpinner size="md" />
+        )}
       </Box>
       {/* ヘッダーを固定表示 */}
       <Box h="calc(100% - 250px)">
@@ -133,7 +141,7 @@ export default function StockGallery(props: StockGalleryProps) {
             <Box visibility="hidden" height={0} ref={prevRef}>
               <Box />
             </Box>
-            {items ? (
+            {!isLoading ? (
               <List.Root
                 className="stock-card-list"
                 gap={0}
